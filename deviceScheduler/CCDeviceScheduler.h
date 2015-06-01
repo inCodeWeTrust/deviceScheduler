@@ -48,7 +48,7 @@
 
 //static unsigned char CCDeviceSchedulerVerbose = DEVICESCHEDULER_BASICDEBUG | DEVICESCHEDULER_MEMORYDEBUG;
 //static unsigned char CCDeviceSchedulerVerbose = SHOW_TASK_VIEW | DEVICESCHEDULER_BASICDEBUG | DEVICESCHEDULER_MEMORYDEBUG;
-static unsigned char CCDeviceSchedulerVerbose = 0x10;
+static unsigned char CCDeviceSchedulerVerbose = 0x13;
 
 
 
@@ -68,7 +68,8 @@ public:
   ~CCDeviceScheduler();
 
   unsigned char addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
-  unsigned char addStepper(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char stepModeCode[], unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
+//  unsigned char addStepper(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
+    unsigned char addStepper(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
   unsigned char addSolenoid(String deviceName, unsigned char solenoid_pin);
 
   void getAllDevices();

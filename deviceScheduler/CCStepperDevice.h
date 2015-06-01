@@ -11,7 +11,7 @@
 #define CCStepperDevice_MOVEMENTDEBUG       0x08
 
 //static unsigned char CCStepperDevice_VERBOSE = 0;
-#define CCStepperDevice_VERBOSE             0x05
+#define CCStepperDevice_VERBOSE             0x0F
 
 //#define CCStepperDevice_VERBOSE CCStepperDevice_BASICOUTPUT | CCStepperDevice_MEMORYDEBUG | CCStepperDevice_CALCULATIONDEBUG
 
@@ -42,7 +42,7 @@ class CCStepperDevice : public CCDevice {
     float                anglePerStep;
 
 
-    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char stepModeCode[], unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
+    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
     ~CCStepperDevice();
 
 

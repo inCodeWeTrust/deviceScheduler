@@ -44,7 +44,7 @@ LOCAL_LIBS_LIST =
 # For example, WiFi may crash on Arduino 1.0.2, Esplora on Arduino 1.0.3, Firmata on Teensy 3.0,
 #   OneWire on MPIDE 0023, HardwareSerial may conflict with MarlinSerial
 #
-#EXCLUDE_LIBS = Firmata WiFi Esplora OneWire Robot_Control Robot_Control/utility Robot_Motor
+#EXCLUDE_LIBS = EEPROM SoftwareSerial SPI Wire SPI Wire Audio Bridge Esplora Ethernet Firmata GSM LiquidCrystal Robot_Control Robot_Motor RobotIRremote Scheduler SD SpacebrewYun Stepper Temboo TFT USBHost WiFi
 
 
 # Warning options
@@ -57,7 +57,7 @@ LOCAL_LIBS_LIST =
 # WARNING_OPTIONS = all no-missing-braces no-conversion-null no-pointer-arith
 # WARNING_OPTIONS = unused-variable unused-function unused-label unused-value no-conversion-null no-pointer-arith
 #
-WARNING_OPTIONS = 0
+WARNING_OPTIONS = 
 
 
 # Applications path folder
@@ -73,7 +73,7 @@ APPLICATIONS_PATH = /Applications
 # = 0 or = empty or comment: open serial console
 # = 1: don't open serial console
 #
-NO_SERIAL_CONSOLE =
+NO_SERIAL_CONSOLE = 1
 
 
 # Teensy USB options
@@ -113,7 +113,7 @@ TEENSY_LAYOUT = LAYOUT_US_ENGLISH
 # SERIAL_BAUDRATE for the serial console, 9600 by default
 # Uncomment and specify another speed
 #
-#SERIAL_BAUDRATE = 19200
+SERIAL_BAUDRATE = 115200
 
 
 # Miscellaneous

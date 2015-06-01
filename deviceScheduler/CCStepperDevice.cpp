@@ -20,7 +20,7 @@ unsigned long lastStep;
 unsigned long currentMicroStep;
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char stepModeCode[], unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep) :
+CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep) :
 CCDevice() {
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
@@ -30,10 +30,20 @@ CCDevice() {
     this->microStep_1_pin = microStep_1_pin;
     this->microStep_2_pin = microStep_2_pin;
     this->highestSteppingMode = highestSteppingMode;
+    
+    Serial.println("is the problem located here?");
+
     this->stepModeCode = new unsigned char[highestSteppingMode];
-    for (int i = 0; i < highestSteppingMode; i++) {
-        this->stepModeCode[i] = stepModeCode[i];
+
+    for (unsigned char codeNumber = 0; codeNumber < highestSteppingMode; codeNumber++) {
+        this->stepModeCode[codeNumber] = stepModeCodes[codeNumber];
+        Serial.print("stepModeCodes are: ");
+        Serial.print(this->stepModeCode[codeNumber]);
+        Serial.print(", ");
     }
+    
+    Serial.println();
+    
     this->anglePerStep = anglePerStep;
     
     currentMicroStep = 0;
@@ -78,6 +88,20 @@ void CCStepperDevice::attachDevice() {
     pinMode(microStep_2_pin, OUTPUT);
     
     digitalWrite(enable_pin, HIGH);
+    
+    if (CCStepperDevice_VERBOSE & CCStepperDevice_BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice]: device "));
+        Serial.print(deviceName);
+        Serial.print(F(" attached: "));
+        Serial.print(deviceName);
+        Serial.print(F(" dir_pin: "));
+        Serial.print(dir_pin);
+        Serial.print(F(", step_pin: "));
+        Serial.print(step_pin);
+        Serial.print(F(", dir_pin: "));
+        Serial.print(enable_pin);
+        Serial.println(F(", enable_pin: "));
+    }
 }
 void CCStepperDevice::detachDevice() {
     digitalWrite(enable_pin, HIGH);
@@ -146,7 +170,7 @@ void CCStepperDevice::prepareNextMove() {
     }
     
     
-    stepsToGo = target / anglePerStep;
+    stepsToGo = (float)target / anglePerStep;
     
     // *** steps for deceleration: ***
     // v * v = 2 * a * gamma

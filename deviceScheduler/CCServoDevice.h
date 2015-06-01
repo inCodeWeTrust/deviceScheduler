@@ -12,7 +12,7 @@
 #define CCServoDevice_MOVEMENTDEBUG       0x08
 
 //static unsigned char CCServoDevice_VERBOSE = 0;
-#define CCServoDevice_VERBOSE            0x04
+#define CCServoDevice_VERBOSE            0x0F
 //#define CCServoDevice_VERBOSE CCServoDevice_BASICOUTPUT | CCServoDevice_MEMORYDEBUG | CCServoDevice_CALCULATIONDEBUG
 
 

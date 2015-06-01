@@ -85,13 +85,16 @@ void loop() {
     freeRam();
     unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_PIN, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
     freeRam();
-    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, (unsigned char*)(unsigned char[])STEPPER_STOCK_STEPMODECODE, STEPPER_STOCK_MICROSTEP_0_PIN, STEPPER_STOCK_MICROSTEP_1_PIN, STEPPER_STOCK_MICROSTEP_2_PIN, STEPPER_STOCK_ANGLE_PER_STEP);
+//    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_MICROSTEP_0_PIN, STEPPER_STOCK_MICROSTEP_1_PIN, STEPPER_STOCK_MICROSTEP_2_PIN, STEPPER_STOCK_ANGLE_PER_STEP);
+    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEP_0_PIN, STEPPER_STOCK_MICROSTEP_1_PIN, STEPPER_STOCK_MICROSTEP_2_PIN, STEPPER_STOCK_ANGLE_PER_STEP);
+    Serial.print("where is stockStepper? ");
+    Serial.println(stockStepper);
     freeRam();
     unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
     freeRam();
     
     
-    for (int n = 20; n < 2800; n+=40) {
+    for (int n = 1; n < 20; n++) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -106,7 +109,8 @@ void loop() {
         
         int theValue = analogRead(A2) / 2;
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove((long)n * n / 80, n, 100, 103);
+//        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove((long)n * n / 80, n, 100, 103);
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove((long)n * 360, 500, 100, 103);
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(320, 400, 0.4, 103);
         //    unsigned char supplyRecord_01 = scheduler->device[stockStepper]->addMove(320, 400, 1.4, 103);
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(100UL * 360UL, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 2103);
