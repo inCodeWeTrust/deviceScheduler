@@ -1,0 +1,726 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A45F721D1B1C70E400B5B7E0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F721C1B1C70E400B5B7E0 /* main.cpp */; };
+		A45F721F1B1C70E400B5B7E0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = A45F721E1B1C70E400B5B7E0 /* Makefile */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A45F72191B1C70E400B5B7E0 /* Index */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Index; sourceTree = BUILT_PRODUCTS_DIR; };
+		A45F721C1B1C70E400B5B7E0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A45F721E1B1C70E400B5B7E0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A45F72211B1C70E400B5B7E0 /* Sketchbook.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = Sketchbook.txt; path = Sketchbook/Sketchbook.txt; sourceTree = "<group>"; };
+		A45F72231B1C70E400B5B7E0 /* Arduino Due.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Due.xcconfig"; path = "Configurations/Arduino Due.xcconfig"; sourceTree = "<group>"; };
+		A45F72241B1C70E400B5B7E0 /* Arduino Duemilanove.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Duemilanove.xcconfig"; path = "Configurations/Arduino Duemilanove.xcconfig"; sourceTree = "<group>"; };
+		A45F72251B1C70E400B5B7E0 /* Arduino Leonardo.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Leonardo.xcconfig"; path = "Configurations/Arduino Leonardo.xcconfig"; sourceTree = "<group>"; };
+		A45F72261B1C70E400B5B7E0 /* Arduino Mega 2560.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Mega 2560.xcconfig"; path = "Configurations/Arduino Mega 2560.xcconfig"; sourceTree = "<group>"; };
+		A45F72271B1C70E400B5B7E0 /* Arduino Micro.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Micro.xcconfig"; path = "Configurations/Arduino Micro.xcconfig"; sourceTree = "<group>"; };
+		A45F72281B1C70E400B5B7E0 /* Arduino Pro with ATmega328-3.3V.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Pro with ATmega328-3.3V.xcconfig"; path = "Configurations/Arduino Pro with ATmega328-3.3V.xcconfig"; sourceTree = "<group>"; };
+		A45F72291B1C70E400B5B7E0 /* Arduino Pro with ATmega328-5V.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Pro with ATmega328-5V.xcconfig"; path = "Configurations/Arduino Pro with ATmega328-5V.xcconfig"; sourceTree = "<group>"; };
+		A45F722A1B1C70E400B5B7E0 /* Arduino Mini with ATmega168.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Mini with ATmega168.xcconfig"; path = "Configurations/Arduino Mini with ATmega168.xcconfig"; sourceTree = "<group>"; };
+		A45F722B1B1C70E400B5B7E0 /* Arduino Mini with ATmega328.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Mini with ATmega328.xcconfig"; path = "Configurations/Arduino Mini with ATmega328.xcconfig"; sourceTree = "<group>"; };
+		A45F722C1B1C70E400B5B7E0 /* Arduino Nano with ATmega168.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Nano with ATmega168.xcconfig"; path = "Configurations/Arduino Nano with ATmega168.xcconfig"; sourceTree = "<group>"; };
+		A45F722D1B1C70E400B5B7E0 /* Arduino Nano with ATmega328.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Nano with ATmega328.xcconfig"; path = "Configurations/Arduino Nano with ATmega328.xcconfig"; sourceTree = "<group>"; };
+		A45F722E1B1C70E400B5B7E0 /* Arduino Robot Control.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Robot Control.xcconfig"; path = "Configurations/Arduino Robot Control.xcconfig"; sourceTree = "<group>"; };
+		A45F722F1B1C70E400B5B7E0 /* Arduino Robot Motor.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Robot Motor.xcconfig"; path = "Configurations/Arduino Robot Motor.xcconfig"; sourceTree = "<group>"; };
+		A45F72301B1C70E400B5B7E0 /* Arduino Uno.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Uno.xcconfig"; path = "Configurations/Arduino Uno.xcconfig"; sourceTree = "<group>"; };
+		A45F72311B1C70E400B5B7E0 /* Arduino Uno (USBtinyISP).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Uno (USBtinyISP).xcconfig"; path = "Configurations/Arduino Uno (USBtinyISP).xcconfig"; sourceTree = "<group>"; };
+		A45F72321B1C70E400B5B7E0 /* Arduino Yun.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Yun.xcconfig"; path = "Configurations/Arduino Yun.xcconfig"; sourceTree = "<group>"; };
+		A45F72331B1C70E400B5B7E0 /* Arduino Yun (WiFi Ethernet).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Arduino Yun (WiFi Ethernet).xcconfig"; path = "Configurations/Arduino Yun (WiFi Ethernet).xcconfig"; sourceTree = "<group>"; };
+		A45F72341B1C70E400B5B7E0 /* Intel Galileo.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Intel Galileo.xcconfig"; path = "Configurations/Intel Galileo.xcconfig"; sourceTree = "<group>"; };
+		A45F72351B1C70E400B5B7E0 /* Intel Galileo Gen2.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Intel Galileo Gen2.xcconfig"; path = "Configurations/Intel Galileo Gen2.xcconfig"; sourceTree = "<group>"; };
+		A45F72361B1C70E400B5B7E0 /* My Board.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "My Board.xcconfig"; path = "Configurations/My Board.xcconfig"; sourceTree = "<group>"; };
+		A45F72381B1C70E400B5B7E0 /* Arduino.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Arduino.mk; path = Makefiles/Arduino.mk; sourceTree = "<group>"; };
+		A45F72391B1C70E400B5B7E0 /* Arduino1.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Arduino1.mk; path = Makefiles/Arduino1.mk; sourceTree = "<group>"; };
+		A45F723A1B1C70E400B5B7E0 /* Arduino15avr.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Arduino15avr.mk; path = Makefiles/Arduino15avr.mk; sourceTree = "<group>"; };
+		A45F723B1B1C70E400B5B7E0 /* Arduino15sam.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Arduino15sam.mk; path = Makefiles/Arduino15sam.mk; sourceTree = "<group>"; };
+		A45F723C1B1C70E400B5B7E0 /* Arduino23.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Arduino23.mk; path = Makefiles/Arduino23.mk; sourceTree = "<group>"; };
+		A45F723D1B1C70E400B5B7E0 /* Galileo.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Galileo.mk; path = Makefiles/Galileo.mk; sourceTree = "<group>"; };
+		A45F723E1B1C70E400B5B7E0 /* Step1.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Step1.mk; path = Makefiles/Step1.mk; sourceTree = "<group>"; };
+		A45F723F1B1C70E400B5B7E0 /* Step2.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Step2.mk; path = Makefiles/Step2.mk; sourceTree = "<group>"; };
+		A45F72401B1C70E400B5B7E0 /* Avrdude.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Avrdude.mk; path = Makefiles/Avrdude.mk; sourceTree = "<group>"; };
+		A45F72411B1C70E400B5B7E0 /* Doxygen.mk */ = {isa = PBXFileReference; lastKnownFileType = text; name = Doxygen.mk; path = Makefiles/Doxygen.mk; sourceTree = "<group>"; };
+		A45F72421B1C70E400B5B7E0 /* ReadMe.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		A45F72441B1C70E400B5B7E0 /* About.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = About.txt; path = About/About.txt; sourceTree = "<group>"; };
+		A45F72461B1C70E400B5B7E0 /* reset.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = reset.py; path = Utilities/reset.py; sourceTree = "<group>"; };
+		A45F72471B1C70E400B5B7E0 /* serial1200.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = serial1200.py; path = Utilities/serial1200.py; sourceTree = "<group>"; };
+		A45F72481B1C70E400B5B7E0 /* sshpass */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = sshpass; path = Utilities/sshpass; sourceTree = "<group>"; };
+		A45F72491B1C70E400B5B7E0 /* pdf.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = pdf.sh; path = Utilities/pdf.sh; sourceTree = "<group>"; };
+		A45F724A1B1C70E400B5B7E0 /* dist.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = dist.sh; path = Utilities/dist.sh; sourceTree = "<group>"; };
+		A45F724B1B1C70E400B5B7E0 /* doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = doxyfile; path = Utilities/doxyfile; sourceTree = "<group>"; };
+		A45F724C1B1C70E400B5B7E0 /* embedXcode_prepare */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = embedXcode_prepare; path = Utilities/embedXcode_prepare; sourceTree = "<group>"; };
+		A45F724D1B1C70E400B5B7E0 /* embedXcode_check */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = embedXcode_check; path = Utilities/embedXcode_check; sourceTree = "<group>"; };
+		A45F724E1B1C70E400B5B7E0 /* embedXcode_chrono */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = embedXcode_chrono; path = Utilities/embedXcode_chrono; sourceTree = "<group>"; };
+		A45F724F1B1C70E400B5B7E0 /* embedXcode_debug */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = embedXcode_debug; path = Utilities/embedXcode_debug; sourceTree = "<group>"; };
+		A45F72501B1C70E400B5B7E0 /* ek_lm4f120xl.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = ek_lm4f120xl.cfg; path = Utilities/ek_lm4f120xl.cfg; sourceTree = "<group>"; };
+		A45F72511B1C70E400B5B7E0 /* cc3200.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = cc3200.cfg; path = Utilities/cc3200.cfg; sourceTree = "<group>"; };
+		A45F72521B1C70E400B5B7E0 /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = TemplateIcon.icns; path = Utilities/TemplateIcon.icns; sourceTree = "<group>"; };
+		A45F72531B1C70E400B5B7E0 /* clupload_osx.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = clupload_osx.sh; path = Utilities/clupload_osx.sh; sourceTree = "<group>"; };
+		A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = deviceScheduler.ino; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		A45F72071B1C70E400B5B7E0 = {
+			isa = PBXGroup;
+			children = (
+				A45F721B1B1C70E400B5B7E0 /* deviceScheduler */,
+				A45F721A1B1C70E400B5B7E0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A45F721A1B1C70E400B5B7E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A45F72191B1C70E400B5B7E0 /* Index */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A45F721B1B1C70E400B5B7E0 /* deviceScheduler */ = {
+			isa = PBXGroup;
+			children = (
+				A45F721C1B1C70E400B5B7E0 /* main.cpp */,
+				A45F721E1B1C70E400B5B7E0 /* Makefile */,
+				A45F72421B1C70E400B5B7E0 /* ReadMe.txt */,
+				A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */,
+				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
+				A45F72221B1C70E400B5B7E0 /* Configurations */,
+				A45F72371B1C70E400B5B7E0 /* Makefiles */,
+				A45F72431B1C70E400B5B7E0 /* About */,
+				A45F72451B1C70E400B5B7E0 /* Utilities */,
+			);
+			path = deviceScheduler;
+			sourceTree = "<group>";
+		};
+		A45F72201B1C70E400B5B7E0 /* Sketchbook */ = {
+			isa = PBXGroup;
+			children = (
+				A45F72211B1C70E400B5B7E0 /* Sketchbook.txt */,
+			);
+			name = Sketchbook;
+			sourceTree = "<group>";
+		};
+		A45F72221B1C70E400B5B7E0 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				A45F72231B1C70E400B5B7E0 /* Arduino Due.xcconfig */,
+				A45F72241B1C70E400B5B7E0 /* Arduino Duemilanove.xcconfig */,
+				A45F72251B1C70E400B5B7E0 /* Arduino Leonardo.xcconfig */,
+				A45F72261B1C70E400B5B7E0 /* Arduino Mega 2560.xcconfig */,
+				A45F72271B1C70E400B5B7E0 /* Arduino Micro.xcconfig */,
+				A45F72281B1C70E400B5B7E0 /* Arduino Pro with ATmega328-3.3V.xcconfig */,
+				A45F72291B1C70E400B5B7E0 /* Arduino Pro with ATmega328-5V.xcconfig */,
+				A45F722A1B1C70E400B5B7E0 /* Arduino Mini with ATmega168.xcconfig */,
+				A45F722B1B1C70E400B5B7E0 /* Arduino Mini with ATmega328.xcconfig */,
+				A45F722C1B1C70E400B5B7E0 /* Arduino Nano with ATmega168.xcconfig */,
+				A45F722D1B1C70E400B5B7E0 /* Arduino Nano with ATmega328.xcconfig */,
+				A45F722E1B1C70E400B5B7E0 /* Arduino Robot Control.xcconfig */,
+				A45F722F1B1C70E400B5B7E0 /* Arduino Robot Motor.xcconfig */,
+				A45F72301B1C70E400B5B7E0 /* Arduino Uno.xcconfig */,
+				A45F72311B1C70E400B5B7E0 /* Arduino Uno (USBtinyISP).xcconfig */,
+				A45F72321B1C70E400B5B7E0 /* Arduino Yun.xcconfig */,
+				A45F72331B1C70E400B5B7E0 /* Arduino Yun (WiFi Ethernet).xcconfig */,
+				A45F72341B1C70E400B5B7E0 /* Intel Galileo.xcconfig */,
+				A45F72351B1C70E400B5B7E0 /* Intel Galileo Gen2.xcconfig */,
+				A45F72361B1C70E400B5B7E0 /* My Board.xcconfig */,
+			);
+			name = Configurations;
+			sourceTree = "<group>";
+		};
+		A45F72371B1C70E400B5B7E0 /* Makefiles */ = {
+			isa = PBXGroup;
+			children = (
+				A45F72381B1C70E400B5B7E0 /* Arduino.mk */,
+				A45F72391B1C70E400B5B7E0 /* Arduino1.mk */,
+				A45F723A1B1C70E400B5B7E0 /* Arduino15avr.mk */,
+				A45F723B1B1C70E400B5B7E0 /* Arduino15sam.mk */,
+				A45F723C1B1C70E400B5B7E0 /* Arduino23.mk */,
+				A45F723D1B1C70E400B5B7E0 /* Galileo.mk */,
+				A45F723E1B1C70E400B5B7E0 /* Step1.mk */,
+				A45F723F1B1C70E400B5B7E0 /* Step2.mk */,
+				A45F72401B1C70E400B5B7E0 /* Avrdude.mk */,
+				A45F72411B1C70E400B5B7E0 /* Doxygen.mk */,
+			);
+			name = Makefiles;
+			sourceTree = "<group>";
+		};
+		A45F72431B1C70E400B5B7E0 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				A45F72441B1C70E400B5B7E0 /* About.txt */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		A45F72451B1C70E400B5B7E0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A45F72461B1C70E400B5B7E0 /* reset.py */,
+				A45F72471B1C70E400B5B7E0 /* serial1200.py */,
+				A45F72481B1C70E400B5B7E0 /* sshpass */,
+				A45F72491B1C70E400B5B7E0 /* pdf.sh */,
+				A45F724A1B1C70E400B5B7E0 /* dist.sh */,
+				A45F724B1B1C70E400B5B7E0 /* doxyfile */,
+				A45F724C1B1C70E400B5B7E0 /* embedXcode_prepare */,
+				A45F724D1B1C70E400B5B7E0 /* embedXcode_check */,
+				A45F724E1B1C70E400B5B7E0 /* embedXcode_chrono */,
+				A45F724F1B1C70E400B5B7E0 /* embedXcode_debug */,
+				A45F72501B1C70E400B5B7E0 /* ek_lm4f120xl.cfg */,
+				A45F72511B1C70E400B5B7E0 /* cc3200.cfg */,
+				A45F72521B1C70E400B5B7E0 /* TemplateIcon.icns */,
+				A45F72531B1C70E400B5B7E0 /* clupload_osx.sh */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		A45F720C1B1C70E400B5B7E0 /* All */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "all -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72571B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "All" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = All;
+			passBuildSettingsInEnvironment = 1;
+			productName = All;
+		};
+		A45F720D1B1C70E400B5B7E0 /* Build */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "build -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F725A1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Build" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Build;
+			passBuildSettingsInEnvironment = 1;
+			productName = Build;
+		};
+		A45F720E1B1C70E400B5B7E0 /* Document */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "document -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F725D1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Document" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Document;
+			passBuildSettingsInEnvironment = 1;
+			productName = Document;
+		};
+		A45F720F1B1C70E400B5B7E0 /* Distribute */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "distribute -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72601B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Distribute" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Distribute;
+			passBuildSettingsInEnvironment = 1;
+			productName = Distribute;
+		};
+		A45F72101B1C70E400B5B7E0 /* Boards */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "boards -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72631B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Boards" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Boards;
+			passBuildSettingsInEnvironment = 1;
+			productName = Boards;
+		};
+		A45F72111B1C70E400B5B7E0 /* Serial */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "serial -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72661B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Serial" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Serial;
+			passBuildSettingsInEnvironment = 1;
+			productName = Serial;
+		};
+		A45F72121B1C70E400B5B7E0 /* Upload */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "upload -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72691B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Upload" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Upload;
+			passBuildSettingsInEnvironment = 1;
+			productName = Upload;
+		};
+		A45F72131B1C70E400B5B7E0 /* Clean */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "clean -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F726C1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Clean" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Clean;
+			passBuildSettingsInEnvironment = 1;
+			productName = Clean;
+		};
+		A45F72141B1C70E400B5B7E0 /* Fast */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "fast -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F726F1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Fast" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Fast;
+			passBuildSettingsInEnvironment = 1;
+			productName = Fast;
+		};
+		A45F72151B1C70E400B5B7E0 /* Make */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "make -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72721B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Make" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Make;
+			passBuildSettingsInEnvironment = 1;
+			productName = Make;
+		};
+		A45F72161B1C70E400B5B7E0 /* Debug */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "debug -C \"$(PROJECT)\"";
+			buildConfigurationList = A45F72751B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Debug" */;
+			buildPhases = (
+			);
+			buildToolPath = make;
+			dependencies = (
+			);
+			name = Debug;
+			passBuildSettingsInEnvironment = 1;
+			productName = Debug;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXNativeTarget section */
+		A45F72181B1C70E400B5B7E0 /* Index */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A45F72781B1C70E400B5B7E0 /* Build configuration list for PBXNativeTarget "Index" */;
+			buildPhases = (
+				A45F72171B1C70E400B5B7E0 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Index;
+			productName = Index;
+			productReference = A45F72191B1C70E400B5B7E0 /* Index */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A45F72081B1C70E400B5B7E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "___FULLUSERNAME___";
+			};
+			buildConfigurationList = A45F720B1B1C70E400B5B7E0 /* Build configuration list for PBXProject "deviceScheduler" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A45F72071B1C70E400B5B7E0;
+			productRefGroup = A45F721A1B1C70E400B5B7E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A45F720C1B1C70E400B5B7E0 /* All */,
+				A45F720D1B1C70E400B5B7E0 /* Build */,
+				A45F720E1B1C70E400B5B7E0 /* Document */,
+				A45F720F1B1C70E400B5B7E0 /* Distribute */,
+				A45F72101B1C70E400B5B7E0 /* Boards */,
+				A45F72111B1C70E400B5B7E0 /* Serial */,
+				A45F72121B1C70E400B5B7E0 /* Upload */,
+				A45F72131B1C70E400B5B7E0 /* Clean */,
+				A45F72141B1C70E400B5B7E0 /* Fast */,
+				A45F72151B1C70E400B5B7E0 /* Make */,
+				A45F72161B1C70E400B5B7E0 /* Debug */,
+				A45F72181B1C70E400B5B7E0 /* Index */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A45F72171B1C70E400B5B7E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A45F721F1B1C70E400B5B7E0 /* Makefile in Sources */,
+				A45F721D1B1C70E400B5B7E0 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A45F72551B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A45F72301B1C70E400B5B7E0 /* Arduino Uno.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PATH = "$(PATH):$(PROJECT_DIR)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKETCHBOOK_DIR = "";
+				SKETCH_EXTENSION = ino;
+			};
+			name = Debug;
+		};
+		A45F72561B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PATH = "$(PATH):$(PROJECT_DIR)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKETCHBOOK_DIR = "";
+				SKETCH_EXTENSION = ino;
+			};
+			name = Release;
+		};
+		A45F72581B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A45F72591B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A45F725B1B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F725C1B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F725E1B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F725F1B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72611B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F72621B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72641B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F72651B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72671B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F72681B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F726A1B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F726B1B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F726D1B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F726E1B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72701B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F72711B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72731B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F72741B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72761B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F72771B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A45F72791B1C70E400B5B7E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A45F727A1B1C70E400B5B7E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A45F720B1B1C70E400B5B7E0 /* Build configuration list for PBXProject "deviceScheduler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72551B1C70E400B5B7E0 /* Debug */,
+				A45F72561B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A45F72571B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72581B1C70E400B5B7E0 /* Debug */,
+				A45F72591B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F725A1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Build" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F725B1B1C70E400B5B7E0 /* Debug */,
+				A45F725C1B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F725D1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Document" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F725E1B1C70E400B5B7E0 /* Debug */,
+				A45F725F1B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72601B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Distribute" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72611B1C70E400B5B7E0 /* Debug */,
+				A45F72621B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72631B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Boards" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72641B1C70E400B5B7E0 /* Debug */,
+				A45F72651B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72661B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Serial" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72671B1C70E400B5B7E0 /* Debug */,
+				A45F72681B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72691B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Upload" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F726A1B1C70E400B5B7E0 /* Debug */,
+				A45F726B1B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F726C1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Clean" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F726D1B1C70E400B5B7E0 /* Debug */,
+				A45F726E1B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F726F1B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Fast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72701B1C70E400B5B7E0 /* Debug */,
+				A45F72711B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72721B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Make" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72731B1C70E400B5B7E0 /* Debug */,
+				A45F72741B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72751B1C70E400B5B7E0 /* Build configuration list for PBXLegacyTarget "Debug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72761B1C70E400B5B7E0 /* Debug */,
+				A45F72771B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A45F72781B1C70E400B5B7E0 /* Build configuration list for PBXNativeTarget "Index" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A45F72791B1C70E400B5B7E0 /* Debug */,
+				A45F727A1B1C70E400B5B7E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A45F72081B1C70E400B5B7E0 /* Project object */;
+}
