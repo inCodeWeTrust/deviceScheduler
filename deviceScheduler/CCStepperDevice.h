@@ -11,7 +11,7 @@
 #define CCStepperDevice_MOVEMENTDEBUG       0x08
 
 //static unsigned char CCStepperDevice_VERBOSE = 0;
-#define CCStepperDevice_VERBOSE             0x0F
+#define CCStepperDevice_VERBOSE             0x07
 
 //#define CCStepperDevice_VERBOSE CCStepperDevice_BASICOUTPUT | CCStepperDevice_MEMORYDEBUG | CCStepperDevice_CALCULATIONDEBUG
 
