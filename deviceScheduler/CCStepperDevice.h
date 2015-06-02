@@ -11,7 +11,7 @@
 #define CCStepperDevice_MOVEMENTDEBUG       0x08
 
 //static unsigned char CCStepperDevice_VERBOSE = 0;
-#define CCStepperDevice_VERBOSE             0x08
+#define CCStepperDevice_VERBOSE             0x0F
 
 //#define CCStepperDevice_VERBOSE CCStepperDevice_BASICOUTPUT | CCStepperDevice_MEMORYDEBUG | CCStepperDevice_CALCULATIONDEBUG
 
@@ -24,8 +24,8 @@ class CCStepperDevice : public CCDevice {
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
     unsigned long        timeForAcceleration, timeForAccAndConstSpeed;
     unsigned long        microStepsToGo, microStepsForAcceleration, microStepsForAccAndConstSpeed;
-    signed long          t0;
-    unsigned long        stepExpiration, elapsedTime;
+    signed long          t0, t0_old;
+    unsigned long        stepExpiration, elapsedTime, lastStepTime;
     float                c0_acc, c0_dec, c1;
     unsigned char        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
     unsigned long        currentMicroStep;

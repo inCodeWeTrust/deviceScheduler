@@ -107,7 +107,7 @@ void loop() {
         int theValue = analogRead(A2) / 2;
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
 //        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove((long)n * n / 80, n, 100, 103);
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(12 * 360, 80, 50.0, 50.0, 103);
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(12 * 360, 40, 50.0, 50.0, 103);
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(320, 400, 0.4, 103);
         //    unsigned char supplyRecord_01 = scheduler->device[stockStepper]->addMove(320, 400, 1.4, 103);
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(100UL * 360UL, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 2103);
