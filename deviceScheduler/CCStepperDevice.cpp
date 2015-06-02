@@ -133,13 +133,13 @@ void CCStepperDevice::prepareNextMove() {
             // v * v = 2 * a * gamma
             // gamma = n * anglePerStep = n_mic / microStepsPerStep * anglePerStep = n_mic / (1 << microSteppingMode) * anglePerStep
             // ==> v = sqrt(2 * a * n_mic / (1 << microSteppingMode) * anglePerStep)
-            currentVelocity = sqrt(2 * acceleration * currentMicroStep / (1 << highestSteppingMode));
+            currentVelocity = sqrt(2 * acceleration * currentMicroStep * anglePerStep / (1 << highestSteppingMode));
         }
         else if (currentMicroStep < microStepsForAccAndConstSpeed) {
             currentVelocity = velocity;
         }
         else {
-            currentVelocity = sqrt(2 * acceleration * (microStepsToGo - currentMicroStep) / (1 << highestSteppingMode));
+            currentVelocity = sqrt(2 * acceleration * (microStepsToGo - currentMicroStep) * anglePerStep / (1 << highestSteppingMode));
         }
     }
     else {
@@ -201,22 +201,22 @@ void CCStepperDevice::prepareNextMove() {
     
     stepsToGo = (float)target / anglePerStep;
 // v[steps/sec] = v[angle/sec] * stepPerAngle = v[angle/sec] / anglePerStep
-    velocity /= anglePerStep;
-    acceleration /= anglePerStep;
-    deceleration /= anglePerStep;
+//    velocity /= anglePerStep;
+//    acceleration /= anglePerStep;
+//    deceleration /= anglePerStep;
     
     // *** steps for deceleration: ***
     // v * v = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v = 2 * a * n * anglePerStep ==> n = v * v / (2 * a * anglePerStep)
-    stepsForDeceleration = (0.5 * velocity * velocity / deceleration) + 0.5;
+    stepsForDeceleration = (0.5 * velocity * velocity / deceleration / anglePerStep) + 0.5;
     
     // *** steps for acceleration: ***
     // v * v - v0 * v0 = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v - v0 * v0 = 2 * a * n * anglePerStep
     // ==> n = (v * v - v0 * v0) / (2 * a * anglePerStep)
-    stepsForAcceleration = fabs((0.5 * (velocity * velocity - currentVelocity * currentVelocity) / acceleration) + 0.5);
+    stepsForAcceleration = fabs((0.5 * (velocity * velocity - currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5);
     
     // *** does acceleration and deceleration fit into the move? ***
     if (stepsForAcceleration + stepsForDeceleration > stepsToGo - 2) {
@@ -237,23 +237,23 @@ void CCStepperDevice::prepareNextMove() {
         if (acceleration > deceleration) {
             // *** recalculate v: ***
             // v * v = 2 * a * n * anglePerStep ==> v = sqrt(2 * a * n * anglePerStep)
-            velocity = sqrt(2 * deceleration * stepsForDeceleration);
+            velocity = sqrt(2 * deceleration * stepsForDeceleration * anglePerStep);
         }
         else {
             // *** recalculate v: ***
             // v * v = 2 * a * n * anglePerStep ==> v = sqrt(2 * a * n * anglePerStep)
-            velocity = sqrt(2 * acceleration * stepsForAcceleration);
+            velocity = sqrt(2 * acceleration * stepsForAcceleration * anglePerStep);
         }
         deceleration = - deceleration;
     }
     else {
         // *** recalculate a: ***
         // v * v = 2 * a * n * anglePerStep ==> a = v * v / (2 * n * anglePerStep)
-        deceleration = -0.5 * velocity * velocity / stepsForDeceleration;
+        deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
 
         // *** recalculate a: ***
         // v * v - v0 * v0 = 2 * a * gamma ==> a = (v * v - v0 * v0) / 2 * gamma = (v * v - v0 * v0) / (2 * n * anglePerStep)
-        acceleration = 0.5 * (velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration;
+        acceleration = 0.5 * (velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
     }
 
     // *** time for acceleration: ***
@@ -261,7 +261,7 @@ void CCStepperDevice::prepareNextMove() {
     // tx = t - t0; ==> tx = v / a - v0 / a = (v - v0) / a
     timeForAcceleration = 1000000.0 * fabs((currentVelocity - velocity) / acceleration);
     
-    timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) / velocity;
+    timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) * anglePerStep / velocity;
     
     // *** time for the next step while acceleration: ***
     // gamma = 0.5 * a * t * t + v0 * t
@@ -270,8 +270,8 @@ void CCStepperDevice::prepareNextMove() {
     // ==> t = (-v0 +/- sqrt(v0 * v0 + 2 * a * n * anglePerStep)) / a
     // ==> t = (-v0 +/- sqrt(v0 * v0 + 2 * a * microSteps / microStepsPerSteps * anglePerStep)) / a
     // 2 * a * anglePerStep / microStepsPerSteps = constant = c0_acc
-    c0_acc = 2.0 * acceleration / (1 << highestSteppingMode);
-    c0_dec = 2.0 * deceleration / (1 << highestSteppingMode);
+    c0_acc = 2.0 * acceleration * anglePerStep / (1 << highestSteppingMode);
+    c0_dec = 2.0 * deceleration * anglePerStep / (1 << highestSteppingMode);
     
     // *** time for next step while constant speed: ***
     // v = gamma / t ==> t = gamma / v
@@ -279,7 +279,7 @@ void CCStepperDevice::prepareNextMove() {
     // ==> t = n * stepsToAngle(1) / v [*1000000us/s]
     // stepsToAngle(1) / v = constant = c1
     // t = n * c1
-    c1 = 1 / velocity / (1 << highestSteppingMode);
+    c1 = 1 * anglePerStep / velocity / (1 << highestSteppingMode);
     
     microStepsToGo = stepsToGo << highestSteppingMode;
     microStepsForAcceleration = stepsForAcceleration << highestSteppingMode;
