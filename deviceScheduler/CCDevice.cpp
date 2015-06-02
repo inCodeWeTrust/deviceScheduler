@@ -28,6 +28,30 @@ unsigned char CCDevice::addMove(float target, float velocity, float acceleration
 
   return countOfMoves - 1;
 }
+unsigned char CCDevice::addMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay) {
+    theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
+    
+    if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {
+        Serial.print(F("[CCDevice]: add Move for "));
+        Serial.print(deviceName);
+        Serial.print(F(", target: "));
+        Serial.print(theMove[countOfMoves]->target);
+        Serial.print(F(", velocity: "));
+        Serial.print(theMove[countOfMoves]->velocity);
+        Serial.print(F(", acceleration: "));
+        Serial.print(theMove[countOfMoves]->acceleration);
+        Serial.print(F(", deceleration: "));
+        Serial.print(theMove[countOfMoves]->deceleration);
+        Serial.print(F(", startDelay: "));
+        Serial.print(theMove[countOfMoves]->startDelay);
+        Serial.print(F("; at $"));
+        Serial.println((long)theMove[countOfMoves], HEX);
+    }
+    
+    countOfMoves++;
+    
+    return countOfMoves - 1;
+}
 
 void CCDevice::setStartDateForMove(unsigned char moveIndex, unsigned long startTime) {
   theMove[moveIndex]->startEvent = DATE;
@@ -43,6 +67,21 @@ void CCDevice::setStartEventForMove(unsigned char moveIndex, unsigned char start
   theMove[moveIndex]->startTriggerDevice = startTriggerDevice;
   theMove[moveIndex]->startTriggerMove = startTriggerMove;
   theMove[moveIndex]->startTriggerPosition = startTriggerPosition;
+}
+void CCDevice::setSwitchDateForMove(unsigned char moveIndex, unsigned long timeout) {
+    theMove[moveIndex]->stopEvent = DATE | 0x10;
+    theMove[moveIndex]->timeout = timeout;
+}
+void CCDevice::setSwitchButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState) {
+    theMove[moveIndex]->stopEvent = BUTTON | 0x10;
+    theMove[moveIndex]->stopButton = stopButton;
+    theMove[moveIndex]->stopButtonState = stopButtonState;
+}
+void CCDevice::setSwitchEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition) {
+    theMove[moveIndex]->stopEvent = POSITION | 0x10;
+    theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
+    theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
+    theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
 }
 void CCDevice::setTimeoutForMove(unsigned char moveIndex, unsigned long timeout, boolean stopSharply) {
   theMove[moveIndex]->stopEvent = DATE;

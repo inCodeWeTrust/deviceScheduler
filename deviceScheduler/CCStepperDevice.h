@@ -11,7 +11,7 @@
 #define CCStepperDevice_MOVEMENTDEBUG       0x08
 
 //static unsigned char CCStepperDevice_VERBOSE = 0;
-#define CCStepperDevice_VERBOSE             0x0F
+#define CCStepperDevice_VERBOSE             0x08
 
 //#define CCStepperDevice_VERBOSE CCStepperDevice_BASICOUTPUT | CCStepperDevice_MEMORYDEBUG | CCStepperDevice_CALCULATIONDEBUG
 
@@ -19,7 +19,7 @@
 
 
 class CCStepperDevice : public CCDevice {
-
+    
     signed long          stepsToGo;
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
     unsigned long        timeForAcceleration, timeForAccAndConstSpeed;
@@ -29,23 +29,24 @@ class CCStepperDevice : public CCDevice {
     float                c0_acc, c0_dec, c1;
     unsigned char        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
     unsigned long        currentMicroStep;
-
+    bool                 lastStep;
+    
     void calculateSteppingValues();
     void kickDown();
     void kickUp();
-
-  public:
-
+    
+public:
+    
     unsigned char        dir_pin, step_pin, enable_pin, microStep_0_pin, microStep_1_pin, microStep_2_pin;
     unsigned char        highestSteppingMode;
     unsigned char        *stepModeCode;
     float                anglePerStep;
-
-
+    
+    
     CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
     ~CCStepperDevice();
-
-
+    
+    
     void attachDevice();
     void detachDevice();
     void enableDevice();
@@ -57,6 +58,6 @@ class CCStepperDevice : public CCDevice {
     void initiateStop();
     void stopMoving();
     void finishMove();
-
+    
 };
 

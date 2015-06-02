@@ -11,14 +11,12 @@
 		A42F727C1B1C71EB00B5B7E0 /* CCDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */; };
 		A42F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */; };
 		A42F72801B1C71EB00B5B7E0 /* CCServoDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */; };
-		A42F72821B1C71EB00B5B7E0 /* CCSolenoidDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72821B1C71EB00B5B7E0 /* CCSolenoidDevice.h */; };
 		A42F72841B1C71EB00B5B7E0 /* CCStepperDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */; };
 		A42F72851B1C71EB00B5B7E0 /* deviceScheduler.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */; };
 		A45F721D1B1C70E400B5B7E0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F721C1B1C70E400B5B7E0 /* main.cpp */; };
 		A45F72861B1C71EB00B5B7E0 /* CCDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727B1B1C71EB00B5B7E0 /* CCDevice.cpp */; };
 		A45F72871B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */; };
 		A45F72881B1C71EB00B5B7E0 /* CCServoDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */; };
-		A45F72891B1C71EB00B5B7E0 /* CCSolenoidDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F72811B1C71EB00B5B7E0 /* CCSolenoidDevice.cpp */; };
 		A45F728A1B1C71EB00B5B7E0 /* CCStepperDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */; };
 		AA2A150601125914AA000006 /* abi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000006 /* abi.cpp */; };
 		AA2A150601125914AA000007 /* Arduino.h in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000007 /* Arduino.h */; };
@@ -713,8 +711,6 @@
 		A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceScheduler.h; sourceTree = "<group>"; };
 		A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCServoDevice.cpp; sourceTree = "<group>"; };
 		A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCServoDevice.h; sourceTree = "<group>"; };
-		A45F72811B1C71EB00B5B7E0 /* CCSolenoidDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSolenoidDevice.cpp; sourceTree = "<group>"; };
-		A45F72821B1C71EB00B5B7E0 /* CCSolenoidDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSolenoidDevice.h; sourceTree = "<group>"; };
 		A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStepperDevice.cpp; sourceTree = "<group>"; };
 		A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice.h; sourceTree = "<group>"; };
 		A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
@@ -1384,8 +1380,6 @@
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
 				A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */,
 				A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */,
-				A45F72811B1C71EB00B5B7E0 /* CCSolenoidDevice.cpp */,
-				A45F72821B1C71EB00B5B7E0 /* CCSolenoidDevice.h */,
 				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
 				A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */,
 				A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */,
@@ -3653,7 +3647,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A45F721D1B1C70E400B5B7E0 /* main.cpp in Sources */,
-				A45F72891B1C71EB00B5B7E0 /* CCSolenoidDevice.cpp in Sources */,
 				A45F72861B1C71EB00B5B7E0 /* CCDevice.cpp in Sources */,
 				A45F72881B1C71EB00B5B7E0 /* CCServoDevice.cpp in Sources */,
 				A45F72871B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp in Sources */,
@@ -3662,7 +3655,6 @@
 				A42F727C1B1C71EB00B5B7E0 /* CCDevice.h in Sources */,
 				A42F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h in Sources */,
 				A42F72801B1C71EB00B5B7E0 /* CCServoDevice.h in Sources */,
-				A42F72821B1C71EB00B5B7E0 /* CCSolenoidDevice.h in Sources */,
 				A42F72841B1C71EB00B5B7E0 /* CCStepperDevice.h in Sources */,
 				A42F72851B1C71EB00B5B7E0 /* deviceScheduler.h in Sources */,
 				AA2A150601125914AA000006 /* abi.cpp in Sources */,

@@ -18,6 +18,7 @@
 #define DATE            0x01
 #define BUTTON          0x02
 #define POSITION        0x04
+#define SWITCH          0x08
 
 //  state:
 #define MOVING		0x01
@@ -31,7 +32,7 @@
 class CCDevice
 {
 public:
-    float                target, velocity, acceleration;
+    float                target, velocity, acceleration, deceleration;
     
     unsigned char        startEvent, stopEvent;
     unsigned long        startTime, startDelay, timeout;
@@ -74,7 +75,8 @@ public:
         signed long        stopTriggerPosition;
         boolean            stopSharply;
         
-        onEventMove(float target, float velocity, float acceleration, unsigned long startDelay) : target(target), velocity(velocity), acceleration(acceleration), startDelay(startDelay), startEvent(0), stopEvent(0), startTime(0), timeout(0), startButton(0), stopButton(0), startButtonState(0), stopButtonState(0), startTriggerDevice(0), startTriggerMove(0), startTriggerPosition(0), stopTriggerDevice(0), stopTriggerMove(0), stopTriggerPosition(0), stopSharply(0) {}
+        onEventMove(float target, float velocity, float acceleration, unsigned long startDelay) : target(target), velocity(velocity), acceleration(acceleration), deceleration(0), startDelay(startDelay), startEvent(0), stopEvent(0), startTime(0), timeout(0), startButton(0), stopButton(0), startButtonState(0), stopButtonState(0), startTriggerDevice(0), startTriggerMove(0), startTriggerPosition(0), stopTriggerDevice(0), stopTriggerMove(0), stopTriggerPosition(0), stopSharply(0) {}
+        onEventMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay) : target(target), velocity(velocity), acceleration(acceleration), deceleration(deceleration), startDelay(startDelay), startEvent(0), stopEvent(0), startTime(0), timeout(0), startButton(0), stopButton(0), startButtonState(0), stopButtonState(0), startTriggerDevice(0), startTriggerMove(0), startTriggerPosition(0), stopTriggerDevice(0), stopTriggerMove(0), stopTriggerPosition(0), stopSharply(0) {}
     };
     
     onEventMove         *theMove[10];
@@ -83,11 +85,16 @@ public:
     virtual ~CCDevice();
     
     unsigned char addMove(float target, float velocity, float acceleration, unsigned long startDelay);
-    
+    unsigned char addMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay);
+
     void setStartDateForMove(unsigned char moveIndex, unsigned long startTime);
     void setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
     void setStartEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
     
+    void setSwitchDateForMove(unsigned char moveIndex, unsigned long startTime);
+    void setSwitchButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
+    void setSwitchEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+
     void setTimeoutForMove(unsigned char moveIndex, unsigned long _timeout, boolean stopSharply);
     void setStopButtonForMove(unsigned char moveIndex, unsigned char _stopButton, boolean _stopButtonState, boolean stopSharply);
     void setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply);
