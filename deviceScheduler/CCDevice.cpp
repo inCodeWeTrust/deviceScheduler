@@ -6,29 +6,17 @@
 
 CCDevice::~CCDevice() {}
 
-unsigned char CCDevice::addMove(float target, float velocity, float acceleration, unsigned long startDelay) {
-  theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, startDelay);
-
-  if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {
-    Serial.print(F("[CCDevice]: add Move for "));
-    Serial.print(deviceName);
-    Serial.print(F(", target: "));
-    Serial.print(theMove[countOfMoves]->target);
-    Serial.print(F(", velocity: "));
-    Serial.print(theMove[countOfMoves]->velocity);
-    Serial.print(F(", acceleration: "));
-    Serial.print(theMove[countOfMoves]->acceleration);
-    Serial.print(F(", startDelay: "));
-    Serial.print(theMove[countOfMoves]->startDelay);
-    Serial.print(F("; at $"));
-    Serial.println((long)theMove[countOfMoves], HEX);
-  }
-
-  countOfMoves++;
-
-  return countOfMoves - 1;
+void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration) {
+    this->defaultVelocity = defaultVelocity;
+    this->defaultAcceleration = defaultAcceleration;
+    this->defaultDeceleration = defaultDeceleration;
 }
-unsigned char CCDevice::addMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay) {
+
+unsigned char CCDevice::addMove(float target, float velocity, float acceleration, float deceleration) {
+  return addMoveWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
+}
+
+unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
     theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
     
     if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {

@@ -137,7 +137,6 @@ unsigned char CCDeviceScheduler::addSolenoid(String deviceName, unsigned char so
     return countOfDevices - 1;
 }
 
-
 void CCDeviceScheduler::getAllDevices() {
     Serial.println(F("[CCDeviceScheduler]: My Devices: "));
     for (int i = 0; i < countOfDevices; i++) {
@@ -315,9 +314,8 @@ void CCDeviceScheduler::runTheLoop() {
                         Serial.print(F(" "));
                     }
                     
-                    switch (device[s]->stopEvent & 0x0F) {                                                              // is there a stopEvent defined?
-                        case DATE:                                                                                 // yes, device shall stop by date
-                            //              if (taskTime > device[s]->theMove[device[s]->movePointer]->startTime + device[s]->theMove[device[s]->movePointer]->timeout) {
+                    switch (device[s]->stopEvent & 0x0F) {                                                     // is there a stopEvent defined?
+                        case DATE:                                                                             // yes, device shall stop by date
                             if (taskTime > device[s]->startTime + device[s]->startDelay + device[s]->timeout) {      // it's time to stop!
                                 if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                     Serial.print(F("->| time: "));
@@ -332,13 +330,13 @@ void CCDeviceScheduler::runTheLoop() {
 //                                    Serial.println((int)device[s]->movePointer);
                                 }
                                 
-                                if (device[s]->stopEvent & 0x10) {
-                                    device[s]->movePointer++;                                                  // go for next job!
-                                    if (device[s]->movePointer < device[s]->countOfMoves) {                    //  all tasks done? no!
+                                if (device[s]->stopEvent & 0x10) {                                          // switch immediately to next move?
+                                    device[s]->movePointer++;                                               // go for next job! (if existing)
+                                    if (device[s]->movePointer < device[s]->countOfMoves) {                 //  all tasks done? no!
                                         device[s]->prepareNextMove();
                                     }
                                 }
-                                else {
+                                else {                                                                      // just stop. but how?
                                     if (device[s]->stopSharply) {
                                         device[s]->stopMoving();
                                     }
@@ -348,15 +346,15 @@ void CCDeviceScheduler::runTheLoop() {
                                     }
                                 }
                             }
-                            else {                                                                                //  stopEvent DATE given, timeout not yet expired
+                            else {                                                             //  stopEvent DATE given, timeout not yet expired
                                 if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                     Serial.print(emptyMessage);
                                 }
                             }
                             break;
                             
-                        case BUTTON:                                                                                  // device shall stop by button
-                            if (digitalRead(device[s]->stopButton) == device[s]->stopButtonState) {                    // it's time to stop!
+                        case BUTTON:                                                                         // device shall stop by button
+                            if (digitalRead(device[s]->stopButton) == device[s]->stopButtonState) {          // it's time to stop!
                                 if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                     Serial.print(F("->| button: "));
                                     Serial.print(formatNumber(device[s]->stopButton, 2));
@@ -370,13 +368,13 @@ void CCDeviceScheduler::runTheLoop() {
                                     Serial.println((int)device[s]->movePointer);
                                 }
  
-                                if (device[s]->stopEvent & 0x10) {
-                                    device[s]->movePointer++;                                                  // go for next job!
-                                    if (device[s]->movePointer < device[s]->countOfMoves) {                    //  all tasks done? no!
+                                if (device[s]->stopEvent & 0x10) {                                           // switch immediately to next move?
+                                    device[s]->movePointer++;                                                // go for next job! (if existing)
+                                    if (device[s]->movePointer < device[s]->countOfMoves) {                  //  all tasks done? no!
                                         device[s]->prepareNextMove();
                                     }
                                 }
-                                else {
+                                else {                                                                       // just stop. but how?
                                     if (device[s]->stopSharply) {
                                         device[s]->stopMoving();
                                     }
@@ -385,18 +383,17 @@ void CCDeviceScheduler::runTheLoop() {
                                         device[s]->stopEvent = 0;
                                     }
                                 }
-                            }                                                                                   //  stopEvent BUTTON given, timeout not yet expired
-                            else {
+                            }
+                            else {                                                            // stopEvent BUTTON given, but was not yet pressed
                                 if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                     Serial.print(emptyMessage);
                                 }
                             }
                             break;
                             
-                        case POSITION:                                                                                  // device shall stop by position of another device
-                            if (device[s]->stopTriggerMove == device[device[s]->stopTriggerDevice]->movePointer) {        //  is the trigger device doing the trigger move?
-                                if ((device[device[s]->stopTriggerDevice]->countingDown && device[device[s]->stopTriggerDevice]->currentPosition <= device[s]->stopTriggerPosition) || (!device[device[s]->stopTriggerDevice]->countingDown && device[device[s]->stopTriggerDevice]->currentPosition >= device[s]->stopTriggerPosition)) {
-                                    //  did the trigger device pass the trigger position?
+                        case POSITION:                                                        // device shall stop by position of another device
+                            if (device[s]->stopTriggerMove == device[device[s]->stopTriggerDevice]->movePointer) {  //  trig dev on trigger move?
+                                if ((device[device[s]->stopTriggerDevice]->direction && device[device[s]->stopTriggerDevice]->currentPosition <= device[s]->stopTriggerPosition) || (!device[device[s]->stopTriggerDevice]->direction && device[device[s]->stopTriggerDevice]->currentPosition >= device[s]->stopTriggerPosition)) { // trigger position reached?
                                     if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                         Serial.print(F("->| from: "));
                                         Serial.print(formatNumber(device[s]->stopTriggerDevice, 2));
@@ -411,13 +408,13 @@ void CCDeviceScheduler::runTheLoop() {
                                         Serial.println((int)device[s]->movePointer);
                                     }
    
-                                    if (device[s]->stopEvent & 0x10) {
-                                        device[s]->movePointer++;                                                  // go for next job!
-                                        if (device[s]->movePointer < device[s]->countOfMoves) {                    //  all tasks done? no!
+                                    if (device[s]->stopEvent & 0x10) {                                        // switch immediately to next move?
+                                        device[s]->movePointer++;                                             // go for next job! (if existing)
+                                        if (device[s]->movePointer < device[s]->countOfMoves) {               //  all tasks done? no!
                                             device[s]->prepareNextMove();
                                         }
                                     }
-                                    else {
+                                    else {                                                                    // just stop. but how?
                                         if (device[s]->stopSharply) {
                                             device[s]->stopMoving();
                                         }
@@ -433,7 +430,7 @@ void CCDeviceScheduler::runTheLoop() {
                                     }
                                 }
                             }
-                            else {
+                            else {                                                          // stopEvent POSITION given, but was not yet reached
                                 if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                     Serial.print(emptyMessage);
                                 }
@@ -571,14 +568,14 @@ void CCDeviceScheduler::runTheLoop() {
                             case POSITION:                                                               //  start the next move by position of another device
                                 if (device[s]->startTriggerMove <= device[device[s]->startTriggerDevice]->movePointer) {                //  is the trigger servo doing the trigger move?
                                     
-                                    if ((device[device[s]->startTriggerDevice]->countingDown && device[device[s]->startTriggerDevice]->currentPosition <= device[s]->startTriggerPosition) || (!device[device[s]->startTriggerDevice]->countingDown && device[device[s]->startTriggerDevice]->currentPosition >= device[s]->startTriggerPosition)) {
+                                    if ((device[device[s]->startTriggerDevice]->direction && device[device[s]->startTriggerDevice]->currentPosition <= device[s]->startTriggerPosition) || (!device[device[s]->startTriggerDevice]->direction && device[device[s]->startTriggerDevice]->currentPosition >= device[s]->startTriggerPosition)) {
                                         //  did the trigger servo pass the trigger position?
                                         if (CCDeviceSchedulerVerbose & SHOW_TAB_VIEW) {
                                             Serial.print(F("|-> from: "));
                                             Serial.print(formatNumber(device[s]->startTriggerDevice, 2));
                                             Serial.print(F(" ->"));
                                             Serial.print(formatNumber((int)device[s]->startTriggerPosition, 6));
-                                            (device[device[s]->startTriggerDevice]->countingDown) ? Serial.print(F("-")) : Serial.print(F("+"));
+                                            (device[device[s]->startTriggerDevice]->direction) ? Serial.print(F("-")) : Serial.print(F("+"));
                                             Serial.print(F("  "));
                                         }
                                         if (CCDeviceSchedulerVerbose & SHOW_TASK_VIEW) {
@@ -665,12 +662,13 @@ String getNameOfDeviceType(unsigned char t) {
     if (t == 1) return "Servo";
     if (t == 2) return "Stepper";
     if (t == 3) return "Solenoid";
+    return "unknown";
 }
 String getNameOfMoveEvent(unsigned char e) {
-    if (e == 0) return "none";
-    if (e == 1) return "date";
-    if (e == 2) return "button";
-    if (e == 4) return "position";
+    if ((e & 0x0F) == 0) return "none";
+    if ((e & 0x0F) == 1) return "date";
+    if ((e & 0x0F) == 2) return "button";
+    if ((e & 0x0F) == 4) return "position";
     return "unknown";
 }
 String getNameOfState(unsigned char s) {
@@ -678,6 +676,7 @@ String getNameOfState(unsigned char s) {
     if (s == 1) return "moving";
     if (s == 2) return "move done";
     if (s == 4) return "pending moves";
+    return "unknown";
 }
 
 String formatNumber(long theData, unsigned char len) {

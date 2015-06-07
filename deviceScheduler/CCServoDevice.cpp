@@ -103,12 +103,12 @@ void CCServoDevice::prepareNextMove() {
     if (wayToGo < 0) {
       acceleration = - fabs(acceleration);
       velocity = - fabs(velocity);
-      countingDown = true;
+      direction = CCW;
     }
     else {
       acceleration = fabs(acceleration);
       velocity = fabs(velocity);
-      countingDown = false;
+      direction = CW;
     }
 
     if (velocity == 0) {
@@ -128,7 +128,7 @@ void CCServoDevice::prepareNextMove() {
     // wayForConstSpeed = 0 ==>
     // wayToGo / 2 = v * v / a ==> a = 2 * v * v / wayToGo
 
-    if ((countingDown && (wayForConstantSpeed > 0)) || (!countingDown && (wayForConstantSpeed < 0))) {      // is there way to go with constant speed?
+    if ((direction && (wayForConstantSpeed > 0)) || (!direction && (wayForConstantSpeed < 0))) {      // is there way to go with constant speed?
       // no constant speed drive ==> speed up the half way then slow down the other half
       wayForAcceleration = wayToGo / 2;
 

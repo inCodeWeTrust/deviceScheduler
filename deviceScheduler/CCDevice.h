@@ -25,6 +25,10 @@
 #define MOVE_DONE	0x02
 #define PENDING_MOVES	0x04
 
+// motor direction
+#define CW          false
+#define CCW         true
+
 
 #ifndef CCDEVICE
 #define CCDEVICE 1
@@ -33,6 +37,7 @@ class CCDevice
 {
 public:
     float                target, velocity, acceleration, deceleration;
+    float                defaultVelocity, defaultAcceleration, defaultDeceleration;
     
     unsigned char        startEvent, stopEvent;
     unsigned long        startTime, startDelay, timeout;
@@ -48,7 +53,7 @@ public:
     unsigned char        movePointer;
     
     signed long	         currentPosition;
-    boolean              countingDown;
+    boolean              direction;
     unsigned char        state;
     
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventMove
@@ -83,10 +88,12 @@ public:
     
     
     virtual ~CCDevice();
-    
-    unsigned char addMove(float target, float velocity, float acceleration, unsigned long startDelay);
-    unsigned char addMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay);
 
+    void defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
+    
+    unsigned char addMove(float target, float velocity = 0, float acceleration = 0, float deceleration = 0);
+    unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity = 0, float acceleration = 0, float deceleration = 0);
+    
     void setStartDateForMove(unsigned char moveIndex, unsigned long startTime);
     void setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
     void setStartEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);

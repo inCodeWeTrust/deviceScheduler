@@ -126,6 +126,7 @@ void CCStepperDevice::detachDevice() {
 
 void CCStepperDevice::prepareNextMove() {
     // this takes 812us with calculating anglePerStep
+    bool currentDirection = CW;
     unsigned long t_prepMove = micros();
     if (state & MOVING) {
         // *** current velocity ***
@@ -141,6 +142,7 @@ void CCStepperDevice::prepareNextMove() {
         else {
             currentVelocity = sqrt(2 * acceleration * (microStepsToGo - currentMicroStep) * anglePerStep / (1 << highestSteppingMode));
         }
+        
     }
     else {
         currentVelocity = 0;
@@ -168,16 +170,19 @@ void CCStepperDevice::prepareNextMove() {
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
     stopSharply = theMove[movePointer]->stopSharply;
     
+    if (velocity == 0 && defaultVelocity == 0) {
+        <#statements#>
+    }
     
     if (target < 0 || velocity < 0 || acceleration < 0) {
         target = fabs(target);
         velocity = fabs(velocity);
         acceleration = fabs(acceleration);
-        countingDown = true;
+        direction = CCW;
         digitalWrite(dir_pin, HIGH);
     }
     else {
-        countingDown = false;
+        direction = CW;
         digitalWrite(dir_pin, LOW);
     }
     
@@ -430,7 +435,7 @@ void CCStepperDevice::driveDynamic() {
         
         currentMicroStep += (1 << (highestSteppingMode - microSteppingMode));
         
-        (countingDown) ? currentPosition = -(currentMicroStep >> highestSteppingMode) * anglePerStep : currentPosition = (currentMicroStep >> highestSteppingMode) * anglePerStep;
+        (direction) ? currentPosition = -(currentMicroStep >> highestSteppingMode) * anglePerStep : currentPosition = (currentMicroStep >> highestSteppingMode) * anglePerStep;
         
         // while ramping up
         if (currentMicroStep <= microStepsForAcceleration) {
