@@ -91,8 +91,8 @@ public:
 
     void defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
     
-    unsigned char addMove(float target, float velocity = 0, float acceleration = 0, float deceleration = 0);
-    unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity = 0, float acceleration = 0, float deceleration = 0);
+    unsigned char addMove(float target, float velocity = defaultVelocity, float acceleration = defaultAcceleration, float deceleration = defaultDeceleration);
+    unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity = defaultVelocity, float acceleration = defaultAcceleration, float deceleration = defaultDeceleration);
     
     void setStartDateForMove(unsigned char moveIndex, unsigned long startTime);
     void setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);

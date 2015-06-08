@@ -90,6 +90,7 @@ unsigned char CCDeviceScheduler::addStepper(String deviceName, unsigned char dir
     
     device[countOfDevices] = new CCStepperDevice(deviceName, dir_pin, step_pin, enable_pin, highestSteppingMode, stepModeCode, microStep_0_pin, microStep_1_pin, microStep_2_pin, anglePerStep);
     
+    
     if (CCDeviceSchedulerVerbose & DEVICESCHEDULER_MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: add Stepper: device #"));
         Serial.print(countOfDevices);

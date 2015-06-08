@@ -49,6 +49,10 @@ CCDevice() {
     movePointer = 0;
     countOfMoves = 0;
     
+    defaultVelocity = 0;
+    defaultAcceleration = 0;
+    defaultDeceleration = 0;
+    
     attachDevice();
     
     if (CCStepperDevice_VERBOSE & CCStepperDevice_MEMORYDEBUG) {
@@ -170,10 +174,9 @@ void CCStepperDevice::prepareNextMove() {
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
     stopSharply = theMove[movePointer]->stopSharply;
     
-    if (velocity == 0 && defaultVelocity == 0) {
-        <#statements#>
+    if (target == 0 || velocity == 0 || acceleration == 0) {
+            return;
     }
-    
     if (target < 0 || velocity < 0 || acceleration < 0) {
         target = fabs(target);
         velocity = fabs(velocity);
@@ -214,6 +217,7 @@ void CCStepperDevice::prepareNextMove() {
     // v * v = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v = 2 * a * n * anglePerStep ==> n = v * v / (2 * a * anglePerStep)
+    /// v[DEG/65536/sec] * 65535 * v[DEG/65536/sec] * 65535 / (2 * a[DEG/65535/sec/sec] * 65535 *) 
     stepsForDeceleration = (0.5 * velocity * velocity / deceleration / anglePerStep) + 0.5;
     
     // *** steps for acceleration: ***
@@ -352,6 +356,10 @@ void CCStepperDevice::prepareNextMove() {
 }
 
 void CCStepperDevice::startMove() {
+    if (stepsToGo == 0 || velocity == 0 || acceleration == 0) {
+        stopMoving();
+    }
+    else {
     // lets start in highest stepping mode
     microSteppingMode = highestSteppingMode;
     (stepModeCode[microSteppingMode] & 1) ? digitalWrite(microStep_0_pin, HIGH) : digitalWrite(microStep_0_pin, LOW);
@@ -367,6 +375,7 @@ void CCStepperDevice::startMove() {
     currentMicroStep = 0;
     stepExpiration = 0;
     driveDynamic();
+    }
     
     if (CCStepperDevice_VERBOSE & CCStepperDevice_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));
