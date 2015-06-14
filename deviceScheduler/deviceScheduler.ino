@@ -91,7 +91,7 @@ void loop() {
     freeRam();
     
     
-    for (int n = 10; n < 40; n++) {
+    for (int n = 1; n < 20; n++) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -116,7 +116,7 @@ void loop() {
 //        scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
         //            scheduler->device[stockStepper]->setStartEventForMove(supplyRecord_01, stockStepper, supplyRecord, 320);
         scheduler->device[stockStepper]->setSwitchDateForMove(supplyRecord, 3000);
-        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(2 * 360, 240, 100.0, 50.0);
+        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(n * 360, n * 100, 100.0, 50.0);
         
         freeRam();
         /*
