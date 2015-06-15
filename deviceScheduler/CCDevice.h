@@ -1,33 +1,32 @@
 #include <Arduino.h>
 
 
-#define CCDEVICE_BASICOUTPUT         0x01
-#define CCDEVICE_MEMORYDEBUG         0x02
-#define CCDEVICE_CALCULATIONDEBUG    0x04
-#define CCDEVICE_MOVEMENTDEBUG       0x08
-
-#define CCDevice_VERBOSE CCDEVICE_BASICOUTPUT | CCDEVICE_MEMORYDEBUG | CCDEVICE_CALCULATIONDEBUG
-
 
 //  device type
-#define SERVODEVICE          1
-#define STEPPERDEVICE        2
-#define SOLENOIDDEVICE       3
+#define SERVODEVICE                     0x01
+#define STEPPERDEVICE                   0x02
+#define SOLENOIDDEVICE                  0x03
 
 // start/stopEvent:
-#define DATE            0x01
-#define BUTTON          0x02
-#define POSITION        0x04
-#define SWITCH          0x08
+#define NONE                            0x00
+#define DATE                            0x01
+#define BUTTON                          0x02
+#define POSITION                        0x04
+#define SWITCH                          0x08
 
-//  state:
-#define MOVING		0x01
-#define MOVE_DONE	0x02
-#define PENDING_MOVES	0x04
+//  device state:
+#define SLEEPING                        0x00
+#define MOVING                          0x01
+#define MOVE_DONE                       0x02
+#define PENDING_MOVES	                0x04
 
-// motor direction
-#define CW          false
-#define CCW         true
+
+
+//  verbosity:
+#define CCDEVICE_BASICOUTPUT            0x01
+
+#define CCDEVICE_VERBOSE                CCDEVICE_BASICOUTPUT
+
 
 
 #ifndef CCDEVICE
@@ -53,7 +52,7 @@ public:
     unsigned char        movePointer;
     
     signed long	         currentPosition;
-    boolean              direction;
+    boolean              directionDown;
     unsigned char        state;
     
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventMove

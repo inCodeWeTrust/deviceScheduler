@@ -12,29 +12,36 @@
 #include "CCStepperDevice.h"
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep) :
+CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep) :
 CCDevice() {
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
     this->enable_pin = enable_pin;
-    this->microStep_0_pin = microStep_0_pin;
-    this->microStep_1_pin = microStep_1_pin;
-    this->microStep_2_pin = microStep_2_pin;
+    this->numberOfMicroStepPins = numberOfMicroStepPins;
+    
+    Serial.print("microStepPins: ");
+    for (unsigned char pinIndex = 0; pinIndex <= numberOfMicroStepPins; pinIndex++) {
+        this->microStepPin[pinIndex] = microStepPin[pinIndex];
+        Serial.print(microStepPin[pinIndex]);
+        Serial.print(", ");
+    }
+    Serial.println();
+    
+    
     this->highestSteppingMode = highestSteppingMode;
     this->stepModeCode = new unsigned char[highestSteppingMode + 1];
     
     Serial.print("stepModeCodes: ");
-    for (unsigned char codeNumber = 0; codeNumber <= highestSteppingMode; codeNumber++) {
-        this->stepModeCode[codeNumber] = stepModeCode[codeNumber];
-        Serial.print(stepModeCode[codeNumber]);
+    for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
+        this->stepModeCode[codeIndex] = stepModeCode[codeIndex];
+        Serial.print(stepModeCode[codeIndex]);
         Serial.print(", ");
     }
     Serial.println();
     
     this->anglePerStep = anglePerStep;
     
-    currentMicroStep = 0;
     
     type = STEPPERDEVICE;
     state = 0;
@@ -45,9 +52,11 @@ CCDevice() {
     defaultAcceleration = 0;
     defaultDeceleration = 0;
     
+    currentMicroStep = 0;
+    
     attachDevice();
     
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_MEMORYDEBUG) {
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: setup stepperDevice "));
         Serial.print(deviceName);
         Serial.print(F(" at $"));
@@ -65,23 +74,24 @@ void CCStepperDevice::enableDevice() {
 }
 void CCStepperDevice::disableDevice() {
     digitalWrite(enable_pin, HIGH);
-    digitalWrite(microStep_0_pin, LOW);
-    digitalWrite(microStep_1_pin, LOW);
-    digitalWrite(microStep_2_pin, LOW);
+    
+    setMicroStepPins(0);
+    
 }
 
 void CCStepperDevice::attachDevice() {
     pinMode(dir_pin, OUTPUT);
+    
     pinMode(step_pin, OUTPUT);
+    
     pinMode(enable_pin, OUTPUT);
-    
-    pinMode(microStep_0_pin, OUTPUT);
-    pinMode(microStep_1_pin, OUTPUT);
-    pinMode(microStep_2_pin, OUTPUT);
-    
     digitalWrite(enable_pin, HIGH);
     
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_BASICOUTPUT) {
+    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+        pinMode(microStepPin[pinIndex], OUTPUT);
+    }
+    
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: device "));
         Serial.print(deviceName);
         Serial.print(F(" attached: dir_pin: "));
@@ -93,8 +103,8 @@ void CCStepperDevice::attachDevice() {
         Serial.print(F(" steppingModes: "));
         Serial.print(highestSteppingMode + 1);
         Serial.print("stepModeCodes: ");
-        for (unsigned char codeNumber = 0; codeNumber <= highestSteppingMode; codeNumber++) {
-            Serial.print(stepModeCode[codeNumber]);
+        for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
+            Serial.print(stepModeCode[codeIndex]);
             Serial.print(", ");
         }
         Serial.println();
@@ -107,11 +117,11 @@ void CCStepperDevice::detachDevice() {
     pinMode(step_pin, INPUT);
     pinMode(enable_pin, INPUT);
     
-    pinMode(microStep_0_pin, INPUT);
-    pinMode(microStep_1_pin, INPUT);
-    pinMode(microStep_2_pin, INPUT);
+    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+        pinMode(microStepPin[pinIndex], INPUT);
+    }
     
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_BASICOUTPUT) {
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: device "));
         Serial.print(deviceName);
         Serial.println(F(" detached"));
@@ -122,9 +132,11 @@ void CCStepperDevice::detachDevice() {
 
 void CCStepperDevice::prepareNextMove() {
     // this takes 812us with calculating anglePerStep
-    bool currentDirection = CW;
     unsigned long t_prepMove = micros();
+    
+    bool currentDirectionDown = false;
     if (state & MOVING) {
+        currentDirectionDown = directionDown;
         // *** current velocity ***
         if (currentMicroStep < microStepsForAcceleration) {
             // v * v = 2 * a * gamma
@@ -167,17 +179,17 @@ void CCStepperDevice::prepareNextMove() {
     stopSharply = theMove[movePointer]->stopSharply;
     
     if (target == 0 || velocity == 0 || acceleration == 0) {
-            return;
+        return;
     }
     if (target < 0 || velocity < 0 || acceleration < 0) {
         target = fabs(target);
         velocity = fabs(velocity);
         acceleration = fabs(acceleration);
-        direction = CCW;
+        directionDown = true;
         digitalWrite(dir_pin, HIGH);
     }
     else {
-        direction = CW;
+        directionDown = false;
         digitalWrite(dir_pin, LOW);
     }
     
@@ -200,16 +212,16 @@ void CCStepperDevice::prepareNextMove() {
     
     
     stepsToGo = (float)target / anglePerStep;
-// v[steps/sec] = v[angle/sec] * stepPerAngle = v[angle/sec] / anglePerStep
-//    velocity /= anglePerStep;
-//    acceleration /= anglePerStep;
-//    deceleration /= anglePerStep;
+    // v[steps/sec] = v[angle/sec] * stepPerAngle = v[angle/sec] / anglePerStep
+    //    velocity /= anglePerStep;
+    //    acceleration /= anglePerStep;
+    //    deceleration /= anglePerStep;
     
     // *** steps for deceleration: ***
     // v * v = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v = 2 * a * n * anglePerStep ==> n = v * v / (2 * a * anglePerStep)
-    /// v[DEG/65536/sec] * 65535 * v[DEG/65536/sec] * 65535 / (2 * a[DEG/65535/sec/sec] * 65535 *) 
+    /// v[DEG/65536/sec] * 65535 * v[DEG/65536/sec] * 65535 / (2 * a[DEG/65535/sec/sec] * 65535 *)
     stepsForDeceleration = (0.5 * velocity * velocity / deceleration / anglePerStep) + 0.5;
     
     // *** steps for acceleration: ***
@@ -251,12 +263,12 @@ void CCStepperDevice::prepareNextMove() {
         // *** recalculate a: ***
         // v * v = 2 * a * n * anglePerStep ==> a = v * v / (2 * n * anglePerStep)
         deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-
+        
         // *** recalculate a: ***
         // v * v - v0 * v0 = 2 * a * gamma ==> a = (v * v - v0 * v0) / 2 * gamma = (v * v - v0 * v0) / (2 * n * anglePerStep)
         acceleration = 0.5 * (velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
     }
-
+    
     // *** time for acceleration: ***
     // a = v0 / t0; a = v / t ==> t0 = v0 / a; t = v / a
     // tx = t - t0; ==> tx = v / a - v0 / a = (v - v0) / a
@@ -291,7 +303,7 @@ void CCStepperDevice::prepareNextMove() {
         currentMicroStep = 1;
         stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currentVelocity * currentVelocity + currentMicroStep * c0_acc)) / acceleration;
         
-        if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
+        if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
             //        Serial.print(F("[CCStepperDevice]: "));
             //        Serial.print(deviceName);
             Serial.print(F("  ["));
@@ -302,47 +314,47 @@ void CCStepperDevice::prepareNextMove() {
             Serial.println((unsigned long)stepExpiration + lastStepTime);
         }
     }
-
-
-
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_MEMORYDEBUG) {
-//        Serial.print(F("[CCStepperDevice]: "));
-//        Serial.print(deviceName);
-//        Serial.print(F(": stepsToGo at $"));
-//        Serial.print((long)&stepsToGo, HEX);
-//        Serial.print(F(", velocity at $"));
-//        Serial.print((long)&velocity, HEX);
-//        Serial.print(F(", acceleration at $"));
-//        Serial.println((long)&acceleration, HEX);
+    
+    
+    
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MEMORYDEBUG) {
+        //        Serial.print(F("[CCStepperDevice]: "));
+        //        Serial.print(deviceName);
+        //        Serial.print(F(": stepsToGo at $"));
+        //        Serial.print((long)&stepsToGo, HEX);
+        //        Serial.print(F(", velocity at $"));
+        //        Serial.print((long)&velocity, HEX);
+        //        Serial.print(F(", acceleration at $"));
+        //        Serial.println((long)&acceleration, HEX);
     }
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_CALCULATIONDEBUG) {
-//        Serial.print(F("[CCStepperDevice]: "));
-//        Serial.print(deviceName);
-//        Serial.print(F(": prepare move "));
-//        Serial.print(movePointer);
-//        Serial.print(F(": "));
-//        Serial.print(F("target: "));
-//        Serial.print(target);
-//        Serial.print(F(", stepsToGo: "));
-//        Serial.print(stepsToGo);
-//        Serial.print(F(" ("));
-//        Serial.print(microStepsToGo);
-//        Serial.print(F("), speed: "));
-//        Serial.print(velocity);
-//        Serial.print(F(", acceleration: "));
-//        Serial.print(acceleration);
-//        Serial.print(F(", deceleration: "));
-//        Serial.print(deceleration);
-//        Serial.print(F(", stepsForAcceleration: "));
-//        Serial.print(stepsForAcceleration);
-//        Serial.print(F(" ("));
-//        Serial.print(microStepsForAcceleration);
-//        Serial.print(F("), stepsForDeceleration: "));
-//        Serial.print(stepsForDeceleration);
-//        Serial.print(F(" ("));
-//        Serial.print(microStepsToGo - microStepsForAccAndConstSpeed);
-//        Serial.print(F("), timeForAcceleration: "));
-//        Serial.println(timeForAcceleration);
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_CALCULATIONDEBUG) {
+        //        Serial.print(F("[CCStepperDevice]: "));
+        //        Serial.print(deviceName);
+        //        Serial.print(F(": prepare move "));
+        //        Serial.print(movePointer);
+        //        Serial.print(F(": "));
+        //        Serial.print(F("target: "));
+        //        Serial.print(target);
+        //        Serial.print(F(", stepsToGo: "));
+        //        Serial.print(stepsToGo);
+        //        Serial.print(F(" ("));
+        //        Serial.print(microStepsToGo);
+        //        Serial.print(F("), speed: "));
+        //        Serial.print(velocity);
+        //        Serial.print(F(", acceleration: "));
+        //        Serial.print(acceleration);
+        //        Serial.print(F(", deceleration: "));
+        //        Serial.print(deceleration);
+        //        Serial.print(F(", stepsForAcceleration: "));
+        //        Serial.print(stepsForAcceleration);
+        //        Serial.print(F(" ("));
+        //        Serial.print(microStepsForAcceleration);
+        //        Serial.print(F("), stepsForDeceleration: "));
+        //        Serial.print(stepsForDeceleration);
+        //        Serial.print(F(" ("));
+        //        Serial.print(microStepsToGo - microStepsForAccAndConstSpeed);
+        //        Serial.print(F("), timeForAcceleration: "));
+        //        Serial.println(timeForAcceleration);
     }
     Serial.println(micros() - t_prepMove);
 }
@@ -352,24 +364,22 @@ void CCStepperDevice::startMove() {
         stopMoving();
     }
     else {
-    // lets start in highest stepping mode
-    microSteppingMode = highestSteppingMode;
-    (stepModeCode[microSteppingMode] & 1) ? digitalWrite(microStep_0_pin, HIGH) : digitalWrite(microStep_0_pin, LOW);
-    (stepModeCode[microSteppingMode] & 2) ? digitalWrite(microStep_1_pin, HIGH) : digitalWrite(microStep_1_pin, LOW);
-    (stepModeCode[microSteppingMode] & 4) ? digitalWrite(microStep_2_pin, HIGH) : digitalWrite(microStep_2_pin, LOW);
-    
-    enableDevice();
-    
-    
-    state |= MOVING;
-    t0 = micros() & 0x7fffffff;
-    
-    currentMicroStep = 0;
-    stepExpiration = 0;
-    driveDynamic();
+        // lets start in highest stepping mode
+        microSteppingMode = highestSteppingMode;
+        setMicroStepPins();
+        
+        enableDevice();
+        
+        
+        state |= MOVING;
+        currentMicroStep = 0;
+        stepExpiration = 0;
+        t0 = micros() & 0x7fffffff;
+        
+        driveDynamic();
     }
     
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_BASICOUTPUT) {
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(", move: "));
@@ -405,7 +415,7 @@ void CCStepperDevice::finishMove() {
     
     disableDevice();
     
-    if (CCStepperDevice_VERBOSE & CCStepperDevice_BASICOUTPUT) {
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop: move "));
@@ -416,7 +426,7 @@ void CCStepperDevice::finishMove() {
 void CCStepperDevice::driveDynamic() {
     long now = micros() & 0x7fffffff;
     if (t0 > now) t0 -= 0x80000000;
-
+    
     elapsedTime = now - t0;
     
     signed long timeDif = stepExpiration - elapsedTime;
@@ -436,7 +446,7 @@ void CCStepperDevice::driveDynamic() {
         
         currentMicroStep += (1 << (highestSteppingMode - microSteppingMode));
         
-        (direction) ? currentPosition = -(currentMicroStep >> highestSteppingMode) * anglePerStep : currentPosition = (currentMicroStep >> highestSteppingMode) * anglePerStep;
+        (directionDown) ? currentPosition = -(currentMicroStep >> highestSteppingMode) * anglePerStep : currentPosition = (currentMicroStep >> highestSteppingMode) * anglePerStep;
         
         // while ramping up
         if (currentMicroStep <= microStepsForAcceleration) {
@@ -445,7 +455,7 @@ void CCStepperDevice::driveDynamic() {
             
             if (stepExpiration - elapsedTime < STEPPINGPERIOD_TO_KICK_UP) kickUp();
             
-            if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
+            if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
                 //        Serial.print(deviceName);
                 Serial.print((unsigned long)elapsedTime);
@@ -461,8 +471,8 @@ void CCStepperDevice::driveDynamic() {
         if (currentMicroStep < microStepsForAccAndConstSpeed) {
             lastStepTime = stepExpiration;
             stepExpiration = timeForAcceleration + (currentMicroStep - microStepsForAcceleration) * 1000000.0 * c1;
-        
-            if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
+            
+            if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
                 //        Serial.print(deviceName);
                 Serial.print(elapsedTime);
@@ -481,7 +491,7 @@ void CCStepperDevice::driveDynamic() {
             
             if (stepExpiration - elapsedTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
             
-            if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
+            if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
                 //        Serial.print(deviceName);
                 Serial.print(elapsedTime);
@@ -497,7 +507,7 @@ void CCStepperDevice::driveDynamic() {
         if (currentMicroStep == microStepsToGo) {
             stepExpiration = -velocity / deceleration;
             
-            if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
+            if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
                 //        Serial.print(deviceName);
                 Serial.print(elapsedTime);
@@ -521,24 +531,32 @@ void CCStepperDevice::kickUp() {
         if (!(currentMicroStep & 0x0F)) {
             microSteppingMode--;
             
-            (stepModeCode[microSteppingMode] & 1) ? digitalWrite(microStep_0_pin, HIGH) : digitalWrite(microStep_0_pin, LOW);
-            (stepModeCode[microSteppingMode] & 2) ? digitalWrite(microStep_1_pin, HIGH) : digitalWrite(microStep_1_pin, LOW);
-            (stepModeCode[microSteppingMode] & 4) ? digitalWrite(microStep_2_pin, HIGH) : digitalWrite(microStep_2_pin, LOW);
+            setMicroStepPins();
+            
         }
     }
 }
+
 void CCStepperDevice::kickDown() {
     if (microSteppingMode < highestSteppingMode) {
         if ((currentMicroStep & 0x0F) == 0) {
             microSteppingMode++;
             
-            (stepModeCode[microSteppingMode] & 1) ? digitalWrite(microStep_0_pin, HIGH) : digitalWrite(microStep_0_pin, LOW);
-            (stepModeCode[microSteppingMode] & 2) ? digitalWrite(microStep_1_pin, HIGH) : digitalWrite(microStep_1_pin, LOW);
-            (stepModeCode[microSteppingMode] & 4) ? digitalWrite(microStep_2_pin, HIGH) : digitalWrite(microStep_2_pin, LOW);
+            setMicroStepPins();
+            
         }
     }
 }
 
-
+void CCStepperDevice::setMicroStepPins() {
+    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+        digitalWrite(microStepPin[pinIndex], stepModeCode[microSteppingMode] & (1 << pinIndex));
+    }
+}
+void CCStepperDevice::setMicroStepPins(unsigned char data) {
+    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+        digitalWrite(microStepPin[pinIndex], data & (1 << pinIndex));
+    }
+}
 
 

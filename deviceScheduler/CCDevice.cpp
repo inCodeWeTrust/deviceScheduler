@@ -37,7 +37,7 @@ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startD
 unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
     theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
     
-    if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {
+    if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCDevice]: add Move for "));
         Serial.print(deviceName);
         Serial.print(F(", target: "));
@@ -109,20 +109,20 @@ void CCDevice::setStopEventForMove(unsigned char moveIndex, unsigned char stopTr
 }
 
 void CCDevice::deleteMoves() {
-  if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {
+  if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
     Serial.print(F("[CCDevice]: delete moves of "));
     Serial.print(deviceName);
     Serial.print(F(": move "));
   }
   for (int j = countOfMoves - 1; j >= 0; j--) {
-    if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {
+    if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
       Serial.print(F(" #"));
       Serial.print(j);
     }
     delete theMove[j];
     theMove[j] = NULL;
   }
-  if (CCDevice_VERBOSE & CCDEVICE_MEMORYDEBUG) {
+  if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
     Serial.println();
   }
   state = 0;

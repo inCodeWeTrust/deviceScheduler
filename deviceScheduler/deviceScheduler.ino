@@ -57,9 +57,9 @@ int freeRam ();
 
 
 // ------------- debug --------------------------------------------------------------------------------------------------
-//static unsigned char CCDeviceSchedulerVerbose = SHOW_TAB_VIEW DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
-//static unsigned char CCDeviceSchedulerVerbose = SHOW_TASK_VIEW | DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
-//static unsigned char CCDeviceSchedulerVerbose = 0;
+//static unsigned char DEVICESCHEDULER_VERBOSE = SHOW_TAB_VIEW DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
+//static unsigned char DEVICESCHEDULER_VERBOSE = SHOW_TASK_VIEW | DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
+//static unsigned char DEVICESCHEDULER_VERBOSE = 0;
 
 // ------------- globals --------------------------------------------------------------------------------------------------
 CCDeviceScheduler *scheduler;
@@ -85,7 +85,7 @@ void loop() {
     freeRam();
     unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_PIN, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
     freeRam();
-    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEP_0_PIN, STEPPER_STOCK_MICROSTEP_1_PIN, STEPPER_STOCK_MICROSTEP_2_PIN, STEPPER_STOCK_ANGLE_PER_STEP);
+    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_ANGLE_PER_STEP);
     freeRam();
 //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
     freeRam();

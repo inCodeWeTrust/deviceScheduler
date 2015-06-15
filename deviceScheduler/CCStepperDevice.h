@@ -5,15 +5,14 @@
 
 #include "CCDevice.h"
 
-#define CCStepperDevice_BASICOUTPUT         0x01
-#define CCStepperDevice_MEMORYDEBUG         0x02
-#define CCStepperDevice_CALCULATIONDEBUG    0x04
-#define CCStepperDevice_MOVEMENTDEBUG       0x08
 
-//static unsigned char CCStepperDevice_VERBOSE = 0;
-#define CCStepperDevice_VERBOSE             0x07
+//  verbosity:
+#define CCSTEPPERDEVICE_BASICOUTPUT         0x01
+#define CCSTEPPERDEVICE_MEMORYDEBUG         0x02
+#define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
+#define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-//#define CCStepperDevice_VERBOSE CCStepperDevice_BASICOUTPUT | CCStepperDevice_MEMORYDEBUG | CCStepperDevice_CALCULATIONDEBUG
+#define CCSTEPPERDEVICE_VERBOSE             CCSTEPPERDEVICE_BASICOUTPUT | CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG
 
 
 
@@ -33,16 +32,21 @@ class CCStepperDevice : public CCDevice {
     
     void                 kickDown();
     void                 kickUp();
+    void                 setMicroStepPins();
+    void                 setMicroStepPins(unsigned char data);
+
     
 public:
     
-    unsigned char        dir_pin, step_pin, enable_pin, microStep_0_pin, microStep_1_pin, microStep_2_pin;
+    unsigned char        dir_pin, step_pin, enable_pin;
+    unsigned char        numberOfMicroStepPins;
+    unsigned char        *microStepPin;
     unsigned char        highestSteppingMode;
     unsigned char        *stepModeCode;
     float                anglePerStep;
     
     
-    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep);
+    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep);
     ~CCStepperDevice();
     
     

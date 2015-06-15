@@ -707,8 +707,8 @@
 		A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; path = deviceScheduler.ino; sourceTree = "<group>"; };
 		A45F727B1B1C71EB00B5B7E0 /* CCDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
 		A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
-		A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeviceScheduler.cpp; sourceTree = "<group>"; };
-		A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceScheduler.h; sourceTree = "<group>"; };
+		A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCDeviceScheduler.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCDeviceScheduler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCServoDevice.cpp; sourceTree = "<group>"; };
 		A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCServoDevice.h; sourceTree = "<group>"; };
 		A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCStepperDevice.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
