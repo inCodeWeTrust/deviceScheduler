@@ -124,6 +124,7 @@ void CCDevice::deleteMoves() {
   }
   if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
     Serial.println();
+    Serial.println();
   }
   state = 0;
   movePointer = 0;

@@ -34,16 +34,24 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int min
     defaultDeceleration = 0;
     
     
-    attachDevice();
-    
     if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
-        Serial.print(F("[CCServoDevice]: setup servoDevice "));
+        Serial.print(F("[CCServoDevice]: setup "));
         Serial.print(deviceName);
+        Serial.print(F(", servo_pin: "));
+        Serial.print(servo_pin);
+        Serial.print(F(", park: "));
+        Serial.print(parkPosition);
+        Serial.print(F(", current: "));
+        Serial.print(currentPosition);
         Serial.print(F(", at $"));
         Serial.print((long)this, HEX);
         Serial.print(F(", Servo at $"));
         Serial.println((long)&theServo, HEX);
     }
+
+    
+    attachDevice();
+    
 }
 
 

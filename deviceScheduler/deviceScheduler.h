@@ -22,14 +22,6 @@
 
 
 
-#define DEVICESCHEDULER_BASICPUTPUT       0x01
-#define DEVICESCHEDULER_MEMORYDEBUG       0x02
-
-#define SHOW_TASK_VIEW                   0x10
-#define SHOW_TAB_VIEW                    0x20
-
-#define COUNT_OF_DEVICES_MAX                3
-#define COUNT_OF_MOVES_PER_DEVICE_MAX       4
 
 
 
@@ -40,7 +32,7 @@
 
 //  ################## Hardware #############################################################################
 
-#define STEPPER_STOCK_NAME       "stockStepper"
+#define STEPPER_STOCK_NAME                  "stockStepper"
 
 #define STEPPER_STOCK_DIR_PIN               5
 #define STEPPER_STOCK_STEP_PIN              6
@@ -50,38 +42,37 @@
 #define STEPPER_STOCK_HIGHEST_STEPPINGMODE  4        
 #define STEPPER_STOCK_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
 #define STEPPER_STOCK_ANGLE_PER_STEP        0.9
-//#define STEPPER_STOCK_ANGLE_PER_STEP        7.5
 #define STEPPER_STOCK_ACC_MAX               200
 
 
 
-#define SERVO_LIFT_NAME             "liftServo"
+#define SERVO_LIFT_NAME                     "liftServo"
 
-#define SERVO_LIFT_PIN                     10
-#define SERVO_LIFT_MIN_POSITION		  800
-#define SERVO_LIFT_MAX_POSITION		 2400
-
-
-
-#define SERVO_TURN_NAME             "turnServo"
-
-#define SERVO_TURN_PIN                     11
-#define SERVO_TURN_MIN_POSITION		  800
-#define SERVO_TURN_MAX_POSITION		 2400
+#define SERVO_LIFT_PIN                      10
+#define SERVO_LIFT_MIN_POSITION             800
+#define SERVO_LIFT_MAX_POSITION             2400
 
 
-#define SOLENOID_VACUUM_NAME   "vacuumSolenoid"
+
+#define SERVO_TURN_NAME                     "turnServo"
+
+#define SERVO_TURN_PIN                      11
+#define SERVO_TURN_MIN_POSITION             800
+#define SERVO_TURN_MAX_POSITION             2400
+
+
+#define SOLENOID_VACUUM_NAME                "vacuumSolenoid"
 #define SOLENOID_VACUUM_PIN                 9
-#define SOLENOID_ON                      HIGH
-#define SOLENOID_OFF                      LOW
+#define SOLENOID_ON                         HIGH
+#define SOLENOID_OFF                        LOW
 
 
-#define START_BUTTON                       A5
-#define LOADING_BUTTON                     A1
-#define RECORD_AVAILABLE_BUTTON            A0
+#define START_BUTTON                        A5
+#define LOADING_BUTTON                      A1
+#define RECORD_AVAILABLE_BUTTON             A0
 
-#define I_AM_LATE_LED                      12
-#define SPEED_PIN                          A2
+#define I_AM_LATE_LED                       12
+#define SPEED_PIN                           A2
 
 
 //  ################## MOVE DATA #############################################################################

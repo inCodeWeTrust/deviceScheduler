@@ -57,8 +57,8 @@ int freeRam ();
 
 
 // ------------- debug --------------------------------------------------------------------------------------------------
-//static unsigned char DEVICESCHEDULER_VERBOSE = SHOW_TAB_VIEW DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
-//static unsigned char DEVICESCHEDULER_VERBOSE = SHOW_TASK_VIEW | DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
+//static unsigned char DEVICESCHEDULER_VERBOSE = DEVICESCHEDULER_SHOW_TAB_VIEW DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
+//static unsigned char DEVICESCHEDULER_VERBOSE = DEVICESCHEDULER_SHOW_TASK_VIEW | DEVICESCHEDULER_BASICPUTPUT | DEVICESCHEDULER_MEMORYDEBUG;
 //static unsigned char DEVICESCHEDULER_VERBOSE = 0;
 
 // ------------- globals --------------------------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void loop() {
 //        scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
         //            scheduler->device[stockStepper]->setStartEventForMove(supplyRecord_01, stockStepper, supplyRecord, 320);
         scheduler->device[stockStepper]->setSwitchDateForMove(supplyRecord, 3000);
-        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(n * 360, n * 100, 100.0, 50.0);
+        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(n * 720, n * 100, 100.0, 50.0);
         
         freeRam();
         /*

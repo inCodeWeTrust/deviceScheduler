@@ -12,33 +12,25 @@
 #include "CCStepperDevice.h"
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep) :
-CCDevice() {
+CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep) : CCDevice() {
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
     this->enable_pin = enable_pin;
+
     this->numberOfMicroStepPins = numberOfMicroStepPins;
+    this->microStepPin = new unsigned char[numberOfMicroStepPins + 1];
     
-    Serial.print("microStepPins: ");
-    for (unsigned char pinIndex = 0; pinIndex <= numberOfMicroStepPins; pinIndex++) {
+    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
         this->microStepPin[pinIndex] = microStepPin[pinIndex];
-        Serial.print(microStepPin[pinIndex]);
-        Serial.print(", ");
     }
-    Serial.println();
-    
     
     this->highestSteppingMode = highestSteppingMode;
     this->stepModeCode = new unsigned char[highestSteppingMode + 1];
     
-    Serial.print("stepModeCodes: ");
     for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
         this->stepModeCode[codeIndex] = stepModeCode[codeIndex];
-        Serial.print(stepModeCode[codeIndex]);
-        Serial.print(", ");
     }
-    Serial.println();
     
     this->anglePerStep = anglePerStep;
     
@@ -57,10 +49,32 @@ CCDevice() {
     attachDevice();
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice]: setup stepperDevice "));
+        Serial.print(F("[CCStepperDevice]: setup "));
         Serial.print(deviceName);
-        Serial.print(F(" at $"));
-        Serial.println((long)this, HEX);
+        Serial.print(F(", dir_pin: "));
+        Serial.print(dir_pin);
+        Serial.print(F(", step_pin: "));
+        Serial.print(step_pin);
+        Serial.print(F(", enable_pin: "));
+        Serial.print(enable_pin);
+        Serial.print(F(", numberOfMicroStepPins: "));
+        Serial.print(numberOfMicroStepPins);
+        Serial.print(F(", pins: "));
+        for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+            Serial.print(microStepPin[pinIndex]);
+            Serial.print(", ");
+        }
+        Serial.print(F("steppingModes: "));
+        Serial.print(highestSteppingMode + 1);
+        Serial.print(F(", stepModeCodes: "));
+        for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
+            Serial.print(stepModeCode[codeIndex]);
+            Serial.print(", ");
+        }
+        Serial.print(F("anglePerStep: "));
+        Serial.print(anglePerStep);
+        Serial.print(F(", at $"));
+        Serial.println((long) this, HEX);
     }
 }
 
@@ -92,22 +106,8 @@ void CCStepperDevice::attachDevice() {
     }
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice]: device "));
-        Serial.print(deviceName);
-        Serial.print(F(" attached: dir_pin: "));
-        Serial.print(dir_pin);
-        Serial.print(F(", step_pin: "));
-        Serial.print(step_pin);
-        Serial.print(F(", enable_pin: "));
-        Serial.print(enable_pin);
-        Serial.print(F(" steppingModes: "));
-        Serial.print(highestSteppingMode + 1);
-        Serial.print("stepModeCodes: ");
-        for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
-            Serial.print(stepModeCode[codeIndex]);
-            Serial.print(", ");
-        }
-        Serial.println();
+        Serial.print(F("[CCStepperDevice]: attach device "));
+        Serial.println(deviceName);
     }
 }
 void CCStepperDevice::detachDevice() {
