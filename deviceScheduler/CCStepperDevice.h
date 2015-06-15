@@ -24,16 +24,15 @@ class CCStepperDevice : public CCDevice {
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
     unsigned long        timeForAcceleration, timeForAccAndConstSpeed;
     unsigned long        microStepsToGo, microStepsForAcceleration, microStepsForAccAndConstSpeed;
-    signed long          t0, t0_old;
+    signed long          t0;
     unsigned long        stepExpiration, elapsedTime, lastStepTime;
     float                c0_acc, c0_dec, c1;
     unsigned char        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
     unsigned long        currentMicroStep;
-    bool                 lastStep;
+    float                currentVelocity;
     
-    void calculateSteppingValues();
-    void kickDown();
-    void kickUp();
+    void                 kickDown();
+    void                 kickUp();
     
 public:
     

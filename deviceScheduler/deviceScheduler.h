@@ -25,14 +25,17 @@
 #define DEVICESCHEDULER_BASICPUTPUT       0x01
 #define DEVICESCHEDULER_MEMORYDEBUG       0x02
 
-#define SHOW_TASK_VIEW                      0x10
-#define SHOW_TAB_VIEW                       0x20
-
-#define STEPPINGPERIOD_MIN                400
-
+#define SHOW_TASK_VIEW                   0x10
+#define SHOW_TAB_VIEW                    0x20
 
 #define COUNT_OF_DEVICES_MAX                3
 #define COUNT_OF_MOVES_PER_DEVICE_MAX       4
+
+
+
+#define STEPPINGPERIOD_TO_KICK_UP         400
+#define STEPPINGPERIOD_TO_KICK_DOWN       600
+
 
 
 //  ################## Hardware #############################################################################

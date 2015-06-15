@@ -11,14 +11,6 @@
 
 #include "CCStepperDevice.h"
 
-float deceleration, currentVelocity;
-
-unsigned long steppingPeriod_small = 400;
-unsigned long steppingPeriod_big =   600;
-//char steppingMode[] = STEPPER_STOCK_STEPPINGMODES;
-unsigned long lastStep;
-unsigned long currentMicroStep;
-
 
 CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char microStep_0_pin, unsigned char microStep_1_pin, unsigned char microStep_2_pin, float anglePerStep) :
 CCDevice() {
@@ -451,7 +443,7 @@ void CCStepperDevice::driveDynamic() {
             lastStepTime = stepExpiration;
             stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currentVelocity * currentVelocity + currentMicroStep * c0_acc)) / acceleration;
             
-            if (stepExpiration - elapsedTime < steppingPeriod_small) kickUp();
+            if (stepExpiration - elapsedTime < STEPPINGPERIOD_TO_KICK_UP) kickUp();
             
             if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
@@ -487,7 +479,7 @@ void CCStepperDevice::driveDynamic() {
             lastStepTime = stepExpiration;
             stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + velocity * velocity) - velocity) * 1000000.0 / deceleration;
             
-            if (stepExpiration - elapsedTime > steppingPeriod_big) kickDown();
+            if (stepExpiration - elapsedTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
             
             if (CCStepperDevice_VERBOSE & CCStepperDevice_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
