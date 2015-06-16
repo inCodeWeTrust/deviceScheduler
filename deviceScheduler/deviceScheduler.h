@@ -23,7 +23,7 @@
 
 
 
-
+#define VERBOSE_BUTTON                      A5
 
 #define STEPPINGPERIOD_TO_KICK_UP         400
 #define STEPPINGPERIOD_TO_KICK_DOWN       600
@@ -39,7 +39,7 @@
 #define STEPPER_STOCK_ENABLE_PIN            7
 #define STEPPER_STOCK_MICROSTEPPINS         "2, 3, 4"
 
-#define STEPPER_STOCK_HIGHEST_STEPPINGMODE  4        
+#define STEPPER_STOCK_HIGHEST_STEPPINGMODE  0        
 #define STEPPER_STOCK_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
 #define STEPPER_STOCK_ANGLE_PER_STEP        0.9
 #define STEPPER_STOCK_ACC_MAX               200
@@ -67,7 +67,7 @@
 #define SOLENOID_OFF                        LOW
 
 
-#define START_BUTTON                        A5
+#define START_BUTTON                        A4
 #define LOADING_BUTTON                      A1
 #define RECORD_AVAILABLE_BUTTON             A0
 

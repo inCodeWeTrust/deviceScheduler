@@ -12,7 +12,7 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             (CCSTEPPERDEVICE_BASICOUTPUT | CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG)
+#define CCSTEPPERDEVICE_VERBOSE             (CCSTEPPERDEVICE_BASICOUTPUT | CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG | CCSTEPPERDEVICE_MOVEMENTDEBUG)
 
 
 
@@ -22,13 +22,14 @@ class CCStepperDevice : public CCDevice {
     signed long          stepsToGo;
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
     unsigned long        timeForAcceleration, timeForAccAndConstSpeed;
-    unsigned long        microStepsToGo, microStepsForAcceleration, microStepsForAccAndConstSpeed;
+    unsigned long        microStepsToGo, microStepsForAcceleration, microStepsForAccAndConstSpeed, microStepsTillZero;
     signed long          t0;
     unsigned long        stepExpiration, elapsedTime, lastStepTime;
     float                c0_acc, c0_dec, c1;
     unsigned char        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
     unsigned long        currentMicroStep;
     float                currentVelocity;
+    bool                 changeDirection, targetDirectionDown;
     
     void                 kickDown();
     void                 kickUp();

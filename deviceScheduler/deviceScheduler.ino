@@ -107,17 +107,47 @@ void loop() {
         int theValue = analogRead(A2) / 2;
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
 //        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove((long)n * n / 80, n, 100, 103);
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(12 * 360, 40, 50.0, 50.0);
+
+        
+        
+//        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
+//        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
+//
+//        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
+//        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord1, 10000);
+
+        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(2 * 360, 100, 50.0, 50.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord2, 0);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, 300);
+        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(2 * 360, 200, 50.0, 50.0);
+
+        unsigned char supplyRecord4 = scheduler->device[stockStepper]->addMove(-2 * 360, 100, 50.0, 50.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord4, 10000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord4, stockStepper, supplyRecord4, 300);
+        unsigned char supplyRecord5 = scheduler->device[stockStepper]->addMove(-2 * 360, 200, 50.0, 50.0);
+        
+/*
+        unsigned char supplyRecord6 = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord6, 20000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord6, stockStepper, supplyRecord6, 500);
+        unsigned char supplyRecord7 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
+
+        unsigned char supplyRecord8 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord8, 30000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord8, stockStepper, supplyRecord8, 500);
+        unsigned char supplyRecord9 = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
+  */
+        
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(320, 400, 0.4, 103);
         //    unsigned char supplyRecord_01 = scheduler->device[stockStepper]->addMove(320, 400, 1.4, 103);
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(100UL * 360UL, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 2103);
         //    //      scheduler->device[stockStepper]->setStartButtonForMove(supplyRecord, START_BUTTON, LOW);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
+//        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
 //        scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
         //            scheduler->device[stockStepper]->setStartEventForMove(supplyRecord_01, stockStepper, supplyRecord, 320);
-        scheduler->device[stockStepper]->setSwitchDateForMove(supplyRecord, 3000);
-        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(n * 720, n * 100, 100.0, 50.0);
-        
+//        scheduler->device[stockStepper]->setSwitchDateForMove(supplyRecord, 3000);
+//        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(n * 720, n * 100, 100.0, 50.0);
+//        
         freeRam();
         /*
          //  turn grappler to stock: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
