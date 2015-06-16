@@ -13,6 +13,7 @@
 
 
 CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep) : CCDevice() {
+    
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
@@ -46,8 +47,6 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsig
     
     currentMicroStep = 0;
     
-    attachDevice();
-    
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: setup "));
         Serial.print(deviceName);
@@ -76,6 +75,9 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsig
         Serial.print(F(", at $"));
         Serial.println((long) this, HEX);
     }
+    
+    attachDevice();
+    
 }
 
 CCStepperDevice::~CCStepperDevice() {
@@ -88,9 +90,7 @@ void CCStepperDevice::enableDevice() {
 }
 void CCStepperDevice::disableDevice() {
     digitalWrite(enable_pin, HIGH);
-    
     setMicroStepPins(0);
-    
 }
 
 void CCStepperDevice::attachDevice() {
@@ -106,8 +106,9 @@ void CCStepperDevice::attachDevice() {
     }
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice]: attach device "));
-        Serial.println(deviceName);
+        Serial.print(F("[CCStepperDevice]: "));
+        Serial.print(deviceName);
+        Serial.println(F(" attached"));
     }
 }
 void CCStepperDevice::detachDevice() {
@@ -135,6 +136,7 @@ void CCStepperDevice::prepareNextMove() {
     unsigned long t_prepMove = micros();
     
     bool currentDirectionDown = false;
+    bool changeDirection = false;
     if (state & MOVING) {
         currentDirectionDown = directionDown;
         // *** current velocity ***
@@ -185,12 +187,27 @@ void CCStepperDevice::prepareNextMove() {
         target = fabs(target);
         velocity = fabs(velocity);
         acceleration = fabs(acceleration);
-        directionDown = true;
-        digitalWrite(dir_pin, HIGH);
+        
+        if (state & MOVING) {
+            if (!currentDirectionDown) {
+                changeDirection = true;
+            }
+        }
+        else {
+            directionDown = true;
+            digitalWrite(dir_pin, HIGH);
+        }
     }
     else {
-        directionDown = false;
-        digitalWrite(dir_pin, LOW);
+        if (state & MOVING) {
+            if (currentDirectionDown) {
+                changeDirection = true;
+            }
+        }
+        else {
+            directionDown = false;
+            digitalWrite(dir_pin, LOW);
+        }
     }
     
     if (velocity == 0) {
@@ -285,6 +302,8 @@ void CCStepperDevice::prepareNextMove() {
     // 2 * a * anglePerStep / microStepsPerSteps = constant = c0_acc
     c0_acc = 2.0 * acceleration * anglePerStep / (1 << highestSteppingMode);
     c0_dec = 2.0 * deceleration * anglePerStep / (1 << highestSteppingMode);
+
+    
     
     // *** time for next step while constant speed: ***
     // v = gamma / t ==> t = gamma / v
@@ -453,7 +472,7 @@ void CCStepperDevice::driveDynamic() {
             lastStepTime = stepExpiration;
             stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currentVelocity * currentVelocity + currentMicroStep * c0_acc)) / acceleration;
             
-            if (stepExpiration - elapsedTime < STEPPINGPERIOD_TO_KICK_UP) kickUp();
+            if (stepExpiration - lastStepTime < STEPPINGPERIOD_TO_KICK_UP) kickUp();
             
             if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));
@@ -489,7 +508,7 @@ void CCStepperDevice::driveDynamic() {
             lastStepTime = stepExpiration;
             stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + velocity * velocity) - velocity) * 1000000.0 / deceleration;
             
-            if (stepExpiration - elapsedTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
+            if (stepExpiration - lastStepTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
             
             if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
                 //        Serial.print(F("[CCStepperDevice]: "));

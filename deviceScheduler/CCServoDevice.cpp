@@ -70,7 +70,9 @@ void CCServoDevice::attachDevice() {
     unsigned char channel = theServo.attach(servo_pin, minPosition, maxPosition);                                                      // substitute with attatchDevice()
     
     if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
-        Serial.print(F("[CCServoDevice]: Servo attached on channel "));
+        Serial.print(F("[CCServoDevice]: "));
+        Serial.print(deviceName);
+        Serial.print(F(" attached: Servo on channel "));
         Serial.println(channel);
     }
 }
