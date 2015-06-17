@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "osascript -e &apos;&#10;tell application &quot;Arduino&quot; to activate&#13;tell application &quot;System Events&quot;&#13;if exists (first window of process &quot;Arduino&quot; whose name starts with &quot;/dev/tty&quot;) then&#13;tell me to keystroke &quot;w&quot; using {command down}&#10;end if&#13;end tell&#13;&apos;">
+               scriptText = "open &quot;/Users/abakus/my_system/computing/Arduino/embedXcode/closeArduinoSerialMonitor.app&quot;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -19,7 +19,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "osascript -e &#x2018;&#13;tell application &quot;Arduino&quot; to activate&#13;tell application &quot;System Events&quot;&#13;&#10;keystroke &quot;M&quot; using {shift down, command down}&#13;&#10;say &quot;open the serial-window&quot;&#13;&#10;end tell&#10;&apos;">
+               scriptText = "oprn &quot;/Users/abakus/my_system/computing/Arduino/embedXcode/openArduinoSerialMonitor.app&quot;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>

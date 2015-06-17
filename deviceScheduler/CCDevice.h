@@ -41,7 +41,7 @@ public:
     unsigned char        startEvent, stopEvent;
     unsigned long        startTime, startDelay, timeout;
     unsigned char        startButton, stopButton;
-    boolean              startButtonState, stopButtonState, stopSharply;
+    bool                 startButtonState, stopButtonState, stopSharply;
     unsigned char        startTriggerDevice, startTriggerMove, stopTriggerDevice, stopTriggerMove;
     signed long	         startTriggerPosition, stopTriggerPosition;
     
@@ -51,8 +51,8 @@ public:
     unsigned char        countOfMoves;
     unsigned char        movePointer;
     
-    signed long	         currentPosition;
-    boolean              directionDown;
+    float                currentPosition;
+    bool                 directionDown;
     unsigned char        state;
     
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventMove

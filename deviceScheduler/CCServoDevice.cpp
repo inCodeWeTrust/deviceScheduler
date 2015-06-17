@@ -82,6 +82,7 @@ void CCServoDevice::detachDevice() {
 
 
 void CCServoDevice::prepareNextMove() {
+    /*
     target = theMove[movePointer]->target;
     velocity = theMove[movePointer]->velocity;
     acceleration = theMove[movePointer]->acceleration;
@@ -198,6 +199,8 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(F(", timeForConstantSpeed: "));
         Serial.println(timeForConstantSpeed);
     }
+
+     */
 }
 
 void CCServoDevice::startMove() {
