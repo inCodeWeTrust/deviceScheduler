@@ -91,7 +91,7 @@ void loop() {
     freeRam();
     
     
-    for (int n = 1; n < 20; n++) {
+    for (int n = 2; n < 72; n+=4) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -110,33 +110,33 @@ void loop() {
 
         
         
-//        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
-//        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
-//
-//        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
-//        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord1, 10000);
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
+
+        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord1, 10000);
 
         unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(2 * 36, 10, 5.0, 5.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord2, 0);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, 30);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord2, 20000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, n);
         unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(2 * 36, 20, 5.0, 5.0);
 
         unsigned char supplyRecord4 = scheduler->device[stockStepper]->addMove(-2 * 36, 10, 5.0, 5.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord4, 10000);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord4, stockStepper, supplyRecord4, 60);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord4, 35000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord4, stockStepper, supplyRecord4, -n);
         unsigned char supplyRecord5 = scheduler->device[stockStepper]->addMove(-2 * 36, 20, 5.0, 5.0);
         
-/*
-        unsigned char supplyRecord6 = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord6, 20000);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord6, stockStepper, supplyRecord6, 500);
-        unsigned char supplyRecord7 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
 
-        unsigned char supplyRecord8 = scheduler->device[stockStepper]->addMove(-2 * 360, 140, 50.0, 50.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord8, 30000);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord8, stockStepper, supplyRecord8, 500);
-        unsigned char supplyRecord9 = scheduler->device[stockStepper]->addMove(2 * 360, 140, 50.0, 50.0);
-  */
+        unsigned char supplyRecord6 = scheduler->device[stockStepper]->addMove(2 * 36, 10, 5.0, 5.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord6, 50000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord6, stockStepper, supplyRecord6, n);
+        unsigned char supplyRecord7 = scheduler->device[stockStepper]->addMove(-2 * 36, 12, 6.0, 6.0);
+
+        unsigned char supplyRecord8 = scheduler->device[stockStepper]->addMove(-2 * 36, 10, 5.0, 5.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord8, 65000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord8, stockStepper, supplyRecord8, -n);
+        unsigned char supplyRecord9 = scheduler->device[stockStepper]->addMove(2 * 36, 18, 6.0, 6.0);
+
         
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(320, 400, 0.4, 103);
         //    unsigned char supplyRecord_01 = scheduler->device[stockStepper]->addMove(320, 400, 1.4, 103);
@@ -265,4 +265,26 @@ int freeRam () {
     Serial.println(fr);
     
 }
+
+
+/*
+ osascript -e '
+ tell application "System Events"
+ try
+ set serialMonitorWindow to first window of process "Arduino" whose name begins with "/dev/tty.usbmodem"
+ click button 1 of serialMonitorWindow
+ end try
+ end tell
+ '
+ 
+ osascript -e '
+ tell application "System Events"
+ try
+ tell application "Arduino" to activate
+ set serialMonitorMenuItem to menu item "Serieller Monitor" of menu "Werkzeuge" of menu bar item "Werkzeuge" of menu bar 1 of process "Arduino"
+ click serialMonitorMenuItem
+ end try
+ end tell
+ '
+ */
 

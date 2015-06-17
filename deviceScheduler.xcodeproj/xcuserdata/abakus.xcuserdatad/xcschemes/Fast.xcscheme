@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "open &quot;/Users/abakus/my_system/computing/Arduino/embedXcode/closeArduinoSerialMonitor.app&quot;">
+               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#10;set serialMonitorWindow to first window of process &quot;Arduino&quot; whose name begins with &quot;/dev/tty.usbmodem&quot;&#13;click button 1 of serialMonitorWindow&#13;end try&#13;end tell&#10;&apos;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -19,7 +19,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "oprn &quot;/Users/abakus/my_system/computing/Arduino/embedXcode/openArduinoSerialMonitor.app&quot;">
+               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#10;tell application &quot;Arduino&quot; to activate&#13;set serialMonitorMenuItem to menu item &quot;Serieller Monitor&quot; of menu &quot;Werkzeuge&quot; of menu bar item &quot;Werkzeuge&quot; of menu bar 1 of process &quot;Arduino&quot;&#13;click serialMonitorMenuItem&#10;end try&#13;end tell&#10;&apos;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>

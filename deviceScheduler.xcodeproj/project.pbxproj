@@ -4373,7 +4373,7 @@
 		A45F72581B1C70E400B5B7E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BOARD_PORT = "/dev/tty.usbmodemfd1*";
+				BOARD_PORT = "/dev/tty.usbmodem1*";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -4448,7 +4448,7 @@
 		A45F726A1B1C70E400B5B7E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BOARD_PORT = "/dev/tty.usbmodemfd*";
+				BOARD_PORT = "/dev/tty.usbmodem1*";
 			};
 			name = Debug;
 		};
@@ -4473,7 +4473,7 @@
 		A45F72701B1C70E400B5B7E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BOARD_PORT = "/dev/tty.usbmodemfd*";
+				BOARD_PORT = "/dev/tty.usbmodem1*";
 			};
 			name = Debug;
 		};

@@ -13,30 +13,30 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
 }
 
 /*
-unsigned char CCDevice::addMove(float target) {
-    return addMoveWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
-}
-unsigned char CCDevice::addMove(float target, float velocity) {
-    return addMoveWithStartDelay(target, 0UL, velocity, defaultAcceleration, defaultDeceleration);
-}
-unsigned char CCDevice::addMove(float target, float velocity, float acceleration) {
-    return addMoveWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
-}
+ unsigned char CCDevice::addMove(float target) {
+ return addMoveWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
+ }
+ unsigned char CCDevice::addMove(float target, float velocity) {
+ return addMoveWithStartDelay(target, 0UL, velocity, defaultAcceleration, defaultDeceleration);
+ }
+ unsigned char CCDevice::addMove(float target, float velocity, float acceleration) {
+ return addMoveWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
+ }
  */
 unsigned char CCDevice::addMove(float target, float velocity, float acceleration, float deceleration) {
     return addMoveWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
 }
 
 /*
-unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay) {
-    return addMoveWithStartDelay(target, startDelay, defaultVelocity, defaultAcceleration, defaultDeceleration);
-}
-unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity) {
-    return addMoveWithStartDelay(target, startDelay, velocity, defaultAcceleration, defaultDeceleration);
-}
-unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration) {
-    return addMoveWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
-}
+ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay) {
+ return addMoveWithStartDelay(target, startDelay, defaultVelocity, defaultAcceleration, defaultDeceleration);
+ }
+ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity) {
+ return addMoveWithStartDelay(target, startDelay, velocity, defaultAcceleration, defaultDeceleration);
+ }
+ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration) {
+ return addMoveWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
+ }
  */
 unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
     theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
@@ -64,19 +64,19 @@ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startD
 }
 
 void CCDevice::setStartDateForMove(unsigned char moveIndex, unsigned long startTime) {
-  theMove[moveIndex]->startEvent = DATE;
-  theMove[moveIndex]->startTime = startTime;
+    theMove[moveIndex]->startEvent = DATE;
+    theMove[moveIndex]->startTime = startTime;
 }
 void CCDevice::setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState) {
-  theMove[moveIndex]->startEvent = BUTTON;
-  theMove[moveIndex]->startButton = startButton;
-  theMove[moveIndex]->startButtonState = startButtonState;
+    theMove[moveIndex]->startEvent = BUTTON;
+    theMove[moveIndex]->startButton = startButton;
+    theMove[moveIndex]->startButtonState = startButtonState;
 }
 void CCDevice::setStartEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition) {
-  theMove[moveIndex]->startEvent = POSITION;
-  theMove[moveIndex]->startTriggerDevice = startTriggerDevice;
-  theMove[moveIndex]->startTriggerMove = startTriggerMove;
-  theMove[moveIndex]->startTriggerPosition = startTriggerPosition;
+    theMove[moveIndex]->startEvent = POSITION;
+    theMove[moveIndex]->startTriggerDevice = startTriggerDevice;
+    theMove[moveIndex]->startTriggerMove = startTriggerMove;
+    theMove[moveIndex]->startTriggerPosition = startTriggerPosition;
 }
 void CCDevice::setSwitchDateForMove(unsigned char moveIndex, unsigned long timeout) {
     theMove[moveIndex]->stopEvent = DATE | 0x10;
@@ -94,43 +94,48 @@ void CCDevice::setSwitchEventForMove(unsigned char moveIndex, unsigned char stop
     theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
 }
 void CCDevice::setTimeoutForMove(unsigned char moveIndex, unsigned long timeout, boolean stopSharply) {
-  theMove[moveIndex]->stopEvent = DATE;
-  theMove[moveIndex]->timeout = timeout;
-  theMove[moveIndex]->stopSharply = stopSharply;
+    theMove[moveIndex]->stopEvent = DATE;
+    theMove[moveIndex]->timeout = timeout;
+    theMove[moveIndex]->stopSharply = stopSharply;
 }
 void CCDevice::setStopButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, boolean stopSharply) {
-  theMove[moveIndex]->stopEvent = BUTTON;
-  theMove[moveIndex]->stopButton = stopButton;
-  theMove[moveIndex]->stopButtonState = stopButtonState;
-  theMove[moveIndex]->stopSharply = stopSharply;
+    theMove[moveIndex]->stopEvent = BUTTON;
+    theMove[moveIndex]->stopButton = stopButton;
+    theMove[moveIndex]->stopButtonState = stopButtonState;
+    theMove[moveIndex]->stopSharply = stopSharply;
 }
 void CCDevice::setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply) {
-  theMove[moveIndex]->stopEvent = POSITION;
-  theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
-  theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
-  theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
-  theMove[moveIndex]->stopSharply = stopSharply;
+    theMove[moveIndex]->stopEvent = POSITION;
+    theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
+    theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
+    theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
+    theMove[moveIndex]->stopSharply = stopSharply;
 }
 
 void CCDevice::deleteMoves() {
-  if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-    Serial.print(F("[CCDevice]: delete moves of "));
-    Serial.print(deviceName);
-    Serial.print(F(": move "));
-  }
-  for (int j = countOfMoves - 1; j >= 0; j--) {
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-      Serial.print(F(" #"));
-      Serial.print(j);
+        Serial.print(F("[CCDevice]: delete moves of "));
+        Serial.print(deviceName);
+        Serial.print(F(": move "));
     }
-    delete theMove[j];
-    theMove[j] = NULL;
-  }
-  if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-    Serial.println();
-    Serial.println();
-  }
-  state = 0;
-  movePointer = 0;
-  countOfMoves = 0;
+    for (int j = countOfMoves - 1; j >= 0; j--) {
+        if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
+            Serial.print(F(" #"));
+            Serial.print(j);
+        }
+        delete theMove[j];
+        theMove[j] = NULL;
+    }
+    if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
+        Serial.println();
+        Serial.println();
+    }
+    
+    state = 0;
+    movePointer = 0;
+    countOfMoves = 0;
+    
+    currentPosition = 0;
+    directionDown = 0;
+    
 }
