@@ -12,6 +12,7 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
     this->defaultDeceleration = defaultDeceleration;
 }
 
+/*
 unsigned char CCDevice::addMove(float target) {
     return addMoveWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
 }
@@ -21,10 +22,12 @@ unsigned char CCDevice::addMove(float target, float velocity) {
 unsigned char CCDevice::addMove(float target, float velocity, float acceleration) {
     return addMoveWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
 }
+ */
 unsigned char CCDevice::addMove(float target, float velocity, float acceleration, float deceleration) {
     return addMoveWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
 }
 
+/*
 unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay) {
     return addMoveWithStartDelay(target, startDelay, defaultVelocity, defaultAcceleration, defaultDeceleration);
 }
@@ -34,6 +37,7 @@ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startD
 unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration) {
     return addMoveWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
 }
+ */
 unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
     theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
     
