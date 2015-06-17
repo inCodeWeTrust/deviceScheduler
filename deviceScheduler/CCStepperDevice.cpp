@@ -295,11 +295,19 @@ void CCStepperDevice::prepareNextMove() {
         if (targetDirectionDown) {
             acceleration = 0.5 * (abs(velocity) * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
             if (abs(acceleration) > acceleration_max) {
-                velocity = -currentVelocity * currentVelocity - 2 * acceleration * stepsForAcceleration * anglePerStep = - v * v - v0 * v0
+                acceleration = -acceleration_max;
+                velocity = sqrt(-currentVelocity * currentVelocity - 2 * acceleration * stepsForAcceleration * anglePerStep);
+                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
             }
         }
         else {
-            acceleration = 0.5 * (abs(currentVelocity) * currentVelocity - abs(velocity) * velocity) / stepsForAcceleration / anglePerStep;
+            acceleration = 0.5 * (abs(currentVelocity) * currentVelocity - velocity * velocity) / stepsForAcceleration / anglePerStep;
+            if (acceleration > acceleration_max) {
+                acceleration = acceleration_max;
+                
+                velocity = sqrt(-currentVelocity * currentVelocity - 2 * acceleration * stepsForAcceleration * anglePerStep);
+                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+            }
         }
     }
     else {
