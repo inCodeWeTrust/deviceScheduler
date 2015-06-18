@@ -47,7 +47,7 @@ public:
     unsigned char        highestSteppingMode;
     unsigned char        *stepModeCode;
     float                anglePerStep;
-    unsigned int         acceleration_max;
+    int                  acceleration_max;
     
     
     CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep);

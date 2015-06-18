@@ -252,6 +252,7 @@ void CCServoDevice::finishMove() {
 
 
 void CCServoDevice::driveDynamic() {
+    /*
     elapsedTime = millis() - t0;
     
     // ramp up
@@ -344,5 +345,5 @@ void CCServoDevice::driveDynamic() {
     }
     
     stopMoving();
-    
+    */
 }

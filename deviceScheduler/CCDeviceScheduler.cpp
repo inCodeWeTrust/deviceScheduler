@@ -371,7 +371,7 @@ void CCDeviceScheduler::runTheLoop() {
                                     Serial.print(taskTime);
                                     Serial.print(F(": "));
                                     Serial.print(device[s]->deviceName);
-                                    Serial.print(F(" initiate stop "));
+                                    Serial.print(F(" stop/switch "));
                                     Serial.println((int)device[s]->movePointer);
                                 }
                                 
@@ -411,7 +411,7 @@ void CCDeviceScheduler::runTheLoop() {
                                     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                                         Serial.print(taskTime);
                                         Serial.print(device[s]->deviceName);
-                                        Serial.print(F(" initiate stop move "));
+                                        Serial.print(F(" stop/switch "));
                                         Serial.println((int)device[s]->movePointer);
                                     }
                                     
@@ -419,6 +419,17 @@ void CCDeviceScheduler::runTheLoop() {
                                         device[s]->movePointer++;                                               // go for next job! (if existing)
                                         if (device[s]->movePointer < device[s]->countOfMoves) {                 // all tasks done? no!
                                             device[s]->prepareNextMove();
+                                            if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+                                                Serial.print(taskTime);
+                                                Serial.print(F(": "));
+                                                Serial.print(device[s]->deviceName);
+                                                Serial.print(F(" prepare Move "));
+                                                Serial.print((int)device[s]->movePointer);
+                                                Serial.print(F(": current: "));
+                                                Serial.print(device[s]->currentPosition);
+                                                Serial.print(F(" target: "));
+                                                Serial.println((int)device[s]->target);
+                                            }
                                         }
                                     }
                                     else {                                                                      // just stop. but how?
