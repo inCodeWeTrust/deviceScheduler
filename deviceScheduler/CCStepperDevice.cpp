@@ -157,12 +157,6 @@ void CCStepperDevice::prepareNextMove() {
         else {
             currentVelocity = sqrt(2 * abs(deceleration) * (microStepsToGo - currentMicroStep) * anglePerStep / (1 << highestSteppingMode));
         }
-        
-        if (directionDown) {
-            currentVelocity = -currentVelocity;
-        }
-        else {
-        }
     }
     else {
         currentVelocity = 0;
@@ -195,7 +189,7 @@ void CCStepperDevice::prepareNextMove() {
     }
     if (target < 0 || velocity < 0 || acceleration < 0) {
         target = abs(target);
-        velocity = -abs(velocity);
+        velocity = abs(velocity);
         acceleration = abs(acceleration);
         
         if (state & MOVING) {
@@ -239,21 +233,29 @@ void CCStepperDevice::prepareNextMove() {
     //    acceleration /= anglePerStep;
     //    deceleration /= anglePerStep;
     
+//    currVeloBySquare = currentVelocity * currentVelocity;
+//    veloBySquare = velocity * velocity;
     
     // *** steps for deceleration: ***
     // v * v = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v = 2 * a * n * anglePerStep ==> n = v * v / (2 * a * anglePerStep)
     /// v[DEG/65536/sec] * 65535 * v[DEG/65536/sec] * 65535 / (2 * a[DEG/65535/sec/sec] * 65535 *)
-    stepsForDeceleration = 0.5 * velocity * velocity / deceleration / anglePerStep + 0.5;
+//    stepsForDeceleration = 0.5 * velocity * velocity / deceleration / anglePerStep + 0.5;
+    stepsForDeceleration = 0.5 * veloBySquare / deceleration / anglePerStep + 0.5;
     
     // *** steps for acceleration: ***
     // v * v - v0 * v0 = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v - v0 * v0 = 2 * a * n * anglePerStep
     // ==> n = (v * v - v0 * v0) / (2 * a * anglePerStep)
-    stepsForAcceleration = abs((0.5 * (abs(velocity) * velocity - abs(currentVelocity) * currentVelocity) / acceleration / anglePerStep) + 0.5);
-
+    if (changeDirection) {
+        stepsForAcceleration = (0.5 * (velocity * velocity + currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
+    }
+    else {
+        stepsForAcceleration = (0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
+    }
+    
     microStepsTillZero = ((unsigned long)(0.5 * currentVelocity * currentVelocity / acceleration / anglePerStep)) << highestSteppingMode;
     
     // *** does acceleration and deceleration fit into the move? ***
@@ -265,82 +267,87 @@ void CCStepperDevice::prepareNextMove() {
         // s_acc / s_dec = c ==> s_acc = c * s_dec
         // ==> s = c * s_dec + s_dec = s_dec * (c + 1) ==> s_dec = s / (c + 1)
         // ==> s_dec = s / (a_dec * (v * v - v0 * v0) / (a_acc * v * v) + 1)
-        
-        stepsForDeceleration = abs(stepsToGo / ((velocity * velocity - currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1);
+        if (changeDirection) {
+            stepsForDeceleration = stepsToGo / ((velocity * velocity + currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
+        }
+        else {
+            stepsForDeceleration = stepsToGo / (abs(velocity * velocity - currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
+        }
         stepsForAcceleration = stepsToGo - 2 - stepsForDeceleration;
     }
-    
-
-    
-    
-    // *** recalculate v: ***
-    // v * v = 2 * a * n * anglePerStep ==> v = sqrt(2 * a * n * anglePerStep)
-    velocity = sqrt(2 * acceleration * stepsForAcceleration * anglePerStep);
-
     
     
     // *** recalculate a: ***
     // v * v = 2 * a * n * anglePerStep ==> a = v * v / (2 * n * anglePerStep)
     deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-    if (deceleration > acceleration_max) {
+    if (deceleration < -acceleration_max) {
         // *** recalculate v: ***
         // v * v = 2 * a * n * anglePerStep ==> v = sqrt(2 * a * n * anglePerStep)
-        deceleration = acceleration_max;
-        velocity = sqrt(2 * deceleration * stepsForDeceleration * anglePerStep);
+        deceleration = -acceleration_max;
+        velocity = sqrt(2 * acceleration_max * stepsForDeceleration * anglePerStep);
     }
     
-    // *** recalculate a: ***
-    // v * v - v0 * v0 = 2 * a * gamma ==> a = (v * v - v0 * v0) / 2 * gamma = (v * v - v0 * v0) / (2 * n * anglePerStep)
-    if (changeDirection) {
-        if (targetDirectionDown) {
-            acceleration = 0.5 * (abs(velocity) * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
-            if (abs(acceleration) > acceleration_max) {
-                acceleration = -acceleration_max;
-                velocity = sqrt(-currentVelocity * currentVelocity - 2 * acceleration * stepsForAcceleration * anglePerStep);
-                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-            }
-        }
-        else {
-            acceleration = 0.5 * (abs(currentVelocity) * currentVelocity - velocity * velocity) / stepsForAcceleration / anglePerStep;
-            if (acceleration > acceleration_max) {
-                acceleration = acceleration_max;
-                
-                velocity = sqrt(-currentVelocity * currentVelocity - 2 * acceleration * stepsForAcceleration * anglePerStep);
-                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-            }
-        }
-    }
-    else {
-        acceleration = 0.5 * abs((velocity * velocity - currentVelocity * currentVelocity)) / stepsForAcceleration / anglePerStep;
-    }
-    if (acceleration > acceleration_max) {
+    if (stepsForAcceleration > 0) {
+        
+        // *** recalculate a: ***
+        // v * v - v0 * v0 = 2 * a * gamma ==> a = (v * v - v0 * v0) / 2 * gamma = (v * v - v0 * v0) / (2 * n * anglePerStep)
         if (changeDirection) {
             if (targetDirectionDown) {
-                acceleration = 0.5 * (abs(velocity) * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
-
-                2 * acceleration * stepsForAcceleration * anglePerStep = - v * v - v0 * v0
-                v = sqrt(-v0 * v0 - 2 * a * n * anglePerStep)
-            
+                acceleration = -0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+                
+                if (acceleration < -acceleration_max) {
+                    acceleration = -acceleration_max;
+                    // acceleration = -0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep
+                    // -2 * acceleration * stepsForAcceleration * anglePerStep = velocity * velocity + currentVelocity * currentVelocity
+                    // -2 * acceleration * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity = velocity * velocity
+                    // acceleration = -acceleration_max ==>
+                    // 2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity = velocity * velocity
+                    // ==> velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity)
+                    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
+                    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+                }
             }
             else {
-                acceleration = 0.5 * (abs(currentVelocity) * currentVelocity - abs(velocity) * velocity) / stepsForAcceleration / anglePerStep;
+                acceleration = 0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+                if (acceleration > acceleration_max) {
+                    acceleration = acceleration_max;
+                    // acceleration = 0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+                    // 2 * acceleration * stepsForAcceleration * anglePerStep = velocity * velocity + currentVelocity * currentVelocity
+                    // 2 * acceleration * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity = velocity * velocity
+                    // acceleration = acceleration_max ==>
+                    // 2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity = velocity * velocity
+                    // ==> velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity)
+                    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
+                    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+                }
             }
         }
         else {
-            acceleration = 0.5 * abs((velocity * velocity - currentVelocity * currentVelocity)) / stepsForAcceleration / anglePerStep;
+            acceleration = 0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+            if (acceleration > acceleration_max) {
+                acceleration = acceleration_max;
+                // acceleration = 0.5 * (velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+                // 2 * acceleration * stepsForAcceleration * anglePerStep = velocity * velocity - currentVelocity * currentVelocity
+                // 2 * acceleration * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity = velocity * velocity
+                // ==> velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity)
+                velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity);
+                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+            }
         }
     }
-
+    
+    
     // *** time for acceleration: ***
     // a = v0 / t0; a = v / t ==> t0 = v0 / a; t = v / a
     // tx = t - t0; ==> tx = v / a - v0 / a = (v - v0) / a
-    timeForAcceleration = 1000000.0 * abs((currentVelocity - velocity) / acceleration);
+    if (changeDirection) {
+        timeForAcceleration = 1000000.0 * (currentVelocity + velocity) / acceleration;
+    }
+    else {
+        timeForAcceleration = abs(1000000.0 * (currentVelocity - velocity) / acceleration);
+    }
+    timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) * anglePerStep / velocity;
     
-    timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) * anglePerStep / abs(velocity);
-    
-    
-    currentVelocity = abs(currentVelocity);
-    velocity = abs(velocity);
     
     
     // *** time for the next step while acceleration: ***
