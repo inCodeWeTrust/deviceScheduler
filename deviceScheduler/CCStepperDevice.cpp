@@ -139,8 +139,9 @@ void CCStepperDevice::detachDevice() {
 
 
 void CCStepperDevice::prepareNextMove() {
-    // this takes 812us with calculating anglePerStep
+    // this takes 900us 1500us with calculating velocity * velocity
     unsigned long t_prepMove = micros();
+    unsigned long t_stop;
     
     if (state & MOVING) {
         // *** current velocity ***
@@ -160,6 +161,12 @@ void CCStepperDevice::prepareNextMove() {
     else {
         currentVelocity = 0;
     }
+ 
+    t_stop = micros() - t_prepMove;
+    Serial.print("== currentVelocity: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+    
     
     target = theMove[movePointer]->target;
     velocity = theMove[movePointer]->velocity;
@@ -182,9 +189,20 @@ void CCStepperDevice::prepareNextMove() {
     stopTriggerMove = theMove[movePointer]->stopTriggerMove;
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
     stopSharply = theMove[movePointer]->stopSharply;
-    
-    stepsToGo = (float)(target - currentPosition) / anglePerStep;
 
+    t_stop = micros() - t_prepMove;
+    Serial.print("== copy parameters: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+
+//    stepsToGo = (float)(target - currentPosition) / anglePerStep;
+    stepsToGo = (target - currentPosition) * 200 / 360;
+
+    
+    t_stop = micros() - t_prepMove;
+    Serial.print("== stepsToGo: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
     
     if (velocity == 0) velocity = defaultVelocity;
     if (acceleration == 0) acceleration = defaultAcceleration;
@@ -237,6 +255,12 @@ void CCStepperDevice::prepareNextMove() {
         deceleration = abs(deceleration);
     }
     
+    t_stop = micros() - t_prepMove;
+    Serial.print("== set flags: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+    
+
     
     // v[steps/sec] = v[angle/sec] * stepPerAngle = v[angle/sec] / anglePerStep
     //    velocity /= anglePerStep;
@@ -245,28 +269,45 @@ void CCStepperDevice::prepareNextMove() {
     
     currVeloBySquare = currentVelocity * currentVelocity;
     veloBySquare = velocity * velocity;
+
+    t_stop = micros() - t_prepMove;
+    Serial.print("== velos to square: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
     
+
     // *** steps for deceleration: ***
     // v * v = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v = 2 * a * n * anglePerStep ==> n = v * v / (2 * a * anglePerStep)
     /// v[DEG/65536/sec] * 65535 * v[DEG/65536/sec] * 65535 / (2 * a[DEG/65535/sec/sec] * 65535 *)
-//    stepsForDeceleration = 0.5 * velocity * velocity / deceleration / anglePerStep + 0.5;
-    stepsForDeceleration = 0.5 * veloBySquare / deceleration / anglePerStep + 0.5;
+    stepsForDeceleration = 0.5 * velocity * velocity / deceleration / anglePerStep + 0.5;
+//    stepsForDeceleration = 0.5 * veloBySquare / deceleration / anglePerStep + 0.5;
     
-    // *** steps for acceleration: ***
+    t_stop = micros() - t_prepMove;
+    Serial.print("== stepsForDeceleration: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+    
+// *** steps for acceleration: ***
     // v * v - v0 * v0 = 2 * a * gamma
     // gamma = n * anglePerStep
     // ==> v * v - v0 * v0 = 2 * a * n * anglePerStep
     // ==> n = (v * v - v0 * v0) / (2 * a * anglePerStep)
     if (changeDirection) {
-//        stepsForAcceleration = (0.5 * (velocity * velocity + currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
-        stepsForAcceleration = (0.5 * (veloBySquare + currVeloBySquare) / acceleration / anglePerStep) + 0.5;
+        stepsForAcceleration = (0.5 * (velocity * velocity + currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
+//        stepsForAcceleration = (0.5 * (veloBySquare + currVeloBySquare) / acceleration / anglePerStep) + 0.5;
     }
     else {
-//        stepsForAcceleration = (0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
-        stepsForAcceleration = (0.5 * abs(veloBySquare - currVeloBySquare) / acceleration / anglePerStep) + 0.5;
+        stepsForAcceleration = (0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
+//        stepsForAcceleration = (0.5 * abs(veloBySquare - currVeloBySquare) / acceleration / anglePerStep) + 0.5;
     }
+    t_stop = micros() - t_prepMove;
+    Serial.print("== stepsForAcceleration: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+    
+
     
     // *** does acceleration and deceleration fit into the move? ***
     if (stepsForAcceleration + stepsForDeceleration > stepsToGo - 2) {
@@ -278,12 +319,12 @@ void CCStepperDevice::prepareNextMove() {
         // ==> s = c * s_dec + s_dec = s_dec * (c + 1) ==> s_dec = s / (c + 1)
         // ==> s_dec = s / (a_dec * (v * v - v0 * v0) / (a_acc * v * v) + 1)
         if (changeDirection) {
-//            stepsForDeceleration = stepsToGo / ((velocity * velocity + currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
-            stepsForDeceleration = stepsToGo / ((veloBySquare + currVeloBySquare) * deceleration / acceleration / veloBySquare + 1) - 1;
+            stepsForDeceleration = stepsToGo / ((velocity * velocity + currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
+//            stepsForDeceleration = stepsToGo / ((veloBySquare + currVeloBySquare) * deceleration / acceleration / veloBySquare + 1) - 1;
         }
         else {
-//            stepsForDeceleration = stepsToGo / (abs(velocity * velocity - currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
-            stepsForDeceleration = stepsToGo / (abs(veloBySquare - currVeloBySquare) * deceleration / acceleration / veloBySquare + 1) - 1;
+            stepsForDeceleration = stepsToGo / (abs(velocity * velocity - currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
+//            stepsForDeceleration = stepsToGo / (abs(veloBySquare - currVeloBySquare) * deceleration / acceleration / veloBySquare + 1) - 1;
         }
         stepsForAcceleration = stepsToGo - 2 - stepsForDeceleration;
     }
@@ -291,8 +332,8 @@ void CCStepperDevice::prepareNextMove() {
     
     // *** recalculate a: ***
     // v * v = 2 * a * n * anglePerStep ==> a = v * v / (2 * n * anglePerStep)
-//    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-    deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
+    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+//    deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
     
     if (deceleration < -acceleration_max) {
         // *** recalculate v: ***
@@ -307,8 +348,8 @@ void CCStepperDevice::prepareNextMove() {
         // v * v - v0 * v0 = 2 * a * gamma ==> a = (v * v - v0 * v0) / 2 * gamma = (v * v - v0 * v0) / (2 * n * anglePerStep)
         if (changeDirection) {
             if (targetDirectionDown) {
-//                acceleration = -0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
-                acceleration = -0.5 * (veloBySquare + currVeloBySquare) / stepsForAcceleration / anglePerStep;
+                acceleration = -0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+//                acceleration = -0.5 * (veloBySquare + currVeloBySquare) / stepsForAcceleration / anglePerStep;
                 if (acceleration < -acceleration_max) {
                     acceleration = -acceleration_max;
                     // acceleration = -0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep
@@ -317,16 +358,16 @@ void CCStepperDevice::prepareNextMove() {
                     // acceleration = -acceleration_max ==>
                     // 2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity = velocity * velocity
                     // ==> velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity)
-//                    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
-                    veloBySquare = 2 * acceleration_max * stepsForAcceleration * anglePerStep - currVeloBySquare;
-                    velocity = sqrt(veloBySquare);
-//                    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-                    deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
+                    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
+//                    veloBySquare = 2 * acceleration_max * stepsForAcceleration * anglePerStep - currVeloBySquare;
+//                    velocity = sqrt(veloBySquare);
+                    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+//                    deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
                 }
             }
             else {
-//                acceleration = 0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
-                acceleration = 0.5 * (veloBySquare + currVeloBySquare) / stepsForAcceleration / anglePerStep;
+                acceleration = 0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+//                acceleration = 0.5 * (veloBySquare + currVeloBySquare) / stepsForAcceleration / anglePerStep;
                 if (acceleration > acceleration_max) {
                     acceleration = acceleration_max;
                     // acceleration = 0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
@@ -335,33 +376,46 @@ void CCStepperDevice::prepareNextMove() {
                     // acceleration = acceleration_max ==>
                     // 2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity = velocity * velocity
                     // ==> velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity)
-//                    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
-                    veloBySquare = 2 * acceleration_max * stepsForAcceleration * anglePerStep - currVeloBySquare;
-                    velocity = sqrt(veloBySquare);
-//                    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-                    deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
+                    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
+//                    veloBySquare = 2 * acceleration_max * stepsForAcceleration * anglePerStep - currVeloBySquare;
+//                    velocity = sqrt(veloBySquare);
+                    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+//                    deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
                 }
             }
         }
         else {
-//            acceleration = 0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
-            acceleration = 0.5 * abs(veloBySquare - currVeloBySquare) / stepsForAcceleration / anglePerStep;
+            acceleration = 0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+//            acceleration = 0.5 * abs(veloBySquare - currVeloBySquare) / stepsForAcceleration / anglePerStep;
             if (acceleration > acceleration_max) {
                 acceleration = acceleration_max;
                 // acceleration = 0.5 * (velocity * velocity - currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
                 // 2 * acceleration * stepsForAcceleration * anglePerStep = velocity * velocity - currentVelocity * currentVelocity
                 // 2 * acceleration * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity = velocity * velocity
                 // ==> velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity)
-//                velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity);
-                veloBySquare = 2 * acceleration_max * stepsForAcceleration * anglePerStep + currVeloBySquare;
-                velocity = sqrt(veloBySquare);
-//                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
-                deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
+                velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep + currentVelocity * currentVelocity);
+//                veloBySquare = 2 * acceleration_max * stepsForAcceleration * anglePerStep + currVeloBySquare;
+//                velocity = sqrt(veloBySquare);
+                deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+//                deceleration = -0.5 * veloBySquare / stepsForDeceleration / anglePerStep;
             }
         }
     }
     
-    microStepsTillZero = (unsigned long)abs(0.5 * currVeloBySquare / acceleration / anglePerStep) << highestSteppingMode;
+    t_stop = micros() - t_prepMove;
+    Serial.print("== recalculations: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+    
+
+    microStepsTillZero = (unsigned long)abs(0.5 * currentVelocity * currentVelocity / acceleration / anglePerStep) << highestSteppingMode;
+//    microStepsTillZero = (unsigned long)abs(0.5 * currVeloBySquare / acceleration / anglePerStep) << highestSteppingMode;
+    
+
+    t_stop = micros() - t_prepMove;
+    Serial.print("== microStepsTillZero: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
     
 
     // *** time for acceleration: ***
@@ -374,6 +428,11 @@ void CCStepperDevice::prepareNextMove() {
         timeForAcceleration = abs(1000000.0 * (currentVelocity - velocity) / acceleration);
     }
     timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) * anglePerStep / velocity;
+    
+    t_stop = micros() - t_prepMove;
+    Serial.print("== times: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
     
     
     
@@ -397,18 +456,32 @@ void CCStepperDevice::prepareNextMove() {
     // t = n * c1
     c1 = 1 * anglePerStep / velocity / (1 << highestSteppingMode);
     
+    t_stop = micros() - t_prepMove;
+    Serial.print("== constants: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
+    
+
+    
     microStepsToGo = stepsToGo << highestSteppingMode;
     microStepsForAcceleration = stepsForAcceleration << highestSteppingMode;
     microStepsForAccAndConstSpeed = microStepsToGo - (stepsForDeceleration << highestSteppingMode);
+
+    t_stop = micros() - t_prepMove;
+    Serial.print("== steps to microSteps: ");
+    Serial.println(t_stop);
+    t_prepMove = micros();
     
+
     if (state & MOVING) {
         t0 += lastStepTime;
         currentMicroStep = 1;
-        stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currentVelocity * currentVelocity + currentMicroStep * c0_acc)) / acceleration;
+        stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currVeloBySquare + currentMicroStep * c0_acc)) / acceleration;
         
         
-        Serial.print("== prepareMove: ");
-        Serial.println(micros() - t_prepMove);
+        t_stop = micros() - t_prepMove;
+        Serial.print("== stepExpiration when moving: ");
+        Serial.println(t_stop);
         
         if (digitalRead(VERBOSE_BUTTON)) {
 //        if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MOVEMENTDEBUG) {
@@ -425,8 +498,8 @@ void CCStepperDevice::prepareNextMove() {
         }
     }
     else {
-        Serial.print("== prepareMove: ");
-        Serial.println(micros() - t_prepMove);
+//        Serial.print("== prepareMove: ");
+//        Serial.println(t_stop);
     }
     
     
@@ -743,4 +816,21 @@ void CCStepperDevice::setMicroStepPins(unsigned char data) {
  }
  
  */
-
+/*
+void CCStepperDevice::prepareNextMove() {
+    currentVelocity = sqrt(2 * abs(deceleration) * (microStepsToGo - currentMicroStep) * anglePerStep / (1 << highestSteppingMode));
+    stepsToGo = (target - currentPosition) * 200 / 360;
+    stepsForAcceleration = (0.5 * abs(velocity * velocity - currentVelocity * currentVelocity) / acceleration / anglePerStep) + 0.5;
+    stepsForDeceleration = stepsToGo / (abs(velocity * velocity - currentVelocity * currentVelocity) * deceleration / acceleration / velocity / velocity + 1) - 1;
+    stepsForAcceleration = stepsToGo - 2 - stepsForDeceleration;
+    acceleration = -0.5 * (velocity * velocity + currentVelocity * currentVelocity) / stepsForAcceleration / anglePerStep;
+    deceleration = -0.5 * velocity * velocity / stepsForDeceleration / anglePerStep;
+    velocity = sqrt(2 * acceleration_max * stepsForAcceleration * anglePerStep - currentVelocity * currentVelocity);
+    microStepsTillZero = (unsigned long)abs(0.5 * currentVelocity * currentVelocity / acceleration / anglePerStep) << highestSteppingMode;
+    timeForAcceleration = abs(1000000.0 * (currentVelocity - velocity) / acceleration);
+    timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) * anglePerStep / velocity;
+    c0_acc = 2.0 * acceleration * anglePerStep / (1 << highestSteppingMode);
+    c1 = 1 * anglePerStep / velocity / (1 << highestSteppingMode);
+    stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currVeloBySquare + currentMicroStep * c0_acc)) / acceleration;
+}
+*/
