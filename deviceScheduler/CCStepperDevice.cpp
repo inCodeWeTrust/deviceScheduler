@@ -344,7 +344,8 @@ void CCStepperDevice::prepareNextMove() {
         veloBySquare = 2 * acceleration_max * stepsForDeceleration;
         velocity = sqrt(veloBySquare);
     }
-    
+    deceleration_inv = 1 / deceleration;
+
     if (stepsForAcceleration > 0) {
         
         // *** recalculate a: ***
@@ -403,6 +404,7 @@ void CCStepperDevice::prepareNextMove() {
                 deceleration = -veloBySquare / (stepsForDeceleration << 1);
             }
         }
+        acceleration_inv = 1 / acceleration;
     }
     
     t_stop = micros() - t_prepMove;
@@ -425,10 +427,10 @@ void CCStepperDevice::prepareNextMove() {
     // a = v0 / t0; a = v / t ==> t0 = v0 / a; t = v / a
     // tx = t - t0; ==> tx = v / a - v0 / a = (v - v0) / a
     if (changeDirection) {
-        timeForAcceleration = abs(1000000.0 * (currentVelocity + velocity) / acceleration);
+        timeForAcceleration = abs(1000000.0 * (currentVelocity + velocity) * acceleration_inv);
     }
     else {
-        timeForAcceleration = abs(1000000.0 * (currentVelocity - velocity) / acceleration);
+        timeForAcceleration = abs(1000000.0 * (currentVelocity - velocity) * acceleration_inv);
     }
     timeForAccAndConstSpeed = timeForAcceleration + 1000000UL * (stepsToGo - stepsForAcceleration - stepsForDeceleration) / velocity;
     
@@ -673,8 +675,9 @@ void CCStepperDevice::driveDynamic() {
                 stepExpiration = 1000000.0 * (-sqrt(-currVeloBySquare - currentMicroStep * c0_acc) - currentVelocity) * acceleration_inv;
             }
             else {
-//                stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currentVelocity * currentVelocity + currentMicroStep * c0_acc)) / acceleration;
-                stepExpiration = 1000000.0 * (sqrt(currVeloBySquare + currentMicroStep * c0_acc) - currentVelocity) * acceleration_inv;
+                stepExpiration = 1000000.0 * (-currentVelocity + sqrt(currentVelocity * currentVelocity + currentMicroStep * c0_acc)) / acceleration;
+//                stepExpiration = 1000000.0 * (sqrt(currVeloBySquare + currentMicroStep * c0_acc) - currentVelocity) * acceleration_inv;
+                //                                 (6.67 * 6.67 + 4 * -12.82)
             }
             
             if (stepExpiration - lastStepTime < STEPPINGPERIOD_TO_KICK_UP) kickUp();
@@ -717,7 +720,9 @@ void CCStepperDevice::driveDynamic() {
         // while ramping down
         if (currentMicroStep < microStepsToGo) {
             lastStepTime = stepExpiration;
-            stepExpiration = timeForAccAndConstSpeed + 1000000.0 * (sqrt(veloBySquare + (currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec) - velocity) * deceleration_inv;
+            
+//            stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + veloBySquare) - velocity) * 1000000.0 / deceleration;
+            stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + veloBySquare) - velocity) * 1000000.0 * deceleration_inv;
             
             if (stepExpiration - lastStepTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
             
