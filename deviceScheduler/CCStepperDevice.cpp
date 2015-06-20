@@ -195,8 +195,8 @@ void CCStepperDevice::prepareNextMove() {
     Serial.println(t_stop);
     t_prepMove = micros();
 
-//    stepsToGo = (float)(target - currentPosition) / anglePerStep;
-    stepsToGo = (target - currentPosition) * 200 / 360;
+    stepsToGo = (float)(target - currentPosition) / anglePerStep;
+//    stepsToGo = (target - currentPosition) * 200 / 360;
 
     
     t_stop = micros() - t_prepMove;
@@ -661,7 +661,7 @@ void CCStepperDevice::driveDynamic() {
         // while ramping up
         if (currentMicroStep <= microStepsForAcceleration) {
             lastStepTime = stepExpiration;
-            if (changeDirection && (currentMicroStep > microStepsTillZero)) {
+            if (changeDirection && (currentMicroStep >= microStepsTillZero)) {
                 if (directionDown != targetDirectionDown) {
                     directionDown = targetDirectionDown;
                     digitalWrite(dir_pin, directionDown);
