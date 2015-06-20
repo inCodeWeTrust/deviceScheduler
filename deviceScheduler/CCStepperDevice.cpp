@@ -145,6 +145,7 @@ void CCStepperDevice::prepareNextMove() {
     unsigned long t_stop;
     
     if (state & MOVING) {
+        if (!prepareNextMoveWhenFinished) {
         if ((theMove[movePointer]->target - currentPosition) < 0 || theMove[movePointer]->velocity < 0 || theMove[movePointer]->acceleration < 0) {
             if (!directionDown) {
                 prepareNextMoveWhenFinished = true;
@@ -159,7 +160,8 @@ void CCStepperDevice::prepareNextMove() {
                 return;
             }
         }
-
+        }
+        
         // *** current velocity ***
         if (currentMicroStep < microStepsForAcceleration) {
             // v * v = 2 * a * gamma
