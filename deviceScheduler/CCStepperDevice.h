@@ -68,5 +68,7 @@ public:
     void stopMoving();
     void finishMove();
     
+    void verbose();
+    
 };
 
