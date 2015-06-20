@@ -722,7 +722,9 @@ void CCStepperDevice::driveDynamic() {
             lastStepTime = stepExpiration;
             
 //            stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + veloBySquare) - velocity) * 1000000.0 / deceleration;
-            stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + veloBySquare) - velocity) * 1000000.0 * deceleration_inv;
+//            stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + veloBySquare) - velocity) * 1000000.0 * deceleration_inv;
+            stepExpiration = 1000000.0 * (sqrt(veloBySquare + (currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec) - velocity) * deceleration_inv + timeForAccAndConstSpeed;
+
             
             if (stepExpiration - lastStepTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
             

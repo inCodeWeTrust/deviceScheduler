@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;--say &quot;try to close arduino window&quot;&#13;try&#13;set serialWindow to first window of process &quot;Arduino&quot; whose name begins with &quot;/dev/tty.usbmodem&quot;&#13;--say &quot;click close&quot;&#13;click button 1 of serialWindow&#13;end try&#13;end tell&#13;&apos;">
+               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#13;set serialWindow to first window of process &quot;Arduino&quot; whose name begins with &quot;/dev/tty.usbmodem&quot;&#13;click button 1 of serialWindow&#13;end try&#13;end tell&#13;&apos;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -19,7 +19,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#13;click menu item &quot;Serieller Monitor&quot; of menu &quot;Werkzeuge&quot; of menu bar item &quot;Werkzeuge&quot; of menu bar 1 of process &quot;Arduino&quot;&#13;--say &quot;clicked serial monitor&quot;&#13;end try&#13;end tell&#13;&apos;">
+               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;tell application &quot;Arduino&quot; to activate&#10;try&#13;click menu item &quot;Serieller Monitor&quot; of menu &quot;Werkzeuge&quot; of menu bar item &quot;Werkzeuge&quot; of menu bar 1 of process &quot;Arduino&quot;&#13;end try&#13;end tell&#13;&apos;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>
