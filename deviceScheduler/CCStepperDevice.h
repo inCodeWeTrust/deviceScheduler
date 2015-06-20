@@ -31,7 +31,7 @@ class CCStepperDevice : public CCDevice {
     unsigned long        currentMicroStep;
     float                currentVelocity, currVeloBySquare, veloBySquare;
 //    long                currentVelocity, currVeloBySquare, veloBySquare;
-    bool                 changeDirection, targetDirectionDown;
+    bool                 changeDirection, targetDirectionDown, prepareNextMoveWhenFinished;
     unsigned char        *steppingUnit;
     float                *positionUnit;
     

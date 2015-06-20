@@ -110,16 +110,17 @@ void loop() {
 
         
         
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(2 * 36, 14, 5.0, 5.0);
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(2 * 36, 10, 5.0, 5.0);
         scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
-        
-        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(36, 10, 5.0, 5.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord1, 10000);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, 2 + n);
+        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(2 * 36, 20, 5.0, 5.0);
         
         unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(146, 16, 6.0, 6.0);
         scheduler->device[stockStepper]->setStartDateForMove(supplyRecord2, 16000);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, n + 40);
-        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(0, 20, 8.0, 8.0);
+        scheduler->device[stockStepper]->setStopEventForMove(supplyRecord2, stockStepper, supplyRecord2, 10 + n, false);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, n + 40);
+//        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(0, 20, 8.0, 8.0);
+
 //        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord3, stockStepper, supplyRecord3, 180);
 //        unsigned char supplyRecord4 = scheduler->device[stockStepper]->addMove(0, 80, 8.0, 8.0);
         
