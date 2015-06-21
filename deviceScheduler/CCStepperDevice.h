@@ -12,7 +12,8 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             (CCSTEPPERDEVICE_BASICOUTPUT | CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG | CCSTEPPERDEVICE_MOVEMENTDEBUG)
+#define CCSTEPPERDEVICE_VERBOSE             (CCSTEPPERDEVICE_BASICOUTPUT | CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG )
+//| CCSTEPPERDEVICE_MOVEMENTDEBUG)
 
 
 
@@ -31,7 +32,8 @@ class CCStepperDevice : public CCDevice {
     float                currentVelocity, currVeloBySquare, veloBySquare;
     bool                 prepareNextMoveWhenFinished;
     unsigned char        *steppingUnit;
-    float                *positionUnit;
+    unsigned long        startPosition;
+    float                stepsPerDegree, degreesPerMicroStep;
     
     void                 kickDown();
     void                 kickUp();
@@ -46,11 +48,11 @@ public:
     unsigned char        *microStepPin;
     unsigned char        highestSteppingMode;
     unsigned char        *stepModeCode;
-    float                anglePerStep;
+    unsigned int         stepsPerRoation;
     int                  acceleration_max;
     
     
-    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, float anglePerStep);
+    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation);
     ~CCStepperDevice();
     
     

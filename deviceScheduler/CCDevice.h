@@ -13,6 +13,7 @@
 #define BUTTON                          0x02
 #define POSITION                        0x04
 #define SWITCH                          0x08
+#define FOLLOW                          0x10
 
 //  device state:
 #define SLEEPING                        0x00

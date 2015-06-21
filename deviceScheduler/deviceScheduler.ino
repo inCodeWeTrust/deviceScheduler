@@ -85,13 +85,13 @@ void loop() {
     freeRam();
     unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_PIN, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
     freeRam();
-    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_ANGLE_PER_STEP);
+    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
     freeRam();
 //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
     freeRam();
     
     
-    for (int n = 2; n < 72; n+=4) {
+    for (int n = 80; n < 4000; n+=80) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -106,18 +106,21 @@ void loop() {
         
         int theValue = analogRead(A2) / 2;
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
-//        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove((long)n * n / 80, n, 100, 103);
+
+        scheduler->device[stockStepper]-> currentPosition = 0;
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(360, 50, 20.0, 20.0);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, 180);
+        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-(long)n * n / 80, n, 100, 103);
 
         
         
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(-2 * 36, 25, 5.0, 5.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, -(2 + n));
-        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-4 * 36, 10, 5.0, 5.0);
-        
-        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(146, -16, 6.0, 6.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord2, 16000);
-        scheduler->device[stockStepper]->setStopEventForMove(supplyRecord2, stockStepper, supplyRecord2, -80 + n, false);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, -(2 + 10 * n));
+//        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-3 * 360, 100, 50.0, 50.0);
+//        
+//        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(-2080, 160, 60.0, 60.0);
+//        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord2, 16000);
+//        scheduler->device[stockStepper]->setStopEventForMove(supplyRecord2, stockStepper, supplyRecord2, -(1100 + 10 * n), false);
 //        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, n + 40);
 //        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(0, 20, 8.0, 8.0);
 
