@@ -41,7 +41,7 @@ public:
     
     unsigned char countOfDevices;
     
-    CCDevice *device[10];
+    CCDevice *device[3];
     
     CCDeviceScheduler();
     ~CCDeviceScheduler();

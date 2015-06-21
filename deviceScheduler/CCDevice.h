@@ -83,7 +83,7 @@ public:
         onEventMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay) : target(target), velocity(velocity), acceleration(acceleration), deceleration(deceleration), startDelay(startDelay), startEvent(0), stopEvent(0), startTime(0), timeout(0), startButton(0), stopButton(0), startButtonState(0), stopButtonState(0), startTriggerDevice(0), startTriggerMove(0), startTriggerPosition(0), stopTriggerDevice(0), stopTriggerMove(0), stopTriggerPosition(0), stopSharply(0) {}
     };
     
-    onEventMove         *theMove[10];
+    onEventMove         *theMove[4];
     
     
     virtual ~CCDevice();

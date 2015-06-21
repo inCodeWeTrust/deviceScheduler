@@ -151,7 +151,7 @@ void CCDeviceScheduler::getAllDevices() {
         Serial.print(device[i]->deviceName);
         Serial.print(F(", type: "));
         Serial.print(getNameOfDeviceType(device[i]->type));
-        Serial.print(", moves: ");
+        Serial.print(F(", moves: "));
         Serial.println(device[i]->countOfMoves);
     }
     Serial.println();
