@@ -87,11 +87,11 @@ void loop() {
     freeRam();
     unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
     freeRam();
-//    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
-    freeRam();
+    //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
+    //    freeRam();
     
     
-    for (int n = 80; n < 4000; n+=80) {
+    for (int n = 2000; n < 6000; n+=500) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -99,19 +99,28 @@ void loop() {
         // ########## setStartDateForMove(unsigned char moveIndex, unsigned long startTime)
         // ########## setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState)
         // ########## setStartEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition)
-        //
+        
+        // ########## setDisposeFollowingMoveForMove(unsigned char moveIndex)
+        
+        // ########## setSwitchDateForMove(unsigned char moveIndex, unsigned long startTime);
+        // ########## setSwitchButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
+        // ########## setSwitchEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+        
         // ########## setTimeoutForMove(unsigned char moveIndex, unsigned long timeout, boolean stopSharply)
         // ########## setStopButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, boolean stopSharply)
         // ########## setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply)
         
-        int theValue = analogRead(A2) / 2;
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
 
         scheduler->device[stockStepper]-> currentPosition = 0;
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(360, 50, 20.0, 20.0);
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(-36, 60, 200.0, 180.0);
         scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, 180);
-        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-(long)n * n / 80, n, 100, 103);
+        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord);
+        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(560, 200, 160, 60);
+        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(860, 60, 60, 10);
+        scheduler->device[stockStepper]->setSwitchDateForMove(supplyRecord1, 5000);
+        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(8000, 1200, 180, 180);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, 600);
 
         
         

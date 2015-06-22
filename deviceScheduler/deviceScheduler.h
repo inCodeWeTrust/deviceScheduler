@@ -25,8 +25,8 @@
 
 #define VERBOSE_BUTTON                      A5
 
-#define STEPPINGPERIOD_TO_KICK_UP           800
-#define STEPPINGPERIOD_TO_KICK_DOWN         1600
+#define STEPPINGPERIOD_TO_KICK_UP           600
+#define STEPPINGPERIOD_TO_KICK_DOWN         1200
 
 
 
@@ -41,7 +41,7 @@
 
 #define STEPPER_STOCK_HIGHEST_STEPPINGMODE  4        
 #define STEPPER_STOCK_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
-#define STEPPER_STOCK_STEPS_PER_ROTATION    200
+#define STEPPER_STOCK_STEPS_PER_ROTATION    400
 #define STEPPER_STOCK_ACC_MAX               200
 
 

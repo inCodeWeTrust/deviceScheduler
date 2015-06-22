@@ -48,7 +48,6 @@ class CCServoDevice : public CCDevice {
     void prepareNextMove();
     void startMove();
     void driveDynamic();
-    void switchToNextMove();
     void initiateStop();
     void stopMoving();
     void finishMove();

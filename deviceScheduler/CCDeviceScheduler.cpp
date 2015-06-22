@@ -219,7 +219,7 @@ void CCDeviceScheduler::getMovesForDevice(unsigned char theDevice) {
             Serial.print(F(", at position: "));
             Serial.print(device[theDevice]->theMove[i]->stopTriggerPosition);
         }
-        if (device[theDevice]->theMove[i]->stopEvent & 0x10) {
+        if (device[theDevice]->theMove[i]->stopEvent & FOLLOW) {
             Serial.print(F(" --> switch to next move"));
         }
         Serial.println();
@@ -337,10 +337,13 @@ void CCDeviceScheduler::runTheLoop() {
                                     Serial.println((int)device[s]->movePointer);
                                 }
                                 
-                                if (device[s]->stopEvent & 0x10) {                                              // switch immediately to next move?
+                                if (device[s]->stopEvent & FOLLOW) {                                              // switch immediately to next move?
                                     device[s]->movePointer++;                                                   // go for next job! (if existing)
                                     if (device[s]->movePointer < device[s]->countOfMoves) {                     //  all tasks done? no!
                                         device[s]->prepareNextMove();
+                                    }
+                                    else {
+                                        device[s]->stopMoving();
                                     }
                                 }
                                 else {                                                                          // just stop. but how?
@@ -375,10 +378,13 @@ void CCDeviceScheduler::runTheLoop() {
                                     Serial.println((int)device[s]->movePointer);
                                 }
                                 
-                                if (device[s]->stopEvent & 0x10) {                                              // switch immediately to next move?
+                                if (device[s]->stopEvent & FOLLOW) {                                              // switch immediately to next move?
                                     device[s]->movePointer++;                                                   // go for next job! (if existing)
                                     if (device[s]->movePointer < device[s]->countOfMoves) {                     //  all tasks done? no!
                                         device[s]->prepareNextMove();
+                                    }
+                                    else {
+                                        device[s]->stopMoving();
                                     }
                                 }
                                 else {                                                                          // just stop. but how?
@@ -415,7 +421,7 @@ void CCDeviceScheduler::runTheLoop() {
                                         Serial.println((int)device[s]->movePointer);
                                     }
                                     
-                                    if (device[s]->stopEvent & 0x10) {                                          // switch immediately to next move?
+                                    if (device[s]->stopEvent & FOLLOW) {                                          // switch immediately to next move?
                                         device[s]->movePointer++;                                               // go for next job! (if existing)
                                         if (device[s]->movePointer < device[s]->countOfMoves) {                 // all tasks done? no!
                                             device[s]->prepareNextMove();
@@ -430,6 +436,9 @@ void CCDeviceScheduler::runTheLoop() {
                                                 Serial.print(F(" target: "));
                                                 Serial.println((int)device[s]->target);
                                             }
+                                        }
+                                        else {
+                                            device[s]->stopMoving();
                                         }
                                     }
                                     else {                                                                      // just stop. but how?

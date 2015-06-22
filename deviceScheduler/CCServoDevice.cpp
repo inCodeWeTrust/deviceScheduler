@@ -230,8 +230,6 @@ void CCServoDevice::initiateStop() {
     }
 }
 
-void CCServoDevice::switchToNextMove() {}
-
 void CCServoDevice::stopMoving() {
     state &= ~MOVING;
     state |= MOVE_DONE;
