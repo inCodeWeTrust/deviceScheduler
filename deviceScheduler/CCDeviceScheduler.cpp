@@ -416,6 +416,7 @@ void CCDeviceScheduler::runTheLoop() {
                                     }
                                     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                                         Serial.print(taskTime);
+                                        Serial.print(F(": "));
                                         Serial.print(device[s]->deviceName);
                                         Serial.print(F(" stop/switch "));
                                         Serial.println((int)device[s]->movePointer);

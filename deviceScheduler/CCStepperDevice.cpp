@@ -166,6 +166,8 @@ void CCStepperDevice::prepareNextMove() {
             // v * v = 2 * a * microSteps / microStepsPerStep
             // ==> v = sqrt(2 * a * microSteps / (1 << microSteppingMode))
             currentVelocity = sqrt(abs(acceleration) * (currentMicroStep << 1) / (1 << highestSteppingMode));
+            // v = a * t ???
+            currentVelocity = acceleration * elapsedTime;
         }
         else if (currentMicroStep < microStepsForAccAndConstSpeed) {
             currentVelocity = velocity;

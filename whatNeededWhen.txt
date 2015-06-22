@@ -1,0 +1,48 @@
+//
+//  whatNeededWhen
+//  Text
+//  ----------------------------------
+//  Developed with embedXcode
+//
+//  Project 	deviceScheduler
+//  Created by 	Little Abakus on 22.06.15
+//  Copyright 	© 2015 Little Abakus
+//  License	<#license#>
+//
+
+
+
+
+
+*** what is calculated ***
+currentVelocity
+directionDown
+velocity
+veloBySquare
+currVeloBySquare
+
+
+
+
+
+*** driveDynamic when accelerating ***
+directionDown
+startPosition
+microStepsForAcceleration
+currVeloBySquare
+c0_acc
+currentVelocity
+acceleration_inv
+
+*** driveDynamic while constant speed ***
+timeForAcceleration
+c1
+
+*** driveDynamic when decelerating ***
+timeForAccAndConstSpeed
+microStepsForAccAndConstSpeed
+c0_dec
+veloBySquare
+velocity
+deceleration_inv
+
