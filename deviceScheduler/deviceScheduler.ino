@@ -91,7 +91,7 @@ void loop() {
     //    freeRam();
     
     
-    for (int n = 2000; n < 6000; n+=500) {
+    for (int n = 1; n < 15; n++) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -113,16 +113,16 @@ void loop() {
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
 
         scheduler->device[stockStepper]-> currentPosition = 0;
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(1 * 360, 60, 40.0, 40.0);
+        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(1 * 360, 120, 40.0, 40.0);
         scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
-        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord);
-        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(0, 120, 80, 80);
-        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord1);
-        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(2 * 360, 60, 100, 100);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord2, stockStepper, supplyRecord2, 360);
-        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(20 * 360, 1200, 240, 240);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord3, stockStepper, supplyRecord3, 18 * 360);
-        unsigned char supplyRecord4 = scheduler->device[stockStepper]->addMove(24 * 360, 100, 120, 120);
+//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord);
+//        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(0, 120, 80, 80);
+//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord1);
+//        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(2 * 360, 60, 100, 100);
+        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, n * 23);
+        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(2 * 360, 400, 240, 240);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord3, stockStepper, supplyRecord3, 18 * 360);
+//        unsigned char supplyRecord4 = scheduler->device[stockStepper]->addMove(24 * 360, 100, 120, 120);
         
         
 //        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, -(2 + 10 * n));

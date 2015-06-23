@@ -143,6 +143,7 @@ void CCStepperDevice::detachDevice() {
 
 
 void CCStepperDevice::prepareNextMove() {
+    unsigned long t_prep = micros();
     if (state & MOVING) {
         if (stopEvent == FOLLOW) {
             if ((theMove[movePointer]->target - currentPosition) < 0) {             // when switching to move in different direction
@@ -162,18 +163,15 @@ void CCStepperDevice::prepareNextMove() {
         }
         // *** current velocity ***
         if (currentMicroStep < microStepsForAcceleration) {
-            // v * v = 2 * a * n
-            // v * v = 2 * a * microSteps / microStepsPerStep
-            // ==> v = sqrt(2 * a * microSteps / (1 << microSteppingMode))
-            currentVelocity = sqrt(abs(acceleration) * (currentMicroStep << 1) / (1 << highestSteppingMode));
-            // v = a * t ???
-            currentVelocity = acceleration * elapsedTime;
+            // v = a * t
+            currentVelocity = elapsedTime * 0.000001 * acceleration;
         }
         else if (currentMicroStep < microStepsForAccAndConstSpeed) {
             currentVelocity = velocity;
         }
         else {
-            currentVelocity = sqrt(abs(deceleration) * ((microStepsToGo - currentMicroStep) << 1) / (1 << highestSteppingMode));
+            // v - v0 = a * t ==> v = a * t + v0
+            currentVelocity = (elapsedTime - timeForAccAndConstSpeed) * 0.000001 * deceleration + velocity;
         }
     }
     else {
@@ -398,6 +396,8 @@ void CCStepperDevice::prepareNextMove() {
         Serial.print(F(", deceleration: "));
         Serial.println(this->deceleration);
     }
+    Serial.print(micros() - t_prep);
+    Serial.println(F(" ms for prep"));
 }
 
 
