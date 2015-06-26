@@ -45,6 +45,8 @@ class CCServoDevice : public CCDevice {
     void detachDevice();
     void enableDevice();
     void disableDevice();
+    
+    void reviewValues();
     void prepareNextMove();
     void startMove();
     void driveDynamic();

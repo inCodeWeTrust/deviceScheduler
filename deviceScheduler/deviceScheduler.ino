@@ -91,7 +91,7 @@ void loop() {
     //    freeRam();
     
     
-    for (int n = 1; n < 15; n++) {
+    for (int n = 5; n < 20; n++) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -113,18 +113,17 @@ void loop() {
         //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
 
         scheduler->device[stockStepper]-> currentPosition = 0;
-        unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(1 * 360, 120, 40.0, 40.0);
-        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
-//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord);
-//        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(0, 120, 80, 80);
-//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(supplyRecord1);
-//        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(2 * 360, 60, 100, 100);
-        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, n * 23);
-        unsigned char supplyRecord3 = scheduler->device[stockStepper]->addMove(2 * 360, 400, 240, 240);
-//        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord3, stockStepper, supplyRecord3, 18 * 360);
-//        unsigned char supplyRecord4 = scheduler->device[stockStepper]->addMove(24 * 360, 100, 120, 120);
-        
-        
+        unsigned char moveToStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_START_POSITION, 2400, 400.0, 400.0);
+        scheduler->device[stockStepper]->setStartDateForMove(moveToStartGroove, 100);
+        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(moveToStartGroove);
+        unsigned char makeStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400, 800.0, 800.0);
+        scheduler->device[stockStepper]->setSwitchEventForMove(makeStartGroove, stockStepper, makeStartGroove, STEPPER_BRIDGE_SONG_START_POSITION);
+        unsigned char makeMainGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 420, 600, 600);
+        scheduler->device[stockStepper]->setSwitchEventForMove(makeMainGroove, stockStepper, makeMainGroove, STEPPER_BRIDGE_SONG_END_POSITION);
+        unsigned char makeEndGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400, 800, 800);
+        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(makeEndGroove);
+        unsigned char returnToParkPosition = scheduler->device[stockStepper]->addMove(0, 2400, 600, 600);
+//        scheduler->device[stockStepper]->setStartDateForMove(test, 100);
 //        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, -(2 + 10 * n));
 //        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-3 * 360, 100, 50.0, 50.0);
 //        
@@ -237,8 +236,10 @@ void loop() {
         
         scheduler->getAllMoves();
         
-        
-        
+        scheduler->reviewMoves();
+
+        scheduler->getAllMoves();
+
         freeRam();
         
         

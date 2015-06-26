@@ -20,9 +20,21 @@ directionDown
 velocity
 veloBySquare
 currVeloBySquare
-
-
-
+stepsForDeceleration
+accelerateDown
+stepsForAcceleration
+deceleration
+acceleration
+acceleration_inv
+<-- deceleration_inv
+<-- timeForAcceleration
+<-- timeForAccAndConstSpeed
+c0_acc
+<-- c0_dec
+<-- c1
+microStepsToGo
+microStepsForAcceleration
+<-- microStepsForAccAndConstSpeed
 
 
 *** driveDynamic when accelerating ***
@@ -35,14 +47,14 @@ currentVelocity
 acceleration_inv
 
 *** driveDynamic while constant speed ***
-timeForAcceleration
-c1
+--> timeForAcceleration
+--> c1
 
 *** driveDynamic when decelerating ***
-timeForAccAndConstSpeed
-microStepsForAccAndConstSpeed
-c0_dec
+--> timeForAccAndConstSpeed
+--> microStepsForAccAndConstSpeed
+--> c0_dec
 veloBySquare
 velocity
-deceleration_inv
+--> deceleration_inv
 

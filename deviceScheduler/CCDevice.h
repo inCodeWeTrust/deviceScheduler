@@ -121,6 +121,7 @@ public:
     virtual void enableDevice() = 0;
     virtual void disableDevice() = 0;
     
+    virtual void reviewValues() = 0;
     virtual void prepareNextMove() = 0;
     virtual void startMove() = 0;
     virtual void driveDynamic() = 0;

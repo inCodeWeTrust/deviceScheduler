@@ -125,22 +125,22 @@ unsigned char CCDeviceScheduler::addStepper(String deviceName, unsigned char dir
     return countOfDevices - 1;
 }
 
-unsigned char CCDeviceScheduler::addSolenoid(String deviceName, unsigned char solenoid_pin) {
-
-    device[countOfDevices] = new CCSolenoidDevice(deviceName, solenoid_pin);
-    
-    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->type));
-        Serial.print(F(": "));
-        Serial.println(device[countOfDevices]->deviceName);
-    }
-    
-    countOfDevices++;
-    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
-    
-    return countOfDevices - 1;
-}
+//unsigned char CCDeviceScheduler::addSolenoid(String deviceName, unsigned char solenoid_pin) {
+//
+//    device[countOfDevices] = new CCSolenoidDevice(deviceName, solenoid_pin);
+//    
+//    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+//        Serial.print(F("[CCDeviceScheduler]: provided "));
+//        Serial.print(getNameOfDeviceType(device[countOfDevices]->type));
+//        Serial.print(F(": "));
+//        Serial.println(device[countOfDevices]->deviceName);
+//    }
+//    
+//    countOfDevices++;
+//    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
+//    
+//    return countOfDevices - 1;
+//}
 
 void CCDeviceScheduler::getAllDevices() {
     Serial.println(F("[CCDeviceScheduler]: My Devices: "));
@@ -231,6 +231,12 @@ void CCDeviceScheduler::getMovesForDevice(unsigned char theDevice) {
 void CCDeviceScheduler::deleteAllMoves() {
     for (int i = 0; i < countOfDevices; i++) {
         device[i]->deleteMoves();
+    }
+}
+
+void CCDeviceScheduler::reviewMoves() {
+    for (unsigned char d; d < countOfDevices; d++) {
+        device[d]->reviewValues();
     }
 }
 

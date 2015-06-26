@@ -80,6 +80,7 @@ void CCServoDevice::detachDevice() {
     theServo.detach();
 }
 
+void CCServoDevice::reviewValues() {}
 
 void CCServoDevice::prepareNextMove() {
     /*

@@ -25,6 +25,7 @@ class CCStepperDevice : public CCDevice {
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
     unsigned long        timeForAcceleration, timeForAccAndConstSpeed;
     unsigned long        microStepsToGo, microStepsForAcceleration, microStepsForAccAndConstSpeed;
+    bool                 accelerateDown;
     float                currentVelocity, currVeloBySquare, veloBySquare;
     signed long          t0;
     unsigned long        stepExpiration, elapsedTime, lastStepTime;
@@ -34,7 +35,7 @@ class CCStepperDevice : public CCDevice {
     float                stepsPerDegree, degreesPerMicroStep;
     unsigned long        currentMicroStep;
     float                startPosition;
-    bool                 prepareAndStartNextMoveWhenFinished;
+    bool                 prepareAndStartNextMoveWhenFinished, switchAtNextFullStep;
     
     void                 kickDown();
     void                 kickUp();
@@ -61,6 +62,8 @@ public:
     void detachDevice();
     void enableDevice();
     void disableDevice();
+    
+    void reviewValues();
     void prepareNextMove();
     void startMove();
     void driveDynamic();
