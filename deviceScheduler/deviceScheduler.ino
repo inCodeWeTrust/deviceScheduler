@@ -91,7 +91,7 @@ void loop() {
     //    freeRam();
     
     
-    for (int n = 5; n < 20; n++) {
+    for (int n = 0; n < 2000; n+=100) {
         // ============================================================================================================================
         // ============= moves ========================================================================================================
         // ============================================================================================================================
@@ -110,20 +110,22 @@ void loop() {
         // ########## setStopButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, boolean stopSharply)
         // ########## setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply)
         
-        //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
 
-        scheduler->device[stockStepper]-> currentPosition = 0;
-        unsigned char moveToStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_START_POSITION, 2400, 400.0, 400.0);
-        scheduler->device[stockStepper]->setStartDateForMove(moveToStartGroove, 100);
-        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(moveToStartGroove);
-        unsigned char makeStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400, 800.0, 800.0);
-        scheduler->device[stockStepper]->setSwitchEventForMove(makeStartGroove, stockStepper, makeStartGroove, STEPPER_BRIDGE_SONG_START_POSITION);
-        unsigned char makeMainGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 420, 600, 600);
-        scheduler->device[stockStepper]->setSwitchEventForMove(makeMainGroove, stockStepper, makeMainGroove, STEPPER_BRIDGE_SONG_END_POSITION);
-        unsigned char makeEndGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400, 800, 800);
-        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(makeEndGroove);
-        unsigned char returnToParkPosition = scheduler->device[stockStepper]->addMove(0, 2400, 600, 600);
-//        scheduler->device[stockStepper]->setStartDateForMove(test, 100);
+//        scheduler->device[stockStepper]-> currentPosition = 0;
+//        unsigned char moveToStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_START_POSITION, 2400 + n, 800.0 + n, 800.0 + n);
+//        scheduler->device[stockStepper]->setStartDateForMove(moveToStartGroove, 100);
+//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(moveToStartGroove);
+//        unsigned char makeStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400 + n, 1200.0 + n, 1200.0 + n);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(makeStartGroove, stockStepper, makeStartGroove, STEPPER_BRIDGE_SONG_START_POSITION);
+//        unsigned char makeMainGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 420 + n, 600, 600);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(makeMainGroove, stockStepper, makeMainGroove, STEPPER_BRIDGE_SONG_END_POSITION);
+//        unsigned char makeEndGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400 + n, 800 + n, 800 + n);
+//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(makeEndGroove);
+//        unsigned char returnToParkPosition = scheduler->device[stockStepper]->addMove(0, 2400 + n, 600 + n, 600 + n);
+//
+//        
+        
+        //        scheduler->device[stockStepper]->setStartDateForMove(test, 100);
 //        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, -(2 + 10 * n));
 //        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-3 * 360, 100, 50.0, 50.0);
 //        
@@ -167,66 +169,78 @@ void loop() {
 //        unsigned char supplyRecord2 = scheduler->device[stockStepper]->addMove(n * 720, n * 100, 100.0, 50.0);
 //        
         freeRam();
-        /*
-         //  turn grappler to stock: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-         unsigned char turnToStock = scheduler->device[turnServo]->addMove(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
-         scheduler->device[turnServo]->setStartButtonForMove(turnToStock, RECORD_AVAILABLE_BUTTON, HIGH);
-         freeRam();
-         
-         //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
-         unsigned char lowerToStock = scheduler->device[liftServo]->addMove(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
-         scheduler->device[liftServo]->setStartEventForMove(lowerToStock, turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
-         freeRam();
-         
-         //  grip new record: start when grappler reached stock (LIFT_STOCK_POSITION)
-         unsigned char gripNewRecord = scheduler->device[vacuumSolenoid]->addMove(SOLENOID_DUTYCYCLE, SOLENOID_FREQUENCY, 0, 500);
-         scheduler->device[vacuumSolenoid]->setStartEventForMove(gripNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
-         freeRam();
-         
-         //  lift the new record: start with startDelay after stock was reached (LIFT_STOCK_POSITION)
-         unsigned char liftNewRecord = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, 2666);
-         scheduler->device[liftServo]->setStartEventForMove(liftNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
-         freeRam();
-         
-         //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-         unsigned char turnRecordToTable = scheduler->device[turnServo]->addMove(TURN_TABLE_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, NO_START_DELAY);
-         scheduler->device[turnServo]->setStartEventForMove(turnRecordToTable, liftServo, liftNewRecord, LIFT_FROM_STOCK_TRIGGER_TURN);
-         freeRam();
-         
-         //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
-         unsigned char lowerRecordToTable = scheduler->device[liftServo]->addMove(LIFT_TABLE_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-         scheduler->device[liftServo]->setStartEventForMove(lowerRecordToTable, turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
-         scheduler->device[vacuumSolenoid]->setStopEventForMove(gripNewRecord, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION, 0);
-         freeRam();
-         
-         //  lift for going to park position: start with startDelay after turn table was reached (LIFT_TABLE_POSITION)
-         //    unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 903);
-         unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 500);
-         //      scheduler->device[liftServo]->setStopButtonForMove(liftForParkPosition, START_BUTTON, LOW, true);
-         scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerToStock, LIFT_TABLE_POSITION);
-         //scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
-         freeRam();
-         
-         //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-         unsigned char turnToParkPosition = scheduler->device[turnServo]->addMove(TURN_PARK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
-         scheduler->device[turnServo]->setStartEventForMove(turnToParkPosition, liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
-         freeRam();
-         
-         //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
-         //    unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 903);
-         unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
-         scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, liftServo, liftForParkPosition, LIFT_UP_POSITION);
-         //      scheduler->device[liftServo]->setStopButtonForMove(lowerForParkPosition, START_BUTTON, LOW, 1);
-         //    scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
-         freeRam();
-         
-         unsigned char goDownForLoading = scheduler->device[stockStepper]->addMove(-3600L, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 3003);
-         scheduler->device[stockStepper]->setStartEventForMove(goDownForLoading, liftServo, lowerForParkPosition, LIFT_PARK_POSITION);
-         //    scheduler->device[stockStepper]->setStartDateForMove(goDownForLoading, 100);
-         //      scheduler->device[stockStepper]->setStartButtonForMove(supplyRecord, START_BUTTON, LOW);
-         //      scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
-         
-         */
+
+        
+        
+        //  supply a new record
+        
+//        //  lift grappler: start soon
+//        unsigned char liftFromParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
+//        scheduler->device[liftServo]->setStartDateForMove(liftFromParkPosition, 100);
+//        freeRam();
+        
+        //  turn grappler to stock: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        unsigned char turnToStock = scheduler->device[turnServo]->addMove(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
+        scheduler->device[turnServo]->setStartButtonForMove(turnToStock, RECORD_AVAILABLE_BUTTON, HIGH);
+        freeRam();
+        
+        //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
+        unsigned char lowerToStock = scheduler->device[liftServo]->addMove(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
+        scheduler->device[liftServo]->setStartEventForMove(lowerToStock, turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
+        freeRam();
+        
+        //         //  grip new record: start when grappler reached stock (LIFT_STOCK_POSITION)
+        //         unsigned char gripNewRecord = scheduler->device[vacuumSolenoid]->addMove(SOLENOID_DUTYCYCLE, SOLENOID_FREQUENCY, 0, 500);
+        //         scheduler->device[vacuumSolenoid]->setStartEventForMove(gripNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
+        //         freeRam();
+        
+        //  lift the new record: start with startDelay after stock was reached (LIFT_STOCK_POSITION)
+        unsigned char liftNewRecord = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, 2666);
+        scheduler->device[liftServo]->setStartEventForMove(liftNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
+        freeRam();
+        
+        //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        unsigned char turnRecordToTable = scheduler->device[turnServo]->addMove(TURN_TABLE_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, NO_START_DELAY);
+        scheduler->device[turnServo]->setStartEventForMove(turnRecordToTable, liftServo, liftNewRecord, LIFT_FROM_STOCK_TRIGGER_TURN);
+        freeRam();
+        
+        //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
+        unsigned char lowerRecordToTable = scheduler->device[liftServo]->addMove(LIFT_TABLE_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
+        scheduler->device[liftServo]->setStartEventForMove(lowerRecordToTable, turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+//        scheduler->device[vacuumSolenoid]->setStopEventForMove(gripNewRecord, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION, 0);
+        freeRam();
+        
+        //  lift for going to park position: start with startDelay after turn table was reached (LIFT_TABLE_POSITION)
+        //    unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 903);
+        unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 500);
+        //      scheduler->device[liftServo]->setStopButtonForMove(liftForParkPosition, START_BUTTON, LOW, true);
+        scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerToStock, LIFT_TABLE_POSITION);
+        //scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
+        freeRam();
+        
+        //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        unsigned char turnToParkPosition = scheduler->device[turnServo]->addMove(TURN_PARK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
+        scheduler->device[turnServo]->setStartEventForMove(turnToParkPosition, liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
+        freeRam();
+        
+        //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
+        //    unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 903);
+        unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
+        scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, liftServo, liftForParkPosition, LIFT_UP_POSITION);
+        //      scheduler->device[liftServo]->setStopButtonForMove(lowerForParkPosition, START_BUTTON, LOW, 1);
+        //    scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
+        freeRam();
+        
+        
+        
+        
+        
+//        unsigned char goDownForLoading = scheduler->device[stockStepper]->addMove(-3600L, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 3003);
+//        scheduler->device[stockStepper]->setStartEventForMove(goDownForLoading, liftServo, lowerForParkPosition, LIFT_PARK_POSITION);
+//        //    scheduler->device[stockStepper]->setStartDateForMove(goDownForLoading, 100);
+//        //      scheduler->device[stockStepper]->setStartButtonForMove(supplyRecord, START_BUTTON, LOW);
+//        //      scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
+//        
         // ============================================================================================================================
         // ============================================================================================================================
         // ============================================================================================================================

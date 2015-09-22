@@ -83,7 +83,7 @@ void CCServoDevice::detachDevice() {
 void CCServoDevice::reviewValues() {}
 
 void CCServoDevice::prepareNextMove() {
-    /*
+    
     target = theMove[movePointer]->target;
     velocity = theMove[movePointer]->velocity;
     acceleration = theMove[movePointer]->acceleration;
@@ -201,7 +201,7 @@ void CCServoDevice::prepareNextMove() {
         Serial.println(timeForConstantSpeed);
     }
 
-     */
+     
 }
 
 void CCServoDevice::startMove() {
@@ -251,7 +251,7 @@ void CCServoDevice::finishMove() {
 
 
 void CCServoDevice::driveDynamic() {
-    /*
+    
     elapsedTime = millis() - t0;
     
     // ramp up
@@ -344,5 +344,5 @@ void CCServoDevice::driveDynamic() {
     }
     
     stopMoving();
-    */
+    
 }

@@ -4301,7 +4301,7 @@
 /* Begin XCBuildConfiguration section */
 		A45F72551B1C70E400B5B7E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A45F72301B1C70E400B5B7E0 /* Arduino Uno.xcconfig */;
+			baseConfigurationReference = A45F72231B1C70E400B5B7E0 /* Arduino Due.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

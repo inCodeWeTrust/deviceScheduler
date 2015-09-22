@@ -239,20 +239,20 @@ void CCStepperDevice::prepareNextMove() {
     stopSharply = theMove[movePointer]->stopSharply;
     
     //    this takes ca 24us
-    //    t_stop = micros() - t_prepMove;
-    //    Serial.print("== copy parameters: ");
-    //    Serial.println(t_stop);
-    //    t_sum += t_stop;
-    //    t_prepMove = micros();
+//    t_stop = micros() - t_prepMove;
+//    Serial.print("== copy parameters: ");
+//    Serial.println(t_stop);
+//    t_sum += t_stop;
+//    t_prepMove = micros();
 
     stepsToGo = (float)(target - currentPosition) * stepsPerDegree;
 
     //    this takes ca 4us
-    //    t_stop = micros() - t_prepMove;
-    //    Serial.print("== stepsToGo: ");
-    //    Serial.println(t_stop);
-    //    t_sum += t_stop;
-    //    t_prepMove = micros();
+//    t_stop = micros() - t_prepMove;
+//    Serial.print("== stepsToGo: ");
+//    Serial.println(t_stop);
+//    t_sum += t_stop;
+//    t_prepMove = micros();
     
     if (stepsToGo < 0) {
         stepsToGo = -stepsToGo;
@@ -266,7 +266,7 @@ void CCStepperDevice::prepareNextMove() {
 //    t_stop = micros() - t_prepMove;
 //    Serial.print("== stepsToGo < 0: ");
 //    Serial.println(t_stop);
-//    t_sum += t_stop;gg
+//    t_sum += t_stop;
 //    t_prepMove = micros();
     
     

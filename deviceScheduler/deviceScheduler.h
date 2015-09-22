@@ -25,8 +25,8 @@
 
 #define VERBOSE_BUTTON                      A5
 
-#define STEPPINGPERIOD_TO_KICK_UP           450
-#define STEPPINGPERIOD_TO_KICK_DOWN         900
+#define STEPPINGPERIOD_TO_KICK_UP           150
+#define STEPPINGPERIOD_TO_KICK_DOWN         300
 
 
 
@@ -34,15 +34,16 @@
 
 #define STEPPER_STOCK_NAME                  "stockStepper"
 
-#define STEPPER_STOCK_DIR_PIN               5
-#define STEPPER_STOCK_STEP_PIN              6
-#define STEPPER_STOCK_ENABLE_PIN            7
-#define STEPPER_STOCK_MICROSTEPPINS         "2, 3, 4"
+#define STEPPER_STOCK_DIR_PIN               2
+#define STEPPER_STOCK_STEP_PIN              3
+#define STEPPER_STOCK_ENABLE_PIN            4
+#define STEPPER_STOCK_MICROSTEPPINS         "5, 6, 7"
 
 #define STEPPER_STOCK_HIGHEST_STEPPINGMODE  4        
 #define STEPPER_STOCK_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
 #define STEPPER_STOCK_STEPS_PER_ROTATION    400
-#define STEPPER_STOCK_ACC_MAX               200
+#define STEPPER_STOCK_PPS_MAX               800
+#define STEPPER_STOCK_ACC_MAX               2000
 
 
 
@@ -59,6 +60,20 @@
 #define SERVO_TURN_PIN                      11
 #define SERVO_TURN_MIN_POSITION             800
 #define SERVO_TURN_MAX_POSITION             2400
+
+
+#define STEPPER_CAT_NAME                  "catStepper"
+
+#define STEPPER_STOCK_DIR_PIN               5
+#define STEPPER_STOCK_STEP_PIN              6
+#define STEPPER_STOCK_ENABLE_PIN            7
+#define STEPPER_STOCK_MICROSTEPPINS         "2, 3, 4"
+
+#define STEPPER_STOCK_HIGHEST_STEPPINGMODE  4
+#define STEPPER_STOCK_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
+#define STEPPER_STOCK_STEPS_PER_ROTATION    400
+#define STEPPER_STOCK_ACC_MAX               200
+
 
 
 #define SOLENOID_VACUUM_NAME                "vacuumSolenoid"
@@ -105,10 +120,10 @@
 #define STEPPER_LOADING_SPEED             520
 #define STEPPER_LOADING_ACCEL             260
 
-#define STEPPER_BRIDGE_START_POSITION      32UL * 360 * 60 * 60 / 22 / 22
-#define STEPPER_BRIDGE_SONG_START_POSITION  STEPPER_BRIDGE_START_POSITION +  4UL * 360 * 60 * 60 / 22 / 22
-#define STEPPER_BRIDGE_SONG_END_POSITION    STEPPER_BRIDGE_START_POSITION + 32UL * 360 * 60 * 60 / 22 / 22
-#define STEPPER_BRIDGE_END_POSITION         STEPPER_BRIDGE_START_POSITION + 40UL * 360 * 60 * 60 / 22 / 22
+#define STEPPER_BRIDGE_START_POSITION      4UL * 360 * 60 * 60 / 22 / 22
+#define STEPPER_BRIDGE_SONG_START_POSITION  STEPPER_BRIDGE_START_POSITION + 8UL * 360 * 60 * 60 / 22 / 22
+#define STEPPER_BRIDGE_SONG_END_POSITION    STEPPER_BRIDGE_START_POSITION + 14UL * 360 * 60 * 60 / 22 / 22
+#define STEPPER_BRIDGE_END_POSITION         STEPPER_BRIDGE_START_POSITION + 18UL * 360 * 60 * 60 / 22 / 22
 
 
 #define SOLENOID_FREQUENCY                 10
