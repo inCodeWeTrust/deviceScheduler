@@ -49,30 +49,31 @@
 
 #define SERVO_LIFT_NAME                     "liftServo"
 
-#define SERVO_LIFT_PIN                      10
-#define SERVO_LIFT_MIN_POSITION             800
-#define SERVO_LIFT_MAX_POSITION             2400
+#define SERVO_LIFT_INDEX                    10
+#define SERVO_LIFT_MIN_POSITION             150
+#define SERVO_LIFT_MAX_POSITION             600
 
 
 
 #define SERVO_TURN_NAME                     "turnServo"
 
-#define SERVO_TURN_PIN                      11
-#define SERVO_TURN_MIN_POSITION             800
-#define SERVO_TURN_MAX_POSITION             2400
+#define SERVO_TURN_INDEX                    11
+#define SERVO_TURN_MIN_POSITION             150
+#define SERVO_TURN_MAX_POSITION             600
 
 
-#define STEPPER_CAT_NAME                  "catStepper"
+#define STEPPER_CAT_NAME                    "catStepper"
 
-#define STEPPER_STOCK_DIR_PIN               5
-#define STEPPER_STOCK_STEP_PIN              6
-#define STEPPER_STOCK_ENABLE_PIN            7
-#define STEPPER_STOCK_MICROSTEPPINS         "2, 3, 4"
+#define STEPPER_CAT_DIR_PIN                 14
+#define STEPPER_CAT_STEP_PIN                15
+#define STEPPER_CAT_ENABLE_PIN              16
+#define STEPPER_CAT_MICROSTEPPINS           "17, 18, 19"
 
-#define STEPPER_STOCK_HIGHEST_STEPPINGMODE  4
-#define STEPPER_STOCK_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
-#define STEPPER_STOCK_STEPS_PER_ROTATION    400
-#define STEPPER_STOCK_ACC_MAX               200
+#define STEPPER_CAT_HIGHEST_STEPPINGMODE    4
+#define STEPPER_CAT_STEPMODECODES           "0x00, 0x01, 0x02, 0x03, 0x07"
+#define STEPPER_CAT_STEPS_PER_ROTATION      400
+#define STEPPER_CAT_PPS_MAX                 800
+#define STEPPER_CAT_ACC_MAX                 2000
 
 
 
@@ -115,15 +116,15 @@
 #define TURN_TO_STOCK_TRIGGER_LIFT        900
 #define TURN_STOCK_POSITION               800
 
-#define STEPPER_SUPPLY_RECORD_SPEED       640
-#define STEPPER_SUPPLY_RECORD_ACCEL       320
-#define STEPPER_LOADING_SPEED             520
-#define STEPPER_LOADING_ACCEL             260
+#define STOCK_SUPPLY_RECORD_SPEED       640
+#define STOCK_SUPPLY_RECORD_ACCEL       320
+#define STOCK_LOADING_SPEED             520
+#define STOCK_LOADING_ACCEL             260
 
-#define STEPPER_BRIDGE_START_POSITION      4UL * 360 * 60 * 60 / 22 / 22
-#define STEPPER_BRIDGE_SONG_START_POSITION  STEPPER_BRIDGE_START_POSITION + 8UL * 360 * 60 * 60 / 22 / 22
-#define STEPPER_BRIDGE_SONG_END_POSITION    STEPPER_BRIDGE_START_POSITION + 14UL * 360 * 60 * 60 / 22 / 22
-#define STEPPER_BRIDGE_END_POSITION         STEPPER_BRIDGE_START_POSITION + 18UL * 360 * 60 * 60 / 22 / 22
+#define CAT_GROOVE_START_POSITION              4UL * 360 * 60 * 60 / 22 / 22
+#define CAT_SONG_START_POSITION         CAT_GROOVE_START_POSITION + 8UL * 360 * 60 * 60 / 22 / 22
+#define CAT_SONG_END_POSITION           CAT_GROOVE_START_POSITION + 14UL * 360 * 60 * 60 / 22 / 22
+#define CAT_GROOVE_END_POSITION         CAT_GROOVE_START_POSITION + 18UL * 360 * 60 * 60 / 22 / 22
 
 
 #define SOLENOID_FREQUENCY                 10

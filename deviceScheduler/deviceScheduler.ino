@@ -81,9 +81,9 @@ void loop() {
     // ============================================================================================================================
     // ============= devices ======================================================================================================
     // ============================================================================================================================
-    unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME, SERVO_LIFT_PIN, SERVO_LIFT_MIN_POSITION, SERVO_LIFT_MAX_POSITION, LIFT_PARK_POSITION);
+    unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME, SERVO_LIFT_INDEX, SERVO_LIFT_MIN_POSITION, SERVO_LIFT_MAX_POSITION, LIFT_PARK_POSITION);
     freeRam();
-    unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_PIN, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
+    unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_INDEX, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
     freeRam();
     unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
     freeRam();
@@ -112,14 +112,14 @@ void loop() {
         
 
 //        scheduler->device[stockStepper]-> currentPosition = 0;
-//        unsigned char moveToStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_START_POSITION, 2400 + n, 800.0 + n, 800.0 + n);
+//        unsigned char moveToStartGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_START_POSITION, 2400 + n, 800.0 + n, 800.0 + n);
 //        scheduler->device[stockStepper]->setStartDateForMove(moveToStartGroove, 100);
 //        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(moveToStartGroove);
-//        unsigned char makeStartGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400 + n, 1200.0 + n, 1200.0 + n);
-//        scheduler->device[stockStepper]->setSwitchEventForMove(makeStartGroove, stockStepper, makeStartGroove, STEPPER_BRIDGE_SONG_START_POSITION);
-//        unsigned char makeMainGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 420 + n, 600, 600);
-//        scheduler->device[stockStepper]->setSwitchEventForMove(makeMainGroove, stockStepper, makeMainGroove, STEPPER_BRIDGE_SONG_END_POSITION);
-//        unsigned char makeEndGroove = scheduler->device[stockStepper]->addMove(STEPPER_BRIDGE_END_POSITION, 2400 + n, 800 + n, 800 + n);
+//        unsigned char makeStartGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_END_POSITION, 2400 + n, 1200.0 + n, 1200.0 + n);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(makeStartGroove, stockStepper, makeStartGroove, CAT_SONG_START_POSITION);
+//        unsigned char makeMainGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_END_POSITION, 420 + n, 600, 600);
+//        scheduler->device[stockStepper]->setSwitchEventForMove(makeMainGroove, stockStepper, makeMainGroove, CAT_SONG_END_POSITION);
+//        unsigned char makeEndGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_END_POSITION, 2400 + n, 800 + n, 800 + n);
 //        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(makeEndGroove);
 //        unsigned char returnToParkPosition = scheduler->device[stockStepper]->addMove(0, 2400 + n, 600 + n, 600 + n);
 //
@@ -160,7 +160,7 @@ void loop() {
         
         //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(320, 400, 0.4, 103);
         //    unsigned char supplyRecord_01 = scheduler->device[stockStepper]->addMove(320, 400, 1.4, 103);
-        //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(100UL * 360UL, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 2103);
+        //    unsigned char supplyRecord = scheduler->device[stockStepper]->addMove(100UL * 360UL, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, 2103);
         //    //      scheduler->device[stockStepper]->setStartButtonForMove(supplyRecord, START_BUTTON, LOW);
 //        scheduler->device[stockStepper]->setStartDateForMove(supplyRecord, 100);
 //        scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
@@ -235,7 +235,7 @@ void loop() {
         
         
         
-//        unsigned char goDownForLoading = scheduler->device[stockStepper]->addMove(-3600L, STEPPER_SUPPLY_RECORD_SPEED, STEPPER_SUPPLY_RECORD_ACCEL, 3003);
+//        unsigned char goDownForLoading = scheduler->device[stockStepper]->addMove(-3600L, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, 3003);
 //        scheduler->device[stockStepper]->setStartEventForMove(goDownForLoading, liftServo, lowerForParkPosition, LIFT_PARK_POSITION);
 //        //    scheduler->device[stockStepper]->setStartDateForMove(goDownForLoading, 100);
 //        //      scheduler->device[stockStepper]->setStartButtonForMove(supplyRecord, START_BUTTON, LOW);
