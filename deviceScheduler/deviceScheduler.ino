@@ -46,6 +46,9 @@
 #include "deviceScheduler.h"
 #include "CCDeviceScheduler.h"
 
+//#include <Streaming.h>
+//#include <malloc.h>
+
 
 
 // Prototypes
@@ -53,6 +56,9 @@ int freeRam ();
 
 
 // Define variables and constants
+//extern char _end;
+//extern "C" char *sbrk(int i);
+
 
 
 
@@ -81,11 +87,16 @@ void loop() {
     // ============================================================================================================================
     // ============= devices ======================================================================================================
     // ============================================================================================================================
-    unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME, SERVO_LIFT_INDEX, SERVO_LIFT_MIN_POSITION, SERVO_LIFT_MAX_POSITION, LIFT_PARK_POSITION);
+    unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME, SERVO_LIFT_PIN, SERVO_LIFT_MIN_POSITION, SERVO_LIFT_MAX_POSITION, LIFT_PARK_POSITION);
     freeRam();
     unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_INDEX, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
     freeRam();
+    unsigned char headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME, SERVO_HEAD_LEFT_PIN, SERVO_HEAD_LEFT_MIN_POSITION, SERVO_HEAD_LEFT_MAX_POSITION, HEAD_LEFT_PARK_POSITION);
+    freeRam();
+    unsigned char headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME, SERVO_HEAD_RIGHT_PIN, SERVO_HEAD_RIGHT_MIN_POSITION, SERVO_HEAD_RIGHT_MAX_POSITION, HEAD_RIGHT_PARK_POSITION);
+    freeRam();
     unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
+    unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME, STEPPER_CAT_STEP_PIN, STEPPER_CAT_DIR_PIN, STEPPER_CAT_ENABLE_PIN, STEPPER_CAT_HIGHEST_STEPPINGMODE, STEPPER_CAT_STEPMODECODES, STEPPER_CAT_MICROSTEPPINS, STEPPER_CAT_STEPS_PER_ROTATION);
     freeRam();
     //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
     //    freeRam();
@@ -111,20 +122,6 @@ void loop() {
         // ########## setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply)
         
 
-//        scheduler->device[stockStepper]-> currentPosition = 0;
-//        unsigned char moveToStartGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_START_POSITION, 2400 + n, 800.0 + n, 800.0 + n);
-//        scheduler->device[stockStepper]->setStartDateForMove(moveToStartGroove, 100);
-//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(moveToStartGroove);
-//        unsigned char makeStartGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_END_POSITION, 2400 + n, 1200.0 + n, 1200.0 + n);
-//        scheduler->device[stockStepper]->setSwitchEventForMove(makeStartGroove, stockStepper, makeStartGroove, CAT_SONG_START_POSITION);
-//        unsigned char makeMainGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_END_POSITION, 420 + n, 600, 600);
-//        scheduler->device[stockStepper]->setSwitchEventForMove(makeMainGroove, stockStepper, makeMainGroove, CAT_SONG_END_POSITION);
-//        unsigned char makeEndGroove = scheduler->device[stockStepper]->addMove(CAT_GROOVE_END_POSITION, 2400 + n, 800 + n, 800 + n);
-//        scheduler->device[stockStepper]->setDisposeFollowingMoveForMove(makeEndGroove);
-//        unsigned char returnToParkPosition = scheduler->device[stockStepper]->addMove(0, 2400 + n, 600 + n, 600 + n);
-//
-//        
-        
         //        scheduler->device[stockStepper]->setStartDateForMove(test, 100);
 //        scheduler->device[stockStepper]->setSwitchEventForMove(supplyRecord, stockStepper, supplyRecord, -(2 + 10 * n));
 //        unsigned char supplyRecord1 = scheduler->device[stockStepper]->addMove(-3 * 360, 100, 50.0, 50.0);
@@ -172,12 +169,17 @@ void loop() {
 
         
         
-        //  supply a new record
+        //  supply a new record from stock
+        unsigned char supplyNewRecord = scheduler->device[stockStepper]->addMove(360L, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, 3003);
+        scheduler->device[stockStepper]->setStartDateForMove(supplyNewRecord, 100);
+        //        //      scheduler->device[stockStepper]->setStartButtonForMove(supplyRecord, START_BUTTON, LOW);
+        //        //      scheduler->device[stockStepper]->setStopButtonForMove(supplyRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
+
         
-//        //  lift grappler: start soon
-//        unsigned char liftFromParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-//        scheduler->device[liftServo]->setStartDateForMove(liftFromParkPosition, 100);
-//        freeRam();
+        //  lift grappler: start soon
+        unsigned char liftFromParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
+        scheduler->device[liftServo]->setStartDateForMove(liftFromParkPosition, 100);
+        freeRam();
         
         //  turn grappler to stock: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         unsigned char turnToStock = scheduler->device[turnServo]->addMove(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
@@ -211,11 +213,8 @@ void loop() {
         freeRam();
         
         //  lift for going to park position: start with startDelay after turn table was reached (LIFT_TABLE_POSITION)
-        //    unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 903);
         unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 500);
-        //      scheduler->device[liftServo]->setStopButtonForMove(liftForParkPosition, START_BUTTON, LOW, true);
-        scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerToStock, LIFT_TABLE_POSITION);
-        //scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
+        scheduler->device[liftServo]->setStartEventForMove(liftForParkPosition, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
         freeRam();
         
         //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
@@ -224,14 +223,41 @@ void loop() {
         freeRam();
         
         //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
-        //    unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 903);
         unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
-        scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, liftServo, liftForParkPosition, LIFT_UP_POSITION);
-        //      scheduler->device[liftServo]->setStopButtonForMove(lowerForParkPosition, START_BUTTON, LOW, 1);
-        //    scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
+        scheduler->device[liftServo]->setStartEventForMove(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
         freeRam();
         
+        //  move to start groove: start when grappler is in park position
+        unsigned char moveToStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_START_POSITION, 2400, 800.0, 800.0);
+        scheduler->device[catStepper]->setStartEventForMove(moveToStartGroove, liftServo, lowerForParkPosition, LIFT_PARK_POSITION);
         
+        //  lower head to record surface: start when reached start position of start groove
+        unsigned char lowerHeadForCuttingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        unsigned char lowerHeadForCuttingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        scheduler->device[headLeftServo]->setStartEventForMove(lowerHeadForCuttingLeft, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION);
+        scheduler->device[headRightServo]->setStartEventForMove(lowerHeadForCuttingRight, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION);
+        
+        //  make the groves: start when cuttinghead is in cutting position
+        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 2400, 1200.0, 1200.0);
+        scheduler->device[catStepper]->setStartEventForMove(makeStartGroove, headLeftServo, lowerHeadForCuttingLeft, HEAD_LEFT_CUT_POSITION);
+        scheduler->device[catStepper]->setSwitchEventForMove(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
+        unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 420, 600, 600);
+        scheduler->device[catStepper]->setSwitchEventForMove(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
+        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 2400, 800, 800);
+        
+        //  lift head after cutting: start, when end groove is finished
+        unsigned char liftHeadAfterCuttingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        unsigned char liftHeadAfterCuttingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        scheduler->device[headLeftServo]->setStartEventForMove(liftHeadAfterCuttingLeft, catStepper, makeEndGroove, CAT_SONG_END_POSITION);
+        scheduler->device[headRightServo]->setStartEventForMove(liftHeadAfterCuttingRight, catStepper, makeEndGroove, CAT_SONG_END_POSITION);
+        
+        //  go back to park position: start when cutting head is lifted up
+        unsigned char returnCatToParkPosition = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 2400, 1200.0, 1200.0);
+        scheduler->device[catStepper]->setStartEventForMove(returnCatToParkPosition, headLeftServo, liftHeadAfterCuttingLeft, HEAD_LEFT_PARK_POSITION);
+
+        
+
+
         
         
         
@@ -292,14 +318,27 @@ void setup() {
 }
 
 int freeRam () {
-    extern int __heap_start, *__brkval;
-    int v;
-    int fr = (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-    Serial.print("Free ram: ");
-    Serial.println(fr);
-    
+//    extern int __heap_start, *__brkval;
+//    int v;
+//    int fr = (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+//    Serial.print("Free ram: ");
+//    Serial.println(fr);
 }
 
+/*
+void freeRam() {
+    char *ramstart = (char *) 0x20070000;
+    char *ramend = (char *) 0x20088000;
+    char *heapend = sbrk(0);
+    register char * stack_ptr asm( "sp" );
+    struct mallinfo mi = mallinfo();
+    Serial << "Ram used (bytes): " << endl
+    << "  dynamic: " << mi.uordblks << endl
+    << "  static:  " << &_end - ramstart << endl
+    << "  stack:   " << ramend - stack_ptr << endl;
+    Serial << "Estimation free Ram: " << stack_ptr - heapend + mi.fordblks << endl;
+}
+*/
 
 /*
  osascript -e '

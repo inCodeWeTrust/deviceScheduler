@@ -15,7 +15,11 @@
 
 CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCDevice() {
     
+    Serial.println("setup new stepper device...");
+    
     this->deviceName = deviceName;
+    Serial.print(deviceName);
+    delay(200);
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
     this->enable_pin = enable_pin;
@@ -83,6 +87,7 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsig
         Serial.print(F("stepsPerDegree: "));
         Serial.print(stepsPerDegree);
         Serial.print(F(", at $"));
+//        Serial.println(" ??? ");
         Serial.println((long) this, HEX);
     }
     
