@@ -235,7 +235,7 @@ void CCDeviceScheduler::deleteAllMoves() {
 }
 
 void CCDeviceScheduler::reviewMoves() {
-    for (unsigned char d; d < countOfDevices; d++) {
+    for (unsigned char d = 0; d < countOfDevices; d++) {
         device[d]->reviewValues();
     }
 }

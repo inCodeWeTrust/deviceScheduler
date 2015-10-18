@@ -12,7 +12,7 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             (CCSTEPPERDEVICE_BASICOUTPUT)
+#define CCSTEPPERDEVICE_VERBOSE             1
 //| CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG )
 //| CCSTEPPERDEVICE_MOVEMENTDEBUG)
 
@@ -54,7 +54,7 @@ public:
     int                  acceleration_max;
     
     
-    CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation);
+    CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation);
     ~CCStepperDevice();
     
     

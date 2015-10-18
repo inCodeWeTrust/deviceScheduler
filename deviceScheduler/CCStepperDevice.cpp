@@ -13,13 +13,9 @@
 
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCDevice() {
-    
-    Serial.println("setup new stepper device...");
+CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCDevice() {
     
     this->deviceName = deviceName;
-    Serial.print(deviceName);
-    delay(200);
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
     this->enable_pin = enable_pin;
@@ -111,14 +107,13 @@ void CCStepperDevice::disableDevice() {
 
 void CCStepperDevice::attachDevice() {
     pinMode(dir_pin, OUTPUT);
-    
     pinMode(step_pin, OUTPUT);
-    
     pinMode(enable_pin, OUTPUT);
     digitalWrite(enable_pin, HIGH);
     
     for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
         pinMode(microStepPin[pinIndex], OUTPUT);
+        digitalWrite(microStepPin[pinIndex], LOW);
     }
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
@@ -147,10 +142,22 @@ void CCStepperDevice::detachDevice() {
 
 
 void CCStepperDevice::reviewValues() {
-    for (unsigned char m; m < countOfMoves; m++) {
-        if (theMove[m]->velocity == 0) theMove[m]->velocity = defaultVelocity;
-        if (theMove[m]->acceleration == 0) theMove[m]->acceleration = defaultAcceleration;
-        if (theMove[m]->deceleration == 0) theMove[m]->deceleration = defaultDeceleration;
+    Serial.print(F("[CCStepperDevice]: device "));
+    Serial.print(deviceName);
+    Serial.print(F(" review Values for move "));
+    for (unsigned char m = 0; m < countOfMoves; m++) {
+        Serial.print(" #");
+        Serial.print(m);
+
+        if (theMove[m]->velocity == 0) {
+            theMove[m]->velocity = defaultVelocity;
+        }
+        if (theMove[m]->acceleration == 0) {
+            theMove[m]->acceleration = defaultAcceleration;
+        }
+        if (theMove[m]->deceleration == 0) {
+            theMove[m]->deceleration = defaultDeceleration;
+        }
 
         if (theMove[m]->deceleration == 0) {
             theMove[m]->deceleration = theMove[m]->acceleration;
@@ -162,10 +169,9 @@ void CCStepperDevice::reviewValues() {
         // a[steps/sec/sec] = a[angle/sec/sec] * stepsPerAngle
         theMove[m]->acceleration *= stepsPerDegree;
         theMove[m]->deceleration *= stepsPerDegree;
-        
-
-
     }
+    Serial.println("   done");
+
 }
 
 void CCStepperDevice::prepareNextMove() {
@@ -225,6 +231,20 @@ void CCStepperDevice::prepareNextMove() {
     velocity = theMove[movePointer]->velocity;
     acceleration = theMove[movePointer]->acceleration;
     deceleration = theMove[movePointer]->deceleration;
+    
+    
+    Serial.print(F("### currentPosition: "));
+    Serial.println(currentPosition);
+
+    Serial.print(F("### target: "));
+    Serial.print(this->target);
+    Serial.print(F(", velocity: "));
+    Serial.print(this->velocity);
+    Serial.print(F(", acceleration: "));
+    Serial.print(this->acceleration);
+    Serial.print(F(", deceleration: "));
+    Serial.println(this->deceleration);
+
     
     startEvent = theMove[movePointer]->startEvent;
     stopEvent = theMove[movePointer]->stopEvent;
@@ -313,6 +333,19 @@ void CCStepperDevice::prepareNextMove() {
 //    t_prepMove = micros();
     
     
+    Serial.print(F("### stepsToGo: "));
+    Serial.print(this->stepsToGo);
+    Serial.print(F(" directionDown: "));
+    Serial.print(this->directionDown);
+    Serial.print(F(" stepsForDeceleration: "));
+    Serial.print(this->stepsForDeceleration);
+    Serial.print(F(", accelerateDown: "));
+    Serial.print(this->accelerateDown);
+    Serial.print(F(", stepsForAcceleration: "));
+    Serial.println(this->stepsForAcceleration);
+
+    
+    
     // *** does acceleration and deceleration fit into the move? ***
     if (stepsForAcceleration + stepsForDeceleration > stepsToGo - 2) {
         
@@ -332,6 +365,12 @@ void CCStepperDevice::prepareNextMove() {
             stepsForDeceleration = (float) stepsToGo / ((veloBySquare - currVeloBySquare) * deceleration / (acceleration * veloBySquare) + 1);
         }
         stepsForAcceleration = stepsToGo - 2 - stepsForDeceleration--;
+        
+        Serial.print(F(" stepsForDeceleration: "));
+        Serial.print(this->stepsForDeceleration);
+        Serial.print(F(", stepsForAcceleration: "));
+        Serial.println(this->stepsForAcceleration);
+
     }
     
     //    this takes ca 4us (no recalculation)
@@ -493,7 +532,7 @@ void CCStepperDevice::prepareNextMove() {
         Serial.print(this->stepsToGo);
         Serial.print(F(" ("));
         Serial.print(this->microStepsToGo);
-        Serial.print(F(", currentVelocity: "));
+        Serial.print(F("), currentVelocity: "));
         Serial.print(this->currentVelocity);
         Serial.print(F(", velocity: "));
         Serial.print(this->velocity);
@@ -516,6 +555,15 @@ void CCStepperDevice::startMove() {
     }
     else {
         digitalWrite(dir_pin, directionDown);
+        Serial.print(F("### dir_pin: "));
+        Serial.print(this->dir_pin);
+        Serial.print(F(" is set to: "));
+        Serial.print(this->directionDown);
+        Serial.print(F(" read it: "));
+        Serial.println(digitalRead(dir_pin));
+
+
+        
         
         // lets start in highest stepping mode
         microSteppingMode = highestSteppingMode;

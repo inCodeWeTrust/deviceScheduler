@@ -6,13 +6,13 @@
 #include <Servo.h>
 
 
-#define CCServoDevice_BASICOUTPUT         0x01
-#define CCServoDevice_MEMORYDEBUG         0x02
-#define CCServoDevice_CALCULATIONDEBUG    0x04
-#define CCServoDevice_MOVEMENTDEBUG       0x08
+#define CCServoDevice_BASICOUTPUT           0x01
+#define CCServoDevice_MEMORYDEBUG           0x02
+#define CCServoDevice_CALCULATIONDEBUG      0x04
+#define CCServoDevice_MOVEMENTDEBUG         0x08
 
 //static unsigned char CCServoDevice_VERBOSE = 0;
-#define CCServoDevice_VERBOSE            0x0F
+#define CCServoDevice_VERBOSE               0x01
 //#define CCServoDevice_VERBOSE CCServoDevice_BASICOUTPUT | CCServoDevice_MEMORYDEBUG | CCServoDevice_CALCULATIONDEBUG
 
 
