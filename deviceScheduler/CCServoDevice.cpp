@@ -14,7 +14,6 @@
 
 #include <Servo.h>
 
-boolean stopping = false;
 
 CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
     this->deviceName = deviceName;
@@ -72,6 +71,8 @@ void CCServoDevice::attachDevice() {
     if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
+        Serial.print(F(", park: "));
+        Serial.print(parkPosition);
         Serial.print(F(" attached: Servo on channel "));
         Serial.println(channel);
     }
@@ -181,7 +182,9 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(F(": prepare move "));
         Serial.print(movePointer);
         Serial.print(F(": "));
-        Serial.print(F("start: "));
+        Serial.print(F("current: "));
+        Serial.print(currentPosition);
+        Serial.print(F(", start: "));
         Serial.print(startPosition);
         Serial.print(F(", target: "));
         Serial.print(targetPosition);
@@ -334,7 +337,8 @@ void CCServoDevice::driveDynamic() {
     }
     
     theServo.writeMicroseconds(targetPosition);
-    currentPosition = theServo.readMicroseconds();
+    //    currentPosition = theServo.readMicroseconds();
+    currentPosition = targetPosition;
     
     if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
         Serial.print(F("currentPosition read from Servo: "));

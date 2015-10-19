@@ -39,7 +39,7 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsi
     stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextMove()
     degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in driveDynamic()
     
-    acceleration_max = 2000;
+    acceleration_max = 4000;
     
     type = STEPPERDEVICE;
     state = 0;

@@ -138,7 +138,7 @@ void CCDevice::deleteMoves() {
     movePointer = 0;
     countOfMoves = 0;
     
-    currentPosition = 0;
-    directionDown = 0;
+//    currentPosition = 0;
+//    directionDown = 0;
     
 }

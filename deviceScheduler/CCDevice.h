@@ -5,7 +5,8 @@
 //  device type
 #define SERVODEVICE                     0x01
 #define STEPPERDEVICE                   0x02
-#define SOLENOIDDEVICE                  0x03
+#define SWITCHINGDEVICE                 0x03
+#define SOLENOIDDEVICE                  0x04
 
 // start/stopEvent:
 #define NONE                            0x00

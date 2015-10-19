@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		405588D01BD5A599005890AA /* CCSwitchDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 405588CE1BD5A599005890AA /* CCSwitchDevice.cpp */; };
 		A42F72541B1C70E400B5B7E0 /* deviceScheduler.ino in Sources */ = {isa = PBXBuildFile; fileRef = A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */; };
 		A42F727C1B1C71EB00B5B7E0 /* CCDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */; };
 		A42F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */; };
@@ -655,6 +656,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		405588CE1BD5A599005890AA /* CCSwitchDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCSwitchDevice.cpp; sourceTree = "<group>"; };
 		40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = whatNeededWhen.txt; path = ../whatNeededWhen.txt; sourceTree = "<group>"; };
 		A45F72191B1C70E400B5B7E0 /* Index */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Index; sourceTree = BUILT_PRODUCTS_DIR; };
 		A45F721C1B1C70E400B5B7E0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -1384,6 +1386,7 @@
 				A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */,
 				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
 				A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */,
+				405588CE1BD5A599005890AA /* CCSwitchDevice.cpp */,
 				A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
 				AAAA150601125914AA000000 /* Resources */,
@@ -3825,6 +3828,7 @@
 				AA2A150601125914AA0000D3 /* EthernetUdp.h in Sources */,
 				AA2A150601125914AA0000D5 /* socket.cpp in Sources */,
 				AA2A150601125914AA0000D6 /* socket.h in Sources */,
+				405588D01BD5A599005890AA /* CCSwitchDevice.cpp in Sources */,
 				AA2A150601125914AA0000D7 /* util.h in Sources */,
 				AA2A150601125914AA0000D8 /* w5100.cpp in Sources */,
 				AA2A150601125914AA0000D9 /* w5100.h in Sources */,
