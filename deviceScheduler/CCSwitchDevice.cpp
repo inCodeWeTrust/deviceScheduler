@@ -29,13 +29,13 @@ CCSwitchDevice::CCSwitchDevice(String deviceName, unsigned char switching_pin, b
 //    defaultDeceleration = 0;
     
     
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_MEMORYDEBUG) {
+    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: setup "));
         Serial.print(deviceName);
         Serial.print(F(", switching_pin: "));
         Serial.print(switching_pin);
-        Serial.print(F(", at $"));
-        Serial.println((long)this, HEX);
+        Serial.print(F(", defaultState: "));
+        Serial.println(defaultState);
     }
 
     
@@ -57,7 +57,7 @@ void CCSwitchDevice::attachDevice() {
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, defaultState);
 
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_MEMORYDEBUG) {
+    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
         Serial.println(F(" attached"));
@@ -90,15 +90,6 @@ void CCSwitchDevice::prepareNextMove() {
     stopTriggerMove = theMove[movePointer]->stopTriggerMove;
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
     
-    
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_MEMORYDEBUG) {
-        Serial.print(F("[CCSwitchDevice]: "));
-        Serial.print(deviceName);
-        Serial.print(F(", target at $"));
-        Serial.println((long)&target, HEX);
-    }
-
-     
 }
 
 

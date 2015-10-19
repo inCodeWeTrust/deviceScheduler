@@ -658,6 +658,7 @@
 /* Begin PBXFileReference section */
 		405588CE1BD5A599005890AA /* CCSwitchDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCSwitchDevice.cpp; sourceTree = "<group>"; };
 		40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = whatNeededWhen.txt; path = ../whatNeededWhen.txt; sourceTree = "<group>"; };
+		A446E5231BD5AFF3003C0F35 /* CCSwitchDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSwitchDevice.h; sourceTree = "<group>"; };
 		A45F72191B1C70E400B5B7E0 /* Index */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Index; sourceTree = BUILT_PRODUCTS_DIR; };
 		A45F721C1B1C70E400B5B7E0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A45F721E1B1C70E400B5B7E0 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -1378,15 +1379,16 @@
 				A45F72421B1C70E400B5B7E0 /* ReadMe.txt */,
 				40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */,
 				A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */,
-				A45F727B1B1C71EB00B5B7E0 /* CCDevice.cpp */,
-				A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */,
-				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
-				A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */,
-				A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */,
-				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
-				A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */,
+				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
+				A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */,
+				A45F727B1B1C71EB00B5B7E0 /* CCDevice.cpp */,
+				A446E5231BD5AFF3003C0F35 /* CCSwitchDevice.h */,
 				405588CE1BD5A599005890AA /* CCSwitchDevice.cpp */,
+				A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */,
+				A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */,
+				A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */,
+				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
 				A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
 				AAAA150601125914AA000000 /* Resources */,
