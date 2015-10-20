@@ -233,17 +233,17 @@ void CCStepperDevice::prepareNextMove() {
     deceleration = theMove[movePointer]->deceleration;
     
     
-    Serial.print(F("### currentPosition: "));
-    Serial.println(currentPosition);
-
-    Serial.print(F("### target: "));
-    Serial.print(this->target);
-    Serial.print(F(", velocity: "));
-    Serial.print(this->velocity);
-    Serial.print(F(", acceleration: "));
-    Serial.print(this->acceleration);
-    Serial.print(F(", deceleration: "));
-    Serial.println(this->deceleration);
+//    Serial.print(F("### currentPosition: "));
+//    Serial.println(currentPosition);
+//
+//    Serial.print(F("### target: "));
+//    Serial.print(this->target);
+//    Serial.print(F(", velocity: "));
+//    Serial.print(this->velocity);
+//    Serial.print(F(", acceleration: "));
+//    Serial.print(this->acceleration);
+//    Serial.print(F(", deceleration: "));
+//    Serial.println(this->deceleration);
 
     
     startEvent = theMove[movePointer]->startEvent;

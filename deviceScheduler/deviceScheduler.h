@@ -106,10 +106,10 @@
 #define SOLENOID_OFF                        LOW
 
 
-#define START_BUTTON                        A0
-#define STOP_BUTTON                         A1
-#define START_CUTTING_BUTTON                A2
-#define STOP_CUTTING_BUTTON                 A3
+#define START_BUTTON                        A3
+#define STOP_BUTTON                         A2
+#define START_CUTTING_BUTTON                A1
+#define STOP_CUTTING_BUTTON                 A0
 #define CAT_PARK_BUTTON                     A4
 
 //#define START_BUTTON                        A2
@@ -146,12 +146,21 @@
 #define TURN_TO_STOCK_TRIGGER_LIFT      900
 #define TURN_STOCK_POSITION             800
 
-#define HEAD_LEFT_PARK_POSITION         900
-#define HEAD_LEFT_CUT_POSITION          1210
+#define HEAD_LEFT_PARK_POSITION         2100
+//#define HEAD_LEFT_CUT_POSITION          1210
+//#define HEAD_LEFT_CUT_POSITION          1520
+#define HEAD_LEFT_CUT_POSITION          1580
+//#define HEAD_LEFT_CUT_POSITION          1610
+//#define HEAD_LEFT_CUT_POSITION          1810
 #define HEAD_LEFT_MID_POSITION          1520
 #define HEAD_LEFT_TOP_POSITION          2100
-#define HEAD_RIGHT_PARK_POSITION        2100
-#define HEAD_RIGHT_CUT_POSITION         1810
+
+#define HEAD_RIGHT_PARK_POSITION        900
+//#define HEAD_RIGHT_CUT_POSITION         1810
+//#define HEAD_RIGHT_CUT_POSITION         1520
+#define HEAD_RIGHT_CUT_POSITION         1460
+//#define HEAD_RIGHT_CUT_POSITION         1430
+//#define HEAD_RIGHT_CUT_POSITION         1210
 #define HEAD_RIGHT_MID_POSITION         1520
 #define HEAD_RIGHT_TOP_POSITION         900
 
