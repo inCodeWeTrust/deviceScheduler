@@ -106,10 +106,16 @@
 #define SOLENOID_OFF                        LOW
 
 
-#define START_BUTTON                        A2
-#define LOADING_BUTTON                      A1
-#define RECORD_AVAILABLE_BUTTON             A0
-#define CAT_PARK_BUTTON                     A3
+#define START_BUTTON                        A0
+#define STOP_BUTTON                         A1
+#define START_CUTTING_BUTTON                A2
+#define STOP_CUTTING_BUTTON                 A3
+#define CAT_PARK_BUTTON                     A4
+
+//#define START_BUTTON                        A2
+//#define LOADING_BUTTON                      A1
+//#define RECORD_AVAILABLE_BUTTON             A0
+//#define CAT_PARK_BUTTON                     A3
 
 #define I_AM_LATE_LED                       12
 #define SPEED_PIN                           A5

@@ -102,6 +102,7 @@ void loop() {
     unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
     unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME, STEPPER_CAT_STEP_PIN, STEPPER_CAT_DIR_PIN, STEPPER_CAT_ENABLE_PIN, STEPPER_CAT_HIGHEST_STEPPINGMODE, STEPPER_CAT_STEPMODECODES, STEPPER_CAT_MICROSTEPPINS, STEPPER_CAT_STEPS_PER_ROTATION);
     freeRam();
+    unsigned char tableDerive = scheduler->addSwitch(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_OFF);
     //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
     //    freeRam();
     
@@ -135,8 +136,8 @@ void loop() {
         freeRam();
 
         //  lift head before doing anything else: start now
-        unsigned char liftHeadFirstLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
+        unsigned char liftHeadFirstLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         scheduler->device[headLeftServo]->setStartDateForMove(liftHeadFirstLeft, 100);
         scheduler->device[headRightServo]->setStartDateForMove(liftHeadFirstRight, 100);
 
@@ -210,8 +211,10 @@ void loop() {
         
         */
         //  move to start groove: start when grappler is in park position
-        unsigned char moveToStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_START_POSITION, 6400, 3200.0, 3200.0);
+        //        unsigned char moveToStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_START_POSITION, 6400, 3200.0, 3200.0);
+        unsigned char moveToStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 6400, 3200.0, 3200.0);
         scheduler->device[catStepper]->setStartButtonForMove(moveToStartGroove, START_BUTTON, LOW);
+        scheduler->device[catStepper]->setStopButtonForMove(moveToStartGroove, STOP_BUTTON, LOW, 0);
         //        scheduler->device[catStepper]->setStartDateForMove(moveToStartGroove, 20000);
         //        scheduler->device[catStepper]->setStartEventForMove(moveToStartGroove, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
     

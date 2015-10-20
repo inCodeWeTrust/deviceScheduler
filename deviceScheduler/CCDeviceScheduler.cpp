@@ -36,6 +36,23 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
 }
 
+unsigned char CCDeviceScheduler::addSwitch(String deviceName, unsigned char switching_pin, bool defaultState) {
+    
+    device[countOfDevices] = new CCSwitchDevice(deviceName, switching_pin, defaultState);
+    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: provided "));
+        Serial.print(getNameOfDeviceType(device[countOfDevices]->type));
+        Serial.print(F(": "));
+        Serial.println(device[countOfDevices]->deviceName);
+    }
+    
+    countOfDevices++;
+    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
+    
+    return countOfDevices - 1;
+}
+
 unsigned char CCDeviceScheduler::addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) {
 
     device[countOfDevices] = new CCServoDevice(deviceName, servo_pin, minPosition, maxPosition, parkPosition);
@@ -695,7 +712,8 @@ void CCDeviceScheduler::runTheLoop() {
 String getNameOfDeviceType(unsigned char t) {
     if (t == 1) return "Servo";
     if (t == 2) return "Stepper";
-    if (t == 3) return "Solenoid";
+    if (t == 3) return "Switch";
+    if (t == 4) return "Solenoid";
     return "unknown";
 }
 String getNameOfMoveEvent(unsigned char e) {
