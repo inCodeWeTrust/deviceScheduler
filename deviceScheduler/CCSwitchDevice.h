@@ -3,7 +3,6 @@
 //#include "motorController.h"
 
 #include "CCDevice.h"
-#include <Servo.h>
 
 
 #define CCSwitchDevice_BASICOUTPUT           0x01

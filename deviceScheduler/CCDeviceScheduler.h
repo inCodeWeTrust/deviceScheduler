@@ -49,7 +49,7 @@ public:
     
     unsigned char addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
     unsigned char addStepper(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
-    unsigned char addSwitch(String deviceName, unsigned char switching_pin, bool defaultState) {
+    unsigned char addSwitch(String deviceName, unsigned char switching_pin, bool defaultState);
 
 //    unsigned char addSolenoid(String deviceName, unsigned char solenoid_pin);
     

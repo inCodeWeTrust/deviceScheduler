@@ -221,27 +221,40 @@ void loop() {
         //  lower head to record surface: start when reached start position of start groove
         unsigned char lowerHeadForCuttingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
         unsigned char lowerHeadForCuttingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        scheduler->device[headLeftServo]->setStartEventForMove(lowerHeadForCuttingLeft, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION - 2);
-        scheduler->device[headRightServo]->setStartEventForMove(lowerHeadForCuttingRight, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION - 2);
+        //        scheduler->device[headLeftServo]->setStartEventForMove(lowerHeadForCuttingLeft, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION - 2);
+        //        scheduler->device[headRightServo]->setStartEventForMove(lowerHeadForCuttingRight, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION - 2);
+        scheduler->device[headLeftServo]->setStartButtonForMove(lowerHeadForCuttingLeft, START_CUTTING_BUTTON, LOW);
+        scheduler->device[headRightServo]->setStartButtonForMove(lowerHeadForCuttingRight, START_CUTTING_BUTTON, LOW);
         
-        //  make the groves: start when cuttinghead is in cutting position
-        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 2400, 1200.0, 1200.0);
-        scheduler->device[catStepper]->setStartEventForMove(makeStartGroove, headLeftServo, lowerHeadForCuttingLeft, HEAD_LEFT_CUT_POSITION);
-        scheduler->device[catStepper]->setSwitchEventForMove(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
         unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 420, 600, 600);
-        scheduler->device[catStepper]->setSwitchEventForMove(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
-        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 2400, 800, 800);
+        scheduler->device[catStepper]->setStartButtonForMove(makeMainGroove, START_CUTTING_BUTTON, LOW);
+
+        
+//        //  make the groves: start when cuttinghead is in cutting position
+//        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 2400, 1200.0, 1200.0);
+//        scheduler->device[catStepper]->setStartEventForMove(makeStartGroove, headLeftServo, lowerHeadForCuttingLeft, HEAD_LEFT_CUT_POSITION);
+//        scheduler->device[catStepper]->setSwitchEventForMove(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
+//        unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 420, 600, 600);
+//        scheduler->device[catStepper]->setSwitchEventForMove(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
+//        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_END_POSITION, 2400, 800, 800);
         
         //  lift head after cutting: start, when end groove is finished
         unsigned char liftHeadAfterCuttingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
         unsigned char liftHeadAfterCuttingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        scheduler->device[headLeftServo]->setStartEventForMove(liftHeadAfterCuttingLeft, catStepper, makeEndGroove, CAT_SONG_END_POSITION - 2);
-        scheduler->device[headRightServo]->setStartEventForMove(liftHeadAfterCuttingRight, catStepper, makeEndGroove, CAT_SONG_END_POSITION - 2);
+//        scheduler->device[headLeftServo]->setStartEventForMove(liftHeadAfterCuttingLeft, catStepper, makeEndGroove, CAT_SONG_END_POSITION - 2);
+//        scheduler->device[headRightServo]->setStartEventForMove(liftHeadAfterCuttingRight, catStepper, makeEndGroove, CAT_SONG_END_POSITION - 2);
+        scheduler->device[headLeftServo]->setStartButtonForMove(liftHeadAfterCuttingLeft, STOP_CUTTING_BUTTON, HIGH);
+        scheduler->device[headRightServo]->setStartButtonForMove(liftHeadAfterCuttingRight, STOP_CUTTING_BUTTON, HIGH);
         
         //  go back to park position: start when cutting head is lifted up
         unsigned char returnCatToParkPosition = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 6400, 3200.0, 3200.0);
         scheduler->device[catStepper]->setStartEventForMove(returnCatToParkPosition, headLeftServo, liftHeadAfterCuttingLeft, HEAD_LEFT_TOP_POSITION);
-        
+        //  lower head to record surface: start when reached start position of start groove
+        unsigned char lowerHeadForParkingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_PARK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
+        unsigned char lowerHeadForParkingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_PARK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
+        scheduler->device[headLeftServo]->setStartEventForMove(lowerHeadForParkingLeft, catStepper, returnCatToParkPosition, CAT_PARK_POSITION - 200);
+        scheduler->device[headRightServo]->setStartEventForMove(lowerHeadForParkingRight, catStepper, returnCatToParkPosition, CAT_PARK_POSITION - 200);
+
         
         
         
@@ -284,10 +297,17 @@ void loop() {
 
 
 void setup() {
+//    pinMode(START_BUTTON, INPUT_PULLUP);
+//    pinMode(LOADING_BUTTON, INPUT_PULLUP);
+//    pinMode(RECORD_AVAILABLE_BUTTON, INPUT_PULLUP);
+//    pinMode(CAT_PARK_BUTTON, INPUT_PULLUP);
+
     pinMode(START_BUTTON, INPUT_PULLUP);
-    pinMode(LOADING_BUTTON, INPUT_PULLUP);
-    pinMode(RECORD_AVAILABLE_BUTTON, INPUT_PULLUP);
+    pinMode(STOP_BUTTON, INPUT_PULLUP);
+    pinMode(START_CUTTING_BUTTON, INPUT_PULLUP);
+    pinMode(STOP_CUTTING_BUTTON, INPUT_PULLUP);
     pinMode(CAT_PARK_BUTTON, INPUT_PULLUP);
+
     pinMode(I_AM_LATE_LED, OUTPUT);
     
     Serial.begin(115200);
