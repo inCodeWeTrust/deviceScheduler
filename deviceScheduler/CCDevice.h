@@ -13,8 +13,8 @@
 #define DATE                            0x01
 #define BUTTON                          0x02
 #define POSITION                        0x04
-#define SWITCH                          0x08
-#define FOLLOW                          0x10
+#define FOLLOW                          0x08
+#define SWITCH                          0x10
 
 //  device state:
 #define SLEEPING                        0x00
@@ -105,11 +105,11 @@ public:
     void setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
     void setStartEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
     
+    void setStartAfterCompletion(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove);
+    
     void setSwitchDateForMove(unsigned char moveIndex, unsigned long startTime);
     void setSwitchButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
     void setSwitchEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
-
-    void setDisposeFollowingMoveForMove(unsigned char moveIndex);
 
     void setTimeoutForMove(unsigned char moveIndex, unsigned long _timeout, boolean stopSharply);
     void setStopButtonForMove(unsigned char moveIndex, unsigned char _stopButton, boolean _stopButtonState, boolean stopSharply);

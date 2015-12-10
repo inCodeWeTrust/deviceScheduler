@@ -78,24 +78,26 @@ void CCDevice::setStartEventForMove(unsigned char moveIndex, unsigned char start
     theMove[moveIndex]->startTriggerMove = startTriggerMove;
     theMove[moveIndex]->startTriggerPosition = startTriggerPosition;
 }
+void CCDevice::setStartAfterCompletion(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove) {
+    theMove[moveIndex]->startEvent |= FOLLOW;
+}
+
 void CCDevice::setSwitchDateForMove(unsigned char moveIndex, unsigned long timeout) {
-    theMove[moveIndex]->stopEvent = DATE | FOLLOW;
+    theMove[moveIndex]->stopEvent = DATE | SWITCH;
     theMove[moveIndex]->timeout = timeout;
 }
 void CCDevice::setSwitchButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState) {
-    theMove[moveIndex]->stopEvent = BUTTON | FOLLOW;
+    theMove[moveIndex]->stopEvent = BUTTON | SWITCH;
     theMove[moveIndex]->stopButton = stopButton;
     theMove[moveIndex]->stopButtonState = stopButtonState;
 }
 void CCDevice::setSwitchEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition) {
-    theMove[moveIndex]->stopEvent = POSITION | FOLLOW;
+    theMove[moveIndex]->stopEvent = POSITION | SWITCH;
     theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
     theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
     theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
 }
-void CCDevice::setDisposeFollowingMoveForMove(unsigned char moveIndex) {
-    theMove[moveIndex]->stopEvent = FOLLOW;    
-}
+
 void CCDevice::setTimeoutForMove(unsigned char moveIndex, unsigned long timeout, boolean stopSharply) {
     theMove[moveIndex]->stopEvent = DATE;
     theMove[moveIndex]->timeout = timeout;

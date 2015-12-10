@@ -578,6 +578,7 @@ void CCStepperDevice::startMove() {
             Serial.println((int)movePointer);
         }
         
+        state &= ~MOVE_DONE;
         state |= MOVING;
         currentMicroStep = 0;
         stepExpiration = 0;

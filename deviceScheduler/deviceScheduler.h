@@ -29,6 +29,18 @@
 #define STEPPINGPERIOD_TO_KICK_DOWN         300
 
 
+#define RECORD_GROOVE_WIDTH                 0.1
+#define STARTGROOVE_MM                      4
+#define ENDGROOVE_MIN_MM                    10
+#define CUTTING_RANGE                       40
+#define PLAYTIME_MINUTES                    3
+#define DIAMETER_SONG_START                 166
+#define DIAMETER_SONG_END                   116
+
+
+
+
+
 
 //  ################## Hardware #############################################################################
 
@@ -110,7 +122,11 @@
 #define STOP_BUTTON                         A2
 #define START_CUTTING_BUTTON                A1
 #define STOP_CUTTING_BUTTON                 A0
-#define CAT_PARK_BUTTON                     A4
+
+#define CAT_PARK_BUTTON                     52
+#define CAT_END_BUTTON                      53
+
+#define HEAD_DISTANCE_SENSOR
 
 //#define START_BUTTON                        A2
 //#define LOADING_BUTTON                      A1
@@ -120,8 +136,33 @@
 #define I_AM_LATE_LED                       12
 #define SPEED_PIN                           A5
 
+#define PLAYTIME_MINUTES                    3
+
 
 //  ################## MOVE DATA #############################################################################
+
+#define SPIN_PITCH_M6                       1
+#define CAT_DRIVE_RATIO                     (float) 36.0 / 60.0 * 22.0 / 60.0
+#define RECORD_TURNS_PER_MINUTE             45
+
+#define MAX_PLAY_RANGE                      CUTTING_RANGE - STARTGROOVE_MM - ENDGROOVE_MIN_MM
+#define MAX_RECORDGROOVES                   (MAX_PLAY_RANGE) / RECORD_GROOVE_WIDTH
+#define MAX_PLAY_TIME_MINUTES               MAX_RECORDGROOVES / RECORD_TURNS_PER_MINUTE
+
+#define RECORDTURNS                         PLAYTIME_MINUTES * RECORD_TURNS_PER_MINUTE
+#define PLAYING_RANGE                       RECORDTURNS * RECORD_GROOVE_WIDTH
+
+#define SECONDS_PER_TABLE_ROTATION          60.0 / RECORD_TURNS_PER_MINUTE
+#define CAT_SPEED                           RECORD_GROOVE_WIDTH / (SECONDS_PER_TABLE_ROTATION)
+
+#define CAT_MOTOR_TURNS_PER_SONG            PLAYING_RANGE / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
+#define CAT_MOTOR_DEGREES_PER_SONG          CAT_MOTOR_TURNS_PER_SONG * 360.0
+
+#define CAT_MOTOR_TURNS_PER_SECOND          (CAT_SPEED) / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
+#define CAT_MOTOR_DEGREES_PER_SECOND        CAT_MOTOR_TURNS_PER_SECOND * 360.0
+
+
+
 
 
 #define LIFT_SPEED_FAST                 1600
@@ -170,10 +211,10 @@
 #define STOCK_LOADING_ACCEL             260
 
 #define CAT_PARK_POSITION               0
-#define CAT_GROOVE_START_POSITION       36000
-#define CAT_SONG_START_POSITION         46000
-#define CAT_SONG_END_POSITION           246000
-#define CAT_GROOVE_END_POSITION         256000
+#define CAT_CUTTING_START_POSITION      100000
+#define CAT_SONG_START_POSITION         CAT_CUTTING_START_POSITION + (float)STARTGROOVE_MM * 360.0 / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
+#define CAT_SONG_END_POSITION           CAT_CUTTING_START_POSITION + (CAT_MOTOR_DEGREES_PER_SONG)
+#define CAT_CUTTING_END_POSITION        CAT_CUTTING_START_POSITION + (float)CUTTING_RANGE * 360.0 / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
 
 
 #define SOLENOID_FREQUENCY                 10

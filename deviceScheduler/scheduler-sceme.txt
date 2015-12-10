@@ -1,0 +1,35 @@
+//
+//  scheduler-sceme
+//  Text
+//  ----------------------------------
+//  Developed with embedXcode
+//
+//  Project 	deviceScheduler
+//  Created by 	Little Abakus on 10.12.15
+//  Copyright 	© 2015 Little Abakus
+//  License	<#license#>
+//
+
+
+
+
+MOVING?
+|
+|---------------
+|               |
+no              yes
+                |
+                DRIVE DYNAMIC
+                |
+                STOP defined?
+                |
+                |---------------
+                |               |
+                no              yes
+                                |
+                                DATE?
+                                |
+                                DATE reached?
+                                |
+                                |---------------
+                                |               |

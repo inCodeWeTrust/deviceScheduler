@@ -302,8 +302,7 @@ void CCDeviceScheduler::runTheLoop() {
                 Serial.print(F("       ."));
             }
             
-        }
-        else {
+        } else {
             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                 Serial.print(F("  [no tasks]            "));
             }
@@ -329,7 +328,6 @@ void CCDeviceScheduler::runTheLoop() {
         ongoingOperations = 0;
         
         if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
-            // ran till 211800
             Serial.print(formatNumber(taskTime, 8));
         }
         
@@ -360,26 +358,22 @@ void CCDeviceScheduler::runTheLoop() {
                                     Serial.println((int)device[s]->movePointer);
                                 }
                                 
-                                if (device[s]->stopEvent & FOLLOW) {                                              // switch immediately to next move?
+                                if (device[s]->stopEvent & SWITCH) {                                              // switch immediately to next move?
                                     device[s]->movePointer++;                                                   // go for next job! (if existing)
                                     if (device[s]->movePointer < device[s]->countOfMoves) {                     //  all tasks done? no!
                                         device[s]->prepareNextMove();
-                                    }
-                                    else {
+                                    } else {
                                         device[s]->stopMoving();
                                     }
-                                }
-                                else {                                                                          // just stop. but how?
+                                } else {                                                                          // just stop. but how?
                                     if (device[s]->stopSharply) {
                                         device[s]->stopMoving();
-                                    }
-                                    else {
+                                    } else {
                                         device[s]->initiateStop();
                                         device[s]->stopEvent = 0;
                                     }
                                 }
-                            }
-                            else {                                                                              // stopEvent DATE given, timeout not yet expired
+                            } else {                                                                              // stopEvent DATE given, timeout not yet expired
                                 if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                                     Serial.print(emptyMessage);
                                 }
@@ -401,26 +395,22 @@ void CCDeviceScheduler::runTheLoop() {
                                     Serial.println((int)device[s]->movePointer);
                                 }
                                 
-                                if (device[s]->stopEvent & FOLLOW) {                                              // switch immediately to next move?
+                                if (device[s]->stopEvent & SWITCH) {                                              // switch immediately to next move?
                                     device[s]->movePointer++;                                                   // go for next job! (if existing)
                                     if (device[s]->movePointer < device[s]->countOfMoves) {                     //  all tasks done? no!
                                         device[s]->prepareNextMove();
-                                    }
-                                    else {
+                                    } else {
                                         device[s]->stopMoving();
                                     }
-                                }
-                                else {                                                                          // just stop. but how?
+                                } else {                                                                          // just stop. but how?
                                     if (device[s]->stopSharply) {
                                         device[s]->stopMoving();
-                                    }
-                                    else {
+                                    } else {
                                         device[s]->initiateStop();
                                         device[s]->stopEvent = 0;
                                     }
                                 }
-                            }
-                            else {                                                                              // stopEvent BUTTON given, but was not yet pressed
+                            } else {                                                                              // stopEvent BUTTON given, but was not yet pressed
                                 if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                                     Serial.print(emptyMessage);
                                 }
@@ -445,7 +435,7 @@ void CCDeviceScheduler::runTheLoop() {
                                         Serial.println((int)device[s]->movePointer);
                                     }
                                     
-                                    if (device[s]->stopEvent & FOLLOW) {                                          // switch immediately to next move?
+                                    if (device[s]->stopEvent & SWITCH) {                                          // switch immediately to next move?
                                         device[s]->movePointer++;                                               // go for next job! (if existing)
                                         if (device[s]->movePointer < device[s]->countOfMoves) {                 // all tasks done? no!
                                             device[s]->prepareNextMove();
@@ -460,16 +450,13 @@ void CCDeviceScheduler::runTheLoop() {
                                                 Serial.print(F(" target: "));
                                                 Serial.println((int)device[s]->target);
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             device[s]->stopMoving();
                                         }
-                                    }
-                                    else {                                                                      // just stop. but how?
+                                    } else {                                                                      // just stop. but how?
                                         if (device[s]->stopSharply) {
                                             device[s]->stopMoving();
-                                        }
-                                        else {
+                                        } else {
                                             device[s]->initiateStop();
                                             device[s]->stopEvent = 0;
                                         }
@@ -493,8 +480,7 @@ void CCDeviceScheduler::runTheLoop() {
                                 Serial.print(emptyMessage);
                             }
                     }
-                }    // (device[s]->state & MOVING)
-                
+                }                                                                                               // (device[s]->state & MOVING)
                 else {                                                                                          // if device is stopped
                     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                         Serial.print(F(" | "));
@@ -539,7 +525,7 @@ void CCDeviceScheduler::runTheLoop() {
                                 Serial.println((int)device[s]->target);
                             }
                             
-                        }
+                         }
                         else {                                                                                  // all tasks are done
                             device[s]->state = 0;
                             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
@@ -616,7 +602,37 @@ void CCDeviceScheduler::runTheLoop() {
                                 }
                                 break;
                                 
-                            case POSITION:                                                                      //  start the next move when a device reached a certain
+                            case FOLLOW:                                                                      //  start the next move when a device reached a certain
+                                if (device[s]->startTriggerMove <= device[device[s]->startTriggerDevice]->movePointer) {        //  is the trigger servo doing the trigger move?
+                                    
+                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
+                                        Serial.print(F("|-> from: "));
+                                        Serial.print(formatNumber(device[s]->startTriggerDevice, 2));
+                                        Serial.print(F(" compl"));
+                                    }
+                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+                                        Serial.print(taskTime);
+                                        Serial.print(F(": "));
+                                        Serial.print(device[s]->deviceName);
+                                        Serial.print(F(" start by Completion Move "));
+                                        Serial.println((int)device[s]->movePointer);
+                                    }
+                                    
+                                    if (device[s]->startDelay > 0) {                                        // startDelay given?
+                                        device[s]->startTime = taskTime + device[s]->startDelay;            // so start the move by date
+                                        device[s]->startDelay = 0;
+                                        device[s]->startEvent = DATE;
+                                    } else {
+                                        device[s]->startTime = taskTime;
+                                        device[s]->startMove();
+                                    }
+                                } else {
+                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
+                                        Serial.print(emptyMessage);
+                                    }
+                                }
+                                
+                             case POSITION:                                                                      //  start the next move when a device reached a certain
                                 if (device[s]->startTriggerMove <= device[device[s]->startTriggerDevice]->movePointer) {        //  is the trigger servo doing the trigger move?
                                     
                                     if ((device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition <= device[s]->startTriggerPosition) || (!device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition >= device[s]->startTriggerPosition)) {
@@ -721,6 +737,9 @@ String getNameOfMoveEvent(unsigned char e) {
     if ((e & 0x0F) == 1) return "date";
     if ((e & 0x0F) == 2) return "button";
     if ((e & 0x0F) == 4) return "position";
+    if ((e & 0x0F) == 9) return "switched by date";
+    if ((e & 0x0F) == 10) return "switched by button";
+    if ((e & 0x0F) == 12) return "switched by position";
     return "unknown";
 }
 String getNameOfState(unsigned char s) {
