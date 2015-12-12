@@ -20,14 +20,11 @@
 
 
 
-#define VERBOSE_BUTTON                      A5
-
 
 
 //  stopModes:
-#define STOP_SHARPLY                    0x00
-#define STOP_NORMAL                     0x01
-#define STOP_DYNAMIC                    0x02
+#define STOP_SHARPLY                    0x01
+#define STOP_NORMAL                     0x00
 
 
 
@@ -93,7 +90,7 @@
 
 #define SERVO_TURN_NAME                     "turnServo"
 
-#define SERVO_TURN_INDEX                    3
+#define SERVO_TURN_PIN                      3
 #define SERVO_TURN_MIN_POSITION             150
 #define SERVO_TURN_MAX_POSITION             600
 

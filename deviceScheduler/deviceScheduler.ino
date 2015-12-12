@@ -93,7 +93,7 @@ void loop() {
     // ============================================================================================================================
     unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME, SERVO_LIFT_PIN, SERVO_LIFT_MIN_POSITION, SERVO_LIFT_MAX_POSITION, LIFT_PARK_POSITION);
     freeRam();
-    unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_INDEX, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
+    unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_PIN, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
     freeRam();
     unsigned char headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME, SERVO_HEAD_LEFT_PIN, SERVO_HEAD_LEFT_MIN_POSITION, SERVO_HEAD_LEFT_MAX_POSITION, HEAD_LEFT_PARK_POSITION);
     freeRam();
@@ -176,9 +176,25 @@ void loop() {
         unsigned char liftHeadFirstLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         scheduler->device[headLeftServo]->setStartDateForMove(liftHeadFirstLeft, 100);
         
+        unsigned char lowerHeadFirstLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_SLOW);
+        scheduler->device[headLeftServo]->setStartAfterCompletion(lowerHeadFirstLeft, headLeftServo, liftHeadFirstLeft);
+        
+//        unsigned char switchTableOn = scheduler->device[tableDrive]->addMove(TABLEDRIVE_ON, 0, 0, 0);
+//        scheduler->device[tableDrive]->setStartAfterCompletion(switchTableOn, headLeftServo, liftHeadFirstLeft);
+//        unsigned char switchTableOff = scheduler->device[tableDrive]->addMove(TABLEDRIVE_OFF, 0, 0, 0);
+//        scheduler->device[tableDrive]->setStartDateForMove(switchTableOff, 10000);
+        
+        unsigned char riseHead = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        scheduler->device[headLeftServo]->setStartAfterCompletion(riseHead, headLeftServo, lowerHeadFirstLeft);
+        scheduler->device[headLeftServo]->setStopDynamicalForMove(riseHead, A5, 1000, 200, 0);
+        scheduler->device[headLeftServo]->setTimeoutForMove(riseHead, 10000, true);
+
         unsigned char lowerHead = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-        scheduler->device[headLeftServo]->setStartAfterCompletion(lowerHead, headLeftServo, liftHeadFirstLeft);
-        scheduler->device[headLeftServo]->setStopDynamicalForMove(lowerHead, A5, 500, 0, 0);
+        scheduler->device[headLeftServo]->setStartAfterCompletion(lowerHead, headLeftServo, riseHead);
+        scheduler->device[headLeftServo]->setStopDynamicalForMove(lowerHead, A5, 1000, 200, 0);
+        scheduler->device[headLeftServo]->setTimeoutForMove(lowerHead, 10000, true);
+
+        
         
         //  unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         //  scheduler->device[headRightServo]->setStartDateForMove(liftHeadFirstRight, 100);
@@ -387,7 +403,11 @@ void setup() {
     Serial.println(), Serial.println(), Serial.println();
     Serial.println(), Serial.println(), Serial.println();
 
-    
+//    pinMode(40, OUTPUT);
+//    digitalWrite(40, HIGH);
+//    delay(10000);
+//    digitalWrite(40, LOW);
+//    pinMode(40, INPUT);
     
     Serial.println();
     Serial.println();

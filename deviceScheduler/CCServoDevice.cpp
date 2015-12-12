@@ -105,7 +105,7 @@ void CCServoDevice::prepareNextMove() {
     stopTriggerDevice = theMove[movePointer]->stopTriggerDevice;
     stopTriggerMove = theMove[movePointer]->stopTriggerMove;
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
-    stopDynamicaly = theMove[movePointer]->stopDynamicaly;
+    stopDynamically = theMove[movePointer]->stopDynamically;
     sensor = theMove[movePointer]->sensor;
     initiatePerformanceValue = theMove[movePointer]->initiatePerformanceValue;
     stopValue = theMove[movePointer]->stopValue;
@@ -207,8 +207,8 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(wayForConstantSpeed);
         Serial.print(F(", timeForConstantSpeed: "));
         Serial.print(timeForConstantSpeed);
-        Serial.print(F(", stopDynamicaly: "));
-        if (stopDynamicaly) {
+        Serial.print(F(", stopDynamically: "));
+        if (stopDynamically) {
             Serial.print(F("yes, stopPerformance: "));
             Serial.print(stopPerformance);
             Serial.print(F(", initiatePerformanceValue: "));
@@ -273,13 +273,13 @@ void CCServoDevice::driveDynamic() {
     
     elapsedTime = millis() - t0;
     
-    Serial.print("sensor value is: ");
-    Serial.println(analogRead(sensor));
-    
-    if (stopDynamicaly) {
+    if (stopDynamically == true) {
         if (dynamicalStop == false) {
             if (analogRead(sensor) < initiatePerformanceValue) {
                 initiateStop();
+                performanceFactor = 1 / ((float)initiatePerformanceValue - (float)stopValue);
+                Serial.print("deltaStop: ");
+                Serial.println(deltaStop);
                 dynamicalStop = true;
             }
         }
@@ -328,38 +328,50 @@ void CCServoDevice::driveDynamic() {
         
         return;
     }
-    
-    // ramp down
-    elapsedTime -= timeForConstantSpeed;
-    if (elapsedTime < timeForAcceleration) {
-        if (dynamicalStop) {
-            deltaS = elapsedTime * velocity / 1000;
-            deltaS = (analogRead(sensor) - stopValue) / (initiatePerformanceValue - stopValue) * deltaS;
-            currentPosition = startPosition + wayForAcceleration + deltaS;
-            if (deltaS <= 0) timeForAcceleration = 0;
-        } else {
+    // stop dynamically?
+    if (dynamicalStop) {
+        sensorValue = analogRead(sensor);
+        deltaS = 10.0 * performanceFactor * (sensorValue - stopValue);
+        currentPosition += deltaS;
+        theServo.writeMicroseconds(currentPosition);
+        
+        Serial.print("sensorValue: ");
+        Serial.print(sensorValue);
+        Serial.print(", initiatePerformanceValue: ");
+        Serial.print(initiatePerformanceValue);
+        Serial.print(", deltaS: ");
+        Serial.print(deltaS);
+        Serial.print(", currentPosition: ");
+        Serial.println(currentPosition);
+        //            if (deltaS == 0) timeForAcceleration = 0;
+        return;
+    } else {
+        // generic ramp down
+        elapsedTime -= timeForConstantSpeed;
+        if (elapsedTime < timeForAcceleration) {
             //  t^2 = (timeForAcceleration - elapsedTime)^2 = (elapsedTime - timeForAcceleration)^2;
             elapsedTime -= timeForAcceleration;
             // s = sges - deltaS = 0.5 * a * t^2 = 0.5 * a * (time_in_millis / 1000)^2 = 1/2 * 1/1000000 * a * t^2
             deltaS = elapsedTime * elapsedTime * acceleration / 2000000;
             currentPosition = targetPosition - deltaS;
+            theServo.writeMicroseconds(currentPosition);
+            
+            if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
+                Serial.print(F("[CCServoDevice]: "));
+                Serial.print(deviceName);
+                Serial.print(F(": ramp down: cur: "));
+                Serial.print((int)currentPosition);
+                Serial.print(F(", target: "));
+                Serial.print((int)targetPosition);
+                Serial.print(F(", deltaS: "));
+                Serial.println((long)deltaS);
+            }
+            
+            return;
         }
-        theServo.writeMicroseconds(currentPosition);
-        
-        if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
-            Serial.print(F("[CCServoDevice]: "));
-            Serial.print(deviceName);
-            Serial.print(F(": ramp down: cur: "));
-            Serial.print((int)currentPosition);
-            Serial.print(F(", target: "));
-            Serial.print((int)targetPosition);
-            Serial.print(F(", deltaS: "));
-            Serial.println((long)deltaS);
-        }
-        
-        return;
     }
-    
+
+
     // if we didnt return up to here, we are done!
     
     

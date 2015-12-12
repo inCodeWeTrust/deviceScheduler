@@ -94,7 +94,7 @@ void CCSwitchDevice::prepareNextMove() {
 
 
 void CCSwitchDevice::startMove() {
-    digitalWrite(switching_pin, target);
+    digitalWrite(switching_pin, target > 0);
     //    state |= MOVING;
     //    state &= ~MOVING;
     state |= MOVE_DONE;
@@ -105,24 +105,28 @@ void CCSwitchDevice::startMove() {
         Serial.print(F(": switchEvent "));
         Serial.print((int)movePointer);
         Serial.print(F(": switch to "));
-        Serial.println((bool)target);
+        Serial.print(target);
+        Serial.print(F(": read it "));
+        Serial.println(digitalRead(switching_pin));
     }
 }
 
 void CCSwitchDevice::initiateStop() {}
+
 void CCSwitchDevice::stopMoving() {
-    digitalWrite(switching_pin, defaultState);
+    //    digitalWrite(switching_pin, defaultState);
 }
 
 void CCSwitchDevice::finishMove() {
     state &= ~MOVING & ~MOVE_DONE;
     
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
-        Serial.print(F(": switchEvent "));
+        Serial.print(F("finish: switchEvent "));
         Serial.print((int)movePointer);
         Serial.print(F(" done: state: "));
         Serial.println((bool)digitalRead(switching_pin));
     }
+    detachDevice();
 }
 
 
