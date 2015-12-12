@@ -110,7 +110,9 @@ void CCSwitchDevice::startMove() {
 }
 
 void CCSwitchDevice::initiateStop() {}
-void CCSwitchDevice::stopMoving() {}
+void CCSwitchDevice::stopMoving() {
+    digitalWrite(switching_pin, defaultState);
+}
 
 void CCSwitchDevice::finishMove() {
     state &= ~MOVING & ~MOVE_DONE;
