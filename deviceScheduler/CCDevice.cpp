@@ -116,6 +116,13 @@ void CCDevice::setStopEventForMove(unsigned char moveIndex, unsigned char stopTr
     theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
     theMove[moveIndex]->stopSharply = stopSharply;
 }
+void CCDevice::setStopDynamicalForMove(unsigned char moveIndex, unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int stopValue, unsigned char stopPerformance) {
+    theMove[moveIndex]->stopDynamicaly = true;
+    theMove[moveIndex]->sensor = sensor;
+    theMove[moveIndex]->initiatePerformanceValue = initiatePerformanceValue;
+    theMove[moveIndex]->stopValue = stopValue;
+    theMove[moveIndex]->stopPerformance = stopPerformance;
+}
 
 void CCDevice::deleteMoves() {
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {

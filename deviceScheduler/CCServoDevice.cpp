@@ -105,7 +105,12 @@ void CCServoDevice::prepareNextMove() {
     stopTriggerDevice = theMove[movePointer]->stopTriggerDevice;
     stopTriggerMove = theMove[movePointer]->stopTriggerMove;
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
-    
+    stopDynamicaly = theMove[movePointer]->stopDynamicaly;
+    sensor = theMove[movePointer]->sensor;
+    initiatePerformanceValue = theMove[movePointer]->initiatePerformanceValue;
+    stopValue = theMove[movePointer]->stopValue;
+    stopPerformance = theMove[movePointer]->stopPerformance;
+    dynamicalStop = false;
     
     targetPosition = target;
     startPosition = currentPosition;
@@ -201,10 +206,21 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(F(", wayForConstantSpeed: "));
         Serial.print(wayForConstantSpeed);
         Serial.print(F(", timeForConstantSpeed: "));
-        Serial.println(timeForConstantSpeed);
+        Serial.print(timeForConstantSpeed);
+        Serial.print(F(", stopDynamicaly: "));
+        if (stopDynamicaly) {
+            Serial.print(F("yes, stopPerformance: "));
+            Serial.print(stopPerformance);
+            Serial.print(F(", initiatePerformanceValue: "));
+            Serial.print(initiatePerformanceValue);
+            Serial.print(F(", stopValue: "));
+            Serial.print(stopValue);
+            Serial.print(F(", stopPerformance: "));
+            Serial.println(stopPerformance);
+        } else {
+            Serial.println("no");
+        }
     }
-
-     
 }
 
 void CCServoDevice::startMove() {
@@ -257,6 +273,17 @@ void CCServoDevice::driveDynamic() {
     
     elapsedTime = millis() - t0;
     
+    Serial.print("sensor value is: ");
+    Serial.println(analogRead(sensor));
+    
+    if (stopDynamicaly) {
+        if (dynamicalStop == false) {
+            if (analogRead(sensor) < initiatePerformanceValue) {
+                initiateStop();
+                dynamicalStop = true;
+            }
+        }
+    }
     // ramp up
     if (elapsedTime < timeForAcceleration) {
         // s = s0 + 0.5 * a * t^2 * (1000ms / sec)^2
@@ -305,11 +332,18 @@ void CCServoDevice::driveDynamic() {
     // ramp down
     elapsedTime -= timeForConstantSpeed;
     if (elapsedTime < timeForAcceleration) {
-        //  t^2 = (timeForAcceleration - elapsedTime)^2 = (elapsedTime - timeForAcceleration)^2;
-        elapsedTime -= timeForAcceleration;
-        // s = sges - deltaS = 0.5 * a * t^2 = 0.5 * a * (time_in_millis / 1000)^2 = 1/2 * 1/1000000 * a * t^2
-        deltaS = elapsedTime * elapsedTime * acceleration / 2000000;
-        currentPosition = targetPosition - deltaS;
+        if (dynamicalStop) {
+            deltaS = elapsedTime * velocity / 1000;
+            deltaS = (analogRead(sensor) - stopValue) / (initiatePerformanceValue - stopValue) * deltaS;
+            currentPosition = startPosition + wayForAcceleration + deltaS;
+            if (deltaS <= 0) timeForAcceleration = 0;
+        } else {
+            //  t^2 = (timeForAcceleration - elapsedTime)^2 = (elapsedTime - timeForAcceleration)^2;
+            elapsedTime -= timeForAcceleration;
+            // s = sges - deltaS = 0.5 * a * t^2 = 0.5 * a * (time_in_millis / 1000)^2 = 1/2 * 1/1000000 * a * t^2
+            deltaS = elapsedTime * elapsedTime * acceleration / 2000000;
+            currentPosition = targetPosition - deltaS;
+        }
         theServo.writeMicroseconds(currentPosition);
         
         if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {

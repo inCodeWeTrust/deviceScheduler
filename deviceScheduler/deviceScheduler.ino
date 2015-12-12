@@ -134,16 +134,18 @@ void loop() {
         // ########## setSwitchButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
         // ########## setSwitchEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
         
-        // ########## setTimeoutForMove(unsigned char moveIndex, unsigned long timeout, boolean stopSharply)
-        // ########## setStopButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, boolean stopSharply)
-        // ########## setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply)
+        // ########## setTimeoutForMove(unsigned char moveIndex, unsigned long timeout, unsigned char stopMode)
+        // ########## setStopButtonForMove(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, unsigned char stopMode)
+        // ########## setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, unsigned char stopMode)
         
+        //  stopModes:  STOP_SHARPLY, STOP_NORMAL, STOP_DYNAMIC
 
         // ============================================================================================================================
         // ============================================================================================================================
         // ============================================================================================================================
 
 
+        /*
         Serial.println("................................. initialisation .................................");
         unsigned char initCatStepper = scheduler->device[catStepper]->addMove(-400000, 6400, 3200.0, 3200.0);
         scheduler->device[catStepper]->setStartDateForMove(initCatStepper, 100);
@@ -163,33 +165,39 @@ void loop() {
         
         
         scheduler->device[catStepper]->currentPosition = 0;
-        
+        */
         
         
         
         freeRam();
 
-        /*
+        
         //  lift head before doing anything else: start now
         unsigned char liftHeadFirstLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-        unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         scheduler->device[headLeftServo]->setStartDateForMove(liftHeadFirstLeft, 100);
-        scheduler->device[headRightServo]->setStartDateForMove(liftHeadFirstRight, 100);
-        */
         
+        unsigned char lowerHead = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        scheduler->device[headLeftServo]->setStartAfterCompletion(lowerHead, headLeftServo, liftHeadFirstLeft);
+        scheduler->device[headLeftServo]->setStopDynamicalForMove(lowerHead, A5, 500, 0, 0);
+        
+        //  unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        //  scheduler->device[headRightServo]->setStartDateForMove(liftHeadFirstRight, 100);
+        
+        
+        /*          my brandnew cutting schdule
         unsigned char driveToCuttingStartPosition = scheduler->device[catStepper]->addMove(CAT_CUTTING_START_POSITION, 6400, 3200, 3200);
         scheduler->device[catStepper]->setStartDateForMove(driveToCuttingStartPosition, 100);
         scheduler->device[catStepper]->setStopButtonForMove(driveToCuttingStartPosition, CAT_END_BUTTON, HIGH, 0);
         
-        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 2400, 3200, 3200);
+        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_START, 3200, 3200);
         scheduler->device[catStepper]->setStartAfterCompletion(makeStartGroove, catStepper, driveToCuttingStartPosition);
         
         unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
         scheduler->device[catStepper]->setSwitchEventForMove(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
         
-        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 2400, 800, 800);
+        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_END, 800, 800);
         scheduler->device[catStepper]->setSwitchEventForMove(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
-        
+        */
         
         // here may be a problem: preperation of next move before 'currentPosition' set to 0
 
@@ -385,12 +393,16 @@ void setup() {
     Serial.println();
     Serial.println();
     
-    Serial.print("grooveWidth is set to ");
-    Serial.print(RECORD_GROOVE_WIDTH);
+    Serial.print("groovePitch is set to ");
+    Serial.print(RECORD_GROOVE_PITCH);
+    Serial.print("mm, startGroovePitch is set to ");
+    Serial.print(START_GROOVE_PITCH);
     Serial.print("mm, startGrooveWidth is set to ");
-    Serial.print(STARTGROOVE_MM);
+    Serial.print(STARTGROOVE_WIDTH);
+    Serial.print("mm, endGroovePitch is set to ");
+    Serial.print(END_GROOVE_PITCH);
     Serial.print("mm, endGrooveWidthMin is set to ");
-    Serial.print(ENDGROOVE_MIN_MM);
+    Serial.print(ENDGROOVE_WIDTH_MIN);
     Serial.println("mm:");
     Serial.print("maxPlayRange: ");
     Serial.print(MAX_PLAY_RANGE);
@@ -408,24 +420,47 @@ void setup() {
     Serial.print(RECORDTURNS);
     Serial.print(", playingRange: ");
     Serial.print(PLAYING_RANGE);
+    Serial.print("mm, endGrooveWidth: ");
+    Serial.print(ENDGROOVE_WIDTH);
     Serial.println("mm");
     Serial.println();
     
     Serial.print("secondsPerTableRotation: ");
-    Serial.print(SECONDS_PER_TABLE_ROTATION);
-    Serial.print(", catSpeed: ");
-    Serial.println(CAT_SPEED);
+    Serial.println(SECONDS_PER_TABLE_ROTATION);
     
-    Serial.print("catmotorTurnsPerSong: ");
+    Serial.print("Cutting the song: catSpeed: ");
+    Serial.print(CAT_SPEED);
+    Serial.print("catmotorTurns: ");
     Serial.print(CAT_MOTOR_TURNS_PER_SONG);
-    Serial.print(", catMotorDegreesPerSong: ");
+    Serial.print(", catMotorDegrees: ");
     Serial.print(CAT_MOTOR_DEGREES_PER_SONG);
     Serial.print(", catMotorTurnsPerSecond: ");
     Serial.print(CAT_MOTOR_TURNS_PER_SECOND);
     Serial.print(", catMotorDegreesPerSecond: ");
     Serial.println(CAT_MOTOR_DEGREES_PER_SECOND);
-    
-    
+
+    Serial.print("StartGroove: catSpeed: ");
+    Serial.print(CAT_SPEED_START);
+    Serial.print(", catmotorTurns: ");
+    Serial.print(CAT_MOTOR_TURNS_PER_START);
+    Serial.print(", catMotorDegrees: ");
+    Serial.print(CAT_MOTOR_DEGREES_PER_START);
+    Serial.print(", catMotorTurnsPerSecond: ");
+    Serial.print(CAT_MOTOR_TURNS_PER_SECOND_START);
+    Serial.print(", catMotorDegreesPerSecond: ");
+    Serial.println(CAT_MOTOR_DEGREES_PER_SECOND_START);
+
+    Serial.print("EndGroove: catSpeed: ");
+    Serial.print(CAT_SPEED_END);
+    Serial.print("catmotorTurns: ");
+    Serial.print(CAT_MOTOR_TURNS_PER_END);
+    Serial.print(", catMotorDegrees: ");
+    Serial.print(CAT_MOTOR_DEGREES_PER_END);
+    Serial.print(", catMotorTurnsPerSecond: ");
+    Serial.print(CAT_MOTOR_TURNS_PER_SECOND_END);
+    Serial.print(", catMotorDegreesPerSecond: ");
+    Serial.println(CAT_MOTOR_DEGREES_PER_SECOND_END);
+
     
     Serial.print("CAT_CUTTING_START_POSITION: ");
     Serial.print(CAT_CUTTING_START_POSITION);

@@ -332,7 +332,7 @@ void CCStepperDevice::prepareNextMove() {
 //    t_sum += t_stop;
 //    t_prepMove = micros();
     
-    
+    /*
     Serial.print(F("### stepsToGo: "));
     Serial.print(this->stepsToGo);
     Serial.print(F(" directionDown: "));
@@ -343,7 +343,7 @@ void CCStepperDevice::prepareNextMove() {
     Serial.print(this->accelerateDown);
     Serial.print(F(", stepsForAcceleration: "));
     Serial.println(this->stepsForAcceleration);
-
+    */
     
     
     // *** does acceleration and deceleration fit into the move? ***

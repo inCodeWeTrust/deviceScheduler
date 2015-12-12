@@ -12,7 +12,7 @@
 #define CCServoDevice_MOVEMENTDEBUG         0x08
 
 //static unsigned char CCServoDevice_VERBOSE = 0;
-#define CCServoDevice_VERBOSE               0x01
+#define CCServoDevice_VERBOSE               0x0D
 //#define CCServoDevice_VERBOSE CCServoDevice_BASICOUTPUT | CCServoDevice_MEMORYDEBUG | CCServoDevice_CALCULATIONDEBUG
 
 
@@ -25,6 +25,7 @@ class CCServoDevice : public CCDevice {
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;
     unsigned long        timeForAcceleration, timeForConstantSpeed;
     signed long          deltaS;
+    boolean              dynamicalStop;
 
 
 
