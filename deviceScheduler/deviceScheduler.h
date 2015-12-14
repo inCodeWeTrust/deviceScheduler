@@ -190,8 +190,10 @@
 
 #define LIFT_SPEED_FAST                 1600
 #define LIFT_SPEED_SLOW                 600
+#define LIFT_SPEED_VERY_SLOW            200
 #define LIFT_ACCEL_FAST                 1600
 #define LIFT_ACCEL_SLOW                 400
+#define LIFT_ACCEL_VERY_SLOW            200
 #define LIFT_UP_POSITION                840
 #define LIFT_FROM_STOCK_TRIGGER_TURN    1400
 #define LIFT_UP_TRIGGER_TURN            1240

@@ -539,8 +539,7 @@ void CCDeviceScheduler::runTheLoop() {
                             }
                         }
                     }
-                    else {    //  (device[s]->state & MOVE_DONE)
-                        //  device is idle
+                    else {    //  (device[s]->state & MOVE_DONE)                                                //  device is idle
                         switch (device[s]->startEvent) {                                                        //  what kind of startEvent is given?
                             case DATE:                                                                          //  start the next move by date
                                 if (taskTime > device[s]->startTime) {

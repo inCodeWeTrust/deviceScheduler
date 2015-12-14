@@ -78,8 +78,10 @@ void CCDevice::setStartEventForMove(unsigned char moveIndex, unsigned char start
     theMove[moveIndex]->startTriggerMove = startTriggerMove;
     theMove[moveIndex]->startTriggerPosition = startTriggerPosition;
 }
-void CCDevice::setStartAfterCompletion(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove) {
+void CCDevice::setStartAfterCompletion(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove) {
     theMove[moveIndex]->startEvent |= FOLLOW;
+    theMove[moveIndex]->startTriggerDevice = startTriggerDevice;
+    theMove[moveIndex]->startTriggerMove = startTriggerMove;
 }
 
 void CCDevice::setSwitchDateForMove(unsigned char moveIndex, unsigned long timeout) {

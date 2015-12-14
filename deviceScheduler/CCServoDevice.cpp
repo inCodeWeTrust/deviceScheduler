@@ -84,6 +84,9 @@ void CCServoDevice::detachDevice() {
 void CCServoDevice::reviewValues() {}
 
 void CCServoDevice::prepareNextMove() {
+    dynamicalStop = false;
+    valueCounter = 0;
+    sensorValuesFalling = (initiatePerformanceValue > stopValue);
     
     target = theMove[movePointer]->target;
     velocity = theMove[movePointer]->velocity;
@@ -169,6 +172,8 @@ void CCServoDevice::prepareNextMove() {
             timeForConstantSpeed = 1000 * wayForConstantSpeed / velocity;
         }
     }
+    
+    
     if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
@@ -270,20 +275,21 @@ void CCServoDevice::finishMove() {
 
 
 void CCServoDevice::driveDynamic() {
-    
+    lastCycleTime = elapsedTime;
     elapsedTime = millis() - t0;
     
     if (stopDynamically == true) {
         if (dynamicalStop == false) {
-            if (analogRead(sensor) < initiatePerformanceValue) {
-                initiateStop();
-                performanceFactor = 1 / ((float)initiatePerformanceValue - (float)stopValue);
-                Serial.print("deltaStop: ");
-                Serial.println(deltaStop);
+            if ((analogRead(sensor) > initiatePerformanceValue && (!sensorValuesFalling)) || (analogRead(sensor) < initiatePerformanceValue && sensorValuesFalling)) {
+                timeForAcceleration = elapsedTime;
+                timeForConstantSpeed = 0;
+                lastCycleTime = 0;
+                c_perform = 1.0 / (initiatePerformanceValue - stopValue);
                 dynamicalStop = true;
             }
         }
     }
+ 
     // ramp up
     if (elapsedTime < timeForAcceleration) {
         // s = s0 + 0.5 * a * t^2 * (1000ms / sec)^2
@@ -330,23 +336,47 @@ void CCServoDevice::driveDynamic() {
     }
     // stop dynamically?
     if (dynamicalStop) {
+        deltaDeltaNorm = (float)(elapsedTime - lastCycleTime) * velocity / 1000.0;
+        
         sensorValue = analogRead(sensor);
-        deltaS = 10.0 * performanceFactor * (sensorValue - stopValue);
-        currentPosition += deltaS;
+        
+        performanceFactor = c_perform * (sensorValue - stopValue);
+        if (performanceFactor > 0) {
+            performanceFactor = pow(performanceFactor, stopPerformance);
+        } else {
+            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
+        }
+        
+        currentPosition += deltaDeltaNorm * performanceFactor;
         theServo.writeMicroseconds(currentPosition);
         
-        Serial.print("sensorValue: ");
-        Serial.print(sensorValue);
-        Serial.print(", initiatePerformanceValue: ");
-        Serial.print(initiatePerformanceValue);
-        Serial.print(", deltaS: ");
-        Serial.print(deltaS);
-        Serial.print(", currentPosition: ");
-        Serial.println(currentPosition);
-        //            if (deltaS == 0) timeForAcceleration = 0;
-        return;
+        if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
+            Serial.print("elapsedTime: ");
+            Serial.print(elapsedTime);
+            Serial.print(", performanceFactor: ");
+            Serial.print(performanceFactor);
+            Serial.print(", sensorValue: ");
+            Serial.print(sensorValue);
+            Serial.print(", deltaDeltaNorm: ");
+            Serial.print(deltaDeltaNorm);
+            Serial.print(", deltaS: ");
+            Serial.print(deltaS);
+            Serial.print(", currentPosition: ");
+            Serial.println(currentPosition);
+        }
+        
+        if (abs(sensorValue - stopValue) < 4) {
+            valueCounter ++;
+        } else {
+            valueCounter = 0;
+        }
+        
+        if (valueCounter < 20) {
+            targetPosition = currentPosition;
+            return;
+        }
     } else {
-        // generic ramp down
+         // generic ramp down
         elapsedTime -= timeForConstantSpeed;
         if (elapsedTime < timeForAcceleration) {
             //  t^2 = (timeForAcceleration - elapsedTime)^2 = (elapsedTime - timeForAcceleration)^2;

@@ -24,12 +24,15 @@ class CCServoDevice : public CCDevice {
     signed long          elapsedTime;
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;
     unsigned long        timeForAcceleration, timeForConstantSpeed;
-    signed long          deltaS, deltaStop;
-    boolean              dynamicalStop;
+    signed long          deltaS;
+    boolean              dynamicalStop, sensorValuesFalling;
+    float                deltaDeltaNorm, deltaDelta, performanceFactor, c_perform;
+    signed int           valueCounter;
+    long                 lastCycleTime;
+    signed int           sensorValue;
+    
 
-    signed int            sensorValue;
-    float                performanceFactor;
-  public:
+public:
 
     Servo                theServo;
     unsigned char        servo_pin;

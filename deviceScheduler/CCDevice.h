@@ -45,8 +45,8 @@ public:
     unsigned char        startTriggerDevice, startTriggerMove, stopTriggerDevice, stopTriggerMove;
     signed long	         startTriggerPosition, stopTriggerPosition;
     unsigned char        sensor;
-    unsigned int         initiatePerformanceValue, stopValue;
-    unsigned char        stopPerformance;
+    signed int           initiatePerformanceValue, stopValue;
+    float                stopPerformance;
    
     
     
@@ -84,8 +84,12 @@ public:
         boolean            stopSharply;
         boolean            stopDynamically;
         unsigned char      sensor;
-        unsigned int       initiatePerformanceValue, stopValue;
-        unsigned char      stopPerformance;
+        signed int         initiatePerformanceValue, stopValue;
+        float              stopPerformance;
+        
+        
+        
+        
         
         onEventMove(float target, float velocity, float acceleration, unsigned long startDelay) : target(target), velocity(velocity), acceleration(acceleration), deceleration(0), startDelay(startDelay), startEvent(0), stopEvent(0), startTime(0), timeout(0), startButton(0), stopButton(0), startButtonState(0), stopButtonState(0), startTriggerDevice(0), startTriggerMove(0), startTriggerPosition(0), stopTriggerDevice(0), stopTriggerMove(0), stopTriggerPosition(0), stopSharply(0), stopDynamically(0), sensor(0), initiatePerformanceValue(0), stopValue(0), stopPerformance(0) {}
         onEventMove(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay) : target(target), velocity(velocity), acceleration(acceleration), deceleration(deceleration), startDelay(startDelay), startEvent(0), stopEvent(0), startTime(0), timeout(0), startButton(0), stopButton(0), startButtonState(0), stopButtonState(0), startTriggerDevice(0), startTriggerMove(0), startTriggerPosition(0), stopTriggerDevice(0), stopTriggerMove(0), stopTriggerPosition(0), stopSharply(0), stopDynamically(0), sensor(0), initiatePerformanceValue(0), stopValue(0), stopPerformance(0) {}
