@@ -13,8 +13,9 @@
 
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCDevice() {
+CCStepperDevice::CCStepperDevice(unsigned int deviceIndex, String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCDevice() {
     
+    this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
@@ -83,7 +84,6 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsi
         Serial.print(F("stepsPerDegree: "));
         Serial.print(stepsPerDegree);
         Serial.print(F(", at $"));
-//        Serial.println(" ??? ");
         Serial.println((long) this, HEX);
     }
     
@@ -179,7 +179,7 @@ void CCStepperDevice::prepareNextMove() {
     unsigned long t_stop, t_sum = 0;
 
     if (state & MOVING) {
-        if (stopEvent == FOLLOW) {
+        if (stopEvent == SWITCH) {
             if ((theMove[movePointer]->target - currentPosition) < 0) {             // when switching to move in different direction
                 if (!directionDown) {
                     prepareAndStartNextMoveWhenFinished = true;
@@ -744,12 +744,6 @@ void CCStepperDevice::driveDynamic() {
         if (prepareAndStartNextMoveWhenFinished) {
             prepareAndStartNextMoveWhenFinished = false;
             state &= ~MOVING;
-            prepareNextMove();
-            startMove();
-        }
-        else if (stopEvent == FOLLOW) {
-            state &= ~MOVING;
-            movePointer++;
             prepareNextMove();
             startMove();
         }

@@ -15,7 +15,8 @@
 #include <Servo.h>
 
 
-CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
+CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
+    this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->servo_pin = servo_pin;
     this->minPosition = minPosition;
@@ -113,7 +114,10 @@ void CCServoDevice::prepareNextMove() {
     initiatePerformanceValue = theMove[movePointer]->initiatePerformanceValue;
     stopValue = theMove[movePointer]->stopValue;
     stopPerformance = theMove[movePointer]->stopPerformance;
+    stopMode = theMove[movePointer]->stopMode;
+    
     dynamicalStop = false;
+    sensorTreshold = 256.0 / stopMode;
     
     targetPosition = target;
     startPosition = currentPosition;
@@ -289,7 +293,7 @@ void CCServoDevice::driveDynamic() {
             }
         }
     }
- 
+    
     // ramp up
     if (elapsedTime < timeForAcceleration) {
         // s = s0 + 0.5 * a * t^2 * (1000ms / sec)^2
@@ -365,18 +369,22 @@ void CCServoDevice::driveDynamic() {
             Serial.println(currentPosition);
         }
         
-        if (abs(sensorValue - stopValue) < 4) {
-            valueCounter ++;
-        } else {
-            valueCounter = 0;
-        }
-        
-        if (valueCounter < 20) {
-            targetPosition = currentPosition;
+        if (stopMode == 0xFF) {
             return;
+        } else {
+            if (abs(sensorValue - stopValue) < 4) {
+                if (valueCounter++ < stopMode) {
+                    return;
+                }
+            } else {
+                valueCounter = 0;
+                return;
+            }
         }
+        targetPosition = currentPosition;
+        
     } else {
-         // generic ramp down
+        // generic ramp down
         elapsedTime -= timeForConstantSpeed;
         if (elapsedTime < timeForAcceleration) {
             //  t^2 = (timeForAcceleration - elapsedTime)^2 = (elapsedTime - timeForAcceleration)^2;

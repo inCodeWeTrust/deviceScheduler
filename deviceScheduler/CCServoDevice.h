@@ -30,7 +30,7 @@ class CCServoDevice : public CCDevice {
     signed int           valueCounter;
     long                 lastCycleTime;
     signed int           sensorValue;
-    
+    float                sensorTreshold;
 
 public:
 
@@ -41,7 +41,7 @@ public:
 
 
 
-    CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
+    CCServoDevice(unsigned int deviceIndex, String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
     ~CCServoDevice();
 
 

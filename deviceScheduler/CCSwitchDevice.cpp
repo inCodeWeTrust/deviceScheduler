@@ -14,7 +14,8 @@
 
 
 
-CCSwitchDevice::CCSwitchDevice(String deviceName, unsigned char switching_pin, bool defaultState) : CCDevice() {
+CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, bool defaultState) : CCDevice() {
+    this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->switching_pin = switching_pin;
     this->defaultState = defaultState;

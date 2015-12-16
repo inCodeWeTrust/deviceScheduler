@@ -23,8 +23,12 @@
 
 
 //  stopModes:
-#define STOP_SHARPLY                    0x01
-#define STOP_NORMAL                     0x00
+#define STOP_SHARPLY                    0x00
+#define STOP_VERY_FAST                  0x01
+#define STOP_FAST                       0x40
+#define STOP_PRECISE                    0x80
+#define STOP_VERY_PRECISE               0xC0
+#define STOP_NEVER                      0xFF
 
 
 

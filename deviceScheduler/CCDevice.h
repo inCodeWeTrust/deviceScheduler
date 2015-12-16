@@ -22,6 +22,8 @@
 #define PENDING_MOVES	                0x04
 
 
+
+
 //  verbosity:
 #define CCDEVICE_BASICOUTPUT            0x01
 
@@ -47,9 +49,11 @@ public:
     unsigned char        sensor;
     signed int           initiatePerformanceValue, stopValue;
     float                stopPerformance;
+    unsigned char        stopMode;
    
     
     
+    unsigned int         deviceIndex;
     String               deviceName;
     unsigned char        type;
     unsigned char        countOfMoves;
@@ -86,6 +90,7 @@ public:
         unsigned char      sensor;
         signed int         initiatePerformanceValue, stopValue;
         float              stopPerformance;
+        unsigned char      stopMode;
         
         
         
@@ -111,21 +116,22 @@ public:
     unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity);
     unsigned char addMoveWithStartDelay(float target, unsigned long startDelay);
     
-    void setStartDateForMove(unsigned char moveIndex, unsigned long startTime);
-    void setStartButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
-    void setStartEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+    void startMoveByDate(unsigned char moveIndex, unsigned long startTime);
+    void startMoveByButton(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
+    void startMoveAfterCompletion(unsigned char moveIndex);
+    void startMoveAfterCompletionOf(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove);
+    void startMoveByTriggerposition(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
     
-    void setStartAfterCompletion(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove);
-    
-    void setSwitchDateForMove(unsigned char moveIndex, unsigned long startTime);
-    void setSwitchButtonForMove(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
-    void setSwitchEventForMove(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+    void switchMoveByDate(unsigned char moveIndex, unsigned long startTime);
+    void switchMoveByButton(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
+    void switchMoveByTriggerposition(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
 
-    void setTimeoutForMove(unsigned char moveIndex, unsigned long _timeout, boolean stopSharply);
-    void setStopButtonForMove(unsigned char moveIndex, unsigned char _stopButton, boolean _stopButtonState, boolean stopSharply);
-    void setStopEventForMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply);
+    void stopMoveByTimeout(unsigned char moveIndex, unsigned long _timeout, boolean stopSharply);
+    void stopMoveByButton(unsigned char moveIndex, unsigned char _stopButton, boolean _stopButtonState, boolean stopSharply);
+    void stopMoveAfterCompletionOf(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove);
+    void stopMoveByTriggerposition(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply);
     
-    void setStopDynamicalForMove(unsigned char moveIndex, unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int stopValue, unsigned char stopPerformance);
+    void stopMoveDynamically(unsigned char moveIndex, unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int stopValue, float stopPerformance, unsigned char stopMode);
     
     void deleteMoves();
     
