@@ -117,7 +117,12 @@ void CCServoDevice::prepareNextMove() {
     stopMode = theMove[movePointer]->stopMode;
     
     dynamicalStop = false;
-    sensorTreshold = 256.0 / stopMode;
+    valueCounter = 0;
+    if (stopMode == 0) {
+        sensorTreshold = 8;
+    } else {
+        sensorTreshold = 256.0 / stopMode;
+    }
     
     targetPosition = target;
     startPosition = currentPosition;
@@ -225,7 +230,11 @@ void CCServoDevice::prepareNextMove() {
             Serial.print(F(", stopValue: "));
             Serial.print(stopValue);
             Serial.print(F(", stopPerformance: "));
-            Serial.println(stopPerformance);
+            Serial.print(stopPerformance);
+            Serial.print(F(", stopMode: "));
+            Serial.print(stopMode);
+            Serial.print(F(", sensorTreshold: "));
+            Serial.println(sensorTreshold);
         } else {
             Serial.println("no");
         }
@@ -369,10 +378,13 @@ void CCServoDevice::driveDynamic() {
             Serial.println(currentPosition);
         }
         
-        if (stopMode == 0xFF) {
+//        Serial.println(sensorValue);
+
+        if (stopMode == STOP_NEVER) {
             return;
         } else {
-            if (abs(sensorValue - stopValue) < 4) {
+            if (abs(sensorValue - stopValue) < sensorTreshold) {
+//                Serial.println(sensorValue);
                 if (valueCounter++ < stopMode) {
                     return;
                 }

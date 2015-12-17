@@ -36,9 +36,9 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
 }
 
-unsigned char CCDeviceScheduler::addSwitch(String deviceName, unsigned char switching_pin, bool defaultState) {
+unsigned char CCDeviceScheduler::addSwitch(String deviceName, unsigned char switching_pin, unsigned char motorReady_pin, boolean defaultState) {
     
-    device[countOfDevices] = new CCSwitchDevice(countOfDevices, deviceName, switching_pin, defaultState);
+    device[countOfDevices] = new CCSwitchDevice(countOfDevices, deviceName, switching_pin, motorReady_pin, defaultState);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: provided "));
@@ -418,7 +418,7 @@ void CCDeviceScheduler::runTheLoop() {
                             break;
                             
                         case FOLLOW:                                                                          // device shall stop when a device reached a certain position
-                            if (device[s]->stopTriggerMove <= device[device[s]->stopTriggerDevice]->movePointer + 1) {          //  trigger device on trigger move?
+                            if (device[device[s]->stopTriggerDevice]->movePointer > device[s]->stopTriggerMove) {          //  trigger device on trigger move?
                                 if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                                     Serial.print(F("->| from: "));
                                     Serial.print(formatNumber(device[s]->stopTriggerDevice, 2));
@@ -556,12 +556,11 @@ void CCDeviceScheduler::runTheLoop() {
                         if (device[s]->movePointer < device[s]->countOfMoves) {                                 //  all tasks done? no!
                             
                             device[s]->prepareNextMove();
-                            if (device[s]->startEvent == FOLLOW) {
-                                if (device[s]->startTriggerDevice == device[s]->deviceIndex) {
-                                    device[s]->startMove();
-                                }
+
+                            if (device[s]->startEvent == FOLLOW && device[s]->startTriggerDevice == s) {
+                                device[s]->startMove();
                             }
-                            
+                           
                             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                                 Serial.print(F(" setup move "));
                                 Serial.print(formatNumber(device[s]->movePointer, 2));
@@ -658,7 +657,7 @@ void CCDeviceScheduler::runTheLoop() {
                                 break;
                                 
                             case FOLLOW:                                                                      //  start the next move when a device reached a certain
-                                if (device[s]->startTriggerMove <= device[device[s]->startTriggerDevice]->movePointer + 1) {        //  is the trigger servo doing the trigger move?
+                                if (device[device[s]->startTriggerDevice]->movePointer > device[s]->startTriggerMove) {        //  is the trigger servo doing the trigger move?
                                     
                                     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TAB_VIEW) {
                                         Serial.print(F("|-> from: "));
@@ -686,8 +685,11 @@ void CCDeviceScheduler::runTheLoop() {
                                         Serial.print(emptyMessage);
                                     }
                                 }
-                                
+                                break;
                              case POSITION:                                                                      //  start the next move when a device reached a certain
+                                Serial.print("i come here! my startEvent is ");
+                                Serial.println((int)device[s]->startEvent);
+
                                 if (device[s]->startTriggerMove <= device[device[s]->startTriggerDevice]->movePointer) {        //  is the trigger servo doing the trigger move?
                                     
                                     if ((device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition <= device[s]->startTriggerPosition) || (!device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition >= device[s]->startTriggerPosition)) {
@@ -781,20 +783,22 @@ void CCDeviceScheduler::runTheLoop() {
 
 
 String getNameOfDeviceType(unsigned char t) {
-    if (t == 1) return "Servo";
-    if (t == 2) return "Stepper";
-    if (t == 3) return "Switch";
+    if (t == SERVODEVICE) return "Servo";
+    if (t == STEPPERDEVICE) return "Stepper";
+    if (t == SWITCHINGDEVICE) return "Switch";
     if (t == 4) return "Solenoid";
     return "unknown";
 }
 String getNameOfMoveEvent(unsigned char e) {
-    if ((e & 0x0F) == 0) return "none";
-    if ((e & 0x0F) == 1) return "date";
-    if ((e & 0x0F) == 2) return "button";
-    if ((e & 0x0F) == 4) return "position";
-    if ((e & 0x0F) == 9) return "switched by date";
-    if ((e & 0x0F) == 10) return "switched by button";
-    if ((e & 0x0F) == 12) return "switched by position";
+    if ((e & 0x0F) == NONE) return "none";
+    if ((e & 0x0F) == DATE) return "date";
+    if ((e & 0x0F) == BUTTON) return "button";
+    if ((e & 0x0F) == FOLLOW) return "follow";
+    if ((e & 0x0F) == POSITION) return "position";
+    if ((e & 0x0F) == (SWITCH | DATE)) return "switched by date";
+    if ((e & 0x0F) == (SWITCH | BUTTON)) return "switched by button";
+    if ((e & 0x0F) == (SWITCH | FOLLOW)) return "switched by position";
+    if ((e & 0x0F) == (SWITCH | POSITION)) return "switched by position";
     return "unknown";
 }
 String getNameOfState(unsigned char s) {

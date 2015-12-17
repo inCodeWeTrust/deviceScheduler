@@ -14,7 +14,7 @@
 
 
 
-CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, bool defaultState) : CCDevice() {
+CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, unsigned char motorReady_pin, boolean defaultState) : CCDevice() {
     this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->switching_pin = switching_pin;
@@ -57,6 +57,7 @@ void CCSwitchDevice::disableDevice() {}
 void CCSwitchDevice::attachDevice() {
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, defaultState);
+    pinMode(motorReady_pin, INPUT_PULLUP);
 
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
@@ -91,19 +92,26 @@ void CCSwitchDevice::prepareNextMove() {
     stopTriggerMove = theMove[movePointer]->stopTriggerMove;
     stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
     
+    
+    Serial.print(F("[CCSwitchDevice]: "));
+    Serial.print(deviceName);
+    Serial.print(F(": my start is"));
+    Serial.print((int)startEvent);
+    Serial.print(F(": my stop is"));
+    Serial.println((int)stopEvent);
+    
+    
 }
 
 
 void CCSwitchDevice::startMove() {
-    digitalWrite(switching_pin, target > 0);
-    //    state |= MOVING;
-    //    state &= ~MOVING;
-    state |= MOVE_DONE;
+    digitalWrite(switching_pin, target);
+    state |= MOVING;
     
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": switchEvent "));
+        Serial.print(F(": start "));
         Serial.print((int)movePointer);
         Serial.print(F(": switch to "));
         Serial.print(target);
@@ -112,10 +120,28 @@ void CCSwitchDevice::startMove() {
     }
 }
 
-void CCSwitchDevice::initiateStop() {}
+void CCSwitchDevice::initiateStop() {
+    stopMoving();
+}
 
 void CCSwitchDevice::stopMoving() {
-    //    digitalWrite(switching_pin, defaultState);
+    
+    state &= ~MOVING;
+    state |= MOVE_DONE;
+
+    
+    
+    digitalWrite(switching_pin, defaultState);
+    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
+        Serial.print(F("[CCSwitchDevice]: "));
+        Serial.print(deviceName);
+        Serial.print(F(": stop "));
+        Serial.print((int)movePointer);
+        Serial.print(F(": switch to "));
+        Serial.print(defaultState);
+        Serial.print(F(": read it "));
+        Serial.println(digitalRead(switching_pin));
+    }
 }
 
 void CCSwitchDevice::finishMove() {
@@ -132,4 +158,5 @@ void CCSwitchDevice::finishMove() {
 
 
 void CCSwitchDevice::driveDynamic() {
+    runningNormally = digitalRead(motorReady_pin);
 }

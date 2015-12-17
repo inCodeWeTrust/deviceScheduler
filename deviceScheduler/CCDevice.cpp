@@ -2,7 +2,7 @@
 
 
 #include "CCDevice.h"
-
+#include "deviceScheduler.h"
 
 CCDevice::~CCDevice() {}
 
@@ -74,6 +74,8 @@ void CCDevice::startMoveByButton(unsigned char moveIndex, unsigned char startBut
 }
 void CCDevice::startMoveAfterCompletion(unsigned char moveIndex) {
     theMove[moveIndex]->startEvent |= FOLLOW;
+    theMove[moveIndex]->startTriggerDevice = deviceIndex;
+    theMove[moveIndex]->startTriggerMove = moveIndex;
 }
 void CCDevice::startMoveAfterCompletionOf(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove) {
     theMove[moveIndex]->startEvent |= FOLLOW;

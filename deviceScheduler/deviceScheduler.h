@@ -19,6 +19,30 @@
 ///
 
 
+#ifndef DEVICESCHEDULER
+#define DEVICESCHEDULER 1
+
+
+//  device type
+#define SERVODEVICE                     0x01
+#define STEPPERDEVICE                   0x02
+#define SWITCHINGDEVICE                 0x03
+#define SOLENOIDDEVICE                  0x04
+
+// start/stopEvent:
+#define NONE                            0x00
+#define DATE                            0x01
+#define BUTTON                          0x02
+#define FOLLOW                          0x04
+#define POSITION                        0x08
+#define SWITCH                          0x10
+
+//  device state:
+#define SLEEPING                        0x00
+#define MOVING                          0x01
+#define MOVE_DONE                       0x02
+#define PENDING_MOVES	                0x04
+
 
 
 
@@ -33,8 +57,8 @@
 
 
 
-#define STEPPINGPERIOD_TO_KICK_UP           150
-#define STEPPINGPERIOD_TO_KICK_DOWN         300
+#define STEPPINGPERIOD_TO_KICK_UP           150        //150
+#define STEPPINGPERIOD_TO_KICK_DOWN         300        //300
 
 
 #define RECORD_GROOVE_PITCH                 0.1
@@ -118,6 +142,7 @@
 
 #define TABLEDRIVE_NAME                     "tableDrive"
 #define TABLEDRIVE_PIN                      40
+#define TABLEDRIVE_READY_PIN                41
 #define TABLEDRIVE_ON                       HIGH
 #define TABLEDRIVE_OFF                      LOW
 
@@ -251,5 +276,5 @@
 
 #define NO_START_DELAY                      0
 
-
+#endif
 

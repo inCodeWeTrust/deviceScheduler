@@ -555,14 +555,7 @@ void CCStepperDevice::startMove() {
     }
     else {
         digitalWrite(dir_pin, directionDown);
-        Serial.print(F("### dir_pin: "));
-        Serial.print(this->dir_pin);
-        Serial.print(F(" is set to: "));
-        Serial.print(this->directionDown);
-        Serial.print(F(" read it: "));
-        Serial.println(digitalRead(dir_pin));
-
-
+        
         
         
         // lets start in highest stepping mode

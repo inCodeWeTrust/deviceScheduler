@@ -17,11 +17,11 @@ class CCSwitchDevice : public CCDevice {
 
   public:
 
-    unsigned char       switching_pin;
+    unsigned char       switching_pin, motorReady_pin;
     bool                defaultState;
 
 
-    CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, bool defaultState);
+    CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, unsigned char motorReady_pin, boolean defaultState);
     ~CCSwitchDevice();
 
 

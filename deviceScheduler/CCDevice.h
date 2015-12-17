@@ -1,28 +1,6 @@
 #include <Arduino.h>
 
-
-//  device type
-#define SERVODEVICE                     0x01
-#define STEPPERDEVICE                   0x02
-#define SWITCHINGDEVICE                 0x03
-#define SOLENOIDDEVICE                  0x04
-
-// start/stopEvent:
-#define NONE                            0x00
-#define DATE                            0x01
-#define BUTTON                          0x02
-#define POSITION                        0x04
-#define FOLLOW                          0x08
-#define SWITCH                          0x10
-
-//  device state:
-#define SLEEPING                        0x00
-#define MOVING                          0x01
-#define MOVE_DONE                       0x02
-#define PENDING_MOVES	                0x04
-
-
-
+#include "deviceScheduler.h"
 
 //  verbosity:
 #define CCDEVICE_BASICOUTPUT            0x01
@@ -50,6 +28,7 @@ public:
     signed int           initiatePerformanceValue, stopValue;
     float                stopPerformance;
     unsigned char        stopMode;
+    boolean              runningNormally;
    
     
     

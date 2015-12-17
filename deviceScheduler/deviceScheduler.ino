@@ -102,7 +102,7 @@ void loop() {
     unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
     unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME, STEPPER_CAT_STEP_PIN, STEPPER_CAT_DIR_PIN, STEPPER_CAT_ENABLE_PIN, STEPPER_CAT_HIGHEST_STEPPINGMODE, STEPPER_CAT_STEPMODECODES, STEPPER_CAT_MICROSTEPPINS, STEPPER_CAT_STEPS_PER_ROTATION);
     freeRam();
-    unsigned char tableDrive = scheduler->addSwitch(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_OFF);
+    unsigned char tableDrive = scheduler->addSwitch(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_READY_PIN, TABLEDRIVE_OFF);
     //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
     //    freeRam();
     
@@ -148,17 +148,12 @@ void loop() {
 
         Serial.println("................................. initialisation .................................");
         
-        /*
+        
         unsigned char initCatStepper = scheduler->device[catStepper]->addMove(-400000, 6400, 3200.0, 3200.0);
         scheduler->device[catStepper]->startMoveByDate(initCatStepper, 100);
         scheduler->device[catStepper]->stopMoveByButton(initCatStepper, CAT_PARK_BUTTON, HIGH, 0);
-        */
-        unsigned char initLiftServoLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-        scheduler->device[headLeftServo]->startMoveByDate(initLiftServoLeft, 200);
-
-        unsigned char initLiftServoRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-        scheduler->device[headRightServo]->startMoveByDate(initLiftServoRight, 300);
-
+        
+        
         
         scheduler->getAllMoves();
         scheduler->reviewMoves();
@@ -179,17 +174,47 @@ void loop() {
         
         freeRam();
 
+        //  move to start groove:
+        unsigned char driveToCuttingStartPosition = scheduler->device[catStepper]->addMove(CAT_CUTTING_START_POSITION, 4800, 3200, 3200);
+        scheduler->device[catStepper]->startMoveByDate(driveToCuttingStartPosition, 100);
+        scheduler->device[catStepper]->stopMoveByButton(driveToCuttingStartPosition, CAT_END_BUTTON, HIGH, 0);
         
         
-        unsigned char lowerHeadLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-        scheduler->device[headLeftServo]->startMoveByDate(lowerHeadLeft, 100);
-        scheduler->device[headLeftServo]->stopMoveDynamically(lowerHeadLeft, A5, 660, 200, 1, STOP_SHARPLY);
+        unsigned char turnTheTable = scheduler->device[tableDrive]->addMove(TABLEDRIVE_ON, 0, 0, 0);
+        scheduler->device[tableDrive]->startMoveAfterCompletionOf(turnTheTable, catStepper, driveToCuttingStartPosition);
+        
+        
+        //  lower head to record surface: start when reached start position of start groove
+        unsigned char lowerHeadLeftForCutting = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+        scheduler->device[headLeftServo]->startMoveAfterCompletionOf(lowerHeadLeftForCutting, catStepper, driveToCuttingStartPosition);
+        scheduler->device[headLeftServo]->stopMoveDynamically(lowerHeadLeftForCutting, A5, 660, 220, 1.0, STOP_VERY_FAST);
 
-        unsigned char lowerHeadRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-        scheduler->device[headRightServo]->startMoveByDate(lowerHeadRight, 100);
-        scheduler->device[headRightServo]->stopMoveDynamically(lowerHeadRight, A5, 660, 200, 0.6, STOP_NEVER);
+        //  lower head to record surface: start when reached start position of start groove
+        unsigned char lowerHeadRightForCutting = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+        scheduler->device[headRightServo]->startMoveAfterCompletionOf(lowerHeadRightForCutting, catStepper, driveToCuttingStartPosition);
+        scheduler->device[headRightServo]->stopMoveDynamically(lowerHeadRightForCutting, A5, 660, 220, 0.6, STOP_PRECISE);
 
+        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_START, 800, 800);
+        scheduler->device[catStepper]->startMoveAfterCompletionOf(makeStartGroove, headRightServo, lowerHeadRightForCutting);
+        scheduler->device[catStepper]->switchMoveByTriggerposition(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
         
+        unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
+        scheduler->device[catStepper]->switchMoveByTriggerposition(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
+        
+        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_END, 800, 800);
+        
+        unsigned char liftHeadLeftAfterCutting = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        scheduler->device[headLeftServo]->startMoveAfterCompletionOf(liftHeadLeftAfterCutting, catStepper, makeEndGroove);
+        
+        unsigned char liftHeadRightAfterCutting = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        scheduler->device[headRightServo]->startMoveAfterCompletionOf(liftHeadRightAfterCutting, headLeftServo, liftHeadLeftAfterCutting);
+
+        unsigned char driveToParkPosition = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 4800, 3200, 3200);
+        scheduler->device[catStepper]->startMoveAfterCompletionOf(driveToParkPosition, headLeftServo, liftHeadLeftAfterCutting);
+        scheduler->device[catStepper]->stopMoveByButton(driveToParkPosition, CAT_PARK_BUTTON, HIGH, 0);
+
+        scheduler->device[tableDrive]->stopMoveAfterCompletionOf(turnTheTable, catStepper, driveToParkPosition);
+
         
 //        unsigned char switchTableOn = scheduler->device[tableDrive]->addMove(TABLEDRIVE_ON, 0, 0, 0);
 //        scheduler->device[tableDrive]->setStartAfterCompletion(switchTableOn, headLeftServo, liftHeadFirstLeft);
@@ -210,21 +235,6 @@ void loop() {
         //  unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         //  scheduler->device[headRightServo]->startMoveByDate(liftHeadFirstRight, 100);
         
-        
-        /*          my brandnew cutting schdule
-        unsigned char driveToCuttingStartPosition = scheduler->device[catStepper]->addMove(CAT_CUTTING_START_POSITION, 6400, 3200, 3200);
-        scheduler->device[catStepper]->startMoveByDate(driveToCuttingStartPosition, 100);
-        scheduler->device[catStepper]->stopMoveByButton(driveToCuttingStartPosition, CAT_END_BUTTON, HIGH, 0);
-        
-        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_START, 3200, 3200);
-        scheduler->device[catStepper]->setStartAfterCompletion(makeStartGroove, catStepper, driveToCuttingStartPosition);
-        
-        unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
-        scheduler->device[catStepper]->switchMoveByTriggerposition(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
-        
-        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_END, 800, 800);
-        scheduler->device[catStepper]->switchMoveByTriggerposition(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
-        */
         
         // here may be a problem: preperation of next move before 'currentPosition' set to 0
 
@@ -289,56 +299,15 @@ void loop() {
         scheduler->device[liftServo]->startMoveByTriggerposition(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
         freeRam();
         
-        */
-        /*
-        //  move to start groove: start when grappler is in park position
-        //        unsigned char moveToStartGroove = scheduler->device[catStepper]->addMove(CAT_GROOVE_START_POSITION, 6400, 3200.0, 3200.0);
-        unsigned char moveToStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 2400, 3200.0, 3200.0);
-        scheduler->device[catStepper]->startMoveByButton(moveToStartGroove, START_BUTTON, LOW);
-        scheduler->device[catStepper]->stopMoveByButton(moveToStartGroove, STOP_BUTTON, LOW, 0);
-        //            scheduler->device[catStepper]->startMoveByDate(moveToStartGroove, 2000);
-        //        scheduler->device[catStepper]->startMoveByTriggerposition(moveToStartGroove, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
-    
-        //  lower head to record surface: start when reached start position of start groove
-        unsigned char lowerHeadForCuttingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        unsigned char lowerHeadForCuttingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        //        scheduler->device[headLeftServo]->startMoveByTriggerposition(lowerHeadForCuttingLeft, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION - 2);
-        //        scheduler->device[headRightServo]->startMoveByTriggerposition(lowerHeadForCuttingRight, catStepper, moveToStartGroove, CAT_GROOVE_START_POSITION - 2);
-        scheduler->device[headLeftServo]->startMoveByButton(lowerHeadForCuttingLeft, START_CUTTING_BUTTON, LOW);
-        scheduler->device[headRightServo]->startMoveByButton(lowerHeadForCuttingRight, START_CUTTING_BUTTON, LOW);
         
-        unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 640, 600, 600);
-        scheduler->device[catStepper]->startMoveByButton(makeMainGroove, START_CUTTING_BUTTON, LOW);
-        scheduler->device[catStepper]->stopMoveByButton(makeMainGroove, STOP_CUTTING_BUTTON, LOW, 0);
-
         
-//        //  make the groves: start when cuttinghead is in cutting position
-//        unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 2400, 1200.0, 1200.0);
-//        scheduler->device[catStepper]->startMoveByTriggerposition(makeStartGroove, headLeftServo, lowerHeadForCuttingLeft, HEAD_LEFT_CUT_POSITION);
-//        scheduler->device[catStepper]->switchMoveByTriggerposition(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
-//        unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 420, 600, 600);
-//        scheduler->device[catStepper]->switchMoveByTriggerposition(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
-//        unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 2400, 800, 800);
+        //  make the groves: start when cuttinghead is in cutting position
         
         //  lift head after cutting: start, when end groove is finished
-        unsigned char liftHeadAfterCuttingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        unsigned char liftHeadAfterCuttingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-//        scheduler->device[headLeftServo]->startMoveByTriggerposition(liftHeadAfterCuttingLeft, catStepper, makeEndGroove, CAT_SONG_END_POSITION - 2);
-//        scheduler->device[headRightServo]->startMoveByTriggerposition(liftHeadAfterCuttingRight, catStepper, makeEndGroove, CAT_SONG_END_POSITION - 2);
-        scheduler->device[headLeftServo]->startMoveByButton(liftHeadAfterCuttingLeft, STOP_CUTTING_BUTTON, LOW);
-        scheduler->device[headRightServo]->startMoveByButton(liftHeadAfterCuttingRight, STOP_CUTTING_BUTTON, LOW);
         
         //  go back to park position: start when cutting head is lifted up
-//        scheduler->device[catStepper]->stopMoveByTriggerposition(makeMainGroove, headLeftServo, liftHeadAfterCuttingLeft, HEAD_LEFT_TOP_POSITION, 0);
-        scheduler->device[catStepper]->setDisposeFollowingMoveForMove(makeMainGroove);
-//        scheduler->device[catStepper]->switchMoveByButton(makeMainGroove, STOP_CUTTING_BUTTON, LOW);
-        unsigned char returnCatToParkPosition = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 6400, 3200.0, 3200.0);
         
         //  lower head to record surface: start when reached start position of start groove
-        unsigned char lowerHeadForParkingLeft = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_PARK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        unsigned char lowerHeadForParkingRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_PARK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
-        scheduler->device[headLeftServo]->startMoveByTriggerposition(lowerHeadForParkingLeft, catStepper, returnCatToParkPosition, CAT_PARK_POSITION + 200);
-        scheduler->device[headRightServo]->startMoveByTriggerposition(lowerHeadForParkingRight, catStepper, returnCatToParkPosition, CAT_PARK_POSITION + 200);
 */
         
         
