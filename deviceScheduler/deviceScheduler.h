@@ -61,7 +61,7 @@
 #define STEPPINGPERIOD_TO_KICK_DOWN         300        //300
 
 
-#define RECORD_GROOVE_PITCH                 0.1
+#define RECORD_GROOVE_PITCH                 0.2
 #define START_GROOVE_PITCH                  1
 #define STARTGROOVE_WIDTH                   4
 #define END_GROOVE_PITCH                    5
@@ -153,8 +153,10 @@
 #define SOLENOID_OFF                        LOW
 
 
-#define START_BUTTON                        A3
-#define STOP_BUTTON                         A2
+
+#define NORMAL_CUTTING                      A4
+#define CAT_FWD                             A3
+#define CAT_RWD                             A2
 #define START_CUTTING_BUTTON                A1
 #define STOP_CUTTING_BUTTON                 A0
 
