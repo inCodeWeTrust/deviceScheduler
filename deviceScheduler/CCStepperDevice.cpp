@@ -44,8 +44,8 @@ CCStepperDevice::CCStepperDevice(unsigned int deviceIndex, String deviceName, un
     
     type = STEPPERDEVICE;
     state = 0;
-    movePointer = 0;
-    countOfMoves = 0;
+    taskPointer = 0;
+    countOfTasks = 0;
     
     defaultVelocity = 0;
     defaultAcceleration = 0;
@@ -145,30 +145,30 @@ void CCStepperDevice::reviewValues() {
     Serial.print(F("[CCStepperDevice]: device "));
     Serial.print(deviceName);
     Serial.print(F(" review Values for move "));
-    for (unsigned char m = 0; m < countOfMoves; m++) {
+    for (unsigned char m = 0; m < countOfTasks; m++) {
         Serial.print(" #");
         Serial.print(m);
 
-        if (theMove[m]->velocity == 0) {
-            theMove[m]->velocity = defaultVelocity;
+        if (task[m]->velocity == 0) {
+            task[m]->velocity = defaultVelocity;
         }
-        if (theMove[m]->acceleration == 0) {
-            theMove[m]->acceleration = defaultAcceleration;
+        if (task[m]->acceleration == 0) {
+            task[m]->acceleration = defaultAcceleration;
         }
-        if (theMove[m]->deceleration == 0) {
-            theMove[m]->deceleration = defaultDeceleration;
+        if (task[m]->deceleration == 0) {
+            task[m]->deceleration = defaultDeceleration;
         }
 
-        if (theMove[m]->deceleration == 0) {
-            theMove[m]->deceleration = theMove[m]->acceleration;
+        if (task[m]->deceleration == 0) {
+            task[m]->deceleration = task[m]->acceleration;
         }
 
         // v[steps/sec] = v[angle/sec] * stepsPerAngle
-        theMove[m]->velocity *= stepsPerDegree;
+        task[m]->velocity *= stepsPerDegree;
 
         // a[steps/sec/sec] = a[angle/sec/sec] * stepsPerAngle
-        theMove[m]->acceleration *= stepsPerDegree;
-        theMove[m]->deceleration *= stepsPerDegree;
+        task[m]->acceleration *= stepsPerDegree;
+        task[m]->deceleration *= stepsPerDegree;
     }
     Serial.println("   done");
 
@@ -180,7 +180,7 @@ void CCStepperDevice::prepareNextMove() {
 
     if (state & MOVING) {
         if (stopEvent == SWITCH) {
-            if ((theMove[movePointer]->target - currentPosition) < 0) {             // when switching to move in different direction
+            if ((task[taskPointer]->target - currentPosition) < 0) {             // when switching to move in different direction
                 if (!directionDown) {
                     prepareAndStartNextMoveWhenFinished = true;
                     initiateStop();
@@ -227,10 +227,10 @@ void CCStepperDevice::prepareNextMove() {
     
     startPosition = currentPosition;
     
-    target = theMove[movePointer]->target;
-    velocity = theMove[movePointer]->velocity;
-    acceleration = theMove[movePointer]->acceleration;
-    deceleration = theMove[movePointer]->deceleration;
+    target = task[taskPointer]->target;
+    velocity = task[taskPointer]->velocity;
+    acceleration = task[taskPointer]->acceleration;
+    deceleration = task[taskPointer]->deceleration;
     
     
 //    Serial.print(F("### currentPosition: "));
@@ -246,22 +246,22 @@ void CCStepperDevice::prepareNextMove() {
 //    Serial.println(this->deceleration);
 
     
-    startEvent = theMove[movePointer]->startEvent;
-    stopEvent = theMove[movePointer]->stopEvent;
-    startDelay = theMove[movePointer]->startDelay;
-    startTime = theMove[movePointer]->startTime;
-    timeout = theMove[movePointer]->timeout;
-    startButton = theMove[movePointer]->startButton;
-    stopButton = theMove[movePointer]->stopButton;
-    startButtonState = theMove[movePointer]->startButtonState;
-    stopButtonState = theMove[movePointer]->stopButtonState;
-    startTriggerDevice = theMove[movePointer]->startTriggerDevice;
-    startTriggerMove = theMove[movePointer]->startTriggerMove;
-    startTriggerPosition = theMove[movePointer]->startTriggerPosition;
-    stopTriggerDevice = theMove[movePointer]->stopTriggerDevice;
-    stopTriggerMove = theMove[movePointer]->stopTriggerMove;
-    stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
-    stopSharply = theMove[movePointer]->stopSharply;
+    startEvent = task[taskPointer]->startEvent;
+    stopEvent = task[taskPointer]->stopEvent;
+    startDelay = task[taskPointer]->startDelay;
+    startTime = task[taskPointer]->startTime;
+    timeout = task[taskPointer]->timeout;
+    startButton = task[taskPointer]->startButton;
+    stopButton = task[taskPointer]->stopButton;
+    startButtonState = task[taskPointer]->startButtonState;
+    stopButtonState = task[taskPointer]->stopButtonState;
+    startTriggerDevice = task[taskPointer]->startTriggerDevice;
+    startTriggerMove = task[taskPointer]->startTriggerMove;
+    startTriggerPosition = task[taskPointer]->startTriggerPosition;
+    stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
+    stopTriggerMove = task[taskPointer]->stopTriggerMove;
+    stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
+    stopSharply = task[taskPointer]->stopSharply;
     
     //    this takes ca 24us
 //    t_stop = micros() - t_prepMove;
@@ -523,7 +523,7 @@ void CCStepperDevice::prepareNextMove() {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": prepare move "));
-        Serial.print(this->movePointer);
+        Serial.print(this->taskPointer);
         Serial.print(F(": currentPosition: "));
         Serial.print(currentPosition);
         Serial.print(F(", target: "));
@@ -568,7 +568,7 @@ void CCStepperDevice::startMove() {
             Serial.print(F("[CCStepperDevice]: "));
             Serial.print(deviceName);
             Serial.print(F(": start move: "));
-            Serial.println((int)movePointer);
+            Serial.println((int)taskPointer);
         }
         
         state &= ~MOVE_DONE;
@@ -612,7 +612,7 @@ void CCStepperDevice::finishMove() {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop move "));
-        Serial.println((int)movePointer);
+        Serial.println((int)taskPointer);
     }
 }
 

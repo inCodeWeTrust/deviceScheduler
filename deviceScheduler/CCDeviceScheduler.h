@@ -16,7 +16,6 @@
 #include "CCServoDevice.h"
 #include "CCStepperDevice.h"
 #include "CCSwitchDevice.h"
-#include "CCSolenoidDevice.h"
 
 
 

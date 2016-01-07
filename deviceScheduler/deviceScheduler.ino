@@ -124,19 +124,19 @@ void loop() {
         // ########## unsigned char addMove(float target, float velocity, float acceleration, float deceleration) {
         
         
-        // ########## startMoveByDate(unsigned char moveIndex, unsigned long startTime)
-        // ########## startMoveByButton(unsigned char moveIndex, unsigned char startButton, boolean startButtonState)
-        // ########## startMoveByTriggerposition(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition)
+        // ########## startByDate(unsigned long startTime)
+        // ########## startByButton(unsigned char startButton, boolean startButtonState)
+        // ########## startByTriggerposition(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition)
         
-        // ########## setDisposeMoveAfterMove(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove)
+        // ########## setDisposeAfterMove(unsigned char stopTriggerDevice, unsigned char stopTriggerMove)
         
-        // ########## switchMoveByDate(unsigned char moveIndex, unsigned long startTime);
-        // ########## switchMoveByButton(unsigned char moveIndex, unsigned char startButton, boolean startButtonState);
-        // ########## switchMoveByTriggerposition(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+        // ########## switchByDate(unsigned long startTime);
+        // ########## switchByButton(unsigned char startButton, boolean startButtonState);
+        // ########## switchByTriggerposition(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
         
-        // ########## stopMoveByTimeout(unsigned char moveIndex, unsigned long timeout, unsigned char stopMode)
-        // ########## stopMoveByButton(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, unsigned char stopMode)
-        // ########## stopMoveByTriggerposition(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, unsigned char stopMode)
+        // ########## stopByTimeout(unsigned long timeout, unsigned char stopMode)
+        // ########## stopByButton(unsigned char stopButton, boolean stopButtonState, unsigned char stopMode)
+        // ########## stopByTriggerposition(unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, unsigned char stopMode)
         
         //  stopModes:  STOP_SHARPLY, STOP_NORMAL, STOP_DYNAMIC
         
@@ -150,8 +150,8 @@ void loop() {
         
         
         unsigned char initCatStepper = scheduler->device[catStepper]->addMove(-400000, 6400, 3200.0, 3200.0);
-        scheduler->device[catStepper]->startMoveByDate(initCatStepper, 100);
-        scheduler->device[catStepper]->stopMoveByButton(initCatStepper, CAT_PARK_BUTTON, HIGH, 0);
+        scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
+        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, 0);
         
         
         
@@ -176,46 +176,44 @@ void loop() {
             
             //  move to start groove:
             unsigned char driveToCuttingStartPosition = scheduler->device[catStepper]->addMove(CAT_CUTTING_START_POSITION, 4800, 3200, 3200);
-            scheduler->device[catStepper]->startMoveByDate(driveToCuttingStartPosition, 100);
-            scheduler->device[catStepper]->stopMoveByButton(driveToCuttingStartPosition, CAT_END_BUTTON, HIGH, 0);
+            scheduler->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
+            scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, 0);
             
             
             unsigned char turnTheTable = scheduler->device[tableDrive]->addMove(TABLEDRIVE_ON, 0, 0, 0);
-            scheduler->device[tableDrive]->startMoveAfterCompletionOf(turnTheTable, catStepper, driveToCuttingStartPosition);
+            scheduler->device[tableDrive]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
             
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadLeftForCutting = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headLeftServo]->startMoveAfterCompletionOf(lowerHeadLeftForCutting, catStepper, driveToCuttingStartPosition);
-            scheduler->device[headLeftServo]->stopMoveDynamically(lowerHeadLeftForCutting, A5, 660, 220, 1.0, STOP_VERY_FAST);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->stopDynamicallyBySensor(A5, 660, 220, 1.0, STOP_VERY_FAST);
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadRightForCutting = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headRightServo]->startMoveAfterCompletionOf(lowerHeadRightForCutting, catStepper, driveToCuttingStartPosition);
-            scheduler->device[headRightServo]->stopMoveDynamically(lowerHeadRightForCutting, A5, 660, 220, 0.6, STOP_PRECISE);
+            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 660, 220, 0.6, STOP_PRECISE);
             
             unsigned char makeStartGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_START, 800, 800);
-            scheduler->device[catStepper]->startMoveAfterCompletionOf(makeStartGroove, headRightServo, lowerHeadRightForCutting);
-            scheduler->device[catStepper]->switchMoveByTriggerposition(makeStartGroove, catStepper, makeStartGroove, CAT_SONG_START_POSITION);
+            scheduler->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, lowerHeadRightForCutting);
+            scheduler->device[catStepper]->task[makeStartGroove]->switchByTriggerposition(catStepper, makeStartGroove, CAT_SONG_START_POSITION);
             
             unsigned char makeMainGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
-            scheduler->device[catStepper]->switchMoveByTriggerposition(makeMainGroove, catStepper, makeMainGroove, CAT_SONG_END_POSITION);
+            scheduler->device[catStepper]->task[makeMainGroove]->switchByTriggerposition(catStepper, makeMainGroove, CAT_SONG_END_POSITION);
             
             unsigned char makeEndGroove = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_END, 800, 800);
             
             unsigned char liftHeadLeftAfterCutting = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-            scheduler->device[headLeftServo]->startMoveAfterCompletionOf(liftHeadLeftAfterCutting, catStepper, makeEndGroove);
+            scheduler->device[headLeftServo]->task[liftHeadLeftAfterCutting]->startAfterCompletionOf(catStepper, makeEndGroove);
             
-            scheduler->device[tableDrive]->stopMoveAfterCompletionOf(turnTheTable, headLeftServo, liftHeadLeftAfterCutting);
+            scheduler->device[tableDrive]->task[turnTheTable]->stopAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting);
             
             unsigned char liftHeadRightAfterCutting = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-            scheduler->device[headRightServo]->startMoveAfterCompletionOf(liftHeadRightAfterCutting, headLeftServo, liftHeadLeftAfterCutting);
+            scheduler->device[headRightServo]->task[liftHeadRightAfterCutting]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting);
             
             unsigned char driveToParkPosition = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 4800, 3200, 3200);
-            scheduler->device[catStepper]->startMoveAfterCompletionOf(driveToParkPosition, headLeftServo, liftHeadLeftAfterCutting);
-            scheduler->device[catStepper]->stopMoveByButton(driveToParkPosition, CAT_PARK_BUTTON, HIGH, 0);
-            
-            scheduler->device[tableDrive]->stopMoveAfterCompletionOf(turnTheTable, catStepper, driveToParkPosition);
+            scheduler->device[catStepper]->task[driveToParkPosition]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting);
+            scheduler->device[catStepper]->task[driveToParkPosition]->stopByButton(CAT_PARK_BUTTON, HIGH, 0);
             
             
             
@@ -257,8 +255,8 @@ void loop() {
         } else {
             //  move to start groove:
             unsigned char driveToCuttingStartPositionMan = scheduler->device[catStepper]->addMove(CAT_CUTTING_START_POSITION, 4800, 3200, 3200);
-            scheduler->device[catStepper]->startMoveByDate(driveToCuttingStartPositionMan, 100);
-            scheduler->device[catStepper]->stopMoveByButton(driveToCuttingStartPositionMan, CAT_END_BUTTON, HIGH, 0);
+            scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(100);
+            scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_END_BUTTON, HIGH, 0);
             
             scheduler->reviewMoves();
             scheduler->runTheLoop();
@@ -267,8 +265,8 @@ void loop() {
             while (digitalRead(START_CUTTING_BUTTON) == HIGH) {
                 if (digitalRead(CAT_FWD) == LOW) {
                     driveToCuttingStartPositionMan = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, 4800, 3200, 3200);
-                    scheduler->device[catStepper]->startMoveByDate(driveToCuttingStartPositionMan, 10);
-                    scheduler->device[catStepper]->stopMoveByButton(driveToCuttingStartPositionMan, CAT_FWD, HIGH, 0);
+                    scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
+                    scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_FWD, HIGH, 0);
                     
                     scheduler->reviewMoves();
                     scheduler->runTheLoop();
@@ -276,8 +274,8 @@ void loop() {
                 }
                 if (digitalRead(CAT_RWD) == LOW) {
                     driveToCuttingStartPositionMan = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 4800, 3200, 3200);
-                    scheduler->device[catStepper]->startMoveByDate(driveToCuttingStartPositionMan, 10);
-                    scheduler->device[catStepper]->stopMoveByButton(driveToCuttingStartPositionMan, CAT_RWD, HIGH, 0);
+                    scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
+                    scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_RWD, HIGH, 0);
                     
                     scheduler->reviewMoves();
                     scheduler->runTheLoop();
@@ -287,33 +285,33 @@ void loop() {
             
             
             unsigned char turnTheTableMan = scheduler->device[tableDrive]->addMove(TABLEDRIVE_ON, 0, 0, 0);
-            scheduler->device[tableDrive]->startMoveByDate(turnTheTableMan, 100);
+            scheduler->device[tableDrive]->task[turnTheTableMan]->startByDate(100);
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadLeftForCuttingMan = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headLeftServo]->startMoveByDate(lowerHeadLeftForCuttingMan, 200);
-            scheduler->device[headLeftServo]->stopMoveDynamically(lowerHeadLeftForCuttingMan, A5, 660, 220, 1.0, STOP_VERY_FAST);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCuttingMan]->startByDate(200);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCuttingMan]->stopDynamicallyBySensor(A5, 660, 220, 1.0, STOP_VERY_FAST);
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadRightForCuttingMan = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headRightServo]->startMoveByDate(lowerHeadRightForCuttingMan, 220);
-            scheduler->device[headRightServo]->stopMoveDynamically(loxwerHeadRightForCuttingMan, A5, 660, 220, 0.6, STOP_PRECISE);
+            scheduler->device[headRightServo]->task[lowerHeadRightForCuttingMan]->startByDate(220);
+            scheduler->device[headRightServo]->task[lowerHeadRightForCuttingMan]->stopDynamicallyBySensor(A5, 660, 220, 0.6, STOP_PRECISE);
             
             unsigned char makeMainGrooveMan = scheduler->device[catStepper]->addMove(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
-            scheduler->device[catStepper]->startMoveAfterCompletionOf(makeMainGrooveMan, headRightServo, lowerHeadRightForCuttingMan);
-            scheduler->device[catStepper]->stopMoveByButton(makeMainGrooveMan, STOP_CUTTING_BUTTON, LOW, 0);
+            scheduler->device[catStepper]->task[makeMainGrooveMan]->startAfterCompletionOf(headRightServo, lowerHeadRightForCuttingMan);
+            scheduler->device[catStepper]->task[makeMainGrooveMan]->stopByButton(STOP_CUTTING_BUTTON, LOW, 0);
             
             unsigned char liftHeadLeftAfterCuttingMan = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-            scheduler->device[headLeftServo]->startMoveAfterCompletionOf(liftHeadLeftAfterCuttingMan, catStepper, makeMainGrooveMan);
+            scheduler->device[headLeftServo]->task[liftHeadLeftAfterCuttingMan]->startAfterCompletionOf(catStepper, makeMainGrooveMan);
             
             unsigned char liftHeadRightAfterCuttingMan = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-            scheduler->device[headRightServo]->startMoveAfterCompletionOf(liftHeadRightAfterCuttingMan, headLeftServo, liftHeadLeftAfterCuttingMan);
+            scheduler->device[headRightServo]->task[liftHeadRightAfterCuttingMan]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCuttingMan);
             
-            scheduler->device[tableDrive]->stopMoveAfterCompletionOf(turnTheTableMan, headLeftServo, liftHeadLeftAfterCuttingMan);
+            scheduler->device[tableDrive]->task[liftHeadRightAfterCuttingMan]->stopAfterCompletionOf(headLeftServo, liftHeadLeftAfterCuttingMan);
             
             unsigned char driveToParkPositionMan = scheduler->device[catStepper]->addMove(CAT_PARK_POSITION, 4800, 3200, 3200);
-            scheduler->device[catStepper]->startMoveAfterCompletionOf(driveToParkPositionMan, headLeftServo, liftHeadLeftAfterCuttingMan);
-            scheduler->device[catStepper]->stopMoveByButton(driveToParkPositionMan, CAT_PARK_BUTTON, HIGH, 0);
+            scheduler->device[catStepper]->task[driveToParkPositionMan]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCuttingMan);
+            scheduler->device[catStepper]->task[driveToParkPositionMan]->stopByButton(CAT_PARK_BUTTON, HIGH, 0);
             
             
             scheduler->reviewMoves();
@@ -482,21 +480,21 @@ void freeRam() {
 //        unsigned char switchTableOn = scheduler->device[tableDrive]->addMove(TABLEDRIVE_ON, 0, 0, 0);
 //        scheduler->device[tableDrive]->setStartAfterCompletion(switchTableOn, headLeftServo, liftHeadFirstLeft);
 //        unsigned char switchTableOff = scheduler->device[tableDrive]->addMove(TABLEDRIVE_OFF, 0, 0, 0);
-//        scheduler->device[tableDrive]->startMoveByDate(switchTableOff, 10000);
+//        scheduler->device[tableDrive]->startByDate(switchTableOff, 10000);
 
 //        unsigned char riseHead = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
 //        scheduler->device[headLeftServo]->setStartAfterCompletion(riseHead, headLeftServo, lowerHeadFirstLeft);
-//        scheduler->device[headLeftServo]->stopMoveByTimeout(riseHead, 10000, true);
+//        scheduler->device[headLeftServo]->stopByTimeout(riseHead, 10000, true);
 //
 //        unsigned char lowerHead = scheduler->device[headLeftServo]->addMove(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
 //        scheduler->device[headLeftServo]->setStartAfterCompletion(lowerHead, headLeftServo, riseHead);
-//        scheduler->device[headLeftServo]->stopMoveDynamically(lowerHead, A5, 1000, 200, 0);
-//        scheduler->device[headLeftServo]->stopMoveByTimeout(lowerHead, 10000, true);
+//        scheduler->device[headLeftServo]->stopDynamicallyBySensor(lowerHead, A5, 1000, 200, 0);
+//        scheduler->device[headLeftServo]->stopByTimeout(lowerHead, 10000, true);
 
 
 
 //  unsigned char liftHeadFirstRight = scheduler->device[headRightServo]->addMove(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-//  scheduler->device[headRightServo]->startMoveByDate(liftHeadFirstRight, 100);
+//  scheduler->device[headRightServo]->startByDate(liftHeadFirstRight, 100);
 
 
 // here may be a problem: preperation of next move before 'currentPosition' set to 0
@@ -505,61 +503,61 @@ void freeRam() {
 /*
  //  supply a new record from stock
  unsigned char supplyNewRecord = scheduler->device[stockStepper]->addMove(36000L, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
- //        scheduler->device[stockStepper]->startMoveByDate(supplyNewRecord, 100);
- scheduler->device[stockStepper]->startMoveByButton(supplyNewRecord, CAT_FWD, LOW);
- scheduler->device[stockStepper]->stopMoveByButton(supplyNewRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
+ //        scheduler->device[stockStepper]->startByDate(supplyNewRecord, 100);
+ scheduler->device[stockStepper]->startByButton(supplyNewRecord, CAT_FWD, LOW);
+ scheduler->device[stockStepper]->stopByButton(supplyNewRecord, RECORD_AVAILABLE_BUTTON, HIGH, 0);
  
  //  lift grappler: start soon
  unsigned char liftFromParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
- //        scheduler->device[liftServo]->startMoveByDate(liftFromParkPosition, 100);
- //        scheduler->device[turnServo]->startMoveByButton(turnToStock, RECORD_AVAILABLE_BUTTON, HIGH);
+ //        scheduler->device[liftServo]->startByDate(liftFromParkPosition, 100);
+ //        scheduler->device[turnServo]->startByButton(turnToStock, RECORD_AVAILABLE_BUTTON, HIGH);
  freeRam();
  
  //  turn grappler to stock: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
  unsigned char turnToStock = scheduler->device[turnServo]->addMove(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
- scheduler->device[turnServo]->startMoveByTriggerposition(turnToStock, liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
+ scheduler->device[turnServo]->startByTriggerposition(turnToStock, liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
  freeRam();
  
  //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
  unsigned char lowerToStock = scheduler->device[liftServo]->addMove(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
- //        scheduler->device[liftServo]->startMoveByDate(lowerToStock, 3000);
- scheduler->device[liftServo]->startMoveByTriggerposition(lowerToStock, turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
+ //        scheduler->device[liftServo]->startByDate(lowerToStock, 3000);
+ scheduler->device[liftServo]->startByTriggerposition(lowerToStock, turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
  freeRam();
  
  //         //  grip new record: start when grappler reached stock (LIFT_STOCK_POSITION)
  //         unsigned char gripNewRecord = scheduler->device[vacuumSolenoid]->addMove(SOLENOID_DUTYCYCLE, SOLENOID_FREQUENCY, 0, 500);
- //         scheduler->device[vacuumSolenoid]->startMoveByTriggerposition(gripNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
+ //         scheduler->device[vacuumSolenoid]->startByTriggerposition(gripNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
  //         freeRam();
  
  //  lift the new record: start with startDelay after stock was reached (LIFT_STOCK_POSITION)
  unsigned char liftNewRecord = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, 2666);
- scheduler->device[liftServo]->startMoveByTriggerposition(liftNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
+ scheduler->device[liftServo]->startByTriggerposition(liftNewRecord, liftServo, lowerToStock, LIFT_STOCK_POSITION);
  freeRam();
  
  //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
  unsigned char turnRecordToTable = scheduler->device[turnServo]->addMove(TURN_TABLE_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, NO_START_DELAY);
- scheduler->device[turnServo]->startMoveByTriggerposition(turnRecordToTable, liftServo, liftNewRecord, LIFT_FROM_STOCK_TRIGGER_TURN);
+ scheduler->device[turnServo]->startByTriggerposition(turnRecordToTable, liftServo, liftNewRecord, LIFT_FROM_STOCK_TRIGGER_TURN);
  freeRam();
  
  //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
  unsigned char lowerRecordToTable = scheduler->device[liftServo]->addMove(LIFT_TABLE_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, NO_START_DELAY);
- scheduler->device[liftServo]->startMoveByTriggerposition(lowerRecordToTable, turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
- //        scheduler->device[vacuumSolenoid]->stopMoveByTriggerposition(gripNewRecord, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION, 0);
+ scheduler->device[liftServo]->startByTriggerposition(lowerRecordToTable, turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+ //        scheduler->device[vacuumSolenoid]->stopByTriggerposition(gripNewRecord, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION, 0);
  freeRam();
  
  //  lift for going to park position: start with startDelay after turn table was reached (LIFT_TABLE_POSITION)
  unsigned char liftForParkPosition = scheduler->device[liftServo]->addMove(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, 500);
- scheduler->device[liftServo]->startMoveByTriggerposition(liftForParkPosition, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
+ scheduler->device[liftServo]->startByTriggerposition(liftForParkPosition, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
  freeRam();
  
  //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
  unsigned char turnToParkPosition = scheduler->device[turnServo]->addMove(TURN_PARK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, NO_START_DELAY);
- scheduler->device[turnServo]->startMoveByTriggerposition(turnToParkPosition, liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
+ scheduler->device[turnServo]->startByTriggerposition(turnToParkPosition, liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
  freeRam();
  
  //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
  unsigned char lowerForParkPosition = scheduler->device[liftServo]->addMove(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, NO_START_DELAY);
- scheduler->device[liftServo]->startMoveByTriggerposition(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
+ scheduler->device[liftServo]->startByTriggerposition(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
  freeRam();
  
  

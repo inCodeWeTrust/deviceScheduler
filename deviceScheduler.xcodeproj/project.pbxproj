@@ -19,6 +19,7 @@
 		A45F72871B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */; };
 		A45F72881B1C71EB00B5B7E0 /* CCServoDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */; };
 		A45F728A1B1C71EB00B5B7E0 /* CCStepperDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */; };
+		A48C24731C3E674600EB3EFA /* CCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A48C24711C3E674600EB3EFA /* CCTask.cpp */; };
 		AA2A150601125914AA000006 /* abi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000006 /* abi.cpp */; };
 		AA2A150601125914AA000007 /* Arduino.h in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000007 /* Arduino.h */; };
 		AA2A150601125914AA000008 /* binary.h in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000008 /* binary.h */; };
@@ -719,6 +720,8 @@
 		A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCStepperDevice.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice.h; sourceTree = "<group>"; };
 		A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
+		A48C24711C3E674600EB3EFA /* CCTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTask.cpp; sourceTree = "<group>"; };
+		A48C24721C3E674600EB3EFA /* CCTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTask.h; sourceTree = "<group>"; };
 		AAAA150601125914AA000006 /* abi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = abi.cpp; sourceTree = "<group>"; };
 		AAAA150601125914AA000007 /* Arduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arduino.h; sourceTree = "<group>"; };
 		AAAA150601125914AA000008 /* binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary.h; sourceTree = "<group>"; };
@@ -1392,6 +1395,8 @@
 				A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */,
 				A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */,
 				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
+				A48C24721C3E674600EB3EFA /* CCTask.h */,
+				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
 				AAAA150601125914AA000000 /* Resources */,
 				A45F72221B1C70E400B5B7E0 /* Configurations */,
@@ -4001,6 +4006,7 @@
 				AA2A150601125914AA00019D /* ChoreoOutput.cpp in Sources */,
 				AA2A150601125914AA00019E /* ChoreoOutput.h in Sources */,
 				AA2A150601125914AA00019F /* ChoreoOutputFormatter.cpp in Sources */,
+				A48C24731C3E674600EB3EFA /* CCTask.cpp in Sources */,
 				AA2A150601125914AA0001A0 /* ChoreoOutputFormatter.h in Sources */,
 				AA2A150601125914AA0001A1 /* ChoreoOutputSet.cpp in Sources */,
 				AA2A150601125914AA0001A2 /* ChoreoOutputSet.h in Sources */,

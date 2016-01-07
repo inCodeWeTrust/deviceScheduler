@@ -39,102 +39,29 @@ unsigned char CCDevice::addMove(float target, float velocity, float acceleration
  }
  */
 unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
-    theMove[countOfMoves] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
+//    task[countOfTasks] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
+    task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, startDelay);
     
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCDevice]: add Move for "));
         Serial.print(deviceName);
         Serial.print(F(", target: "));
-        Serial.print(theMove[countOfMoves]->target);
+        Serial.print(task[countOfTasks]->target);
         Serial.print(F(", velocity: "));
-        Serial.print(theMove[countOfMoves]->velocity);
+        Serial.print(task[countOfTasks]->velocity);
         Serial.print(F(", acceleration: "));
-        Serial.print(theMove[countOfMoves]->acceleration);
+        Serial.print(task[countOfTasks]->acceleration);
         Serial.print(F(", deceleration: "));
-        Serial.print(theMove[countOfMoves]->deceleration);
+        Serial.print(task[countOfTasks]->deceleration);
         Serial.print(F(", startDelay: "));
-        Serial.print(theMove[countOfMoves]->startDelay);
+        Serial.print(task[countOfTasks]->startDelay);
         Serial.print(F("; at $"));
-        Serial.println((long)theMove[countOfMoves], HEX);
+        Serial.println((long)task[countOfTasks], HEX);
     }
     
-    countOfMoves++;
+    countOfTasks++;
     
-    return countOfMoves - 1;
-}
-
-void CCDevice::startMoveByDate(unsigned char moveIndex, unsigned long startTime) {
-    theMove[moveIndex]->startEvent = DATE;
-    theMove[moveIndex]->startTime = startTime;
-}
-void CCDevice::startMoveByButton(unsigned char moveIndex, unsigned char startButton, boolean startButtonState) {
-    theMove[moveIndex]->startEvent = BUTTON;
-    theMove[moveIndex]->startButton = startButton;
-    theMove[moveIndex]->startButtonState = startButtonState;
-}
-void CCDevice::startMoveAfterCompletion(unsigned char moveIndex) {
-    theMove[moveIndex]->startEvent |= FOLLOW;
-    theMove[moveIndex]->startTriggerDevice = deviceIndex;
-    theMove[moveIndex]->startTriggerMove = moveIndex;
-}
-void CCDevice::startMoveAfterCompletionOf(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove) {
-    theMove[moveIndex]->startEvent |= FOLLOW;
-    theMove[moveIndex]->startTriggerDevice = startTriggerDevice;
-    theMove[moveIndex]->startTriggerMove = startTriggerMove;
-}
-void CCDevice::startMoveByTriggerposition(unsigned char moveIndex, unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition) {
-    theMove[moveIndex]->startEvent = POSITION;
-    theMove[moveIndex]->startTriggerDevice = startTriggerDevice;
-    theMove[moveIndex]->startTriggerMove = startTriggerMove;
-    theMove[moveIndex]->startTriggerPosition = startTriggerPosition;
-}
-
-void CCDevice::switchMoveByDate(unsigned char moveIndex, unsigned long timeout) {
-    theMove[moveIndex]->stopEvent = DATE | SWITCH;
-    theMove[moveIndex]->timeout = timeout;
-}
-void CCDevice::switchMoveByButton(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState) {
-    theMove[moveIndex]->stopEvent = BUTTON | SWITCH;
-    theMove[moveIndex]->stopButton = stopButton;
-    theMove[moveIndex]->stopButtonState = stopButtonState;
-}
-void CCDevice::switchMoveByTriggerposition(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition) {
-    theMove[moveIndex]->stopEvent = POSITION | SWITCH;
-    theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
-    theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
-    theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
-}
-
-void CCDevice::stopMoveByTimeout(unsigned char moveIndex, unsigned long timeout, boolean stopSharply) {
-    theMove[moveIndex]->stopEvent = DATE;
-    theMove[moveIndex]->timeout = timeout;
-    theMove[moveIndex]->stopSharply = stopSharply;
-}
-void CCDevice::stopMoveByButton(unsigned char moveIndex, unsigned char stopButton, boolean stopButtonState, boolean stopSharply) {
-    theMove[moveIndex]->stopEvent = BUTTON;
-    theMove[moveIndex]->stopButton = stopButton;
-    theMove[moveIndex]->stopButtonState = stopButtonState;
-    theMove[moveIndex]->stopSharply = stopSharply;
-}
-void CCDevice::stopMoveAfterCompletionOf(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove) {
-    theMove[moveIndex]->stopEvent = FOLLOW;
-    theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
-    theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
-}
-void CCDevice::stopMoveByTriggerposition(unsigned char moveIndex, unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply) {
-    theMove[moveIndex]->stopEvent = POSITION;
-    theMove[moveIndex]->stopTriggerDevice = stopTriggerDevice;
-    theMove[moveIndex]->stopTriggerMove = stopTriggerMove;
-    theMove[moveIndex]->stopTriggerPosition = stopTriggerPosition;
-    theMove[moveIndex]->stopSharply = stopSharply;
-}
-void CCDevice::stopMoveDynamically(unsigned char moveIndex, unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int stopValue, float stopPerformance, unsigned char stopMode) {
-    theMove[moveIndex]->stopDynamically = true;
-    theMove[moveIndex]->sensor = sensor;
-    theMove[moveIndex]->initiatePerformanceValue = initiatePerformanceValue;
-    theMove[moveIndex]->stopValue = stopValue;
-    theMove[moveIndex]->stopPerformance = stopPerformance;
-    theMove[moveIndex]->stopMode = stopMode;
+    return countOfTasks - 1;
 }
 
 void CCDevice::deleteMoves() {
@@ -143,13 +70,13 @@ void CCDevice::deleteMoves() {
         Serial.print(deviceName);
         Serial.print(F(": move "));
     }
-    for (int j = countOfMoves - 1; j >= 0; j--) {
+    for (int j = countOfTasks - 1; j >= 0; j--) {
         if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
             Serial.print(F(" #"));
             Serial.print(j);
         }
-        delete theMove[j];
-        theMove[j] = NULL;
+        delete task[j];
+        task[j] = NULL;
     }
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
         Serial.println();
@@ -157,8 +84,8 @@ void CCDevice::deleteMoves() {
     }
     
     state = 0;
-    movePointer = 0;
-    countOfMoves = 0;
+    taskPointer = 0;
+    countOfTasks = 0;
     
 //    currentPosition = 0;
 //    directionDown = 0;

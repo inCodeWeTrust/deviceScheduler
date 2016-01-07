@@ -22,8 +22,8 @@ CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsi
     
     type = SWITCHINGDEVICE;
     state = 0;
-    movePointer = 0;
-    countOfMoves = 0;
+    taskPointer = 0;
+    countOfTasks = 0;
     
 //    defaultVelocity = 0;
 //    defaultAcceleration = 0;
@@ -73,24 +73,24 @@ void CCSwitchDevice::reviewValues() {}
 
 void CCSwitchDevice::prepareNextMove() {
     
-    target = theMove[movePointer]->target;
+    target = task[taskPointer]->target;
     
-    startEvent = theMove[movePointer]->startEvent;
-    stopEvent = theMove[movePointer]->stopEvent;
-    startDelay = theMove[movePointer]->startDelay;
-    startTime = theMove[movePointer]->startTime;
-    timeout = theMove[movePointer]->timeout;
-    stopSharply = theMove[movePointer]->stopSharply;
-    startButton = theMove[movePointer]->startButton;
-    stopButton = theMove[movePointer]->stopButton;
-    startButtonState = theMove[movePointer]->startButtonState;
-    stopButtonState = theMove[movePointer]->stopButtonState;
-    startTriggerDevice = theMove[movePointer]->startTriggerDevice;
-    startTriggerMove = theMove[movePointer]->startTriggerMove;
-    startTriggerPosition = theMove[movePointer]->startTriggerPosition;
-    stopTriggerDevice = theMove[movePointer]->stopTriggerDevice;
-    stopTriggerMove = theMove[movePointer]->stopTriggerMove;
-    stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
+    startEvent = task[taskPointer]->startEvent;
+    stopEvent = task[taskPointer]->stopEvent;
+    startDelay = task[taskPointer]->startDelay;
+    startTime = task[taskPointer]->startTime;
+    timeout = task[taskPointer]->timeout;
+    stopSharply = task[taskPointer]->stopSharply;
+    startButton = task[taskPointer]->startButton;
+    stopButton = task[taskPointer]->stopButton;
+    startButtonState = task[taskPointer]->startButtonState;
+    stopButtonState = task[taskPointer]->stopButtonState;
+    startTriggerDevice = task[taskPointer]->startTriggerDevice;
+    startTriggerMove = task[taskPointer]->startTriggerMove;
+    startTriggerPosition = task[taskPointer]->startTriggerPosition;
+    stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
+    stopTriggerMove = task[taskPointer]->stopTriggerMove;
+    stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
     
     
     Serial.print(F("[CCSwitchDevice]: "));
@@ -112,7 +112,7 @@ void CCSwitchDevice::startMove() {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": start "));
-        Serial.print((int)movePointer);
+        Serial.print((int)taskPointer);
         Serial.print(F(": switch to "));
         Serial.print(target);
         Serial.print(F(": read it "));
@@ -136,7 +136,7 @@ void CCSwitchDevice::stopMoving() {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop "));
-        Serial.print((int)movePointer);
+        Serial.print((int)taskPointer);
         Serial.print(F(": switch to "));
         Serial.print(defaultState);
         Serial.print(F(": read it "));
@@ -149,7 +149,7 @@ void CCSwitchDevice::finishMove() {
     
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("finish: switchEvent "));
-        Serial.print((int)movePointer);
+        Serial.print((int)taskPointer);
         Serial.print(F(" done: state: "));
         Serial.println((bool)digitalRead(switching_pin));
     }

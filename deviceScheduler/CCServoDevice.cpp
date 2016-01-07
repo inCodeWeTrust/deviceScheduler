@@ -26,8 +26,8 @@ CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsign
     
     type = SERVODEVICE;
     state = 0;
-    movePointer = 0;
-    countOfMoves = 0;
+    taskPointer = 0;
+    countOfTasks = 0;
     
     defaultVelocity = 0;
     defaultAcceleration = 0;
@@ -89,32 +89,32 @@ void CCServoDevice::prepareNextMove() {
     valueCounter = 0;
     sensorValuesFalling = (initiatePerformanceValue > stopValue);
     
-    target = theMove[movePointer]->target;
-    velocity = theMove[movePointer]->velocity;
-    acceleration = theMove[movePointer]->acceleration;
+    target = task[taskPointer]->target;
+    velocity = task[taskPointer]->velocity;
+    acceleration = task[taskPointer]->acceleration;
     
-    startEvent = theMove[movePointer]->startEvent;
-    stopEvent = theMove[movePointer]->stopEvent;
-    startDelay = theMove[movePointer]->startDelay;
-    startTime = theMove[movePointer]->startTime;
-    timeout = theMove[movePointer]->timeout;
-    stopSharply = theMove[movePointer]->stopSharply;
-    startButton = theMove[movePointer]->startButton;
-    stopButton = theMove[movePointer]->stopButton;
-    startButtonState = theMove[movePointer]->startButtonState;
-    stopButtonState = theMove[movePointer]->stopButtonState;
-    startTriggerDevice = theMove[movePointer]->startTriggerDevice;
-    startTriggerMove = theMove[movePointer]->startTriggerMove;
-    startTriggerPosition = theMove[movePointer]->startTriggerPosition;
-    stopTriggerDevice = theMove[movePointer]->stopTriggerDevice;
-    stopTriggerMove = theMove[movePointer]->stopTriggerMove;
-    stopTriggerPosition = theMove[movePointer]->stopTriggerPosition;
-    stopDynamically = theMove[movePointer]->stopDynamically;
-    sensor = theMove[movePointer]->sensor;
-    initiatePerformanceValue = theMove[movePointer]->initiatePerformanceValue;
-    stopValue = theMove[movePointer]->stopValue;
-    stopPerformance = theMove[movePointer]->stopPerformance;
-    stopMode = theMove[movePointer]->stopMode;
+    startEvent = task[taskPointer]->startEvent;
+    stopEvent = task[taskPointer]->stopEvent;
+    startDelay = task[taskPointer]->startDelay;
+    startTime = task[taskPointer]->startTime;
+    timeout = task[taskPointer]->timeout;
+    stopSharply = task[taskPointer]->stopSharply;
+    startButton = task[taskPointer]->startButton;
+    stopButton = task[taskPointer]->stopButton;
+    startButtonState = task[taskPointer]->startButtonState;
+    stopButtonState = task[taskPointer]->stopButtonState;
+    startTriggerDevice = task[taskPointer]->startTriggerDevice;
+    startTriggerMove = task[taskPointer]->startTriggerMove;
+    startTriggerPosition = task[taskPointer]->startTriggerPosition;
+    stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
+    stopTriggerMove = task[taskPointer]->stopTriggerMove;
+    stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
+    stopDynamically = task[taskPointer]->stopDynamically;
+    sensor = task[taskPointer]->sensor;
+    initiatePerformanceValue = task[taskPointer]->initiatePerformanceValue;
+    stopValue = task[taskPointer]->stopValue;
+    stopPerformance = task[taskPointer]->stopPerformance;
+    stopMode = task[taskPointer]->stopMode;
     
     dynamicalStop = false;
     valueCounter = 0;
@@ -199,7 +199,7 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": prepare move "));
-        Serial.print(movePointer);
+        Serial.print(taskPointer);
         Serial.print(F(": "));
         Serial.print(F("current: "));
         Serial.print(currentPosition);
@@ -249,7 +249,7 @@ void CCServoDevice::startMove() {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": start move "));
-        Serial.println((int)movePointer);
+        Serial.println((int)taskPointer);
     }
 }
 void CCServoDevice::initiateStop() {
@@ -279,7 +279,7 @@ void CCServoDevice::finishMove() {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop: move "));
-        Serial.println((int)movePointer);
+        Serial.println((int)taskPointer);
     }
 }
 
