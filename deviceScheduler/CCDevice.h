@@ -51,10 +51,10 @@ public:
 
     void defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
     
-    unsigned char addMove(float target, float velocity, float acceleration, float deceleration);
-    unsigned char addMove(float target, float velocity, float acceleration);
-    unsigned char addMove(float target, float velocity);
-    unsigned char addMove(float target);
+    unsigned char addTask(float target, float velocity, float acceleration, float deceleration);
+    unsigned char addTask(float target, float velocity, float acceleration);
+    unsigned char addTask(float target, float velocity);
+    unsigned char addTask(float target);
     unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration);
     unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration);
     unsigned char addMoveWithStartDelay(float target, unsigned long startDelay, float velocity);

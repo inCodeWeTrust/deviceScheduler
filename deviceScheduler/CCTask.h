@@ -51,7 +51,7 @@ public:
 
     void startByDate(unsigned long startTime);
     void startByButton(unsigned char startButton, boolean startButtonState);
-    void startAfterMy(unsigned char moveIndex);
+    void startAfterMy(unsigned char startTriggerMove);
     void startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove);
     void startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
     

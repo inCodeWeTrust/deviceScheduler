@@ -13,17 +13,17 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
 }
 
 /*
- unsigned char CCDevice::addMove(float target) {
+ unsigned char CCDevice::addTask(float target) {
  return addMoveWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
  }
- unsigned char CCDevice::addMove(float target, float velocity) {
+ unsigned char CCDevice::addTask(float target, float velocity) {
  return addMoveWithStartDelay(target, 0UL, velocity, defaultAcceleration, defaultDeceleration);
  }
- unsigned char CCDevice::addMove(float target, float velocity, float acceleration) {
+ unsigned char CCDevice::addTask(float target, float velocity, float acceleration) {
  return addMoveWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
  }
  */
-unsigned char CCDevice::addMove(float target, float velocity, float acceleration, float deceleration) {
+unsigned char CCDevice::addTask(float target, float velocity, float acceleration, float deceleration) {
     return addMoveWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
 }
 
@@ -66,7 +66,7 @@ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startD
 
 void CCDevice::deleteMoves() {
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCDevice]: delete moves of "));
+        Serial.print(F("[CCDevice]: delete tasks of "));
         Serial.print(deviceName);
         Serial.print(F(": move "));
     }
