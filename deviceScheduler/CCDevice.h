@@ -35,7 +35,8 @@ public:
     
     unsigned int         deviceIndex;
     String               deviceName;
-    unsigned char        type;
+    deviceType           type;
+//    unsigned char        type;
     unsigned char        countOfTasks;
     unsigned char        taskPointer;
     

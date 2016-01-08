@@ -782,11 +782,10 @@ void CCDeviceScheduler::runTheLoop() {
 }
 
 
-String getNameOfDeviceType(unsigned char t) {
+String getNameOfDeviceType(deviceType t) {
     if (t == SERVODEVICE) return "Servo";
     if (t == STEPPERDEVICE) return "Stepper";
     if (t == SWITCHINGDEVICE) return "Switch";
-    if (t == 4) return "Solenoid";
     return "unknown";
 }
 String getNameOfMoveEvent(unsigned char e) {

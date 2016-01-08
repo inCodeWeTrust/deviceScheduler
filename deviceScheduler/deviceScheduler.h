@@ -23,11 +23,20 @@
 #define DEVICESCHEDULER 1
 
 
+
 //  device type
-#define SERVODEVICE                     0x01
-#define STEPPERDEVICE                   0x02
-#define SWITCHINGDEVICE                 0x03
-#define SOLENOIDDEVICE                  0x04
+enum deviceType {
+    SERVODEVICE,
+    STEPPERDEVICE,
+    SWITCHINGDEVICE
+};
+
+//#define SERVODEVICE                     0x01
+//#define STEPPERDEVICE                   0x02
+//#define SWITCHINGDEVICE                 0x03
+//#define SOLENOIDDEVICE                  0x04
+
+
 
 // start/stopEvent:
 #define NONE                            0x00

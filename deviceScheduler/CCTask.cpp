@@ -51,7 +51,7 @@ void CCTask::startByButton(unsigned char startButton, boolean startButtonState) 
     this->startButton = startButton;
     this->startButtonState = startButtonState;
 }
-//void CCTask::startAfterCompletion(unsigned char moveIndex) {
+//void CCTask::startAfterMy(unsigned char moveIndex) {
 //    this->startEvent |= FOLLOW;
 //    this->startTriggerDevice = deviceIndex;
 //    this->startTriggerMove = moveIndex;
