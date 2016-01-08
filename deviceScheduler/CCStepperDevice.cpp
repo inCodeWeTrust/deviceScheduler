@@ -43,7 +43,7 @@ CCStepperDevice::CCStepperDevice(unsigned int deviceIndex, String deviceName, un
     acceleration_max = 4000;
     
     type = STEPPERDEVICE;
-    state = 0;
+    state = SLEEPING;
     taskPointer = 0;
     countOfTasks = 0;
     
@@ -178,8 +178,8 @@ void CCStepperDevice::prepareNextMove() {
     unsigned long t_prepMove = micros();
     unsigned long t_stop, t_sum = 0;
 
-    if (state & MOVING) {
-        if (stopEvent == SWITCH) {
+    if (state == MOVING) {
+        if (switchMovePromptly) {
             if ((task[taskPointer]->target - currentPosition) < 0) {             // when switching to move in different direction
                 if (!directionDown) {
                     prepareAndStartNextMoveWhenFinished = true;
@@ -248,6 +248,7 @@ void CCStepperDevice::prepareNextMove() {
     
     startEvent = task[taskPointer]->startEvent;
     stopEvent = task[taskPointer]->stopEvent;
+    switchMovePromptly = task[taskPointer]->switchMovePromptly;
     startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
     timeout = task[taskPointer]->timeout;
@@ -493,7 +494,7 @@ void CCStepperDevice::prepareNextMove() {
     
     
     
-    if (state & MOVING) {
+    if (state == MOVING) {
         t0 += lastStepTime;
         currentMicroStep = steppingUnit[microSteppingMode];
         stepExpiration = 1000000.0 * (sqrt(currVeloBySquare + currentMicroStep * c0_acc) - currentVelocity) * acceleration_inv;
@@ -571,8 +572,7 @@ void CCStepperDevice::startMove() {
             Serial.println((int)taskPointer);
         }
         
-        state &= ~MOVE_DONE;
-        state |= MOVING;
+        state = MOVING;
         currentMicroStep = 0;
         stepExpiration = 0;
         t0 = micros() & 0x7fffffff;
@@ -600,11 +600,10 @@ void CCStepperDevice::initiateStop() {
 }
 
 void CCStepperDevice::stopMoving() {
-    state &= ~MOVING;
-    state |= MOVE_DONE;
+    state = MOVE_DONE;
 }
 void CCStepperDevice::finishMove() {
-    state &= ~MOVING & ~MOVE_DONE;
+    state = SLEEPING;
     
     disableDevice();
     
@@ -736,7 +735,7 @@ void CCStepperDevice::driveDynamic() {
         
         if (prepareAndStartNextMoveWhenFinished) {
             prepareAndStartNextMoveWhenFinished = false;
-            state &= ~MOVING;
+            state = SLEEPING;
             prepareNextMove();
             startMove();
         }

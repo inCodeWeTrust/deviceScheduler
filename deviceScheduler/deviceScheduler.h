@@ -31,31 +31,28 @@ enum deviceType {
     SWITCHINGDEVICE
 };
 
-//#define SERVODEVICE                     0x01
-//#define STEPPERDEVICE                   0x02
-//#define SWITCHINGDEVICE                 0x03
-//#define SOLENOIDDEVICE                  0x04
-
-
 
 // start/stopEvent:
-#define NONE                            0x00
-#define DATE                            0x01
-#define BUTTON                          0x02
-#define FOLLOW                          0x04
-#define POSITION                        0x08
-#define SWITCH                          0x10
+enum event {
+    NONE,
+    DATE,
+    BUTTON,
+    FOLLOW,
+    POSITION
+};
+
 
 //  device state:
-#define SLEEPING                        0x00
-#define MOVING                          0x01
-#define MOVE_DONE                       0x02
-#define PENDING_MOVES	                0x04
+enum deviceState {
+    SLEEPING,
+    MOVING,
+    MOVE_DONE,
+    PENDING_MOVES
+};
 
 
 
-
-//  stopModes:
+//  stoppingModes:
 #define STOP_SHARPLY                    0x00
 #define STOP_VERY_FAST                  0x01
 #define STOP_FAST                       0x40

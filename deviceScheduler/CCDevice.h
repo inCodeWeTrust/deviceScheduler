@@ -19,30 +19,29 @@ public:
     float                target, velocity, acceleration, deceleration;
     float                defaultVelocity, defaultAcceleration, defaultDeceleration;
     
-    unsigned char        startEvent, stopEvent;
+    event                startEvent, stopEvent;
+    boolean              switchMovePromptly;
     unsigned long        startTime, startDelay, timeout;
     unsigned char        startButton, stopButton;
     bool                 startButtonState, stopButtonState, stopSharply, stopDynamically;
     unsigned char        startTriggerDevice, startTriggerMove, stopTriggerDevice, stopTriggerMove;
     signed long	         startTriggerPosition, stopTriggerPosition;
     unsigned char        sensor;
-    signed int           initiatePerformanceValue, stopValue;
+    signed int           initiatePerformanceValue, targetValue;
     float                stopPerformance;
     unsigned char        stopMode;
-    boolean              runningNormally;
    
     CCTask               *task[10];
     
     unsigned int         deviceIndex;
     String               deviceName;
     deviceType           type;
-//    unsigned char        type;
     unsigned char        countOfTasks;
     unsigned char        taskPointer;
     
     float                currentPosition;
     bool                 directionDown;
-    unsigned char        state;
+    deviceState        state;
     
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventMove
     

@@ -17,9 +17,10 @@
 class CCTask {
     
 public:
-
-    unsigned char       startEvent;
-    unsigned char       stopEvent;
+    
+    event       startEvent;
+    event       stopEvent;
+    boolean     switchMovePromptly;
     float               target;
     float               velocity;
     float               acceleration;
@@ -41,30 +42,30 @@ public:
     boolean             stopDynamically;
     unsigned char       sensor;
     signed int          initiatePerformanceValue;
-    signed int          stopValue;
+    signed int          targetValue;
     float               stopPerformance;
     unsigned char       stopMode;
     
     
     CCTask(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay);
-    
+
     void startByDate(unsigned long startTime);
     void startByButton(unsigned char startButton, boolean startButtonState);
     void startAfterMy(unsigned char moveIndex);
     void startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove);
-    void startByTriggerposition(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+    void startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
     
-    void switchByDate(unsigned long startTime);
-    void switchByButton(unsigned char startButton, boolean startButtonState);
-    void switchByTriggerposition(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+    void switchToNextTaskByDate(unsigned long switchingTimeout);
+    void switchToNextTaskByButton(unsigned char switchingButton, boolean switchingButtonState);
+    void switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerMove);
+    void switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerMove, signed long switchingTriggerPosition);
     
-    void stopByTimeout(unsigned long _timeout, boolean stopSharply);
-    void stopByButton(unsigned char _stopButton, boolean _stopButtonState, boolean stopSharply);
+    void stopByTimeout(unsigned long timeout, boolean stopSharply);
+    void stopByButton(unsigned char stopButton, boolean stopButtonState, boolean stopSharply);
     void stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerMove);
-    void stopByTriggerposition(unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply);
+    void stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply);
     
-    void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int stopValue, float stopPerformance, unsigned char stopMode);
-    
+    void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, unsigned char stopMode);
     
 };
 

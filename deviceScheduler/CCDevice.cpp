@@ -83,7 +83,7 @@ void CCDevice::deleteMoves() {
         Serial.println();
     }
     
-    state = 0;
+    state = SLEEPING;
     taskPointer = 0;
     countOfTasks = 0;
     

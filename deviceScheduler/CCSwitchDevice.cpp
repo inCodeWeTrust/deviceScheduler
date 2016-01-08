@@ -14,14 +14,14 @@
 
 
 
-CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, unsigned char motorReady_pin, boolean defaultState) : CCDevice() {
+CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, boolean defaultState) : CCDevice() {
     this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->switching_pin = switching_pin;
     this->defaultState = defaultState;
     
     type = SWITCHINGDEVICE;
-    state = 0;
+    state = SLEEPING;
     taskPointer = 0;
     countOfTasks = 0;
     
@@ -57,7 +57,6 @@ void CCSwitchDevice::disableDevice() {}
 void CCSwitchDevice::attachDevice() {
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, defaultState);
-    pinMode(motorReady_pin, INPUT_PULLUP);
 
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
@@ -77,6 +76,7 @@ void CCSwitchDevice::prepareNextMove() {
     
     startEvent = task[taskPointer]->startEvent;
     stopEvent = task[taskPointer]->stopEvent;
+    switchMovePromptly = task[taskPointer]->switchMovePromptly;
     startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
     timeout = task[taskPointer]->timeout;
@@ -106,7 +106,7 @@ void CCSwitchDevice::prepareNextMove() {
 
 void CCSwitchDevice::startMove() {
     digitalWrite(switching_pin, target);
-    state |= MOVING;
+    state = MOVING;
     
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
@@ -125,9 +125,8 @@ void CCSwitchDevice::initiateStop() {
 }
 
 void CCSwitchDevice::stopMoving() {
-    
-    state &= ~MOVING;
-    state |= MOVE_DONE;
+    digitalWrite(switching_pin, defaultState);
+    state = MOVE_DONE;
 
     
     
@@ -145,7 +144,7 @@ void CCSwitchDevice::stopMoving() {
 }
 
 void CCSwitchDevice::finishMove() {
-    state &= ~MOVING & ~MOVE_DONE;
+    state = SLEEPING;
     
     if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
         Serial.print(F("finish: switchEvent "));
@@ -158,5 +157,4 @@ void CCSwitchDevice::finishMove() {
 
 
 void CCSwitchDevice::driveDynamic() {
-    runningNormally = digitalRead(motorReady_pin);
 }

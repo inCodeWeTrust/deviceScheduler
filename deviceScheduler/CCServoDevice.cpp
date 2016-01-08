@@ -25,7 +25,7 @@ CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsign
     
     
     type = SERVODEVICE;
-    state = 0;
+    state = SLEEPING;
     taskPointer = 0;
     countOfTasks = 0;
     
@@ -87,7 +87,7 @@ void CCServoDevice::reviewValues() {}
 void CCServoDevice::prepareNextMove() {
     dynamicalStop = false;
     valueCounter = 0;
-    sensorValuesFalling = (initiatePerformanceValue > stopValue);
+    sensorValuesFalling = (initiatePerformanceValue > targetValue);
     
     target = task[taskPointer]->target;
     velocity = task[taskPointer]->velocity;
@@ -95,6 +95,7 @@ void CCServoDevice::prepareNextMove() {
     
     startEvent = task[taskPointer]->startEvent;
     stopEvent = task[taskPointer]->stopEvent;
+    switchMovePromptly = task[taskPointer]->switchMovePromptly;
     startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
     timeout = task[taskPointer]->timeout;
@@ -112,7 +113,7 @@ void CCServoDevice::prepareNextMove() {
     stopDynamically = task[taskPointer]->stopDynamically;
     sensor = task[taskPointer]->sensor;
     initiatePerformanceValue = task[taskPointer]->initiatePerformanceValue;
-    stopValue = task[taskPointer]->stopValue;
+    targetValue = task[taskPointer]->targetValue;
     stopPerformance = task[taskPointer]->stopPerformance;
     stopMode = task[taskPointer]->stopMode;
     
@@ -227,8 +228,8 @@ void CCServoDevice::prepareNextMove() {
             Serial.print(stopPerformance);
             Serial.print(F(", initiatePerformanceValue: "));
             Serial.print(initiatePerformanceValue);
-            Serial.print(F(", stopValue: "));
-            Serial.print(stopValue);
+            Serial.print(F(", targetValue: "));
+            Serial.print(targetValue);
             Serial.print(F(", stopPerformance: "));
             Serial.print(stopPerformance);
             Serial.print(F(", stopMode: "));
@@ -242,7 +243,7 @@ void CCServoDevice::prepareNextMove() {
 }
 
 void CCServoDevice::startMove() {
-    state |= MOVING;
+    state = MOVING;
     t0 = millis();
     
     if (CCServoDevice_VERBOSE & CCServoDevice_BASICOUTPUT) {
@@ -269,11 +270,10 @@ void CCServoDevice::initiateStop() {
 }
 
 void CCServoDevice::stopMoving() {
-    state &= ~MOVING;
-    state |= MOVE_DONE;
+    state = MOVE_DONE;
 }
 void CCServoDevice::finishMove() {
-    state &= ~MOVING & ~MOVE_DONE;
+    state = SLEEPING;
     
     if (CCServoDevice_VERBOSE & CCServoDevice_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
@@ -293,11 +293,12 @@ void CCServoDevice::driveDynamic() {
     
     if (stopDynamically == true) {
         if (dynamicalStop == false) {
-            if ((analogRead(sensor) > initiatePerformanceValue && (!sensorValuesFalling)) || (analogRead(sensor) < initiatePerformanceValue && sensorValuesFalling)) {
+            sensorValue = analogRead(sensor);
+            if ((sensorValue > initiatePerformanceValue && (!sensorValuesFalling)) || (sensorValue < initiatePerformanceValue && sensorValuesFalling)) {
                 timeForAcceleration = elapsedTime;
                 timeForConstantSpeed = 0;
                 lastCycleTime = 0;
-                c_perform = 1.0 / (initiatePerformanceValue - stopValue);
+                c_perform = 1.0 / (initiatePerformanceValue - targetValue);
                 dynamicalStop = true;
             }
         }
@@ -353,7 +354,7 @@ void CCServoDevice::driveDynamic() {
         
         sensorValue = analogRead(sensor);
         
-        performanceFactor = c_perform * (sensorValue - stopValue);
+        performanceFactor = c_perform * (sensorValue - targetValue);
         if (performanceFactor > 0) {
             performanceFactor = pow(performanceFactor, stopPerformance);
         } else {
@@ -378,13 +379,11 @@ void CCServoDevice::driveDynamic() {
             Serial.println(currentPosition);
         }
         
-//        Serial.println(sensorValue);
 
         if (stopMode == STOP_NEVER) {
             return;
         } else {
-            if (abs(sensorValue - stopValue) < sensorTreshold) {
-//                Serial.println(sensorValue);
+            if (abs(sensorValue - targetValue) < sensorTreshold) {
                 if (valueCounter++ < stopMode) {
                     return;
                 }
