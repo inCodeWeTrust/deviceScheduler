@@ -58,7 +58,7 @@ public:
 
     void deleteAllMoves();
     
-    void runTheLoop();
+    void run();
     
 };
 

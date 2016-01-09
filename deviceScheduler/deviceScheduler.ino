@@ -83,7 +83,7 @@ void loop() {
     Serial.println(), Serial.println(), Serial.println();
     
     freeRam();
-    
+    /* create a scheduler object */
     scheduler = new CCDeviceScheduler;
     
     freeRam();
@@ -99,7 +99,14 @@ void loop() {
     freeRam();
     unsigned char headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME, SERVO_HEAD_RIGHT_PIN, SERVO_HEAD_RIGHT_MIN_POSITION, SERVO_HEAD_RIGHT_MAX_POSITION, HEAD_RIGHT_PARK_POSITION);
     freeRam();
-    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME, STEPPER_STOCK_STEP_PIN, STEPPER_STOCK_DIR_PIN, STEPPER_STOCK_ENABLE_PIN, STEPPER_STOCK_HIGHEST_STEPPINGMODE, STEPPER_STOCK_STEPMODECODES, STEPPER_STOCK_MICROSTEPPINS, STEPPER_STOCK_STEPS_PER_ROTATION);
+    unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME,
+                                                       STEPPER_STOCK_STEP_PIN,
+                                                       STEPPER_STOCK_DIR_PIN,
+                                                       STEPPER_STOCK_ENABLE_PIN,
+                                                       STEPPER_STOCK_HIGHEST_STEPPINGMODE,
+                                                       STEPPER_STOCK_STEPMODECODES,
+                                                       STEPPER_STOCK_MICROSTEPPINS,
+                                                       STEPPER_STOCK_STEPS_PER_ROTATION);
     unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME, STEPPER_CAT_STEP_PIN, STEPPER_CAT_DIR_PIN, STEPPER_CAT_ENABLE_PIN, STEPPER_CAT_HIGHEST_STEPPINGMODE, STEPPER_CAT_STEPMODECODES, STEPPER_CAT_MICROSTEPPINS, STEPPER_CAT_STEPS_PER_ROTATION);
     freeRam();
     unsigned char tableDrive = scheduler->addSwitch(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_OFF);
@@ -159,7 +166,7 @@ void loop() {
         scheduler->reviewMoves();
         scheduler->getAllMoves();
         
-        scheduler->runTheLoop();
+        scheduler->run();
         
         scheduler->deleteAllMoves();
         
@@ -250,7 +257,7 @@ void loop() {
             
             delay(2000);
             
-            scheduler->runTheLoop();
+            scheduler->run();
             
             scheduler->deleteAllMoves();
         } else {
@@ -261,7 +268,7 @@ void loop() {
             scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_END_BUTTON, HIGH, 0);
             
             scheduler->reviewMoves();
-            scheduler->runTheLoop();
+            scheduler->run();
             scheduler->deleteAllMoves();
             
             while (digitalRead(START_CUTTING_BUTTON) == HIGH) {
@@ -271,7 +278,7 @@ void loop() {
                     scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_FWD, HIGH, 0);
                     
                     scheduler->reviewMoves();
-                    scheduler->runTheLoop();
+                    scheduler->run();
                     scheduler->deleteAllMoves();
                 }
                 if (digitalRead(CAT_RWD) == LOW) {
@@ -280,7 +287,7 @@ void loop() {
                     scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_RWD, HIGH, 0);
                     
                     scheduler->reviewMoves();
-                    scheduler->runTheLoop();
+                    scheduler->run();
                     scheduler->deleteAllMoves();
                 }
             }
@@ -317,7 +324,7 @@ void loop() {
             
        
             scheduler->reviewMoves();
-            scheduler->runTheLoop();
+            scheduler->run();
             scheduler->deleteAllMoves();
             
             

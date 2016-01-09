@@ -253,7 +253,7 @@ void CCDeviceScheduler::reviewMoves() {
     }
 }
 
-void CCDeviceScheduler::runTheLoop() {
+void CCDeviceScheduler::run() {
     
     unsigned long loopCounter = 0;
     unsigned char ongoingOperations;

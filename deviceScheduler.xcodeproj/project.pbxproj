@@ -658,6 +658,7 @@
 
 /* Begin PBXFileReference section */
 		405588CE1BD5A599005890AA /* CCSwitchDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCSwitchDevice.cpp; sourceTree = "<group>"; };
+		40B046B41C417C8A00A19029 /* MeisterStueckwerk.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = MeisterStueckwerk.pages; sourceTree = "<group>"; };
 		40B50AAE1C19850400705EE0 /* scheduler-sceme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scheduler-sceme.txt"; sourceTree = "<group>"; };
 		40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = whatNeededWhen.txt; path = ../whatNeededWhen.txt; sourceTree = "<group>"; };
 		A446E5231BD5AFF3003C0F35 /* CCSwitchDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSwitchDevice.h; sourceTree = "<group>"; };
@@ -1397,6 +1398,7 @@
 				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
 				A48C24721C3E674600EB3EFA /* CCTask.h */,
 				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
+				40B046B41C417C8A00A19029 /* MeisterStueckwerk.pages */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
 				AAAA150601125914AA000000 /* Resources */,
 				A45F72221B1C70E400B5B7E0 /* Configurations */,
