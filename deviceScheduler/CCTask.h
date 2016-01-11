@@ -10,7 +10,6 @@
 #define __deviceScheduler__CCTask__
 
 #include <Arduino.h>
-
 #include "deviceScheduler.h"
 
 

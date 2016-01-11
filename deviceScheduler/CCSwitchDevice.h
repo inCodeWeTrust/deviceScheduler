@@ -1,13 +1,22 @@
+//
+//  CCSwitchDevice.h
+//  deviceScheduler
+//
+//  Created by Little Abakus on 30.05.14.
+//  Copyright (c) 2014 Little Abakus. All rights reserved.
+//
+
+
+#ifndef __deviceScheduler__CCSWITCHDEVICE__
+#define __deviceScheduler__CCSWITCHDEVICE__
+
+
 #include <Arduino.h>
-
-//#include "motorController.h"
-
 #include "CCDevice.h"
 
 
-#define CCSwitchDevice_BASICOUTPUT           0x01
-
-#define CCSwitchDevice_VERBOSE               CCSwitchDevice_BASICOUTPUT
+#define CCSWITCHDEVICE_BASICOUTPUT           0x01
+#define CCSWITCHDEVICE_VERBOSE               CCSWITCHDEVICE_BASICOUTPUT
 
 
 
@@ -33,9 +42,11 @@ class CCSwitchDevice : public CCDevice {
     void reviewValues();
     void prepareNextMove();
     void startMove();
-    void driveDynamic();
+    void drive();
     void initiateStop();
     void stopMoving();
     void finishMove();
 };
 
+
+#endif /* defined(__deviceScheduler__CCSwitchDevice__) */

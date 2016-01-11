@@ -1,6 +1,6 @@
 //
 //  CCDeviceScheduler.cpp
-//  CCDeviceScheduler
+//  deviceScheduler
 //
 //  Created by Little Abakus on 09.06.14.
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
@@ -300,7 +300,7 @@ void CCDeviceScheduler::run() {
         for (unsigned char s = 0; s < countOfDevices; s++) {
             if (device[s]->state > SLEEPING) {                                                         // (== MOVING || MOVE_DONE || PENDING_MOVES)
                 if (device[s]->state == MOVING) {                                                // if device is moving...
-                    device[s]->driveDynamic();                                                  // so: move on!
+                    device[s]->drive();                                                  // so: move on!
                     
                     switch (device[s]->stopEvent) {                                                      // is there a stopEvent defined?
                         case DATE:                                                                              // yes, device shall stop by date

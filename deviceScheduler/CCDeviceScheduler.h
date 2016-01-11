@@ -1,10 +1,13 @@
 //
 //  CCDeviceScheduler.h
-//  CCDeviceScheduler
+//  deviceScheduler
 //
 //  Created by Little Abakus on 09.06.14.
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
 //
+
+#ifndef __deviceScheduler__CCDeviceScheduler__
+#define __deviceScheduler__CCDeviceScheduler__
 
 
 #include <Arduino.h>
@@ -21,14 +24,12 @@
 
 
 //  log visuals:
+#define DEVICESCHEDULER_BASICOUTPUT                     0x01
+
 #define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
 
-
-
-#define DEVICESCHEDULER_BASICOUTPUT                     0x01
-
-#define DEVICESCHEDULER_VERBOSE                 (DEVICESCHEDULER_BASICOUTPUT | DEVICESCHEDULER_SHOW_TASK_VIEW)
+#define DEVICESCHEDULER_VERBOSE                         (DEVICESCHEDULER_BASICOUTPUT | DEVICESCHEDULER_SHOW_TASK_VIEW)
 
 
 
@@ -62,5 +63,8 @@ public:
     
 };
 
+
+
+#endif /* defined(__deviceScheduler__CCDeviceScheduler__) */
 
 

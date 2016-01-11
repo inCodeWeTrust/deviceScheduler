@@ -1,19 +1,27 @@
+//
+//  CCServoDevice.h
+//  deviceScheduler
+//
+//  Created by Little Abakus on 30.05.14.
+//  Copyright (c) 2014 Little Abakus. All rights reserved.
+//
+
+#ifndef __deviceScheduler__CCServoDevice__
+#define __deviceScheduler__CCServoDevice__
+
+
 #include <Arduino.h>
-
-//#include "motorController.h"
-
 #include "CCDevice.h"
+
 #include <Servo.h>
 
 
-#define CCServoDevice_BASICOUTPUT           0x01
-#define CCServoDevice_MEMORYDEBUG           0x02
-#define CCServoDevice_CALCULATIONDEBUG      0x04
-#define CCServoDevice_MOVEMENTDEBUG         0x08
+#define CCSERVODEVICE_BASICOUTPUT           0x01
+#define CCSERVODEVICE_MEMORYDEBUG           0x02
+#define CCSERVODEVICE_CALCULATIONDEBUG      0x04
+#define CCSERVODEVICE_MOVEMENTDEBUG         0x08
 
-//static unsigned char CCServoDevice_VERBOSE = 0;
-#define CCServoDevice_VERBOSE               0x05
-//#define CCServoDevice_VERBOSE CCServoDevice_BASICOUTPUT | CCServoDevice_MEMORYDEBUG | CCServoDevice_CALCULATIONDEBUG
+#define CCSERVODEVICE_VERBOSE               CCSERVODEVICE_BASICOUTPUT | CCSERVODEVICE_CALCULATIONDEBUG
 
 
 
@@ -53,9 +61,12 @@ public:
     void reviewValues();
     void prepareNextMove();
     void startMove();
-    void driveDynamic();
+    void drive();
     void initiateStop();
     void stopMoving();
     void finishMove();
 };
+
+
+#endif /* defined(__deviceScheduler__CCServoDevice__) */
 

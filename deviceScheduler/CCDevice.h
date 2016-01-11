@@ -1,7 +1,21 @@
+//
+//  CCDevice.h
+//  deviceScheduler
+//
+//  Created by Little Abakus on 30.05.14.
+//  Copyright (c) 2014 Little Abakus. All rights reserved.
+//
+
+#ifndef __deviceScheduler__CCDevice__
+#define __deviceScheduler__CCDevice__
+
+
+
 #include <Arduino.h>
 
 #include "deviceScheduler.h"
 #include "CCTask.h"
+
 
 //  verbosity:
 #define CCDEVICE_BASICOUTPUT            0x01
@@ -9,9 +23,6 @@
 #define CCDEVICE_VERBOSE                CCDEVICE_BASICOUTPUT
 
 
-
-#ifndef CCDEVICE
-#define CCDEVICE 1
 
 class CCDevice
 {
@@ -36,12 +47,11 @@ public:
     unsigned int         deviceIndex;
     String               deviceName;
     deviceType           type;
-    unsigned char        countOfTasks;
-    unsigned char        taskPointer;
+    unsigned char        countOfTasks, taskPointer;
     
     float                currentPosition;
     bool                 directionDown;
-    deviceState        state;
+    deviceState          state;
     
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventMove
     
@@ -71,10 +81,10 @@ public:
     virtual void reviewValues() = 0;
     virtual void prepareNextMove() = 0;
     virtual void startMove() = 0;
-    virtual void driveDynamic() = 0;
+    virtual void drive() = 0;
     virtual void initiateStop() = 0;
     virtual void stopMoving() = 0;
     virtual void finishMove() = 0;
 };
 
-#endif
+#endif /* defined(__deviceScheduler__CCDevice__) */

@@ -37,7 +37,7 @@ microStepsForAcceleration
 <-- microStepsForAccAndConstSpeed
 
 
-*** driveDynamic when accelerating ***
+*** drive when accelerating ***
 directionDown
 startPosition
 microStepsForAcceleration
@@ -46,11 +46,11 @@ c0_acc
 currentVelocity
 acceleration_inv
 
-*** driveDynamic while constant speed ***
+*** drive while constant speed ***
 --> timeForAcceleration
 --> c1
 
-*** driveDynamic when decelerating ***
+*** drive when decelerating ***
 --> timeForAccAndConstSpeed
 --> microStepsForAccAndConstSpeed
 --> c0_dec

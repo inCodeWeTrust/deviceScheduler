@@ -1,3 +1,10 @@
+//
+//  CCDevice.cpp
+//  deviceScheduler
+//
+//  Created by Little Abakus on 30.05.14.
+//  Copyright (c) 2014 Little Abakus. All rights reserved.
+//
 
 
 

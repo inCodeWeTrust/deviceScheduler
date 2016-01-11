@@ -1,6 +1,6 @@
 //
 //  CCSwitchDevice.cpp
-//  moveServos
+//  deviceScheduler
 //
 //  Created by Little Abakus on 30.05.14.
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
@@ -30,7 +30,7 @@ CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsi
 //    defaultDeceleration = 0;
     
     
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
+    if (CCSWITCHDEVICE_VERBOSE & CCSWITCHDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: setup "));
         Serial.print(deviceName);
         Serial.print(F(", switching_pin: "));
@@ -58,7 +58,7 @@ void CCSwitchDevice::attachDevice() {
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, defaultState);
 
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
+    if (CCSWITCHDEVICE_VERBOSE & CCSWITCHDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
         Serial.println(F(" attached"));
@@ -108,7 +108,7 @@ void CCSwitchDevice::startMove() {
     digitalWrite(switching_pin, target);
     state = MOVING;
     
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
+    if (CCSWITCHDEVICE_VERBOSE & CCSWITCHDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": start "));
@@ -131,7 +131,7 @@ void CCSwitchDevice::stopMoving() {
     
     
     digitalWrite(switching_pin, defaultState);
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
+    if (CCSWITCHDEVICE_VERBOSE & CCSWITCHDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCSwitchDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop "));
@@ -146,7 +146,7 @@ void CCSwitchDevice::stopMoving() {
 void CCSwitchDevice::finishMove() {
     state = SLEEPING;
     
-    if (CCSwitchDevice_VERBOSE & CCSwitchDevice_BASICOUTPUT) {
+    if (CCSWITCHDEVICE_VERBOSE & CCSWITCHDEVICE_BASICOUTPUT) {
         Serial.print(F("finish: switchEvent "));
         Serial.print((int)taskPointer);
         Serial.print(F(" done: state: "));
@@ -156,5 +156,5 @@ void CCSwitchDevice::finishMove() {
 }
 
 
-void CCSwitchDevice::driveDynamic() {
+void CCSwitchDevice::drive() {
 }

@@ -1,6 +1,6 @@
 //
 //  CCServoDevice.cpp
-//  moveServos
+//  deviceScheduler
 //
 //  Created by Little Abakus on 30.05.14.
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
@@ -34,7 +34,7 @@ CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsign
     defaultDeceleration = 0;
     
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice]: setup "));
         Serial.print(deviceName);
         Serial.print(F(", servo_pin: "));
@@ -69,7 +69,7 @@ void CCServoDevice::attachDevice() {
     currentPosition = parkPosition;
     unsigned char channel = theServo.attach(servo_pin, minPosition, maxPosition);                                                      // substitute with attatchDevice()
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(", park: "));
@@ -184,7 +184,7 @@ void CCServoDevice::prepareNextMove() {
     }
     
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": currentPosition at $"));
@@ -196,7 +196,7 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(F(", acceleration at $"));
         Serial.println((long)&acceleration, HEX);
     }
-    if (CCServoDevice_VERBOSE & CCServoDevice_CALCULATIONDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_CALCULATIONDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": prepare move "));
@@ -246,7 +246,7 @@ void CCServoDevice::startMove() {
     state = MOVING;
     t0 = millis();
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_BASICOUTPUT) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": start move "));
@@ -275,7 +275,7 @@ void CCServoDevice::stopMoving() {
 void CCServoDevice::finishMove() {
     state = SLEEPING;
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_BASICOUTPUT) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop: move "));
@@ -287,7 +287,7 @@ void CCServoDevice::finishMove() {
 
 
 
-void CCServoDevice::driveDynamic() {
+void CCServoDevice::drive() {
     lastCycleTime = elapsedTime;
     elapsedTime = millis() - t0;
     
@@ -311,7 +311,7 @@ void CCServoDevice::driveDynamic() {
         currentPosition = startPosition + deltaS;
         theServo.writeMicroseconds(currentPosition);
         
-        if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
+        if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MOVEMENTDEBUG) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.print(F(": ramp up: cur: "));
@@ -333,7 +333,7 @@ void CCServoDevice::driveDynamic() {
         currentPosition = startPosition + wayForAcceleration + deltaS;
         theServo.writeMicroseconds(currentPosition);
         
-        if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
+        if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MOVEMENTDEBUG) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.print(F(": go constant: cur: "));
@@ -364,7 +364,7 @@ void CCServoDevice::driveDynamic() {
         currentPosition += deltaDeltaNorm * performanceFactor;
         theServo.writeMicroseconds(currentPosition);
         
-        if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
+        if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MOVEMENTDEBUG) {
             Serial.print("elapsedTime: ");
             Serial.print(elapsedTime);
             Serial.print(", performanceFactor: ");
@@ -405,7 +405,7 @@ void CCServoDevice::driveDynamic() {
             currentPosition = targetPosition - deltaS;
             theServo.writeMicroseconds(currentPosition);
             
-            if (CCServoDevice_VERBOSE & CCServoDevice_MOVEMENTDEBUG) {
+            if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MOVEMENTDEBUG) {
                 Serial.print(F("[CCServoDevice]: "));
                 Serial.print(deviceName);
                 Serial.print(F(": ramp down: cur: "));
@@ -424,7 +424,7 @@ void CCServoDevice::driveDynamic() {
     // if we didnt return up to here, we are done!
     
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
         Serial.print(F("currentPosition just after move: "));
         Serial.print((int)currentPosition);
         Serial.print(F("[in memory: "));
@@ -435,7 +435,7 @@ void CCServoDevice::driveDynamic() {
     //    currentPosition = theServo.readMicroseconds();
     currentPosition = targetPosition;
     
-    if (CCServoDevice_VERBOSE & CCServoDevice_MEMORYDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
         Serial.print(F("currentPosition read from Servo: "));
         Serial.print((int)currentPosition);
         Serial.print(F("[in memory: "));

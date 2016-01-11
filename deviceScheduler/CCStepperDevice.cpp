@@ -1,6 +1,6 @@
 //
 //  CCStepperDevice.cpp
-//  moveServos
+//  deviceScheduler
 //
 //  Created by Little Abakus on 30.05.14.
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
@@ -8,7 +8,6 @@
 
 
 #include <avr/pgmspace.h>
-
 #include "CCStepperDevice.h"
 
 
@@ -38,7 +37,7 @@ CCStepperDevice::CCStepperDevice(unsigned int deviceIndex, String deviceName, un
     }
     
     stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextMove()
-    degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in driveDynamic()
+    degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in drive()
     
     acceleration_max = 4000;
     
@@ -387,8 +386,7 @@ void CCStepperDevice::prepareNextMove() {
     // v * v = 2 * a * n ==> a = v * v / (2 * n)
     deceleration = -veloBySquare / (stepsForDeceleration << 1);
     
-    if (deceleration < -acceleration_max) {
-        Serial.println(F("!!!! too much deceleration !!!!"));
+    if (deceleration < -acceleration_max) {                             // !!!! too much deceleration !!!!
         deceleration = -acceleration_max;
         // *** recalculate v: ***
         // v * v = 2 * a * n ==> v = sqrt(2 * a * n)
@@ -398,7 +396,7 @@ void CCStepperDevice::prepareNextMove() {
     }
     
     // *** recalculate a: ***
-    if (stepsForAcceleration > 0) {
+    if (stepsForAcceleration > 0) {                                     // !!!! too much acceleration !!!!
         // v * v - v0 * v0 = 2 * a * n ==> a = (v * v - v0 * v0) / (2 * n)
         acceleration = (veloBySquare - currVeloBySquare) / (stepsForAcceleration << 1);
         if (acceleration > acceleration_max) {
@@ -425,14 +423,6 @@ void CCStepperDevice::prepareNextMove() {
     }
     deceleration_inv = 1 / deceleration;
     
-    //    this takes ca 190us
-//    t_stop = micros() - t_prepMove;
-//    Serial.print("== recalculat acc & dec: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepMove = micros();
-    
-    
     
     // *** time for acceleration: ***
     // a = v0 / t0; a = v / t ==> t0 = v0 / a; t = v / a
@@ -441,14 +431,6 @@ void CCStepperDevice::prepareNextMove() {
     // in case accelerateDown: (velocity - currentVelocity) < 0 ==> acceleration_inv < 0 ==> timeForAcceleration > 0
     timeForAcceleration = 1000000.0 * (velocity - currentVelocity) * acceleration_inv;
     timeForAccAndConstSpeed = 1000000.0 * (stepsToGo - stepsForAcceleration - stepsForDeceleration) / velocity + timeForAcceleration;
-    
-    //    this takes ca 100us
-//    t_stop = micros() - t_prepMove;
-//    Serial.print("== times: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepMove = micros();
-    
     
 
     // *** time for the next step while acceleration: ***
@@ -550,20 +532,18 @@ void CCStepperDevice::prepareNextMove() {
 }
 
 
-void CCStepperDevice::startMove() {
-    if (stepsToGo == 0 || velocity == 0 || acceleration == 0) {
+void CCStepperDevice::startMove() {                                 // start this move
+    if (stepsToGo == 0 || velocity == 0 || acceleration == 0) {     // values valid?
         stopMoving();
     }
     else {
-        digitalWrite(dir_pin, directionDown);
-        
-        
+        digitalWrite(dir_pin, directionDown);                       // setup DIR-pin of stepper driver
         
         // lets start in highest stepping mode
-        microSteppingMode = highestSteppingMode;
+        microSteppingMode = highestSteppingMode;                    // setup stepper driver's highest steppingMode
         setMicroStepPins();
         
-        enableDevice();
+        enableDevice();                                             // setup ENABLE-pin of stepper driver
         
         if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
             Serial.print(F("[CCStepperDevice]: "));
@@ -572,29 +552,34 @@ void CCStepperDevice::startMove() {
             Serial.println((int)taskPointer);
         }
         
-        state = MOVING;
-        currentMicroStep = 0;
-        stepExpiration = 0;
-        t0 = micros() & 0x7fffffff;
+        state = MOVING;                                             // tag device as MOVING
+        currentMicroStep = 0;                                       // start counting at 0
+        stepExpiration = 0;                                         // set time for next step to 0 (= now)
+        t0 = micros() & 0x7fffffff;                                 // remember starting time (but be aware of overflows)
         
-        driveDynamic();
+        drive();                                                    // do step, if time expired and calculate time for next step
     }
 }
 
-void CCStepperDevice::initiateStop() {
-    if (currentMicroStep < microStepsForAcceleration) {
+void CCStepperDevice::initiateStop() {                              // irregular stopping
+    if (currentMicroStep < microStepsForAcceleration) {             // if stop request appears while accelerating
+                                                                    // stop acceleration immediately and decelerate symmetrical
+        // what is my speed?
+        // v * v [steps/s] = 2 * a * steps = 2 * a * microStep / microStepsPerFullStep
         veloBySquare = 2 * abs(acceleration) * currentMicroStep / (1 << highestSteppingMode);
         velocity = sqrt(veloBySquare);
-        microStepsToGo = 2 * currentMicroStep;
-        microStepsForAcceleration = currentMicroStep;
-        microStepsForAccAndConstSpeed = currentMicroStep;
-        timeForAccAndConstSpeed = stepExpiration;
+        
+        // do deceleration symetrical to acceleration: take same amount of microSteps for deceleration as used for acceleration till here
+        microStepsToGo = 2 * currentMicroStep;                      // stepsToGo = stepsForAcceleration + stepsForDeceleration
+        microStepsForAcceleration = currentMicroStep;               // stepsForAcceleration = currentStep = stepsForDeceleration
+        microStepsForAccAndConstSpeed = currentMicroStep;           // stepsForConstSpeed = 0
+        timeForAccAndConstSpeed = stepExpiration;                   // time for start of deceleration is time of next step
         return;
     }
-    if (currentMicroStep < microStepsForAccAndConstSpeed) {
-        microStepsToGo = currentMicroStep + (stepsForDeceleration << highestSteppingMode);
-        microStepsForAccAndConstSpeed = currentMicroStep;
-        timeForAccAndConstSpeed = stepExpiration;
+    if (currentMicroStep < microStepsForAccAndConstSpeed) {         // when going with constant speed
+        microStepsToGo = currentMicroStep + (stepsForDeceleration << highestSteppingMode);  // use nominated deceration values
+        microStepsForAccAndConstSpeed = currentMicroStep;           // no more stepsForConstSpeed
+        timeForAccAndConstSpeed = stepExpiration;                   // time for start of deceleration is time of next step
         return;
     }
 }
@@ -615,7 +600,7 @@ void CCStepperDevice::finishMove() {
     }
 }
 
-void CCStepperDevice::driveDynamic() {
+void CCStepperDevice::drive() {
     long now = micros() & 0x7fffffff;
     if (t0 > now) t0 -= 0x80000000;
     

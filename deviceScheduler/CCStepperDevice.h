@@ -1,8 +1,17 @@
+//
+//  CCStepperDevice.h
+//  deviceScheduler
+//
+//  Created by Little Abakus on 30.05.14.
+//  Copyright (c) 2014 Little Abakus. All rights reserved.
+//
+
+#ifndef __deviceScheduler__CCStepperDevice__
+#define __deviceScheduler__CCStepperDevice__
+
+
 #include <Arduino.h>
-
 #include "deviceScheduler.h"
-
-
 #include "CCDevice.h"
 
 
@@ -12,9 +21,7 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             1
-//| CCSTEPPERDEVICE_MEMORYDEBUG | CCSTEPPERDEVICE_CALCULATIONDEBUG )
-//| CCSTEPPERDEVICE_MOVEMENTDEBUG)
+#define CCSTEPPERDEVICE_VERBOSE             CCSTEPPERDEVICE_BASICOUTPUT
 
 
 
@@ -66,10 +73,12 @@ public:
     void reviewValues();
     void prepareNextMove();
     void startMove();
-    void driveDynamic();
+    void drive();
     void initiateStop();
     void stopMoving();
     void finishMove();
         
 };
 
+
+#endif /* defined(__deviceScheduler__CCStepperDevice__) */
