@@ -1,5 +1,56 @@
+/// <h1>hello, this is an introdiction to the scheduler</h1>
+/// viele Sachen können hier aufgeführt werden, die den \c scheduler betreffen.
 ///
-/// @file		motorController.h
+
+///
+ /// @mainpage deviceScheduler
+///
+/// Beschreibung des Projekts
+/// <br>Mit "<br>" kann bei der HTML-Dokumentation eine neue Zeile erzeugt werden
+///
+/// Mit dem <img-Schlüsselwort können eigene Bilder hinzugefügt werden
+/// <img src="../application_screenshot.jpg" alt="Screenshot">
+///
+/// @author Max Mustermann
+///
+
+
+/*! \page page1 A documentation page
+ \tableofcontents
+ Leading text.
+ \section sec An example section
+ This page contains the subsections \ref subsection1 and \ref subsection2.
+ For more info see page \ref page2.
+ \subsection subsection1 The first subsection
+ Text.
+ \subsection subsection2 The second subsection
+ More text.
+ */
+/*! \page page2 Another page
+ Even more info.
+ */
+
+
+/*
+ * @mainpage Overview
+ *
+ * Beschreibung des Projekts
+ * <br>Mit "<br>" kann bei der HTML-Dokumentation eine neue Zeile erzeugt werden
+ *
+ * Mit dem <img-Schlüsselwort können eigene Bilder hinzugefügt werden
+ * <img src="../application_screenshot.jpg" alt="Screenshot">
+ *
+ * @author Max Mustermann
+ */
+
+
+/**
+ *  A test class. A more elaborate class description.
+ */
+
+
+///
+/// @file		CCDevice.h
 /// @brief		Header
 /// @details	<#details#>
 /// @n
@@ -28,6 +79,7 @@
 enum deviceType {
     SERVODEVICE,
     STEPPERDEVICE,
+    SOLENOIDDEVICE,
     SWITCHINGDEVICE
 };
 
@@ -51,14 +103,24 @@ enum deviceState {
 };
 
 
+//  stop mode:
+enum stoppingMode {
+    STOP_IMMEDIATELY,
+    STOP_NORMAL,
+    STOP_DYNAMIC
+};
 
-//  stoppingModes:
-#define STOP_SHARPLY                    0x00
-#define STOP_VERY_FAST                  0x01
-#define STOP_FAST                       0x40
-#define STOP_PRECISE                    0x80
-#define STOP_VERY_PRECISE               0xC0
-#define STOP_NEVER                      0xFF
+
+//  appriximation mode:
+enum approximationMode {
+    SKIP_APPROXIMATION_IMMEDIATELY = 0x00,
+    SKIP_APPROXIMATION_VERY_FAST = 0x01,
+    SKIP_APPROXIMATION_FAST = 0x40,
+    SKIP_APPROXIMATION_PRECISE = 0x80,
+    SKIP_APPROXIMATION_VERY_PRECISE = 0xC0,
+    SKIP_APPROXIMATION_NEVER = 0xFF
+};
+
 
 
 

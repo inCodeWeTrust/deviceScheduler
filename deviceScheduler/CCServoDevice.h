@@ -25,6 +25,13 @@
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @class CCServoDevice
+///
+/// @brief Device class for servo motor devices
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 class CCServoDevice : public CCDevice {
@@ -59,12 +66,12 @@ public:
     void disableDevice();
     
     void reviewValues();
-    void prepareNextMove();
-    void startMove();
-    void drive();
+    void prepareNextTask();
+    void startTask();
+    void operateTask();
     void initiateStop();
-    void stopMoving();
-    void finishMove();
+    void stopTask();
+    void finishTask();
 };
 
 

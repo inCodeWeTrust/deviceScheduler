@@ -24,6 +24,12 @@
 #define CCSTEPPERDEVICE_VERBOSE             CCSTEPPERDEVICE_BASICOUTPUT
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @class CCStepperDevice
+///
+/// @brief Device class for stepper motor devices
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 class CCStepperDevice : public CCDevice {
@@ -42,7 +48,7 @@ class CCStepperDevice : public CCDevice {
     float                stepsPerDegree, degreesPerMicroStep;
     unsigned long        currentMicroStep;
     float                startPosition;
-    bool                 prepareAndStartNextMoveWhenFinished, switchAtNextFullStep;
+    bool                 prepareAndStartNextTaskWhenFinished, switchAtNextFullStep;
     
     void                 kickDown();
     void                 kickUp();
@@ -56,6 +62,15 @@ public:
     unsigned char        numberOfMicroStepPins;
     unsigned char        *microStepPin;
     unsigned char        highestSteppingMode;
+
+///    i.e. "0x00, 0x01, 0x02, 0x03, 0x07":
+    /// stepModeCode | bin | pin 2 | pin 1 | pin 0 | description
+    /// -------------|-----|-------|-------|-------|---------------------------------------------
+    /// 0x00         | 000 |   LOW |   LOW |   LOW | full step mode
+    /// 0x01         | 001 |   LOW |   LOW |  HIGH | half step mode
+    /// 0x02         | 010 |   LOW |  HIGH |   LOW | quarter step mode
+    /// 0x03         | 011 |   LOW |  HIGH |  HIGH | eighth step mode
+    /// 0x07         | 111 |  HIGH |  HIGH |  HIGH | sixteenth step mode
     unsigned char        *stepModeCode;
     unsigned int         stepsPerRoation;
     int                  acceleration_max;
@@ -71,12 +86,12 @@ public:
     void disableDevice();
     
     void reviewValues();
-    void prepareNextMove();
-    void startMove();
-    void drive();
+    void prepareNextTask();
+    void startTask();
+    void operateTask();
     void initiateStop();
-    void stopMoving();
-    void finishMove();
+    void stopTask();
+    void finishTask();
         
 };
 

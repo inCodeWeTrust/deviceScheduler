@@ -22,7 +22,7 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->startDelay = startDelay;
     this->startEvent = NONE;
     this->stopEvent = NONE;
-    this->switchMovePromptly = false;
+    this->switchTaskPromptly = false;
     this->startTime = 0;
     this->timeout = 0;
     this->startButton = 0;
@@ -30,13 +30,12 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->startButtonState = 0;
     this->stopButtonState = 0;
     this->startTriggerDevice = 0;
-    this->startTriggerMove = 0;
+    this->startTriggerTask = 0;
     this->startTriggerPosition = 0;
     this->stopTriggerDevice = 0;
-    this->stopTriggerMove = 0;
+    this->stopTriggerTask = 0;
     this->stopTriggerPosition = 0;
-    this->stopSharply = 0;
-    this->stopDynamically = 0;
+    this->stopping = STOP_NORMAL;
     this->sensor = 0;
     this->initiatePerformanceValue = 0;
     this->targetValue = 0;
@@ -53,76 +52,77 @@ void CCTask::startByButton(unsigned char startButton, boolean startButtonState) 
     this->startButton = startButton;
     this->startButtonState = startButtonState;
 }
-void CCTask::startAfterMy(unsigned char startTriggerMove) {
+void CCTask::startAfterMy(unsigned char startTriggerTask) {
     this->startEvent = FOLLOW;
-    this->startTriggerMove = startTriggerMove;
+    this->startTriggerTask = startTriggerTask;
 }
-void CCTask::startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove) {
+void CCTask::startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask) {
     this->startEvent = FOLLOW;
     this->startTriggerDevice = startTriggerDevice;
-    this->startTriggerMove = startTriggerMove;
+    this->startTriggerTask = startTriggerTask;
 }
-void CCTask::startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition) {
+void CCTask::startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask, signed long startTriggerPosition) {
     this->startEvent = POSITION;
     this->startTriggerDevice = startTriggerDevice;
-    this->startTriggerMove = startTriggerMove;
+    this->startTriggerTask = startTriggerTask;
     this->startTriggerPosition = startTriggerPosition;
 }
 
 void CCTask::switchToNextTaskByDate(unsigned long switchingTimeout) {
     this->stopEvent = DATE;
     this->timeout = switchingTimeout;
-    this->switchMovePromptly = true;
+    this->switchTaskPromptly = true;
 }
 void CCTask::switchToNextTaskByButton(unsigned char switchingButton, boolean switchingButtonState) {
     this->stopEvent = BUTTON;
     this->stopButton = switchingButton;
     this->stopButtonState = switchingButtonState;
-    this->switchMovePromptly = true;
+    this->switchTaskPromptly = true;
 }
-void CCTask::switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerMove) {
+void CCTask::switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = switchingTriggerDevice;
-    this->stopTriggerMove = switchingTriggerMove;
-    this->switchMovePromptly = true;
+    this->stopTriggerTask = switchingTriggerTask;
+    this->switchTaskPromptly = true;
 }
-void CCTask::switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerMove, signed long switchingTriggerPosition) {
+void CCTask::switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask, signed long switchingTriggerPosition) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = switchingTriggerDevice;
-    this->stopTriggerMove = switchingTriggerMove;
+    this->stopTriggerTask = switchingTriggerTask;
     this->stopTriggerPosition = switchingTriggerPosition;
-    this->switchMovePromptly = true;
+    this->switchTaskPromptly = true;
 }
 
-void CCTask::stopByTimeout(unsigned long timeout, boolean stopSharply) {
+void CCTask::stopByTimeout(unsigned long timeout, stoppingMode stopping) {
     this->stopEvent = DATE;
     this->timeout = timeout;
-    this->stopSharply = stopSharply;
+    this->stopping = stopping;
 }
-void CCTask::stopByButton(unsigned char stopButton, boolean stopButtonState, boolean stopSharply) {
+void CCTask::stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping) {
     this->stopEvent = BUTTON;
     this->stopButton = stopButton;
     this->stopButtonState = stopButtonState;
-    this->stopSharply = stopSharply;
+    this->stopping = stopping;
 }
-void CCTask::stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerMove) {
+void CCTask::stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, stoppingMode stopping) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = stopTriggerDevice;
-    this->stopTriggerMove = stopTriggerMove;
+    this->stopTriggerTask = stopTriggerTask;
+    this->stopping = stopping;
 }
-void CCTask::stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply) {
+void CCTask::stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = stopTriggerDevice;
-    this->stopTriggerMove = stopTriggerMove;
+    this->stopTriggerTask = stopTriggerTask;
     this->stopTriggerPosition = stopTriggerPosition;
-    this->stopSharply = stopSharply;
+    this->stopping = stopping;
 }
-void CCTask::stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, unsigned char stopMode) {
-    this->stopDynamically = true;
+void CCTask::stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation) {
+    this->stopping = STOP_DYNAMIC;
     this->sensor = sensor;
     this->initiatePerformanceValue = initiatePerformanceValue;
     this->targetValue = targetValue;
     this->stopPerformance = stopPerformance;
-    this->stopMode = stopMode;
+    this->approximation = approximation;
 }
 

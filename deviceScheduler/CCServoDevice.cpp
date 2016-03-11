@@ -24,14 +24,14 @@ CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsign
     this->parkPosition = parkPosition;
     
     
-    type = SERVODEVICE;
-    state = SLEEPING;
-    taskPointer = 0;
-    countOfTasks = 0;
+    this->type = SERVODEVICE;
+    this->state = SLEEPING;
+    this->taskPointer = 0;
+    this->countOfTasks = 0;
     
-    defaultVelocity = 0;
-    defaultAcceleration = 0;
-    defaultDeceleration = 0;
+    this->defaultVelocity = 0;
+    this->defaultAcceleration = 0;
+    this->defaultDeceleration = 0;
     
     
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
@@ -56,7 +56,7 @@ CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsign
 
 
 CCServoDevice::~CCServoDevice() {
-    deleteMoves();
+    deleteTasks();
     detachDevice();
 }
 
@@ -84,45 +84,44 @@ void CCServoDevice::detachDevice() {
 
 void CCServoDevice::reviewValues() {}
 
-void CCServoDevice::prepareNextMove() {
-    dynamicalStop = false;
-    valueCounter = 0;
-    sensorValuesFalling = (initiatePerformanceValue > targetValue);
-    
+void CCServoDevice::prepareNextTask() {
     target = task[taskPointer]->target;
     velocity = task[taskPointer]->velocity;
     acceleration = task[taskPointer]->acceleration;
+    startDelay = task[taskPointer]->startDelay;
     
     startEvent = task[taskPointer]->startEvent;
-    stopEvent = task[taskPointer]->stopEvent;
-    switchMovePromptly = task[taskPointer]->switchMovePromptly;
-    startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
-    timeout = task[taskPointer]->timeout;
-    stopSharply = task[taskPointer]->stopSharply;
     startButton = task[taskPointer]->startButton;
-    stopButton = task[taskPointer]->stopButton;
     startButtonState = task[taskPointer]->startButtonState;
-    stopButtonState = task[taskPointer]->stopButtonState;
     startTriggerDevice = task[taskPointer]->startTriggerDevice;
-    startTriggerMove = task[taskPointer]->startTriggerMove;
+    startTriggerTask = task[taskPointer]->startTriggerTask;
     startTriggerPosition = task[taskPointer]->startTriggerPosition;
+    
+    stopEvent = task[taskPointer]->stopEvent;
+    timeout = task[taskPointer]->timeout;
+    stopButton = task[taskPointer]->stopButton;
+    stopButtonState = task[taskPointer]->stopButtonState;
     stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
-    stopTriggerMove = task[taskPointer]->stopTriggerMove;
+    stopTriggerTask = task[taskPointer]->stopTriggerTask;
     stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
-    stopDynamically = task[taskPointer]->stopDynamically;
+    
+    stopping = task[taskPointer]->stopping;
+    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
+    
     sensor = task[taskPointer]->sensor;
     initiatePerformanceValue = task[taskPointer]->initiatePerformanceValue;
     targetValue = task[taskPointer]->targetValue;
     stopPerformance = task[taskPointer]->stopPerformance;
-    stopMode = task[taskPointer]->stopMode;
-    
+    approximation = task[taskPointer]->approximation;
+
     dynamicalStop = false;
     valueCounter = 0;
-    if (stopMode == 0) {
-        sensorTreshold = 8;
+    sensorValuesFalling = (initiatePerformanceValue > targetValue);
+    if (approximation == SKIP_APPROXIMATION_IMMEDIATELY) {
+        sensorTreshold = 64;
     } else {
-        sensorTreshold = 256.0 / stopMode;
+        sensorTreshold = 256.0 / approximation;
     }
     
     targetPosition = target;
@@ -222,8 +221,8 @@ void CCServoDevice::prepareNextMove() {
         Serial.print(wayForConstantSpeed);
         Serial.print(F(", timeForConstantSpeed: "));
         Serial.print(timeForConstantSpeed);
-        Serial.print(F(", stopDynamically: "));
-        if (stopDynamically) {
+        Serial.print(F(", stopping: "));
+        if (stopping == STOP_DYNAMIC) {
             Serial.print(F("yes, stopPerformance: "));
             Serial.print(stopPerformance);
             Serial.print(F(", initiatePerformanceValue: "));
@@ -232,8 +231,8 @@ void CCServoDevice::prepareNextMove() {
             Serial.print(targetValue);
             Serial.print(F(", stopPerformance: "));
             Serial.print(stopPerformance);
-            Serial.print(F(", stopMode: "));
-            Serial.print(stopMode);
+            Serial.print(F(", stopping: "));
+            Serial.print(stopping);
             Serial.print(F(", sensorTreshold: "));
             Serial.println(sensorTreshold);
         } else {
@@ -242,7 +241,7 @@ void CCServoDevice::prepareNextMove() {
     }
 }
 
-void CCServoDevice::startMove() {
+void CCServoDevice::startTask() {
     state = MOVING;
     t0 = millis();
     
@@ -269,10 +268,10 @@ void CCServoDevice::initiateStop() {
     }
 }
 
-void CCServoDevice::stopMoving() {
+void CCServoDevice::stopTask() {
     state = MOVE_DONE;
 }
-void CCServoDevice::finishMove() {
+void CCServoDevice::finishTask() {
     state = SLEEPING;
     
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
@@ -287,11 +286,11 @@ void CCServoDevice::finishMove() {
 
 
 
-void CCServoDevice::drive() {
+void CCServoDevice::operateTask() {
     lastCycleTime = elapsedTime;
     elapsedTime = millis() - t0;
     
-    if (stopDynamically == true) {
+    if (stopping == STOP_DYNAMIC) {
         if (dynamicalStop == false) {
             sensorValue = analogRead(sensor);
             if ((sensorValue > initiatePerformanceValue && (!sensorValuesFalling)) || (sensorValue < initiatePerformanceValue && sensorValuesFalling)) {
@@ -380,11 +379,11 @@ void CCServoDevice::drive() {
         }
         
 
-        if (stopMode == STOP_NEVER) {
+        if (approximation == SKIP_APPROXIMATION_NEVER) {
             return;
         } else {
             if (abs(sensorValue - targetValue) < sensorTreshold) {
-                if (valueCounter++ < stopMode) {
+                if (valueCounter++ < approximation) {
                     return;
                 }
             } else {
@@ -442,6 +441,6 @@ void CCServoDevice::drive() {
         Serial.println((long)&currentPosition, HEX);
     }
     
-    stopMoving();
+    stopTask();
     
 }

@@ -20,6 +20,12 @@
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @class CCSwitchDevice
+///
+/// @brief Device class for devices, that are simply switched on and off.
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 class CCSwitchDevice : public CCDevice {
@@ -40,12 +46,12 @@ class CCSwitchDevice : public CCDevice {
     void disableDevice();
     
     void reviewValues();
-    void prepareNextMove();
-    void startMove();
-    void drive();
+    void prepareNextTask();
+    void startTask();
+    void operateTask();
     void initiateStop();
-    void stopMoving();
-    void finishMove();
+    void stopTask();
+    void finishTask();
 };
 
 

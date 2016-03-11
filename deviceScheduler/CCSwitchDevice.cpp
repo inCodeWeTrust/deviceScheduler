@@ -46,7 +46,7 @@ CCSwitchDevice::CCSwitchDevice(unsigned int deviceIndex, String deviceName, unsi
 
 
 CCSwitchDevice::~CCSwitchDevice() {
-    deleteMoves();
+    deleteTasks();
     detachDevice();
 }
 
@@ -70,26 +70,26 @@ void CCSwitchDevice::detachDevice() {
 
 void CCSwitchDevice::reviewValues() {}
 
-void CCSwitchDevice::prepareNextMove() {
+void CCSwitchDevice::prepareNextTask() {
     
     target = task[taskPointer]->target;
     
     startEvent = task[taskPointer]->startEvent;
     stopEvent = task[taskPointer]->stopEvent;
-    switchMovePromptly = task[taskPointer]->switchMovePromptly;
+    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
     startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
     timeout = task[taskPointer]->timeout;
-    stopSharply = task[taskPointer]->stopSharply;
+    stopping = task[taskPointer]->stopping;
     startButton = task[taskPointer]->startButton;
     stopButton = task[taskPointer]->stopButton;
     startButtonState = task[taskPointer]->startButtonState;
     stopButtonState = task[taskPointer]->stopButtonState;
     startTriggerDevice = task[taskPointer]->startTriggerDevice;
-    startTriggerMove = task[taskPointer]->startTriggerMove;
+    startTriggerTask = task[taskPointer]->startTriggerTask;
     startTriggerPosition = task[taskPointer]->startTriggerPosition;
     stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
-    stopTriggerMove = task[taskPointer]->stopTriggerMove;
+    stopTriggerTask = task[taskPointer]->stopTriggerTask;
     stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
     
     
@@ -104,7 +104,7 @@ void CCSwitchDevice::prepareNextMove() {
 }
 
 
-void CCSwitchDevice::startMove() {
+void CCSwitchDevice::startTask() {
     digitalWrite(switching_pin, target);
     state = MOVING;
     
@@ -121,10 +121,10 @@ void CCSwitchDevice::startMove() {
 }
 
 void CCSwitchDevice::initiateStop() {
-    stopMoving();
+    stopTask();
 }
 
-void CCSwitchDevice::stopMoving() {
+void CCSwitchDevice::stopTask() {
     digitalWrite(switching_pin, defaultState);
     state = MOVE_DONE;
 
@@ -143,7 +143,7 @@ void CCSwitchDevice::stopMoving() {
     }
 }
 
-void CCSwitchDevice::finishMove() {
+void CCSwitchDevice::finishTask() {
     state = SLEEPING;
     
     if (CCSWITCHDEVICE_VERBOSE & CCSWITCHDEVICE_BASICOUTPUT) {
@@ -156,5 +156,5 @@ void CCSwitchDevice::finishMove() {
 }
 
 
-void CCSwitchDevice::drive() {
+void CCSwitchDevice::operateTask() {
 }

@@ -12,6 +12,12 @@
 #include <Arduino.h>
 #include "deviceScheduler.h"
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @class CCTask
+///
+/// @brief Class for tasks to be executed
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 class CCTask {
     
@@ -19,7 +25,7 @@ public:
     
     event       startEvent;
     event       stopEvent;
-    boolean     switchMovePromptly;
+    boolean     switchTaskPromptly;
     float               target;
     float               velocity;
     float               acceleration;
@@ -32,39 +38,38 @@ public:
     boolean             startButtonState;
     boolean             stopButtonState;
     unsigned char       startTriggerDevice;
-    unsigned char       startTriggerMove;
+    unsigned char       startTriggerTask;
     signed long         startTriggerPosition;
     unsigned char       stopTriggerDevice;
-    unsigned char       stopTriggerMove;
+    unsigned char       stopTriggerTask;
     signed long         stopTriggerPosition;
-    boolean             stopSharply;
-    boolean             stopDynamically;
     unsigned char       sensor;
     signed int          initiatePerformanceValue;
     signed int          targetValue;
     float               stopPerformance;
-    unsigned char       stopMode;
+    stoppingMode        stopping;
+    approximationMode   approximation;
     
     
     CCTask(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay);
 
     void startByDate(unsigned long startTime);
     void startByButton(unsigned char startButton, boolean startButtonState);
-    void startAfterMy(unsigned char startTriggerMove);
-    void startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove);
-    void startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerMove, signed long startTriggerPosition);
+    void startAfterMy(unsigned char startTriggerTask);
+    void startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask);
+    void startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
     void switchToNextTaskByButton(unsigned char switchingButton, boolean switchingButtonState);
-    void switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerMove);
-    void switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerMove, signed long switchingTriggerPosition);
+    void switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask);
+    void switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask, signed long switchingTriggerPosition);
     
-    void stopByTimeout(unsigned long timeout, boolean stopSharply);
-    void stopByButton(unsigned char stopButton, boolean stopButtonState, boolean stopSharply);
-    void stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerMove);
-    void stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerMove, signed long stopTriggerPosition, boolean stopSharply);
+    void stopByTimeout(unsigned long timeout, stoppingMode stopping);
+    void stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping);
+    void stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, stoppingMode stopping);
+    void stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     
-    void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, unsigned char stopMode);
+    void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
     
 };
 

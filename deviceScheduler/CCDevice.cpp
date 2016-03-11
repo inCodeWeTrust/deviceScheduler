@@ -7,9 +7,10 @@
 //
 
 
-
 #include "CCDevice.h"
 #include "deviceScheduler.h"
+
+
 
 CCDevice::~CCDevice() {}
 
@@ -21,36 +22,36 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
 
 /*
  unsigned char CCDevice::addTask(float target) {
- return addMoveWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
+ return addTaskWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
  }
  unsigned char CCDevice::addTask(float target, float velocity) {
- return addMoveWithStartDelay(target, 0UL, velocity, defaultAcceleration, defaultDeceleration);
+ return addTaskWithStartDelay(target, 0UL, velocity, defaultAcceleration, defaultDeceleration);
  }
  unsigned char CCDevice::addTask(float target, float velocity, float acceleration) {
- return addMoveWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
+ return addTaskWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
  }
  */
 unsigned char CCDevice::addTask(float target, float velocity, float acceleration, float deceleration) {
-    return addMoveWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
+    return addTaskWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
 }
 
 /*
- unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay) {
- return addMoveWithStartDelay(target, startDelay, defaultVelocity, defaultAcceleration, defaultDeceleration);
+ unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay) {
+ return addTaskWithStartDelay(target, startDelay, defaultVelocity, defaultAcceleration, defaultDeceleration);
  }
- unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity) {
- return addMoveWithStartDelay(target, startDelay, velocity, defaultAcceleration, defaultDeceleration);
+ unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay, float velocity) {
+ return addTaskWithStartDelay(target, startDelay, velocity, defaultAcceleration, defaultDeceleration);
  }
- unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration) {
- return addMoveWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
+ unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration) {
+ return addTaskWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
  }
  */
-unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
-//    task[countOfTasks] = new onEventMove(target, velocity, acceleration, deceleration, startDelay);
+unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
+//    task[countOfTasks] = new onEventTask(target, velocity, acceleration, deceleration, startDelay);
     task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, startDelay);
     
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCDevice]: add Move for "));
+        Serial.print(F("[CCDevice]: add Task for "));
         Serial.print(deviceName);
         Serial.print(F(", target: "));
         Serial.print(task[countOfTasks]->target);
@@ -71,7 +72,7 @@ unsigned char CCDevice::addMoveWithStartDelay(float target, unsigned long startD
     return countOfTasks - 1;
 }
 
-void CCDevice::deleteMoves() {
+void CCDevice::deleteTasks() {
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCDevice]: delete tasks of "));
         Serial.print(deviceName);

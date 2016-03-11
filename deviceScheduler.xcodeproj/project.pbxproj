@@ -723,6 +723,8 @@
 		A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
 		A48C24711C3E674600EB3EFA /* CCTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTask.cpp; sourceTree = "<group>"; };
 		A48C24721C3E674600EB3EFA /* CCTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTask.h; sourceTree = "<group>"; };
+		A4CE206E1C935888000C941D /* CCSolenoidDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSolenoidDevice.cpp; sourceTree = "<group>"; };
+		A4CE206F1C935888000C941D /* CCSolenoidDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSolenoidDevice.h; sourceTree = "<group>"; };
 		AAAA150601125914AA000006 /* abi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = abi.cpp; sourceTree = "<group>"; };
 		AAAA150601125914AA000007 /* Arduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arduino.h; sourceTree = "<group>"; };
 		AAAA150601125914AA000008 /* binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary.h; sourceTree = "<group>"; };
@@ -1396,6 +1398,8 @@
 				A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */,
 				A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */,
 				A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */,
+				A4CE206F1C935888000C941D /* CCSolenoidDevice.h */,
+				A4CE206E1C935888000C941D /* CCSolenoidDevice.cpp */,
 				A48C24721C3E674600EB3EFA /* CCTask.h */,
 				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
 				40B046B41C417C8A00A19029 /* MeisterStueckwerk.pages */,
