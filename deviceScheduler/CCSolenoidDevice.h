@@ -31,11 +31,17 @@
 /// @class CCSolenoidDevice
 ///
 /// @brief Device class for solenoid devices
+///
+/// @ingroup devices
+/// @{
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 class CCSolenoidDevice : public CCDevice {
+    
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
     unsigned long        t0;
     signed long          elapsedTime;
     unsigned int         switchingInterval, onDuration;
@@ -65,6 +71,13 @@ class CCSolenoidDevice : public CCDevice {
     void initiateStop();
     void stopTask();
     void finishTask();
+    
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 };
+
+/// @}
+///
+
 #endif /* defined(__deviceScheduler__CCSolenoidDevice__) */
 

@@ -31,13 +31,23 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-/// This baseclass holds all parameters, that are common for all devices,
-/// and it holds the array of tasks to be executed by this device
+/// # This baseclass
+/// holds all parameters, that are common for all devices,
+/// including the array of tasks to be executed by this device
+///
+/// @page page1 some notes from the base class
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 class CCDevice {
     
 public:
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
     /// Device parameter:
     /// Value, set by the owner of the device (CCDeviceScheduler) to be recognized by him.
     unsigned int         deviceIndex;
@@ -83,7 +93,7 @@ public:
     float                currentPosition;
 
     /// Device parameter:
-    /// This value indicates, if device's position values increase (<false>) or decrease (<true>) while the task is executed.
+    /// This value indicates, if device's position values increase (´false´) or decrease (`true`) while the task is executed.
     bool                 directionDown;
     
     /// Device parameter:
@@ -229,7 +239,7 @@ public:
     /// SKIP_APPROXIMATION_PRECISE = 0x80         | ...
     /// SKIP_APPROXIMATION_VERY_PRECISE = 0xC0    | stop not until a huge amount of values are within a small tolerance
     /// SKIP_APPROXIMATION_NEVER = 0xFF           | keep approximating
-    /// (skip when <appriximationMode> times the sensor value is within the tolerance of +/- <256 / approximationMode>)
+    /// (skip when ´appriximationMode´ times the sensor value is within the tolerance of ´ +/- 256 / approximationMode´)
     approximationMode   approximation;
         
     /// Array of tasks to be performed.
@@ -244,6 +254,9 @@ public:
        
     
     virtual ~CCDevice();
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 
     /// Function sets up device-specific default values for velocity, acceleration and deceleration.
     /// Call this function to be prepared for overloading [addTask(...)](@ref addTask) and [addTaskWithStartDelay(...)](@ref addTaskWithStartDelay) functions.
@@ -280,6 +293,7 @@ public:
     ///
     void deleteTasks();
     
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     
     virtual void attachDevice() = 0;
     virtual void detachDevice() = 0;
@@ -297,6 +311,7 @@ public:
     
 private:
     
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
     
 };

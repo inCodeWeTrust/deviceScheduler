@@ -29,12 +29,17 @@
 /// @class CCServoDevice
 ///
 /// @brief Device class for servo motor devices
+///
+/// @defgroup devices Devices to be controlled by the Scheduler
+/// @{
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 class CCServoDevice : public CCDevice {
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
     unsigned long        t0;
     signed long          elapsedTime;
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;
@@ -72,8 +77,14 @@ public:
     void initiateStop();
     void stopTask();
     void finishTask();
+    
+    
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 };
 
+/// @}
+///
 
 #endif /* defined(__deviceScheduler__CCServoDevice__) */
 

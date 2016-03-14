@@ -25,11 +25,13 @@
 ///
 /// @brief Device class for devices, that are simply switched on and off.
 ///
+/// @ingroup devices
+/// @{
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 class CCSwitchDevice : public CCDevice {
-
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
   public:
 
     unsigned char       switching_pin;
@@ -52,7 +54,13 @@ class CCSwitchDevice : public CCDevice {
     void initiateStop();
     void stopTask();
     void finishTask();
+    
+    
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 };
+/// @}
+///
 
 
 #endif /* defined(__deviceScheduler__CCSwitchDevice__) */

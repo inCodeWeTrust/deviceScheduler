@@ -22,6 +22,7 @@
 class CCTask {
     
 public:
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     
     event       startEvent;
     event       stopEvent;
@@ -52,6 +53,8 @@ public:
     
     
     CCTask(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay);
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
     void startByDate(unsigned long startTime);
     void startByButton(unsigned char startButton, boolean startButtonState);

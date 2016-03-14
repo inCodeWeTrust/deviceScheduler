@@ -55,7 +55,8 @@
 class CCDeviceScheduler {
     
 public:
-    
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
     /// Scheduler parameter:
     /// Value holds the number of devices managed by him.
     unsigned char countOfDevices;
@@ -67,6 +68,8 @@ public:
     CCDeviceScheduler();
     ~CCDeviceScheduler();
     
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
     /// Function adds a servo device to the device array and returns the index of the device.
     /// Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
@@ -122,6 +125,9 @@ public:
     void deleteAllTasks();
     
     void run();
+    
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
     
 };
 
