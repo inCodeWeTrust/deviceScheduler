@@ -1,0 +1,87 @@
+//
+//  howItWorks.dox
+//  Text
+//  ----------------------------------
+//  Developed with embedXcode
+//
+//  Project 	deviceScheduler
+//  Created by 	little Ikarus on 15.03.16
+//  Copyright 	© 2016 little Ikarus
+//  License	<#license#>
+//
+
+/*! \file CCDeviceScheduler.h
+
+    Details out of .txt.
+*/
+/*! \page page1
+    \brief A macro that returns the maximum of \a a and \a b.
+   
+    Details.
+*/
+/*! \var typedef unsigned int UINT32
+    \brief A type definition for a .
+    
+    Details.
+*/
+
+/*! \file deviceScheduler.h
+
+    Details out of .txt.
+*/
+
+/*! \page page2
+To oerate different kinds of devices the scheduler has different device classes. The specific class carries all the code, that is neccessary to control this kind of devices, i.e. the code to generate the PWM signal is inside the DC-Controller class, the code to switch between half step and quarter step microstepping mode is inside the stepper class, the code to calculate an accelerated rotation of a servo motor is inside the servo class.
+
+Other devices, needing different code to be controlled, can be added here easyly.
+
+
+All device classes (CCStepper class, CCServo class, CCDcControl class) are now inherited from the same base class (CCDevice class). So all sub classes share the same interface to be controlled with. They share a set of methods and members that are quite abstract - suitable to control common operations of arbitrary devices. They are:
+
+- @c attachDevice()
+- @c detachDevice()
+- @c enableDevice()
+- @c disableDevice()
+    
+- @c reviewValues()
+- @c prepareNextTask()
+- @c startTask()
+- @c operateTask()
+- @c initiateStop()
+- @c stopTask()
+- @c finishTask()
+
+So CCStepper.h once included, the scheduler does not need to know, which pin needs to be set to whitch value to enable the stepper driver. He just gives the stepper class the directive @c enableDevice().
+
+Some of the common members are:
+- deviceName
+- deviceType
+- countOfTasks
+- taskPointer
+- currentPosition
+- deviceState
+
+Having an abstract base class for all device sub classes has a second advantage: the devices can be put into an array:
+
+@code
+CCDevice *device[10];
+@endcode
+
+So for example to get the position of device 3, the code is:
+
+@code
+float devicePosition = device[3]->currentPosition;
+@endcode
+
+To start the tasks of all devices, the code would be:
+
+@code
+for (int n = 0; n < 10; n++) {
+    device[n]->startTask();
+}
+@endcode
+
+
+
+
+ */

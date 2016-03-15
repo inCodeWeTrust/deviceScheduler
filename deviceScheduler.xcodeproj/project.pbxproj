@@ -661,6 +661,7 @@
 		40B046B41C417C8A00A19029 /* MeisterStueckwerk.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = MeisterStueckwerk.pages; sourceTree = "<group>"; };
 		40B50AAE1C19850400705EE0 /* scheduler-sceme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scheduler-sceme.txt"; sourceTree = "<group>"; };
 		40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = whatNeededWhen.txt; path = ../whatNeededWhen.txt; sourceTree = "<group>"; };
+		A442495A1C97BFF100C3E457 /* howItWorks.dox.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = howItWorks.dox.txt; sourceTree = "<group>"; };
 		A446E5231BD5AFF3003C0F35 /* CCSwitchDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSwitchDevice.h; sourceTree = "<group>"; };
 		A45F72191B1C70E400B5B7E0 /* Index */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Index; sourceTree = BUILT_PRODUCTS_DIR; };
 		A45F721C1B1C70E400B5B7E0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -1401,6 +1402,7 @@
 				A4CE206F1C935888000C941D /* CCSolenoidDevice.h */,
 				A4CE206E1C935888000C941D /* CCSolenoidDevice.cpp */,
 				A48C24721C3E674600EB3EFA /* CCTask.h */,
+				A442495A1C97BFF100C3E457 /* howItWorks.dox.txt */,
 				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
 				40B046B41C417C8A00A19029 /* MeisterStueckwerk.pages */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
