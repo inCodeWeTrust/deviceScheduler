@@ -1,0 +1,5 @@
+<map id="CCDevice" name="CCDevice">
+<area shape="rect" id="node2" href="$class_c_c_dc_controller_device.html" title="Device class for devices controlled by PWM&#45;signals or spimply switched on and off. " alt="" coords="5,80,160,107"/>
+<area shape="rect" id="node3" href="$class_c_c_servo_device.html" title="Device class for servo motor devices. " alt="" coords="185,80,303,107"/>
+<area shape="rect" id="node4" href="$class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="327,80,456,107"/>
+</map>

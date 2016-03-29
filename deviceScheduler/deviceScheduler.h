@@ -1,77 +1,6 @@
-/// <h1>hello, this is an introdiction to the scheduler</h1>
-/// viele Sachen können hier aufgeführt werden, die den \c scheduler betreffen.
-///
 
-///
- /// @mainpage deviceScheduler
-///
-/// Beschreibung des Projekts
-/// <br>Mit "<br>" kann bei der HTML-Dokumentation eine neue Zeile erzeugt werden
-///
-/// Mit dem <img-Schlüsselwort können eigene Bilder hinzugefügt werden
-/// <img src="../application_screenshot.jpg" alt="Screenshot">
-///
-/// @author Max Mustermann
-///
-
-
-/*! \page page1 A documentation page
- \tableofcontents
- Leading text.
- \section sec An example section
- This page contains the subsections \ref subsection1 and \ref subsection2.
- For more info see page \ref page2.
- \subsection subsection1 The first subsection
- Text. 
- \subsection subsection2 The second subsection
- More text.
- */
-/*! \page page2 Another page
- Even more info.
- */
-
-
-/*
- * @mainpage Overview
- *
- * Beschreibung des Projekts
- * <br>Mit "<br>" kann bei der HTML-Dokumentation eine neue Zeile erzeugt werden
- *
- * Mit dem <img-Schlüsselwort können eigene Bilder hinzugefügt werden
- * <img src="../application_screenshot.jpg" alt="Screenshot">
- *
- * @author Max Mustermann
- */
-
-
-/**
- *  A test class. A more elaborate class description.
- */
-
-
-///
-/// @file		CCDevice.h
-/// @brief		Header
-/// @details	<#details#>
-/// @n
-/// @n @b		Project motorController
-/// @n @a		Developed with [embedXcode+](http://embedXcode.weebly.com)
-///
-/// @author		Little Abakus
-/// @author		Little Abakus
-///
-/// @date		17.09.14 03:23
-/// @version	<#version#>
-///
-/// @copyright	(c) Little Abakus, 2014
-/// @copyright	<#license#>
-///
-/// @see		ReadMe.txt for references
-///
-
-
-#ifndef DEVICESCHEDULER
-#define DEVICESCHEDULER 1
+#ifndef __deviceScheduler__deviceScheduler__
+#define __deviceScheduler__deviceScheduler__
 
 
 
@@ -211,8 +140,7 @@ enum approximationMode {
 #define TABLEDRIVE_NAME                     "tableDrive"
 #define TABLEDRIVE_PIN                      40
 #define TABLEDRIVE_READY_PIN                41
-#define TABLEDRIVE_ON                       HIGH
-#define TABLEDRIVE_OFF                      LOW
+#define TABLEDRIVE_ACTIV                    HIGH
 
 
 #define SOLENOID_VACUUM_NAME                "vacuumSolenoid"
@@ -346,5 +274,7 @@ enum approximationMode {
 
 #define NO_START_DELAY                      0
 
-#endif
+
+
+#endif /* defined(__deviceScheduler__deviceScheduler__) */
 

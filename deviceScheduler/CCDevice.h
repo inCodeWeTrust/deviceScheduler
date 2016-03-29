@@ -35,7 +35,6 @@
 /// holds all parameters, that are common for all devices,
 /// including the array of tasks to be executed by this device
 ///
-/// @page page1 some notes from the base class
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -46,7 +45,6 @@
 class CCDevice {
     
 public:
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
     /// Device parameter:
     /// Value, set by the owner of the device (CCDeviceScheduler) to be recognized by him.
@@ -255,7 +253,6 @@ public:
     
     virtual ~CCDevice();
 
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
     /// Function sets up device-specific default values for velocity, acceleration and deceleration.
@@ -268,7 +265,7 @@ public:
     /// @see deceleration
     void defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
     
-    /// Function declares a task to be executed and returns it's index.
+    /// Function declares a task to be executed and returns its index.
     /// It calls [addTaskWithStartDelay(...)](@ref addTaskWithStartDelay) with startDelay = 0.
     /// @param target the current task's target.
     /// @param velocity the current task's velocity.
@@ -278,7 +275,7 @@ public:
     unsigned char addTask(float target, float velocity, float acceleration, float deceleration);
     
     
-    /// Function declares a task to be executed and returns it's index.
+    /// Function declares a task to be executed and returns its index.
     /// It creates an instance of [CCTask](@ref task) and puts it into the task array of the device.
     /// @param target the current task's target.
     /// @param startDelay the current task's startDelay.
@@ -293,7 +290,7 @@ public:
     ///
     void deleteTasks();
     
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
     
     virtual void attachDevice() = 0;
     virtual void detachDevice() = 0;
@@ -311,7 +308,7 @@ public:
     
 private:
     
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 
     
 };

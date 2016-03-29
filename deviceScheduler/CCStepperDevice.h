@@ -29,15 +29,13 @@
 ///
 /// @brief Device class for stepper motor devices
 ///
-/// @ingroup devices
-/// @{
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 class CCStepperDevice : public CCDevice {
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 
     signed long          stepsToGo;
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
@@ -98,12 +96,10 @@ public:
     void stopTask();
     void finishTask();
     
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 
     
 };
-/// @}
-///
 
 
 #endif /* defined(__deviceScheduler__CCStepperDevice__) */

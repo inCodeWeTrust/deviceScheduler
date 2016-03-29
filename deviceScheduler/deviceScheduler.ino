@@ -109,9 +109,8 @@ void loop() {
                                                        STEPPER_STOCK_STEPS_PER_ROTATION);
     unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME, STEPPER_CAT_STEP_PIN, STEPPER_CAT_DIR_PIN, STEPPER_CAT_ENABLE_PIN, STEPPER_CAT_HIGHEST_STEPPINGMODE, STEPPER_CAT_STEPMODECODES, STEPPER_CAT_MICROSTEPPINS, STEPPER_CAT_STEPS_PER_ROTATION);
     freeRam();
-    unsigned char tableDrive = scheduler->addSwitch(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_OFF);
-    //    unsigned char vacuumSolenoid = scheduler->addSolenoid(SOLENOID_VACUUM_NAME, SOLENOID_VACUUM_PIN);
-    //    freeRam();
+    unsigned char tableDrive = scheduler->addDcController(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_ACTIV);
+    freeRam();
     
     
     scheduler->getAllDevices();
@@ -188,7 +187,7 @@ void loop() {
             scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
             
             
-            unsigned char turnTheTable = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ON, 0, 0, 0);
+            unsigned char turnTheTable = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ACTIV, 0, 0, 0);
             scheduler->device[tableDrive]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
             
             
@@ -293,7 +292,7 @@ void loop() {
             }
             
             
-            unsigned char turnTheTableMan = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ON, 0, 0, 0);
+            unsigned char turnTheTableMan = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ACTIV, 0, 0, 0);
             scheduler->device[tableDrive]->task[turnTheTableMan]->startByDate(100);
             
             //  lower head to record surface: start when reached start position of start groove
@@ -488,7 +487,7 @@ void freeRam() {
 
 //        unsigned char switchTableOn = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ON, 0, 0, 0);
 //        scheduler->device[tableDrive]->setStartAfterCompletion(switchTableOn, headLeftServo, liftHeadFirstLeft);
-//        unsigned char switchTableOff = scheduler->device[tableDrive]->addTask(TABLEDRIVE_OFF, 0, 0, 0);
+//        unsigned char switchTableOff = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ACTIV, 0, 0, 0);
 //        scheduler->device[tableDrive]->startByDate(switchTableOff, 10000);
 
 //        unsigned char riseHead = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);

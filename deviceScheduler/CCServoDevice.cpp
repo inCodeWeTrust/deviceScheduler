@@ -107,7 +107,7 @@ void CCServoDevice::prepareNextTask() {
     stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
     
     stopping = task[taskPointer]->stopping;
-    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
+    
     
     sensor = task[taskPointer]->sensor;
     initiatePerformanceValue = task[taskPointer]->initiatePerformanceValue;

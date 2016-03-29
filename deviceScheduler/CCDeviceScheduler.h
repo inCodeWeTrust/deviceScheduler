@@ -18,7 +18,7 @@
 #include "CCDevice.h"
 #include "CCServoDevice.h"
 #include "CCStepperDevice.h"
-#include "CCSwitchDevice.h"
+#include "CCDcControllerDevice.h"
 
 
 
@@ -34,14 +34,6 @@
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///
-/// @file CCDeviceScheduler.h
-///
-/// @brief Eine kurze Beschreibung der Datei - was enthält sie, wozu ist sie da, ...
-///
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCDeviceScheduler
@@ -55,7 +47,7 @@
 class CCDeviceScheduler {
     
 public:
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 
     /// Scheduler parameter:
     /// Value holds the number of devices managed by him.
@@ -68,7 +60,7 @@ public:
     CCDeviceScheduler();
     ~CCDeviceScheduler();
     
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 
     /// Function adds a servo device to the device array and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -100,10 +92,12 @@ public:
     /// @param switching_pin the pin number of the device's controll pin.
     /// @param defaultState the default state of the device.
     /// @return the device index.
-    unsigned char addSwitch(String deviceName, unsigned char switching_pin, boolean defaultState);
+    unsigned char addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
 
-//    unsigned char addSolenoid(String deviceName, unsigned char solenoid_pin);
+  
     
+
+
     /// Function lists all registered devices.
     /// A list with all devices and bare informations are presented.
     void getAllDevices();
@@ -126,7 +120,7 @@ public:
     
     void run();
     
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 
     
 };

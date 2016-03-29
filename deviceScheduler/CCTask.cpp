@@ -52,10 +52,6 @@ void CCTask::startByButton(unsigned char startButton, boolean startButtonState) 
     this->startButton = startButton;
     this->startButtonState = startButtonState;
 }
-void CCTask::startAfterMy(unsigned char startTriggerTask) {
-    this->startEvent = FOLLOW;
-    this->startTriggerTask = startTriggerTask;
-}
 void CCTask::startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask) {
     this->startEvent = FOLLOW;
     this->startTriggerDevice = startTriggerDevice;

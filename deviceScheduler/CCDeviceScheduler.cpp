@@ -36,9 +36,9 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
 }
 
-unsigned char CCDeviceScheduler::addSwitch(String deviceName, unsigned char switching_pin, boolean defaultState) {
+unsigned char CCDeviceScheduler::addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) {
     
-    device[countOfDevices] = new CCSwitchDevice(countOfDevices, deviceName, switching_pin, defaultState);
+    device[countOfDevices] = new CCDcControllerDevice(countOfDevices, deviceName, switching_pin, switchingPin_activ);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: provided "));
@@ -502,7 +502,7 @@ void CCDeviceScheduler::run() {
                                 break;
                                 
                             case FOLLOW:                                                                      //  start the next move when a device reached a certain
-                                if (device[s]->taskPointer > device[s]->startTriggerTask) {        //  is the trigger servo doing the trigger move?
+                                if (device[device[s]->startTriggerDevice]->taskPointer > device[s]->startTriggerTask) {        //  is the trigger servo doing the trigger move?
                                     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                                         Serial.print(taskTime);
                                         Serial.print(F(": "));
@@ -523,7 +523,7 @@ void CCDeviceScheduler::run() {
                                 break;
                                 
                             case POSITION:                                                                      //  start the next move when a device reached a certain
-                                if (device[s]->startTriggerTask <= device[device[s]->startTriggerDevice]->taskPointer) {        //  is the trigger servo doing the trigger move?
+                                if (device[device[s]->startTriggerDevice]->taskPointer >= device[s]->startTriggerTask) {        //  is the trigger servo doing the trigger move?
                                     
                                     if ((device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition <= device[s]->startTriggerPosition) || (!device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition >= device[s]->startTriggerPosition)) {
                                         //  did the trigger servo pass the trigger position?

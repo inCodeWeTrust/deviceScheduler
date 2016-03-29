@@ -1,0 +1,4 @@
+<map id="CCDeviceScheduler" name="CCDeviceScheduler">
+<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices " alt="" coords="35,96,117,123"/>
+<area shape="rect" id="node3" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="41,5,111,32"/>
+</map>
