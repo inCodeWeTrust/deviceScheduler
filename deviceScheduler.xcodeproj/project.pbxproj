@@ -657,7 +657,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = whatNeededWhen.txt; path = ../whatNeededWhen.txt; sourceTree = "<group>"; };
 		A442495B1C9AD1E600C3E457 /* CCDcControllerDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDcControllerDevice.cpp; sourceTree = "<group>"; };
 		A442495C1C9AD1E600C3E457 /* CCDcControllerDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDcControllerDevice.h; sourceTree = "<group>"; };
 		A45F72191B1C70E400B5B7E0 /* Index */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Index; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1522,7 +1521,6 @@
 				A45F721C1B1C70E400B5B7E0 /* main.cpp */,
 				A45F721E1B1C70E400B5B7E0 /* Makefile */,
 				A45F72421B1C70E400B5B7E0 /* ReadMe.txt */,
-				40C4A9BD1B38B7A300EA9067 /* whatNeededWhen.txt */,
 				A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */,
 				A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */,
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
