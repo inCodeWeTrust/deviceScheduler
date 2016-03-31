@@ -56,6 +56,7 @@ void CCDcControllerDevice::disableDevice() {}
 void CCDcControllerDevice::attachDevice() {
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, !switchingPin_activ);
+    isActiv = false;
     
     if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_BASICOUTPUT) {
         Serial.print(F("[CCDcControllerDevice]: "));
@@ -71,6 +72,17 @@ void CCDcControllerDevice::reviewValues() {}
 
 void CCDcControllerDevice::prepareNextTask() {
     
+    
+    if (state == MOVING) {
+        // *** current ratio ***
+        currentRatio = currentPosition;
+        t0 += switchOnTime;
+        switchOffTime -= switchOnTime;
+        switchOnTime = 0;
+    } else {
+        currentRatio = 0;
+    }
+
     target = task[taskPointer]->target;
     velocity = task[taskPointer]->velocity;
     acceleration = task[taskPointer]->acceleration;
@@ -103,7 +115,7 @@ void CCDcControllerDevice::prepareNextTask() {
     
     switchingInterval = 1000uL / velocity;
     
-    onDuration_max = target * switchingInterval;
+    targetOnDuration = target * switchingInterval;
     
     timeForAcceleration = acceleration;
     timeForDeceleration = deceleration;
@@ -111,16 +123,6 @@ void CCDcControllerDevice::prepareNextTask() {
     
     switchOnTime = 0;
     
-    if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_BASICOUTPUT) {
-Serial.print(F("[CCDcControllerDevice]: "));
-    Serial.print(deviceName);
-    Serial.print(F(": my start is"));
-    Serial.print((int)startEvent);
-    Serial.print(F(": my start is"));
-    Serial.print((int)startEvent);
-    Serial.print(F(": my stop is"));
-    Serial.println((int)stopEvent);
-    }
     if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_CALCULATIONDEBUG) {
         Serial.print(F("[CCDcControllerDevice]: "));
         Serial.print(deviceName);
@@ -132,14 +134,14 @@ Serial.print(F("[CCDcControllerDevice]: "));
         Serial.print(velocity);
         Serial.print(F(", switchingInterval (ms): "));
         Serial.print(switchingInterval);
-        Serial.print(F(", onDuration_max (ms): "));
-        Serial.print(onDuration_max);
+        Serial.print(F(", targetOnDuration (ms): "));
+        Serial.print(targetOnDuration);
         Serial.print(F(", acceleration: "));
         Serial.print(acceleration);
         Serial.print(F(", deceleration: "));
         Serial.println(deceleration);
     }
-
+    
     
 }
 
@@ -155,8 +157,8 @@ void CCDcControllerDevice::startTask() {
         t0 = millis();
         
         switchOnTime = 0;
-        switchOffTime = switchOnTime + onDuration_max;
-        isActiv = false;
+        switchOffTime = switchOnTime + targetOnDuration;
+        currentRatio = 0;
         
         if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_BASICOUTPUT) {
             Serial.print(F("[CCDcControllerDevice]: "));
@@ -169,11 +171,12 @@ void CCDcControllerDevice::startTask() {
 }
 
 void CCDcControllerDevice::initiateStop() {
-timeForAccAndConstSpeed = millis() - t0;
+    timeForAccAndConstSpeed = millis() - t0;
 }
 
 void CCDcControllerDevice::stopTask() {
     digitalWrite(switching_pin, !switchingPin_activ);
+    isActiv = false;
     state = MOVE_DONE;
     
     
@@ -205,37 +208,47 @@ void CCDcControllerDevice::operateTask() {
     
     if (elapsedTime >= switchOnTime) {
         digitalWrite(switching_pin, switchingPin_activ);
-        
+        isActiv = true;
         if (elapsedTime < timeForAcceleration) {
-            switchOffTime = switchOnTime + onDuration_max * elapsedTime / timeForAcceleration;
+            currentPosition = currentRatio + (target - currentRatio) * elapsedTime / (float)timeForAcceleration;
+            switchOffTime = switchOnTime + switchingInterval * currentPosition;
             switchOnTime += switchingInterval;
             if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_MOVEMENTDEBUG) {
                 Serial.print(elapsedTime);
                 Serial.print(F(": switched on: accellerating, switch off at "));
                 Serial.print(switchOffTime);
+                Serial.print(F(", duty cycle: "));
+                Serial.print(currentPosition);
                 Serial.print(F(", next cycle at "));
                 Serial.println(switchOnTime);
             }
-                        return;
+            return;
         } else if (elapsedTime < timeForAccAndConstSpeed) {
-            switchOffTime = switchOnTime + onDuration_max;
+            currentPosition = target;
+            switchOffTime = switchOnTime + targetOnDuration;
             switchOnTime += switchingInterval;
             if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_MOVEMENTDEBUG) {
                 Serial.print(elapsedTime);
                 Serial.print(F(": switched on, switch off at "));
                 Serial.print(switchOffTime);
+                Serial.print(F(", duty cycle: "));
+                Serial.print(currentPosition);
                 Serial.print(F(", next cycle at "));
                 Serial.println(switchOnTime);
             }
             return;
         } else {
             elapsedTime -= timeForAccAndConstSpeed;
-            if (elapsedTime < timeForDeceleration) {            switchOffTime = switchOnTime + onDuration_max * (1 - elapsedTime / timeForDeceleration);
-            switchOnTime += switchingInterval;
+            if (elapsedTime < timeForDeceleration) {
+                currentPosition = target * (1 - elapsedTime / (float)timeForDeceleration);
+                switchOffTime = switchOnTime + switchingInterval * currentPosition;
+                switchOnTime += switchingInterval;
                 if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_MOVEMENTDEBUG) {
                     Serial.print(elapsedTime);
                     Serial.print(F(": switched on: decellerating, switch off at "));
                     Serial.print(switchOffTime);
+                    Serial.print(F(", duty cycle: "));
+                    Serial.print(currentPosition);
                     Serial.print(F(", next cycle at "));
                     Serial.println(switchOnTime);
                 }
@@ -246,11 +259,14 @@ void CCDcControllerDevice::operateTask() {
         }
         
     } else if (elapsedTime > switchOffTime) {
+        if (isActiv == true) {
             digitalWrite(switching_pin, !switchingPin_activ);
-        if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_MOVEMENTDEBUG) {
-            Serial.print(elapsedTime);
-            Serial.print(F(": switched off at "));
-            Serial.println(switchOffTime);
+            isActiv = false;
+            if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_MOVEMENTDEBUG) {
+                Serial.print(elapsedTime);
+                Serial.print(F(": switched off at "));
+                Serial.println(switchOffTime);
+            }
         }
     }
 }

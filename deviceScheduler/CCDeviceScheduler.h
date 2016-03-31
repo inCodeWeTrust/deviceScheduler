@@ -120,7 +120,9 @@ public:
     
     void run();
     
-
+private:
+    void handleStartEvent(unsigned long taskTime, unsigned char device, event startEvent);
+    void handleStopEvent(unsigned long taskTime, unsigned char device, event stopEvent);
 
     
 };

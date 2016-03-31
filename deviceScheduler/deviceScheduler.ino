@@ -152,6 +152,35 @@ void loop() {
         
         
         
+            
+            unsigned char switchLampOn = scheduler->device[tableDrive]->addTask(0.5, 4, 4000, 4000);
+            scheduler->device[tableDrive]->task[switchLampOn]->startByDate(100);
+            scheduler->device[tableDrive]->task[switchLampOn]->stopByTimeout(8000, STOP_NORMAL);
+        
+        unsigned char lampOn = scheduler->device[tableDrive]->addTask(0.5, 4, 4000, 4000);
+        scheduler->device[tableDrive]->task[lampOn]->startAfterCompletionOf(tableDrive, switchLampOn);
+        unsigned char powerUp = scheduler->device[tableDrive]->addTask(0.8, 4, 1800, 1800);
+            scheduler->device[tableDrive]->task[lampOn]->switchToNextTaskByButton(CAT_PARK_BUTTON, HIGH);
+            
+            scheduler->device[tableDrive]->task[powerUp]->stopByTimeout(28000, STOP_NORMAL);
+
+            
+            scheduler->getAllTasks();
+            scheduler->reviewTasks();
+            scheduler->getAllTasks();
+        for (int i = 0; i < 10; i++) {
+            
+            scheduler->run();
+
+            delay(4000);
+        }
+        
+            scheduler->deleteAllTasks();
+            
+            Serial.println("...................................... done ......................................");
+            
+    
+        
         Serial.println("................................. initialisation .................................");
         
         

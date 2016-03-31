@@ -22,7 +22,7 @@
 #define CCDcControllerDevice_MOVEMENTDEBUG       0x08
 
 //static unsigned char CCDcControllerDevice_VERBOSE = 0;
-#define CCDcControllerDevice_VERBOSE            0x0F
+#define CCDcControllerDevice_VERBOSE            0x0f
 //#define CCDcControllerDevice_VERBOSE CCDcControllerDevice_BASICOUTPUT | CCDcControllerDevice_MEMORYDEBUG | CCDcControllerDevice_CALCULATIONDEBUG
 
 
@@ -42,9 +42,10 @@ class CCDcControllerDevice : public CCDevice {
     
     unsigned long        t0;
     signed long          elapsedTime, timeForAcceleration, timeForDeceleration, timeForAccAndConstSpeed;
-    unsigned int         switchingInterval, onDuration, onDuration_max;
-    signed long        switchOnTime, switchOffTime;
+    unsigned int         switchingInterval, targetOnDuration;
+    signed long          switchOnTime, switchOffTime;
     boolean              isActiv;
+    float                currentRatio;
     
     
     

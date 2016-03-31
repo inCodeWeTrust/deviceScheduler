@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#10;set serialMonitorWindow to first window of process &quot;Arduino&quot; whose name begins with &quot;/dev/tty.usbmodem&quot;&#13;click button 1 of serialMonitorWindow&#13;end try&#13;end tell&#10;&apos;">
+               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#10;set serialMonitorWindow to first window of process &quot;Arduino&quot; whose name begins with &quot;/dev/tty.usbmodem&quot;&#13;click button 1 of serialMonitorWindow&#10;on error&#10;display alert &quot;cant deactivate Arduinos Serial Monitor!&quot;&#13;end try&#13;end tell&#10;&apos;">
             </ActionContent>
          </ExecutionAction>
       </PreActions>

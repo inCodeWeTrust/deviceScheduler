@@ -305,114 +305,26 @@ void CCDeviceScheduler::run() {
                     switch (device[s]->stopEvent) {                                                      // is there a stopEvent defined?
                         case DATE:                                                                              // yes, device shall stop by date
                             if (taskTime > device[s]->startTime + device[s]->startDelay + device[s]->timeout) { // it's time to stop!
-                                if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                    Serial.print(taskTime);
-                                    Serial.print(F(": "));
-                                    Serial.print(device[s]->deviceName);
-                                    Serial.print(F(" stop/switch "));
-                                    Serial.println((int)device[s]->taskPointer);
-                                }
-                                
-                                if (device[s]->switchTaskPromptly) {                                              // switch immediately to next move?
-                                    device[s]->taskPointer++;                                                   // go for next job! (if existing)
-                                    if (device[s]->taskPointer < device[s]->countOfTasks) {                     //  all tasks done? no!
-                                        device[s]->prepareNextTask();
-                                    } else {
-                                        device[s]->stopTask();
-                                    }
-                                } else {                                                                          // just stop. but how?
-                                    if (device[s]->stopping == STOP_IMMEDIATELY) {
-                                        device[s]->stopTask();
-                                    } else {
-                                        device[s]->initiateStop();
-                                        device[s]->stopEvent = NONE;
-                                    }
-                                }
+                                handleStopEvent(taskTime, s, device[s]->stopEvent);
                             }
                             break;
                             
                         case BUTTON:                                                                            // device shall stop by button
                             if (digitalRead(device[s]->stopButton) == device[s]->stopButtonState) {             // it's time to stop!
-                                if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                    Serial.print(taskTime);
-                                    Serial.print(F(": "));
-                                    Serial.print(device[s]->deviceName);
-                                    Serial.print(F(" stop/switch "));
-                                    Serial.println((int)device[s]->taskPointer);
-                                }
-                                
-                                if (device[s]->switchTaskPromptly) {                                              // switch immediately to next move?
-                                    device[s]->taskPointer++;                                                   // go for next job! (if existing)
-                                    if (device[s]->taskPointer < device[s]->countOfTasks) {                     //  all tasks done? no!
-                                        device[s]->prepareNextTask();
-                                    } else {
-                                        device[s]->stopTask();
-                                    }
-                                } else {                                                                          // just stop. but how?
-                                    if (device[s]->stopping == STOP_IMMEDIATELY) {
-                                        device[s]->stopTask();
-                                    } else {
-                                        device[s]->initiateStop();
-                                        device[s]->stopEvent = NONE;
-                                    }
-                                }
+                                handleStopEvent(taskTime, s, device[s]->stopEvent);
                             }
                             break;
                             
                         case FOLLOW:                                                                          // device shall stop when a device reached a certain position
                             if (device[device[s]->stopTriggerDevice]->taskPointer > device[s]->stopTriggerTask) {          //  trigger device on trigger move?
-                                if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                    Serial.print(taskTime);
-                                    Serial.print(F(": "));
-                                    Serial.print(device[s]->deviceName);
-                                    Serial.print(F(" stop/switch "));
-                                    Serial.println((int)device[s]->taskPointer);
-                                }
-                                
-                                if (device[s]->switchTaskPromptly) {                                          // switch immediately to next move?
-                                    device[s]->taskPointer++;                                               // go for next job! (if existing)
-                                    if (device[s]->taskPointer < device[s]->countOfTasks) {                 // all tasks done? no!
-                                        device[s]->prepareNextTask();
-                                    } else {
-                                        device[s]->stopTask();
-                                    }
-                                } else {                                                                      // just stop. but how?
-                                    if (device[s]->stopping == STOP_IMMEDIATELY) {
-                                        device[s]->stopTask();
-                                    } else {
-                                        device[s]->initiateStop();
-                                        device[s]->stopEvent = NONE;
-                                    }
-                                }
+                                handleStopEvent(taskTime, s, device[s]->stopEvent);
                             }
                             break;
                             
                         case POSITION:                                                                          // device shall stop when a device reached a certain position
                             if (device[s]->stopTriggerTask == device[device[s]->stopTriggerDevice]->taskPointer) {          //  trigger device on trigger move?
                                 if ((device[device[s]->stopTriggerDevice]->directionDown && device[device[s]->stopTriggerDevice]->currentPosition <= device[s]->stopTriggerPosition) || (!device[device[s]->stopTriggerDevice]->directionDown && device[device[s]->stopTriggerDevice]->currentPosition >= device[s]->stopTriggerPosition)) { // trigger position reached?
-                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                        Serial.print(taskTime);
-                                        Serial.print(F(": "));
-                                        Serial.print(device[s]->deviceName);
-                                        Serial.print(F(" stop/switch "));
-                                        Serial.println((int)device[s]->taskPointer);
-                                    }
-                                    
-                                    if (device[s]->switchTaskPromptly) {                                          // switch immediately to next move?
-                                        device[s]->taskPointer++;                                               // go for next job! (if existing)
-                                        if (device[s]->taskPointer < device[s]->countOfTasks) {                 // all tasks done? no!
-                                            device[s]->prepareNextTask();
-                                        } else {
-                                            device[s]->stopTask();
-                                        }
-                                    } else {                                                                      // just stop. but how?
-                                        if (device[s]->stopping == STOP_IMMEDIATELY) {
-                                            device[s]->stopTask();
-                                        } else {
-                                            device[s]->initiateStop();
-                                            device[s]->stopEvent = NONE;
-                                        }
-                                    }
+                                    handleStopEvent(taskTime, s, device[s]->stopEvent);
                                 }
                             }
                             break;
@@ -435,6 +347,7 @@ void CCDeviceScheduler::run() {
                         device[s]->taskPointer++;                                                               // go for next job!
                         
                         if (device[s]->taskPointer < device[s]->countOfTasks) {                                 //  all tasks done? no!
+                            device[s]->state = PENDING_MOVES;
                             device[s]->prepareNextTask();
                             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                                 Serial.print(taskTime);
@@ -463,62 +376,19 @@ void CCDeviceScheduler::run() {
                         switch (device[s]->startEvent) {                                                        //  what kind of startEvent is given?
                             case DATE:                                                                          //  start the next move by date
                                 if (taskTime > device[s]->startTime) {
-                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                        Serial.print(taskTime);
-                                        Serial.print(F(": "));
-                                        Serial.print(device[s]->deviceName);
-                                        Serial.print(F(" start by Date Task "));
-                                        Serial.println((int)device[s]->taskPointer);
-                                    }
-                                    if (device[s]->startDelay > 0) {                                            // startDelay given?
-                                        device[s]->startTime += device[s]->startDelay;
-                                        device[s]->startDelay = 0;
-                                    }
-                                    else {
-                                        device[s]->startTask();
-                                    }
+                                    handleStartEvent(taskTime, s, device[s]->startEvent);
                                 }
                                 break;
                                 
                             case BUTTON:                                                                        //  start the next move by button
                                 if (digitalRead(device[s]->startButton) == device[s]->startButtonState) {
-                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                        Serial.print(taskTime);
-                                        Serial.print(F(": "));
-                                        Serial.print(device[s]->deviceName);
-                                        Serial.print(F(" start by Button Task "));
-                                        Serial.println((int)device[s]->taskPointer);
-                                    }
-                                    if (device[s]->startDelay > 0) {                                            // startDelay given?
-                                        device[s]->startTime = taskTime + device[s]->startDelay;                // so start the move by date
-                                        device[s]->startDelay = 0;
-                                        device[s]->startEvent = DATE;
-                                    }
-                                    else {
-                                        device[s]->startTime = taskTime;
-                                        device[s]->startTask();
-                                    }
+                                    handleStartEvent(taskTime, s, device[s]->startEvent);
                                 }
                                 break;
                                 
                             case FOLLOW:                                                                      //  start the next move when a device reached a certain
                                 if (device[device[s]->startTriggerDevice]->taskPointer > device[s]->startTriggerTask) {        //  is the trigger servo doing the trigger move?
-                                    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                        Serial.print(taskTime);
-                                        Serial.print(F(": "));
-                                        Serial.print(device[s]->deviceName);
-                                        Serial.print(F(" start by Completion Task "));
-                                        Serial.println((int)device[s]->taskPointer);
-                                    }
-                                    
-                                    if (device[s]->startDelay > 0) {                                        // startDelay given?
-                                        device[s]->startTime = taskTime + device[s]->startDelay;            // so start the move by date
-                                        device[s]->startDelay = 0;
-                                        device[s]->startEvent = DATE;
-                                    } else {
-                                        device[s]->startTime = taskTime;
-                                        device[s]->startTask();
-                                    }
+                                    handleStartEvent(taskTime, s, device[s]->startEvent);
                                 }
                                 break;
                                 
@@ -527,23 +397,7 @@ void CCDeviceScheduler::run() {
                                     
                                     if ((device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition <= device[s]->startTriggerPosition) || (!device[device[s]->startTriggerDevice]->directionDown && device[device[s]->startTriggerDevice]->currentPosition >= device[s]->startTriggerPosition)) {
                                         //  did the trigger servo pass the trigger position?
-                                        if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                                            Serial.print(taskTime);
-                                            Serial.print(F(": "));
-                                            Serial.print(device[s]->deviceName);
-                                            Serial.print(F(" start by Position Task "));
-                                            Serial.println((int)device[s]->taskPointer);
-                                        }
-                                        
-                                        if (device[s]->startDelay > 0) {                                        // startDelay given?
-                                            device[s]->startTime = taskTime + device[s]->startDelay;            // so start the move by date
-                                            device[s]->startDelay = 0;
-                                            device[s]->startEvent = DATE;
-                                        }
-                                        else {
-                                            device[s]->startTime = taskTime;
-                                            device[s]->startTask();
-                                        }
+                                        handleStartEvent(taskTime, s, device[s]->startEvent);
                                     }
                                 }
                         }
@@ -583,6 +437,59 @@ void CCDeviceScheduler::run() {
     
 }
 
+
+void CCDeviceScheduler::handleStartEvent(unsigned long taskTime, unsigned char s, event startEvent) {
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+        Serial.print(taskTime);
+        Serial.print(F(": "));
+        Serial.print(device[s]->deviceName);
+        Serial.print(F(" start task "));
+        Serial.print((int)device[s]->taskPointer);
+        Serial.print(" by ");
+        Serial.println(getNameOfTaskEvent(startEvent));
+    }
+    
+    if (device[s]->startDelay > 0) {                                        // startDelay given?
+        if (startEvent == DATE) {
+            device[s]->startTime += device[s]->startDelay;
+        } else {
+            device[s]->startTime = taskTime + device[s]->startDelay;            // so start the move by date
+            device[s]->startEvent = DATE;
+        }
+        device[s]->startDelay = 0;
+    }
+    else {
+        device[s]->startTime = taskTime;
+        device[s]->startTask();
+    }
+}
+void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, unsigned char s, event stopEvent) {
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+        Serial.print(taskTime);
+        Serial.print(F(": "));
+        Serial.print(device[s]->deviceName);
+        Serial.print(F(" stop task "));
+        Serial.print((int)device[s]->taskPointer);
+        Serial.print(" by ");
+        Serial.println(getNameOfTaskEvent(stopEvent));
+    }
+    
+    if (device[s]->switchTaskPromptly) {                                              // switch immediately to next move?
+        device[s]->taskPointer++;                                                   // go for next job! (if existing)
+        if (device[s]->taskPointer < device[s]->countOfTasks) {                     //  all tasks done? no!
+            device[s]->prepareNextTask();
+        } else {
+            device[s]->stopTask();
+        }
+    } else {                                                                          // just stop. but how?
+        if (device[s]->stopping == STOP_IMMEDIATELY) {
+            device[s]->stopTask();
+        } else {
+            device[s]->initiateStop();
+            device[s]->stopEvent = NONE;
+        }
+    }
+}
 
 String getNameOfDeviceType(deviceType t) {
     if (t == SERVODEVICE) return "Servo";
