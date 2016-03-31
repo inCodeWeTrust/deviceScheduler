@@ -11,10 +11,6 @@
 #include "CCDeviceScheduler.h"
 
 
-String getNameOfDeviceType(deviceType t);
-String getNameOfTaskEvent(event e);
-String getNameOfState(deviceState s);
-String formatNumber(long theData, unsigned char len);
 
 
 
@@ -182,58 +178,68 @@ void CCDeviceScheduler::getTasksForDevice(unsigned char theDevice) {
         Serial.print(device[theDevice]->task[i]->startDelay);
         Serial.print(F(", started by "));
         Serial.print(getNameOfTaskEvent(device[theDevice]->task[i]->startEvent));
-        if (device[theDevice]->task[i]->startEvent == DATE) {
-            Serial.print(F(", startTime: "));
-            Serial.print(device[theDevice]->task[i]->startTime);
-        }
-        if (device[theDevice]->task[i]->startEvent == BUTTON) {
-            Serial.print(F(", startButton: "));
-            Serial.print(device[theDevice]->task[i]->startButton);
-            Serial.print(F(", at state: "));
-            Serial.print(device[theDevice]->task[i]->startButtonState);
-        }
-        if (device[theDevice]->task[i]->startEvent == FOLLOW) {
-            Serial.print(F(", of: "));
-            Serial.print(device[device[theDevice]->task[i]->startTriggerDevice]->deviceName);
-            Serial.print(F(", after move: "));
-            Serial.print(device[theDevice]->task[i]->startTriggerTask);
-        }
-        if (device[theDevice]->task[i]->startEvent == POSITION) {
-            Serial.print(F(", of: "));
-            Serial.print(device[device[theDevice]->task[i]->startTriggerDevice]->deviceName);
-            Serial.print(F(", on move: "));
-            Serial.print(device[theDevice]->task[i]->startTriggerTask);
-            Serial.print(F(", at position: "));
-            Serial.print(device[theDevice]->task[i]->startTriggerPosition);
+        switch (device[theDevice]->task[i]->startEvent) {
+            case DATE:
+                Serial.print(F(", startTime: "));
+                Serial.print(device[theDevice]->task[i]->startTime);
+                break;
+            case BUTTON:
+                Serial.print(F(", startButton: "));
+                Serial.print(device[theDevice]->task[i]->startButton);
+                Serial.print(F(", at state: "));
+                Serial.print(device[theDevice]->task[i]->startButtonState);
+                break;
+            case FOLLOW:
+                Serial.print(F(", of: "));
+                Serial.print(device[device[theDevice]->task[i]->startTriggerDevice]->deviceName);
+                Serial.print(F(", after move: "));
+                Serial.print(device[theDevice]->task[i]->startTriggerTask);
+                break;
+            case POSITION:
+                Serial.print(F(", of: "));
+                Serial.print(device[device[theDevice]->task[i]->startTriggerDevice]->deviceName);
+                Serial.print(F(", on move: "));
+                Serial.print(device[theDevice]->task[i]->startTriggerTask);
+                Serial.print(F(", at position: "));
+                Serial.print(device[theDevice]->task[i]->startTriggerPosition);
+                break;
         }
         Serial.print(F(", terminated by: "));
         Serial.print(getNameOfTaskEvent(device[theDevice]->task[i]->stopEvent));
-        if ((device[theDevice]->task[i]->stopEvent) == DATE) {
-            Serial.print(F(", timeout: "));
-            Serial.print(device[theDevice]->task[i]->timeout);
-        }
-        if ((device[theDevice]->task[i]->stopEvent) == BUTTON) {
-            Serial.print(F(", stopButton: "));
-            Serial.print(device[theDevice]->task[i]->stopButton);
-            Serial.print(F(", at state: "));
-            Serial.print(device[theDevice]->task[i]->stopButtonState);
-        }
-        if (device[theDevice]->task[i]->stopEvent == FOLLOW) {
-            Serial.print(F(", of: "));
-            Serial.print(device[device[theDevice]->task[i]->stopTriggerDevice]->deviceName);
-            Serial.print(F(", after move: "));
-            Serial.print(device[theDevice]->task[i]->stopTriggerTask);
-        }
-        if ((device[theDevice]->task[i]->stopEvent) == POSITION) {
-            Serial.print(F(", of: "));
-            Serial.print(device[device[theDevice]->task[i]->stopTriggerDevice]->deviceName);
-            Serial.print(F(", on move: "));
-            Serial.print(device[theDevice]->task[i]->stopTriggerTask);
-            Serial.print(F(", at position: "));
-            Serial.print(device[theDevice]->task[i]->stopTriggerPosition);
-        }
-        if (device[theDevice]->task[i]->switchTaskPromptly) {
-            Serial.print(F(" --> switch promptly to next move"));
+        if ((device[theDevice]->task[i]->stopEvent) > 0) {
+            Serial.print(" stopping: ");
+            Serial.println(getNameOfStoppingMode(device[theDevice]->task[i]->stopping));
+
+            switch (device[theDevice]->task[i]->stopEvent) {
+                case DATE:
+                    Serial.print(F(", timeout: "));
+                    Serial.print(device[theDevice]->task[i]->timeout);
+                    break;
+                case BUTTON:
+                    Serial.print(F(", stopButton: "));
+                    Serial.print(device[theDevice]->task[i]->stopButton);
+                    Serial.print(F(", at state: "));
+                    Serial.print(device[theDevice]->task[i]->stopButtonState);
+                    break;
+                case FOLLOW:
+                    Serial.print(F(", of: "));
+                    Serial.print(device[device[theDevice]->task[i]->stopTriggerDevice]->deviceName);
+                    Serial.print(F(", after move: "));
+                    Serial.print(device[theDevice]->task[i]->stopTriggerTask);
+                    break;
+                case POSITION:
+                    Serial.print(F(", of: "));
+                    Serial.print(device[device[theDevice]->task[i]->stopTriggerDevice]->deviceName);
+                    Serial.print(F(", on move: "));
+                    Serial.print(device[theDevice]->task[i]->stopTriggerTask);
+                    Serial.print(F(", at position: "));
+                    Serial.print(device[theDevice]->task[i]->stopTriggerPosition);
+                    break;
+            }
+        
+            if (device[theDevice]->task[i]->switchTaskPromptly) {
+                Serial.print(F(" --> switch promptly to next move"));
+            }
         }
         Serial.println();
         
@@ -368,7 +374,7 @@ void CCDeviceScheduler::run() {
                                 Serial.print(taskTime);
                                 Serial.print(F(": "));
                                 Serial.print(device[s]->deviceName);
-                                Serial.println(F(" finished all Tasks\n"));
+                                Serial.println(F(" finished all Tasks"));
                             }
                         }
                     }
@@ -471,8 +477,12 @@ void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, unsigned char s,
         Serial.print(F(" stop task "));
         Serial.print((int)device[s]->taskPointer);
         Serial.print(" by ");
-        Serial.println(getNameOfTaskEvent(stopEvent));
-    }
+        Serial.print(getNameOfTaskEvent(stopEvent));
+        Serial.print(", switchTaskPromptly: ");
+        Serial.print(device[s]->switchTaskPromptly);
+        Serial.print(" stopping: ");
+        Serial.println(getNameOfStoppingMode(device[s]->stopping));
+}
     
     if (device[s]->switchTaskPromptly) {                                              // switch immediately to next move?
         device[s]->taskPointer++;                                                   // go for next job! (if existing)
@@ -487,17 +497,18 @@ void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, unsigned char s,
         } else {
             device[s]->initiateStop();
             device[s]->stopEvent = NONE;
+            Serial.println(F(" stop normal "));
         }
     }
 }
 
-String getNameOfDeviceType(deviceType t) {
+String CCDeviceScheduler::getNameOfDeviceType(deviceType t) {
     if (t == SERVODEVICE) return "Servo";
     if (t == STEPPERDEVICE) return "Stepper";
-    if (t == SWITCHINGDEVICE) return "Switch";
+    if (t == DCCONTROLLERDEVICE) return "Switch";
     return "unknown";
 }
-String getNameOfTaskEvent(event e) {
+String CCDeviceScheduler::getNameOfTaskEvent(event e) {
     if (e == NONE) return "none";
     if (e == DATE) return "date";
     if (e == BUTTON) return "button";
@@ -505,15 +516,22 @@ String getNameOfTaskEvent(event e) {
     if (e == POSITION) return "position";
     return "unknown";
 }
-String getNameOfState(deviceState s) {
-    if (s == 0) return "sleeping";
-    if (s == 1) return "moving";
-    if (s == 2) return "move done";
-    if (s == 4) return "pending moves";
+String CCDeviceScheduler::getNameOfState(deviceState s) {
+    if (s == SLEEPING) return "sleeping";
+    if (s == MOVING) return "moving";
+    if (s == MOVE_DONE) return "move done";
+    if (s == PENDING_MOVES) return "pending moves";
+    return "unknown";
+}
+String CCDeviceScheduler::getNameOfStoppingMode(stoppingMode s) {
+    if (s == STOP_IMMEDIATELY) return "stop_immediately";
+    if (s == STOP_NORMAL) return "stop_normal";
+    if (s == STOP_DYNAMIC) return "stop_dynamic";
     return "unknown";
 }
 
-String formatNumber(long theData, unsigned char len) {
+
+String CCDeviceScheduler::formatNumber(long theData, unsigned char len) {
     char theString[len + 1];
     theString[len] = 0;
     theString[len - 1] = (theData % 10) + 48;

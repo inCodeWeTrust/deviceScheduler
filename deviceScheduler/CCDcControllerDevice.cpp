@@ -19,7 +19,7 @@ CCDcControllerDevice::CCDcControllerDevice(unsigned int deviceIndex, String devi
     this->switching_pin = switching_pin;
     this->switchingPin_activ = switchingPin_activ;
     
-    type = SWITCHINGDEVICE;
+    type = DCCONTROLLERDEVICE;
     state = SLEEPING;
     taskPointer = 0;
     countOfTasks = 0;
@@ -94,7 +94,6 @@ void CCDcControllerDevice::prepareNextTask() {
     startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
     timeout = task[taskPointer]->timeout;
-    stopping = task[taskPointer]->stopping;
     startButton = task[taskPointer]->startButton;
     stopButton = task[taskPointer]->stopButton;
     startButtonState = task[taskPointer]->startButtonState;
@@ -106,6 +105,9 @@ void CCDcControllerDevice::prepareNextTask() {
     stopTriggerTask = task[taskPointer]->stopTriggerTask;
     stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
     
+    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
+    stopping = task[taskPointer]->stopping;
+
     
     // target: dutycycle
     // velocity: pwm frequency

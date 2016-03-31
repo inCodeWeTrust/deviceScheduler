@@ -247,7 +247,6 @@ void CCStepperDevice::prepareNextTask() {
     
     startEvent = task[taskPointer]->startEvent;
     stopEvent = task[taskPointer]->stopEvent;
-    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
     startDelay = task[taskPointer]->startDelay;
     startTime = task[taskPointer]->startTime;
     timeout = task[taskPointer]->timeout;
@@ -261,6 +260,8 @@ void CCStepperDevice::prepareNextTask() {
     stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
     stopTriggerTask = task[taskPointer]->stopTriggerTask;
     stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
+    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
+    stopping = task[taskPointer]->stopping;
     
     //    this takes ca 24us
 //    t_stop = micros() - t_prepTask;

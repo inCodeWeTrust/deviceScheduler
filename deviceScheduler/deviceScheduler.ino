@@ -153,36 +153,32 @@ void loop() {
         
         
             
-            unsigned char switchLampOn = scheduler->device[tableDrive]->addTask(0.5, 4, 4000, 4000);
-            scheduler->device[tableDrive]->task[switchLampOn]->startByDate(100);
-            scheduler->device[tableDrive]->task[switchLampOn]->stopByTimeout(8000, STOP_NORMAL);
-        
-        unsigned char lampOn = scheduler->device[tableDrive]->addTask(0.5, 4, 4000, 4000);
-        scheduler->device[tableDrive]->task[lampOn]->startAfterCompletionOf(tableDrive, switchLampOn);
-        unsigned char powerUp = scheduler->device[tableDrive]->addTask(0.8, 4, 1800, 1800);
-            scheduler->device[tableDrive]->task[lampOn]->switchToNextTaskByButton(CAT_PARK_BUTTON, HIGH);
+        for (int i = 100; i <= 0; i += 10) {
+            Serial.println("................................. training .................................");
+            Serial.print("######### speed: ");
+            Serial.println(i);
             
-            scheduler->device[tableDrive]->task[powerUp]->stopByTimeout(28000, STOP_NORMAL);
+            unsigned char initCatStepper = scheduler->device[catStepper]->addTask(2000, i, 3200.0, 3200.0);
+            scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
 
+            unsigned char initCatStepper2 = scheduler->device[catStepper]->addTask(0, i, 3200.0, 3200.0);
+            scheduler->device[catStepper]->task[initCatStepper2]->startAfterCompletionOf(catStepper, initCatStepper);
             
+        
             scheduler->getAllTasks();
             scheduler->reviewTasks();
             scheduler->getAllTasks();
-        for (int i = 0; i < 10; i++) {
-            
+        
             scheduler->run();
-
-            delay(4000);
-        }
         
             scheduler->deleteAllTasks();
-            
+        
             Serial.println("...................................... done ......................................");
-            
-    
+        }
+        
+
         
         Serial.println("................................. initialisation .................................");
-        
         
         unsigned char initCatStepper = scheduler->device[catStepper]->addTask(-400000, 6400, 3200.0, 3200.0);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
@@ -199,8 +195,7 @@ void loop() {
         scheduler->deleteAllTasks();
         
         Serial.println("...................................... done ......................................");
-        
-        
+
         
         scheduler->device[catStepper]->currentPosition = 0;
         
@@ -216,19 +211,21 @@ void loop() {
             scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
             
             
-            unsigned char turnTheTable = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ACTIV, 0, 0, 0);
+            unsigned char turnTheTable = scheduler->device[tableDrive]->addTask(1, 10, 0, 0);
             scheduler->device[tableDrive]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+            scheduler->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
             
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadLeftForCutting = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->stopDynamicallyBySensor(A5, 660, 220, 1.0, SKIP_APPROXIMATION_VERY_FAST);
+//            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 20000);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->stopDynamicallyBySensor(A5, 720, 320, 1.0, SKIP_APPROXIMATION_VERY_FAST);
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadRightForCutting = scheduler->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
             scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 660, 220, 0.6, SKIP_APPROXIMATION_PRECISE);
+            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 720, 220, 0.6, SKIP_APPROXIMATION_PRECISE);
             
             unsigned char makeStartGroove = scheduler->device[catStepper]->addTask(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_START, 800, 800);
             scheduler->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, lowerHeadRightForCutting);

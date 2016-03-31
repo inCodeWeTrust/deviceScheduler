@@ -106,8 +106,9 @@ void CCServoDevice::prepareNextTask() {
     stopTriggerTask = task[taskPointer]->stopTriggerTask;
     stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
     
+    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
     stopping = task[taskPointer]->stopping;
-    
+
     
     sensor = task[taskPointer]->sensor;
     initiatePerformanceValue = task[taskPointer]->initiatePerformanceValue;
@@ -422,25 +423,10 @@ void CCServoDevice::operateTask() {
 
     // if we didnt return up to here, we are done!
     
-    
-    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
-        Serial.print(F("currentPosition just after move: "));
-        Serial.print((int)currentPosition);
-        Serial.print(F("[in memory: "));
-        Serial.println((long)&currentPosition, HEX);
-    }
-    
     theServo.writeMicroseconds(targetPosition);
     //    currentPosition = theServo.readMicroseconds();
     currentPosition = targetPosition;
-    
-    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
-        Serial.print(F("currentPosition read from Servo: "));
-        Serial.print((int)currentPosition);
-        Serial.print(F("[in memory: "));
-        Serial.println((long)&currentPosition, HEX);
-    }
-    
+        
     stopTask();
     
 }

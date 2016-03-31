@@ -61,8 +61,7 @@ public:
     /// --------------------|--------------------------------------------------------------------------
     /// SERVODEVICE         | modell servo
     /// STEPPERDEVICE       | stepper motor with stepper driver
-    /// SOLENOIDDEVICE      | any device to be pwm driven
-    /// SWITCHINGDEVICE     | any device to be switched on or off
+    /// DCCONTROLLERDEVICE  | any device to be pwm driven
     deviceType           type;
     
     /// Parameters of the device as a peer of a run-loop.

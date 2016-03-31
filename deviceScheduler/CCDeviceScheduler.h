@@ -124,6 +124,12 @@ private:
     void handleStartEvent(unsigned long taskTime, unsigned char device, event startEvent);
     void handleStopEvent(unsigned long taskTime, unsigned char device, event stopEvent);
 
+    String getNameOfDeviceType(deviceType t);
+    String getNameOfTaskEvent(event e);
+    String getNameOfState(deviceState s);
+    String getNameOfStoppingMode(stoppingMode s);
+    String formatNumber(long theData, unsigned char len);
+
     
 };
 
