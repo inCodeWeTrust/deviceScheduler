@@ -4,70 +4,17 @@
 
 
 
-//  device type
-enum deviceType {
-    SERVODEVICE,
-    STEPPERDEVICE,
-    DCCONTROLLERDEVICE
-};
 
 
-// start/stopEvent:
-enum event {
-    NONE,
-    DATE,
-    BUTTON,
-    FOLLOW,
-    POSITION
-};
-
-
-//  device state:
-enum deviceState {
-    SLEEPING,
-    MOVING,
-    MOVE_DONE,
-    PENDING_MOVES
-};
-
-
-//  stop mode:
-enum stoppingMode {
-    STOP_IMMEDIATELY,
-    STOP_NORMAL,
-    STOP_DYNAMIC
-};
-
-
-//  appriximation mode:
-enum approximationMode {
-    SKIP_APPROXIMATION_IMMEDIATELY = 0x00,
-    SKIP_APPROXIMATION_VERY_FAST = 0x01,
-    SKIP_APPROXIMATION_FAST = 0x20,
-    SKIP_APPROXIMATION_PRECISE = 0x40,
-    SKIP_APPROXIMATION_VERY_PRECISE = 0xC0,
-    SKIP_APPROXIMATION_NEVER = 0xFF
-};
-
-
-
-
-
-#define STEPPINGPERIOD_TO_KICK_UP           150        //150
-#define STEPPINGPERIOD_TO_KICK_DOWN         300        //300
-
-
-#define RECORD_GROOVE_PITCH                 0.2
-#define START_GROOVE_PITCH                  1
-#define STARTGROOVE_WIDTH                   4
-#define END_GROOVE_PITCH                    5
-#define ENDGROOVE_WIDTH_MIN                 10
-#define CUTTING_RANGE                       40
+#define SONGGROOVE_PITCH                 0.2
+#define STARTGROOVE_PITCH                  1
+#define STARTGROOVE_RANGE                   4
+#define ENDGROOVE_PITCH                    5
+#define ENDGROOVE_RANGE_MIN                 10
+#define CUTTING_RANGE                       38
 #define PLAYTIME_MINUTES                    3
-#define DIAMETER_SONG_START                 166
-#define DIAMETER_SONG_END                   116
 
-
+#define ADJUSTGROOVEPITCH_TO_PLAYTIME      false
 
 
 
@@ -137,15 +84,29 @@ enum approximationMode {
 
 
 #define TABLEDRIVE_NAME                     "tableDrive"
+
 #define TABLEDRIVE_PIN                      40
-#define TABLEDRIVE_READY_PIN                41
 #define TABLEDRIVE_ACTIV                    HIGH
 
 
-#define SOLENOID_VACUUM_NAME                "vacuumSolenoid"
-#define SOLENOID_VACUUM_PIN                 9
-#define SOLENOID_ON                         HIGH
-#define SOLENOID_OFF                        LOW
+#define VACUUMSOLENOID_NAME                 "vacuumSolenoid"
+
+#define VACUUMSOLENOID_PIN                  9
+#define VACUUMSOLENOID_ACTIV                LOW
+
+
+
+
+//  ################## BUTTONS AND SENSORS #########################################################################
+
+
+#define SONG_END_BUTTON_NAME                "songEndButton"
+#define SONG_END_PIN                        50
+#define SONG_END_ACTIV                      LOW
+
+#define SONG_CANCEL_BUTTON_NAME             "songCancelButton"
+#define SONG_CANCEL_PIN                     51
+#define SONG_CANCEL_ACTIV                   LOW
 
 
 
@@ -158,7 +119,7 @@ enum approximationMode {
 #define CAT_PARK_BUTTON                     52
 #define CAT_END_BUTTON                      53
 
-#define HEAD_DISTANCE_SENSOR
+#define HEAD_INCLINATION_SENSOR             A5
 
 //#define START_BUTTON                        A2
 //#define LOADING_BUTTON                      A1
@@ -166,52 +127,20 @@ enum approximationMode {
 //#define CAT_PARK_BUTTON                     A3
 
 #define I_AM_LATE_LED                       12
-#define HEADDISTANCE_SENSE_PIN              A5
 
-#define PLAYTIME_MINUTES                    3
+
+
+
+//  ################## CUTTING TOOL #########################################################################
+
+#define SPIN_PITCH_M6                       1
+#define CAT_DRIVE_RATIO                     36.0 / 60.0 * 22.0 / 60.0
+#define RECORD_TURNS_PER_MINUTE             45
+
+
 
 
 //  ################## MOVE DATA #############################################################################
-
-#define SPIN_PITCH_M6                       1
-#define CAT_DRIVE_RATIO                     (float) 36.0 / 60.0 * 22.0 / 60.0
-#define RECORD_TURNS_PER_MINUTE             45
-
-#define MAX_PLAY_RANGE                      CUTTING_RANGE - STARTGROOVE_WIDTH - ENDGROOVE_WIDTH_MIN
-#define MAX_RECORDGROOVES                   (MAX_PLAY_RANGE) / RECORD_GROOVE_PITCH
-#define MAX_PLAY_TIME_MINUTES               MAX_RECORDGROOVES / RECORD_TURNS_PER_MINUTE
-
-#define RECORDTURNS                         PLAYTIME_MINUTES * RECORD_TURNS_PER_MINUTE
-#define PLAYING_RANGE                       RECORDTURNS * RECORD_GROOVE_PITCH
-#define ENDGROOVE_WIDTH                     CUTTING_RANGE - PLAYING_RANGE - STARTGROOVE_WIDTH
-
-#define SECONDS_PER_TABLE_ROTATION          60.0 / RECORD_TURNS_PER_MINUTE
-#define CAT_SPEED                           RECORD_GROOVE_PITCH / (SECONDS_PER_TABLE_ROTATION)
-
-#define CAT_MOTOR_TURNS_PER_SONG            PLAYING_RANGE / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
-#define CAT_MOTOR_DEGREES_PER_SONG          CAT_MOTOR_TURNS_PER_SONG * 360.0
-
-#define CAT_MOTOR_TURNS_PER_SECOND          (CAT_SPEED) / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
-#define CAT_MOTOR_DEGREES_PER_SECOND        CAT_MOTOR_TURNS_PER_SECOND * 360.0
-
-#define CAT_SPEED_START                     START_GROOVE_PITCH / (SECONDS_PER_TABLE_ROTATION)
-
-#define CAT_MOTOR_TURNS_PER_START           STARTGROOVE_WIDTH / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
-#define CAT_MOTOR_DEGREES_PER_START         CAT_MOTOR_TURNS_PER_START * 360.0
-
-#define CAT_MOTOR_TURNS_PER_SECOND_START    (CAT_SPEED_START) / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
-#define CAT_MOTOR_DEGREES_PER_SECOND_START  CAT_MOTOR_TURNS_PER_SECOND_START * 360.0
-
-#define CAT_SPEED_END                       END_GROOVE_PITCH / (SECONDS_PER_TABLE_ROTATION)
-
-#define CAT_MOTOR_TURNS_PER_END             (ENDGROOVE_WIDTH) / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
-#define CAT_MOTOR_DEGREES_PER_END           CAT_MOTOR_TURNS_PER_END * 360.0
-
-#define CAT_MOTOR_TURNS_PER_SECOND_END      (CAT_SPEED_END) / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
-#define CAT_MOTOR_DEGREES_PER_SECOND_END    CAT_MOTOR_TURNS_PER_SECOND_END * 360.0
-
-
-
 
 
 #define LIFT_SPEED_FAST                 1600
@@ -248,9 +177,9 @@ enum approximationMode {
 #define HEAD_LEFT_TOP_POSITION          2100
 
 #define HEAD_RIGHT_PARK_POSITION        900
-//#define HEAD_RIGHT_CUT_POSITION         1810
+#define HEAD_RIGHT_CUT_POSITION         2000
 //#define HEAD_RIGHT_CUT_POSITION         1520
-#define HEAD_RIGHT_CUT_POSITION         1460
+//#define HEAD_RIGHT_CUT_POSITION         1460
 //#define HEAD_RIGHT_CUT_POSITION         1430
 //#define HEAD_RIGHT_CUT_POSITION         1210
 #define HEAD_RIGHT_MID_POSITION         1520
@@ -263,15 +192,80 @@ enum approximationMode {
 
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      100000
-#define CAT_SONG_START_POSITION         CAT_CUTTING_START_POSITION + (CAT_MOTOR_DEGREES_PER_START)
-#define CAT_SONG_END_POSITION           CAT_SONG_START_POSITION + (CAT_MOTOR_DEGREES_PER_SONG)
-#define CAT_CUTTING_END_POSITION        CAT_CUTTING_START_POSITION + (float)CUTTING_RANGE * 360.0 / SPIN_PITCH_M6 / (CAT_DRIVE_RATIO)
+
+#define VACUUMSOLENOID_FREQUENCY           20
+#define VACUUMSOLENOID_DUTYCYCLE           0.4
 
 
-#define SOLENOID_FREQUENCY                 10
-#define SOLENOID_DUTYCYCLE           0.3 * 16
+
 
 #define NO_START_DELAY                      0
+
+
+
+//  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
+
+//  device type
+enum deviceType {
+    SERVODEVICE,
+    STEPPERDEVICE,
+    DCCONTROLLERDEVICE
+};
+
+
+// start/stopEvent:
+enum event {
+    NONE,
+    DATE,
+    BUTTON,
+    FOLLOW,
+    POSITION,
+    CONTROLBUTTON
+};
+
+
+//  device state:
+enum deviceState {
+    SLEEPING,
+    MOVING,
+    MOVE_DONE,
+    PENDING_MOVES
+};
+
+
+//  device action:
+enum deviceAction {
+    START,
+    STOP_AND_SWITCH,
+    STOP,
+    STOP_SHARP_AND_SWITCH,
+    STOP_SHARP
+};
+
+//  stop mode:
+enum stoppingMode {
+    STOP_IMMEDIATELY,
+    STOP_NORMAL,
+    STOP_DYNAMIC
+};
+
+
+//  appriximation mode:
+enum approximationMode {
+    SKIP_APPROXIMATION_IMMEDIATELY = 0x00,
+    SKIP_APPROXIMATION_VERY_FAST = 0x01,
+    SKIP_APPROXIMATION_FAST = 0x20,
+    SKIP_APPROXIMATION_PRECISE = 0x40,
+    SKIP_APPROXIMATION_VERY_PRECISE = 0xC0,
+    SKIP_APPROXIMATION_NEVER = 0xFF
+};
+
+
+
+
+
+#define STEPPINGPERIOD_TO_KICK_UP           150        //150
+#define STEPPINGPERIOD_TO_KICK_DOWN         300        //300
 
 
 

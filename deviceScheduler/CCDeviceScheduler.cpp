@@ -16,6 +16,8 @@
 
 CCDeviceScheduler::CCDeviceScheduler() {
     countOfDevices = 0;
+    countOfControlButtons = 0;
+
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: CCDeviceScheduler constructed at $"));
         Serial.println((long)this, HEX);
@@ -29,6 +31,10 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     for (int i = countOfDevices - 1; i >= 0; i--) {
         delete device[i];
         device[i] = NULL;
+    }
+    for (int i = countOfControlButtons - 1; i >= 0; i--) {
+        delete controlButton[i];
+        controlButton[i] = NULL;
     }
 }
 
@@ -207,8 +213,8 @@ void CCDeviceScheduler::getTasksForDevice(unsigned char theDevice) {
         Serial.print(F(", terminated by: "));
         Serial.print(getNameOfTaskEvent(device[theDevice]->task[i]->stopEvent));
         if ((device[theDevice]->task[i]->stopEvent) > 0) {
-            Serial.print(" stopping: ");
-            Serial.println(getNameOfStoppingMode(device[theDevice]->task[i]->stopping));
+            Serial.print(", stopping: ");
+            Serial.print(getNameOfStoppingMode(device[theDevice]->task[i]->stopping));
 
             switch (device[theDevice]->task[i]->stopEvent) {
                 case DATE:
@@ -258,6 +264,61 @@ void CCDeviceScheduler::reviewTasks() {
         device[d]->reviewValues();
     }
 }
+
+unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean button_activ) {
+    controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, button_activ);
+    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: provided controlButton "));
+        Serial.println(controlButton[countOfControlButtons]->buttonName);
+    }
+    
+    countOfControlButtons++;
+    //	control button index = countOfControlButtons - 1 [8 buttons: index of first: 0, last: 7]
+    
+    return countOfControlButtons - 1;
+
+}
+void CCDeviceScheduler::getAllControlButtons() {
+    Serial.println(F("[CCDeviceScheduler]: My ControlButtons: "));
+    for (int i = 0; i < countOfControlButtons; i++) {
+        Serial.print(F("   # "));
+        Serial.print(i);
+        Serial.print(F(", name: "));
+        Serial.print(controlButton[i]->buttonName);
+        Serial.print(F(", actions: "));
+        Serial.println(controlButton[i]->countOfActions);
+    }
+    Serial.println();
+}
+
+void CCDeviceScheduler::getAllActions() {
+    for (int i = 0; i < countOfControlButtons; i++) {
+        getActionsForControlButton(i);
+    }
+}
+
+void CCDeviceScheduler::getActionsForControlButton(unsigned char theButton) {
+    Serial.print(F("[CCDeviceScheduler]: Actions of ControlButton "));
+    Serial.print(controlButton[theButton]->buttonName);
+    Serial.println(F(": "));
+    for (int i = 0; i < controlButton[theButton]->countOfActions; i++) {
+        Serial.print(F("   # "));
+        Serial.print(i);
+        Serial.print(F(": targetDevice: "));
+        Serial.print(controlButton[theButton]->action[i].targetDevice);
+        Serial.print(F(", validTask: "));
+        Serial.print(controlButton[theButton]->action[i].validTask);
+        Serial.print(F(", targetAction: "));
+        Serial.print(getNameOfDeviceAction(controlButton[theButton]->action[i].targetAction));
+        Serial.print(F(", taskAdvance: "));
+        Serial.println((int)controlButton[theButton]->action[i].taskAdvance);
+    }
+    Serial.println();
+}
+
+
+
 
 void CCDeviceScheduler::run() {
     
@@ -414,6 +475,39 @@ void CCDeviceScheduler::run() {
             
         }
         
+        
+        
+        for (unsigned char b = 0; b < countOfControlButtons; b++) {
+            for (int theAction = 0; theAction < controlButton[b]->countOfActions; theAction++) {
+                if (controlButton[b]->isActiv()) {
+                    if (!controlButton[b]->action[theAction].actionDone) {
+                        if (controlButton[b]->action[theAction].validTask == device[controlButton[b]->action[theAction].targetDevice]->taskPointer) {
+                            device[controlButton[b]->action[theAction].targetDevice]->taskPointer += controlButton[b]->action[theAction].taskAdvance;
+                            switch (controlButton[b]->action[theAction].targetAction) {
+                                case START:
+                                    handleStartEvent(taskTime, controlButton[b]->action[theAction].targetDevice, CONTROLBUTTON);
+                                    break;
+                                case STOP_AND_SWITCH:
+                                    device[controlButton[b]->action[theAction].targetDevice]->switchTaskPromptly = true;
+                                case STOP:
+                                    device[controlButton[b]->action[theAction].targetDevice]->stopping = STOP_NORMAL;
+                                    handleStopEvent(taskTime, controlButton[b]->action[theAction].targetDevice, CONTROLBUTTON);
+                                    break;
+                                case STOP_SHARP_AND_SWITCH:
+                                    device[controlButton[b]->action[theAction].targetDevice]->switchTaskPromptly = true;
+                                case STOP_SHARP:
+                                    device[controlButton[b]->action[theAction].targetDevice]->stopping = STOP_IMMEDIATELY;
+                                    handleStopEvent(taskTime, controlButton[b]->action[theAction].targetDevice, CONTROLBUTTON);
+                            }
+                            controlButton[b]->action[theAction].actionDone = true;
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
         loopCounter++;
         
         
@@ -422,8 +516,7 @@ void CCDeviceScheduler::run() {
         loopTime_max = fmax(loopTime, loopTime_max);
         
         
-    }
-    while (ongoingOperations > 0);
+    } while (ongoingOperations > 0);
     
     
     
@@ -480,7 +573,7 @@ void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, unsigned char s,
         Serial.print(getNameOfTaskEvent(stopEvent));
         Serial.print(", switchTaskPromptly: ");
         Serial.print(device[s]->switchTaskPromptly);
-        Serial.print(" stopping: ");
+        Serial.print(", stopping: ");
         Serial.println(getNameOfStoppingMode(device[s]->stopping));
 }
     
@@ -497,7 +590,6 @@ void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, unsigned char s,
         } else {
             device[s]->initiateStop();
             device[s]->stopEvent = NONE;
-            Serial.println(F(" stop normal "));
         }
     }
 }
@@ -514,6 +606,7 @@ String CCDeviceScheduler::getNameOfTaskEvent(event e) {
     if (e == BUTTON) return "button";
     if (e == FOLLOW) return "follow";
     if (e == POSITION) return "position";
+    if (e == CONTROLBUTTON) return "control button";
     return "unknown";
 }
 String CCDeviceScheduler::getNameOfState(deviceState s) {
@@ -524,9 +617,17 @@ String CCDeviceScheduler::getNameOfState(deviceState s) {
     return "unknown";
 }
 String CCDeviceScheduler::getNameOfStoppingMode(stoppingMode s) {
-    if (s == STOP_IMMEDIATELY) return "stop_immediately";
-    if (s == STOP_NORMAL) return "stop_normal";
-    if (s == STOP_DYNAMIC) return "stop_dynamic";
+    if (s == STOP_IMMEDIATELY) return "stop immediately";
+    if (s == STOP_NORMAL) return "stop normal";
+    if (s == STOP_DYNAMIC) return "stop dynamic";
+    return "unknown";
+}
+String CCDeviceScheduler::getNameOfDeviceAction(deviceAction d) {
+    if (d == START) return "start";
+    if (d == STOP_AND_SWITCH) return "stop and switch";
+    if (d == STOP) return "stop";
+    if (d == STOP_SHARP_AND_SWITCH) return "stop immediately and switch";
+    if (d == STOP_SHARP) return "stop immediately";
     return "unknown";
 }
 

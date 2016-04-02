@@ -56,6 +56,10 @@ void freeRam ();
 
 
 // Define variables and constants
+unsigned long catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
+float catMotorSpeed_start, catMotorSpeed_song, catMotorSpeed_end;
+
+
 extern char _end;
 extern "C" char *sbrk(int i);
 
@@ -72,7 +76,7 @@ CCDeviceScheduler *scheduler;
 
 // ------------- prototypes --------------------------------------------------------------------------------------------------
 void setup();
-
+void calculateCuttingParameters();
 
 
 
@@ -91,13 +95,29 @@ void loop() {
     // ============================================================================================================================
     // ============= devices ======================================================================================================
     // ============================================================================================================================
-    unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME, SERVO_LIFT_PIN, SERVO_LIFT_MIN_POSITION, SERVO_LIFT_MAX_POSITION, LIFT_PARK_POSITION);
+    unsigned char liftServo = scheduler->addServo(SERVO_LIFT_NAME,
+                                                  SERVO_LIFT_PIN,
+                                                  SERVO_LIFT_MIN_POSITION,
+                                                  SERVO_LIFT_MAX_POSITION,
+                                                  LIFT_PARK_POSITION);
     freeRam();
-    unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME, SERVO_TURN_PIN, SERVO_TURN_MIN_POSITION, SERVO_TURN_MAX_POSITION, TURN_PARK_POSITION);
+    unsigned char turnServo = scheduler->addServo(SERVO_TURN_NAME,
+                                                  SERVO_TURN_PIN,
+                                                  SERVO_TURN_MIN_POSITION,
+                                                  SERVO_TURN_MAX_POSITION,
+                                                  TURN_PARK_POSITION);
     freeRam();
-    unsigned char headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME, SERVO_HEAD_LEFT_PIN, SERVO_HEAD_LEFT_MIN_POSITION, SERVO_HEAD_LEFT_MAX_POSITION, HEAD_LEFT_PARK_POSITION);
+    unsigned char headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
+                                                      SERVO_HEAD_LEFT_PIN,
+                                                      SERVO_HEAD_LEFT_MIN_POSITION,
+                                                      SERVO_HEAD_LEFT_MAX_POSITION,
+                                                      HEAD_LEFT_PARK_POSITION);
     freeRam();
-    unsigned char headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME, SERVO_HEAD_RIGHT_PIN, SERVO_HEAD_RIGHT_MIN_POSITION, SERVO_HEAD_RIGHT_MAX_POSITION, HEAD_RIGHT_PARK_POSITION);
+    unsigned char headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME,
+                                                       SERVO_HEAD_RIGHT_PIN,
+                                                       SERVO_HEAD_RIGHT_MIN_POSITION,
+                                                       SERVO_HEAD_RIGHT_MAX_POSITION,
+                                                       HEAD_RIGHT_PARK_POSITION);
     freeRam();
     unsigned char stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME,
                                                        STEPPER_STOCK_STEP_PIN,
@@ -107,16 +127,26 @@ void loop() {
                                                        STEPPER_STOCK_STEPMODECODES,
                                                        STEPPER_STOCK_MICROSTEPPINS,
                                                        STEPPER_STOCK_STEPS_PER_ROTATION);
-    unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME, STEPPER_CAT_STEP_PIN, STEPPER_CAT_DIR_PIN, STEPPER_CAT_ENABLE_PIN, STEPPER_CAT_HIGHEST_STEPPINGMODE, STEPPER_CAT_STEPMODECODES, STEPPER_CAT_MICROSTEPPINS, STEPPER_CAT_STEPS_PER_ROTATION);
+
+    unsigned char catStepper = scheduler->addStepper(STEPPER_CAT_NAME,
+                                                     STEPPER_CAT_STEP_PIN,
+                                                     STEPPER_CAT_DIR_PIN,
+                                                     STEPPER_CAT_ENABLE_PIN,
+                                                     STEPPER_CAT_HIGHEST_STEPPINGMODE,
+                                                     STEPPER_CAT_STEPMODECODES,
+                                                     STEPPER_CAT_MICROSTEPPINS,
+                                                     STEPPER_CAT_STEPS_PER_ROTATION);
     freeRam();
     unsigned char tableDrive = scheduler->addDcController(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_ACTIV);
     freeRam();
     
     
     scheduler->getAllDevices();
+
+    unsigned char songEndButton = scheduler->addControlButton(SONG_END_BUTTON_NAME, SONG_END_PIN, SONG_END_ACTIV);
+    unsigned char songCancelButton = scheduler->addControlButton(SONG_CANCEL_BUTTON_NAME, SONG_CANCEL_PIN, SONG_CANCEL_ACTIV);
     
-    
-    
+    scheduler->getAllControlButtons();
     
     
     
@@ -152,33 +182,9 @@ void loop() {
         
         
         
-            
-        for (int i = 100; i <= 0; i += 10) {
-            Serial.println("................................. training .................................");
-            Serial.print("######### speed: ");
-            Serial.println(i);
-            
-            unsigned char initCatStepper = scheduler->device[catStepper]->addTask(2000, i, 3200.0, 3200.0);
-            scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
-
-            unsigned char initCatStepper2 = scheduler->device[catStepper]->addTask(0, i, 3200.0, 3200.0);
-            scheduler->device[catStepper]->task[initCatStepper2]->startAfterCompletionOf(catStepper, initCatStepper);
-            
-        
-            scheduler->getAllTasks();
-            scheduler->reviewTasks();
-            scheduler->getAllTasks();
-        
-            scheduler->run();
-        
-            scheduler->deleteAllTasks();
-        
-            Serial.println("...................................... done ......................................");
-        }
-        
-
         
         Serial.println("................................. initialisation .................................");
+        
         
         unsigned char initCatStepper = scheduler->device[catStepper]->addTask(-400000, 6400, 3200.0, 3200.0);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
@@ -186,7 +192,6 @@ void loop() {
         
         
         
-        scheduler->getAllTasks();
         scheduler->reviewTasks();
         scheduler->getAllTasks();
         
@@ -204,37 +209,34 @@ void loop() {
             
             freeRam();
             
-            
             //  move to start groove:
             unsigned char driveToCuttingStartPosition = scheduler->device[catStepper]->addTask(CAT_CUTTING_START_POSITION, 4800, 3200, 3200);
             scheduler->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
             scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
             
-            
+            //  turn the table:
+            delay(100);
             unsigned char turnTheTable = scheduler->device[tableDrive]->addTask(1, 10, 0, 0);
             scheduler->device[tableDrive]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
             scheduler->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
             
-            
             //  lower head to record surface: start when reached start position of start groove
-            unsigned char lowerHeadLeftForCutting = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-//            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 20000);
-            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->stopDynamicallyBySensor(A5, 720, 320, 1.0, SKIP_APPROXIMATION_VERY_FAST);
+            unsigned char lowerHeadLeftForCutting = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
+            scheduler->device[headLeftServo]->task[lowerHeadLeftForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
             
             //  lower head to record surface: start when reached start position of start groove
             unsigned char lowerHeadRightForCutting = scheduler->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
             scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 720, 220, 0.6, SKIP_APPROXIMATION_PRECISE);
+            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
             
-            unsigned char makeStartGroove = scheduler->device[catStepper]->addTask(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_START, 800, 800);
+            unsigned char makeStartGroove = scheduler->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_start, 800, 800);
             scheduler->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, lowerHeadRightForCutting);
-            scheduler->device[catStepper]->task[makeStartGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, CAT_SONG_START_POSITION);
+            scheduler->device[catStepper]->task[makeStartGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
             
-            unsigned char makeMainGroove = scheduler->device[catStepper]->addTask(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
-            scheduler->device[catStepper]->task[makeMainGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, CAT_SONG_END_POSITION);
+            unsigned char makeMainGroove = scheduler->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_song, 600, 600);
+            scheduler->device[catStepper]->task[makeMainGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition);
             
-            unsigned char makeEndGroove = scheduler->device[catStepper]->addTask(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND_END, 800, 800);
+            unsigned char makeEndGroove = scheduler->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_end, 1800, 1800);
             
             unsigned char liftHeadLeftAfterCutting = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
             scheduler->device[headLeftServo]->task[liftHeadLeftAfterCutting]->startAfterCompletionOf(catStepper, makeEndGroove);
@@ -250,17 +252,21 @@ void loop() {
             
             
             
+            scheduler->controlButton[songEndButton]->addAction(catStepper, makeMainGroove, STOP_AND_SWITCH, 0);
+            
+            scheduler->controlButton[songCancelButton]->addAction(catStepper, makeStartGroove, STOP_AND_SWITCH, 2);
+            scheduler->controlButton[songCancelButton]->addAction(catStepper, makeMainGroove, STOP_AND_SWITCH, 1);
+            scheduler->controlButton[songCancelButton]->addAction(catStepper, makeEndGroove, STOP, 0);
+
+            scheduler->getAllControlButtons();
+            scheduler->getAllActions();
             
             // ============================================================================================================================
             // ============================================================================================================================
             // ============================================================================================================================
             
             
-            scheduler->getAllDevices();
-            
-            scheduler->getAllTasks();
-            
-            scheduler->reviewTasks();
+           scheduler->reviewTasks();
             
             scheduler->getAllTasks();
             
@@ -268,18 +274,7 @@ void loop() {
             
             
             
-            Serial.print("*** Inputs: CAT_FWD: ");
-            Serial.print(digitalRead(CAT_FWD));
-            Serial.print(", CAT_RWD: ");
-            Serial.print(digitalRead(CAT_RWD));
-            Serial.print(", START_CUTTING_BUTTON: ");
-            Serial.print(digitalRead(START_CUTTING_BUTTON));
-            Serial.print(", STOP_CUTTING_BUTTON: ");
-            Serial.print(digitalRead(STOP_CUTTING_BUTTON));
-            Serial.print(", CAT_PARK_BUTTON: ");
-            Serial.println(digitalRead(CAT_PARK_BUTTON));
-            
-            
+             
             delay(2000);
             
             scheduler->run();
@@ -298,7 +293,7 @@ void loop() {
             
             while (digitalRead(START_CUTTING_BUTTON) == HIGH) {
                 if (digitalRead(CAT_FWD) == LOW) {
-                    driveToCuttingStartPositionMan = scheduler->device[catStepper]->addTask(CAT_CUTTING_END_POSITION, 4800, 3200, 3200);
+                    driveToCuttingStartPositionMan = scheduler->device[catStepper]->addTask(catCuttingEndPosition, 4800, 3200, 3200);
                     scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
                     scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_FWD, HIGH, STOP_NORMAL);
                     
@@ -318,36 +313,6 @@ void loop() {
             }
             
             
-            unsigned char turnTheTableMan = scheduler->device[tableDrive]->addTask(TABLEDRIVE_ACTIV, 0, 0, 0);
-            scheduler->device[tableDrive]->task[turnTheTableMan]->startByDate(100);
-            
-            //  lower head to record surface: start when reached start position of start groove
-            unsigned char lowerHeadLeftForCuttingMan = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headLeftServo]->task[lowerHeadLeftForCuttingMan]->startByDate(200);
-            scheduler->device[headLeftServo]->task[lowerHeadLeftForCuttingMan]->stopDynamicallyBySensor(A5, 660, 220, 1.0, SKIP_APPROXIMATION_VERY_FAST);
-            
-            //  lower head to record surface: start when reached start position of start groove
-            unsigned char lowerHeadRightForCuttingMan = scheduler->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-            scheduler->device[headRightServo]->task[lowerHeadRightForCuttingMan]->startByDate(220);
-            scheduler->device[headRightServo]->task[lowerHeadRightForCuttingMan]->stopDynamicallyBySensor(A5, 660, 220, 0.6, SKIP_APPROXIMATION_PRECISE);
-            
-            unsigned char makeMainGrooveMan = scheduler->device[catStepper]->addTask(CAT_CUTTING_END_POSITION, CAT_MOTOR_DEGREES_PER_SECOND, 600, 600);
-            scheduler->device[catStepper]->task[makeMainGrooveMan]->startAfterCompletionOf(headRightServo, lowerHeadRightForCuttingMan);
-            scheduler->device[catStepper]->task[makeMainGrooveMan]->stopByButton(STOP_CUTTING_BUTTON, LOW, STOP_NORMAL);
-            
-            unsigned char liftHeadLeftAfterCuttingMan = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-            scheduler->device[headLeftServo]->task[liftHeadLeftAfterCuttingMan]->startAfterCompletionOf(catStepper, makeMainGrooveMan);
-            
-            unsigned char liftHeadRightAfterCuttingMan = scheduler->device[headRightServo]->addTask(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-            scheduler->device[headRightServo]->task[liftHeadRightAfterCuttingMan]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCuttingMan);
-            
-            scheduler->device[tableDrive]->task[liftHeadRightAfterCuttingMan]->stopAfterCompletionOf(headLeftServo, liftHeadLeftAfterCuttingMan, STOP_NORMAL);
-            
-            unsigned char driveToParkPositionMan = scheduler->device[catStepper]->addTask(CAT_PARK_POSITION, 4800, 3200, 3200);
-            scheduler->device[catStepper]->task[driveToParkPositionMan]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCuttingMan);
-            scheduler->device[catStepper]->task[driveToParkPositionMan]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
-            
-       
             scheduler->reviewTasks();
             scheduler->run();
             scheduler->deleteAllTasks();
@@ -370,7 +335,105 @@ void loop() {
     
 }
 
+void calculateCuttingParameters() {
+    
+    unsigned int songRange = CUTTING_RANGE - STARTGROOVE_RANGE - ENDGROOVE_RANGE_MIN;
+    unsigned int songGrooves = songRange / (float)SONGGROOVE_PITCH;
+    unsigned int playTime_seconds = songGrooves * 60 / RECORD_TURNS_PER_MINUTE;
+    unsigned int endGrooveRange = ENDGROOVE_RANGE_MIN;
+    
+    
+    
+    Serial.println();
+    Serial.println("################################################################################");
+    Serial.println("############################## CUTTING PARAMETERS ##############################");
+    Serial.println("################################################################################");
+    Serial.println();
 
+    Serial.print("groove pitch is set to ");
+    Serial.print(SONGGROOVE_PITCH);
+    Serial.print("mm, start groove pitch is set to ");
+    Serial.print(STARTGROOVE_PITCH);
+    Serial.print("mm, start groove width is set to ");
+    Serial.print(STARTGROOVE_RANGE);
+    Serial.print("mm, end groove pitch is set to ");
+    Serial.print(ENDGROOVE_PITCH);
+    Serial.print("mm, minimal end groove width is set to ");
+    Serial.print(ENDGROOVE_RANGE_MIN);
+    Serial.println("mm");
+    Serial.print("max. song width: ");
+    Serial.print(songRange);
+    Serial.print("mm, max. record grooves: ");
+    Serial.print(songGrooves);
+    Serial.print(", max. playing time: ");
+    Serial.print(playTime_seconds / 60);
+    Serial.print(":");
+    Serial.println(playTime_seconds % 60);
+
+    
+    if ((float)PLAYTIME_MINUTES * 60 < playTime_seconds) {
+        songGrooves = PLAYTIME_MINUTES * RECORD_TURNS_PER_MINUTE;
+        songRange = songGrooves * SONGGROOVE_PITCH;
+        endGrooveRange = CUTTING_RANGE - songRange - STARTGROOVE_RANGE;
+        playTime_seconds = PLAYTIME_MINUTES * 60;
+
+        Serial.print("playing time is set to ");
+        Serial.print(playTime_seconds / 60);
+        Serial.print(":");
+        Serial.print(playTime_seconds % 60);
+        Serial.print(", song width: ");
+        Serial.print(songRange);
+        Serial.print("mm, record grooves: ");
+        Serial.println(songGrooves);
+    } else {
+        Serial.println("desired playing time is too long, using maximal playing time!");
+    }
+
+    float catSpeed_start_mmPerSecond = STARTGROOVE_PITCH * RECORD_TURNS_PER_MINUTE / 60.0;
+    float catMotorDegrees_start = 360.0 * STARTGROOVE_RANGE / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    catMotorSpeed_start = 360.0 * catSpeed_start_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+
+    float catSpeed_song_mmPerSecond = SONGGROOVE_PITCH * RECORD_TURNS_PER_MINUTE / 60.0;
+    float catMotorDegrees_song = 360.0 * songRange / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    catMotorSpeed_song = 360.0 * catSpeed_song_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    
+    float catSpeed_end_mmPerSecond = ENDGROOVE_PITCH * RECORD_TURNS_PER_MINUTE / 60.0;
+    float catMotorDegrees_end = 360.0 * endGrooveRange / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    catMotorSpeed_end = 360.0 * catSpeed_end_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    
+    
+    catSongStartPosition = CAT_CUTTING_START_POSITION + catMotorDegrees_start;
+    catSongEndPosition = catSongStartPosition + catMotorDegrees_song;
+    catCuttingEndPosition = CAT_CUTTING_START_POSITION + CUTTING_RANGE * 360.0 / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    
+
+    Serial.print("Cutting the start groove: cutting progress [mm/sec]: ");
+    Serial.print(catSpeed_start_mmPerSecond);
+    Serial.print(", degrees: ");
+    Serial.print(catMotorDegrees_start);
+    Serial.print(", degrees per second: ");
+    Serial.println(catMotorSpeed_start);
+    
+    Serial.print("Cutting the song: cutting progress [mm/sec]: ");
+    Serial.print(catSpeed_song_mmPerSecond);
+    Serial.print(", degrees: ");
+    Serial.print(catMotorDegrees_song);
+    Serial.print(", degrees per second: ");
+    Serial.println(catMotorSpeed_song);
+
+    Serial.print("Cutting the end groove: cutting progress [mm/sec]: ");
+    Serial.print(catSpeed_end_mmPerSecond);
+    Serial.print(", degrees: ");
+    Serial.print(catMotorDegrees_end);
+    Serial.print(", degrees per second: ");
+    Serial.println(catMotorSpeed_end);
+
+    Serial.println();
+    Serial.println("################################################################################");
+    Serial.println();
+    Serial.println();
+    
+}
 
 void setup() {
     //    pinMode(CAT_FWD, INPUT_PULLUP);
@@ -398,89 +461,7 @@ void setup() {
     Serial.println();
     Serial.println();
     
-    Serial.print("groovePitch is set to ");
-    Serial.print(RECORD_GROOVE_PITCH);
-    Serial.print("mm, startGroovePitch is set to ");
-    Serial.print(START_GROOVE_PITCH);
-    Serial.print("mm, startGrooveWidth is set to ");
-    Serial.print(STARTGROOVE_WIDTH);
-    Serial.print("mm, endGroovePitch is set to ");
-    Serial.print(END_GROOVE_PITCH);
-    Serial.print("mm, endGrooveWidthMin is set to ");
-    Serial.print(ENDGROOVE_WIDTH_MIN);
-    Serial.println("mm:");
-    Serial.print("maxPlayRange: ");
-    Serial.print(MAX_PLAY_RANGE);
-    Serial.print("mm, maxRecordGrooves: ");
-    Serial.print(MAX_RECORDGROOVES);
-    Serial.print(", max. playTime: ");
-    Serial.print(MAX_PLAY_TIME_MINUTES);
-    Serial.println("min");
-    Serial.println();
-    
-    Serial.print("playTime is set to ");
-    Serial.print(PLAYTIME_MINUTES);
-    Serial.println("min:");
-    Serial.print("grooves [ = recordTurns]: ");
-    Serial.print(RECORDTURNS);
-    Serial.print(", playingRange: ");
-    Serial.print(PLAYING_RANGE);
-    Serial.print("mm, endGrooveWidth: ");
-    Serial.print(ENDGROOVE_WIDTH);
-    Serial.println("mm");
-    Serial.println();
-    
-    Serial.print("secondsPerTableRotation: ");
-    Serial.println(SECONDS_PER_TABLE_ROTATION);
-    
-    Serial.print("Cutting the song: catSpeed: ");
-    Serial.print(CAT_SPEED);
-    Serial.print("catmotorTurns: ");
-    Serial.print(CAT_MOTOR_TURNS_PER_SONG);
-    Serial.print(", catMotorDegrees: ");
-    Serial.print(CAT_MOTOR_DEGREES_PER_SONG);
-    Serial.print(", catMotorTurnsPerSecond: ");
-    Serial.print(CAT_MOTOR_TURNS_PER_SECOND);
-    Serial.print(", catMotorDegreesPerSecond: ");
-    Serial.println(CAT_MOTOR_DEGREES_PER_SECOND);
-    
-    Serial.print("StartGroove: catSpeed: ");
-    Serial.print(CAT_SPEED_START);
-    Serial.print(", catmotorTurns: ");
-    Serial.print(CAT_MOTOR_TURNS_PER_START);
-    Serial.print(", catMotorDegrees: ");
-    Serial.print(CAT_MOTOR_DEGREES_PER_START);
-    Serial.print(", catMotorTurnsPerSecond: ");
-    Serial.print(CAT_MOTOR_TURNS_PER_SECOND_START);
-    Serial.print(", catMotorDegreesPerSecond: ");
-    Serial.println(CAT_MOTOR_DEGREES_PER_SECOND_START);
-    
-    Serial.print("EndGroove: catSpeed: ");
-    Serial.print(CAT_SPEED_END);
-    Serial.print("catmotorTurns: ");
-    Serial.print(CAT_MOTOR_TURNS_PER_END);
-    Serial.print(", catMotorDegrees: ");
-    Serial.print(CAT_MOTOR_DEGREES_PER_END);
-    Serial.print(", catMotorTurnsPerSecond: ");
-    Serial.print(CAT_MOTOR_TURNS_PER_SECOND_END);
-    Serial.print(", catMotorDegreesPerSecond: ");
-    Serial.println(CAT_MOTOR_DEGREES_PER_SECOND_END);
-    
-    
-    Serial.print("CAT_CUTTING_START_POSITION: ");
-    Serial.print(CAT_CUTTING_START_POSITION);
-    Serial.print(", CAT_SONG_START_POSITION: ");
-    Serial.print(CAT_SONG_START_POSITION);
-    Serial.print(", CAT_SONG_END_POSITION: ");
-    Serial.print(CAT_SONG_END_POSITION);
-    Serial.print(", CAT_CUTTING_END_POSITION: ");
-    Serial.print(CAT_CUTTING_END_POSITION);
-    
-    
-    Serial.println();
-    Serial.println();
-    Serial.println();
-    
+    calculateCuttingParameters();
     
 }
 

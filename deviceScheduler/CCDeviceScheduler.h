@@ -20,6 +20,7 @@
 #include "CCStepperDevice.h"
 #include "CCDcControllerDevice.h"
 
+#include "CCControlButton.h"
 
 
 
@@ -51,11 +52,12 @@ public:
 
     /// Scheduler parameter:
     /// Value holds the number of devices managed by him.
-    unsigned char countOfDevices;
+    unsigned char countOfDevices, countOfControlButtons;
     
     /// The Scheduler's device array.
     /// Array of all devices.
     CCDevice *device[8];
+    CCControlButton *controlButton[8];
     
     CCDeviceScheduler();
     ~CCDeviceScheduler();
@@ -118,16 +120,34 @@ public:
     /// Function deletes all tasks of all registered devices.
     void deleteAllTasks();
     
-    void run();
     
-private:
+    
+    
+    
+    
+    unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean button_activ);
+    void getAllControlButtons();
+    void getAllActions();
+    void getActionsForControlButton(unsigned char theButton);
+
+    
+    
+    
+    void run();
     void handleStartEvent(unsigned long taskTime, unsigned char device, event startEvent);
     void handleStopEvent(unsigned long taskTime, unsigned char device, event stopEvent);
+    
 
+private:
+    deviceAction action;
+    unsigned char actionDevice;
+    char increaseTaskPointerBy;
+    
     String getNameOfDeviceType(deviceType t);
     String getNameOfTaskEvent(event e);
     String getNameOfState(deviceState s);
     String getNameOfStoppingMode(stoppingMode s);
+    String getNameOfDeviceAction(deviceAction d);
     String formatNumber(long theData, unsigned char len);
 
     
