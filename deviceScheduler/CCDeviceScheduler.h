@@ -130,6 +130,7 @@ public:
     void getAllActions();
     void getActionsForControlButton(unsigned char theButton);
 
+    void deleteAllActions();
     
     
     

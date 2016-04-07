@@ -1,5 +1,7 @@
 var class_c_c_device_scheduler =
 [
+    [ "CCDeviceScheduler", "class_c_c_device_scheduler.html#a37daa3b1bb1e77b7153c65556bdb252e", null ],
+    [ "~CCDeviceScheduler", "class_c_c_device_scheduler.html#a1c9a06dd1a108096aefc6252e1af0f8e", null ],
     [ "addServo", "class_c_c_device_scheduler.html#ac6f5cf70702b7d8c76d463a66ec1be7f", null ],
     [ "addStepper", "class_c_c_device_scheduler.html#a475855e14e3c81eea911aa68167a5ae4", null ],
     [ "addDcController", "class_c_c_device_scheduler.html#a9e77844375b408f187d2b320db17946e", null ],
@@ -8,6 +10,16 @@ var class_c_c_device_scheduler =
     [ "getTasksForDevice", "class_c_c_device_scheduler.html#a8e71e46e2a79d287cd79f45684892ae8", null ],
     [ "reviewTasks", "class_c_c_device_scheduler.html#a29eed8510e46a5d0843a218d405cd688", null ],
     [ "deleteAllTasks", "class_c_c_device_scheduler.html#a0b5a165314803618046b07cf637aa14b", null ],
+    [ "addControlButton", "class_c_c_device_scheduler.html#a6a208c65a3eede0c75e7421b5fff5fe6", null ],
+    [ "getAllControlButtons", "class_c_c_device_scheduler.html#a8852e0c0181ab959c6bc0d863353dd71", null ],
+    [ "getAllActions", "class_c_c_device_scheduler.html#a4b7756c59896f6ddcb2e7708d0fac745", null ],
+    [ "getActionsForControlButton", "class_c_c_device_scheduler.html#a38db4fd7a01fa688ba339414d39752b8", null ],
+    [ "deleteAllActions", "class_c_c_device_scheduler.html#a37f83a8c566b6da623f63a6c46eedb21", null ],
+    [ "run", "class_c_c_device_scheduler.html#a55be212e5303af5995ca94e4421396eb", null ],
+    [ "handleStartEvent", "class_c_c_device_scheduler.html#a1cad7f73525cf569654924b2988c67b5", null ],
+    [ "handleStopEvent", "class_c_c_device_scheduler.html#ac4cf6d6e0250fd78e2b58c6fdd2659ab", null ],
     [ "countOfDevices", "class_c_c_device_scheduler.html#ab5d1c4d713a80e381cb3fd35a3df00a3", null ],
-    [ "device", "class_c_c_device_scheduler.html#ac229f37760c102a68df7cb4b8af59563", null ]
+    [ "countOfControlButtons", "class_c_c_device_scheduler.html#af1a139b92bbda7a25c475be220e317a7", null ],
+    [ "device", "class_c_c_device_scheduler.html#ac229f37760c102a68df7cb4b8af59563", null ],
+    [ "controlButton", "class_c_c_device_scheduler.html#a56cd855fee695361789422ddc769dd2c", null ]
 ];

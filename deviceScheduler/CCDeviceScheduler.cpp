@@ -311,10 +311,16 @@ void CCDeviceScheduler::getActionsForControlButton(unsigned char theButton) {
         Serial.print(controlButton[theButton]->action[i].validTask);
         Serial.print(F(", targetAction: "));
         Serial.print(getNameOfDeviceAction(controlButton[theButton]->action[i].targetAction));
-        Serial.print(F(", taskAdvance: "));
-        Serial.println((int)controlButton[theButton]->action[i].taskAdvance);
+        Serial.print(F(", followingTask: "));
+        Serial.println((int)controlButton[theButton]->action[i].followingTask);
     }
     Serial.println();
+}
+
+void CCDeviceScheduler::deleteAllActions() {
+    for (int i = 0; i < countOfControlButtons; i++) {
+        controlButton[i]->deleteActions();
+    }
 }
 
 
@@ -482,7 +488,7 @@ void CCDeviceScheduler::run() {
                 if (controlButton[b]->isActiv()) {
                     if (!controlButton[b]->action[theAction].actionDone) {
                         if (controlButton[b]->action[theAction].validTask == device[controlButton[b]->action[theAction].targetDevice]->taskPointer) {
-                            device[controlButton[b]->action[theAction].targetDevice]->taskPointer += controlButton[b]->action[theAction].taskAdvance;
+                            device[controlButton[b]->action[theAction].targetDevice]->taskPointer = controlButton[b]->action[theAction].followingTask - 1;
                             switch (controlButton[b]->action[theAction].targetAction) {
                                 case START:
                                     handleStartEvent(taskTime, controlButton[b]->action[theAction].targetDevice, CONTROLBUTTON);

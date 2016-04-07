@@ -1,4 +1,25 @@
 var class_c_c_stepper_device =
 [
-    [ "stepModeCode", "class_c_c_stepper_device.html#a65074bf73ea38032ad6b74c8772cb587", null ]
+    [ "CCStepperDevice", "class_c_c_stepper_device.html#aeb91ad69412a7ba6f8343903de33e097", null ],
+    [ "~CCStepperDevice", "class_c_c_stepper_device.html#a4a16937cd79aa54ffd242eb459d91205", null ],
+    [ "attachDevice", "class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25", null ],
+    [ "detachDevice", "class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c", null ],
+    [ "enableDevice", "class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3", null ],
+    [ "disableDevice", "class_c_c_stepper_device.html#ac372f7c2f54db906ae6390ea0386f18b", null ],
+    [ "reviewValues", "class_c_c_stepper_device.html#a5d54a4b0cdd2a17b0aef6aa09dbdee0b", null ],
+    [ "prepareNextTask", "class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a", null ],
+    [ "startTask", "class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e", null ],
+    [ "operateTask", "class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8", null ],
+    [ "initiateStop", "class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a", null ],
+    [ "stopTask", "class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1", null ],
+    [ "finishTask", "class_c_c_stepper_device.html#ab70b3b82a5772237514eb77111d64ff5", null ],
+    [ "dir_pin", "class_c_c_stepper_device.html#a7942d286a0d4ff373c0736c7fb78b8a3", null ],
+    [ "step_pin", "class_c_c_stepper_device.html#a2fdb652c9853ee9bd6a2eb18bfc65229", null ],
+    [ "enable_pin", "class_c_c_stepper_device.html#a96912b12d670c919c0a0264f3a0d9b8f", null ],
+    [ "numberOfMicroStepPins", "class_c_c_stepper_device.html#a4389d6a664f21e84c3e5e2379f881d13", null ],
+    [ "microStepPin", "class_c_c_stepper_device.html#a545ebf980c9c28b0b85f9ad07b4ba975", null ],
+    [ "highestSteppingMode", "class_c_c_stepper_device.html#a50886f3154c5c534fac226e1479ec3a3", null ],
+    [ "stepModeCode", "class_c_c_stepper_device.html#a65074bf73ea38032ad6b74c8772cb587", null ],
+    [ "stepsPerRoation", "class_c_c_stepper_device.html#afe5c08d8be085cd292e5733346cf416f", null ],
+    [ "acceleration_max", "class_c_c_stepper_device.html#a0058fe9c9703ed2a1aa496fc43d13e1b", null ]
 ];

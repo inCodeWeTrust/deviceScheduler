@@ -149,6 +149,7 @@
 #define LIFT_ACCEL_FAST                 1600
 #define LIFT_ACCEL_SLOW                 400
 #define LIFT_ACCEL_VERY_SLOW            200
+
 #define LIFT_UP_POSITION                840
 #define LIFT_FROM_STOCK_TRIGGER_TURN    1400
 #define LIFT_UP_TRIGGER_TURN            1240
@@ -156,10 +157,12 @@
 #define LIFT_STOCK_POSITION             1480
 #define LIFT_PARK_POSITION              1484
 
+
 #define TURN_SPEED_FAST                 320
 #define TURN_SPEED_SLOW                 180
 #define TURN_ACCEL_FAST                 280
 #define TURN_ACCEL_SLOW                 150
+
 #define TURN_TABLE_POSITION             1800
 #define TURN_TO_PARK_TRIGGER_LIFT       1600
 #define TURN_TO_TABLE_TRIGGER_LIFT      1600
@@ -167,28 +170,39 @@
 #define TURN_TO_STOCK_TRIGGER_LIFT      900
 #define TURN_STOCK_POSITION             800
 
+
 #define HEAD_LEFT_PARK_POSITION         2100
 //#define HEAD_LEFT_CUT_POSITION          1210
 //#define HEAD_LEFT_CUT_POSITION          1520
-#define HEAD_LEFT_CUT_POSITION          900
+#define HEAD_LEFT_CUT_POSITION          1460
 //#define HEAD_LEFT_CUT_POSITION          1610
 //#define HEAD_LEFT_CUT_POSITION          1810
 #define HEAD_LEFT_MID_POSITION          1520
 #define HEAD_LEFT_TOP_POSITION          2100
 
 #define HEAD_RIGHT_PARK_POSITION        900
-#define HEAD_RIGHT_CUT_POSITION         2000
+//#define HEAD_RIGHT_CUT_POSITION         2000
 //#define HEAD_RIGHT_CUT_POSITION         1520
 //#define HEAD_RIGHT_CUT_POSITION         1460
 //#define HEAD_RIGHT_CUT_POSITION         1430
-//#define HEAD_RIGHT_CUT_POSITION         1210
+#define HEAD_RIGHT_CUT_POSITION         2100
 #define HEAD_RIGHT_MID_POSITION         1520
 #define HEAD_RIGHT_TOP_POSITION         900
 
+
 #define STOCK_SUPPLY_RECORD_SPEED       640
 #define STOCK_SUPPLY_RECORD_ACCEL       320
+
 #define STOCK_LOADING_SPEED             520
 #define STOCK_LOADING_ACCEL             260
+
+
+#define CAT_SPEED_HIGH                  4800
+#define CAT_SPEED_VERY_HIGH             6400
+#define CAT_ACCEL_SLOW                  800
+#define CAT_ACCEL_NORMAL                1800
+#define CAT_ACCEL_HIGH                  3200
+#define CAT_ACCEL_VERY_HIGH             4800
 
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      100000
@@ -200,10 +214,14 @@
 
 
 #define NO_START_DELAY                      0
-
+#define PWM_FULL_POWER                  1
+#define PWM_FREQUENCY_LOW               1
+#define PWM_NO_RAMPING                  0
 
 
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
+
+typedef unsigned char schedulerDevice, scheduledTask, schedulerControlButton;
 
 //  device type
 enum deviceType {

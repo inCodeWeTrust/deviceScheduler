@@ -45,7 +45,7 @@ public:
         unsigned char       targetDevice;
         unsigned char       validTask;
         deviceAction        targetAction;
-        char                taskAdvance;
+        unsigned char       followingTask;
         boolean             actionDone;
     };
     buttonAction        action[8];
@@ -54,7 +54,10 @@ public:
     CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean button_activ);
     ~CCControlButton();
     
-    void addAction(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction, char taskAdvance);
+    void evokeTaskJumpToTask(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction, unsigned char followingTask);
+    void evokeTaskJump(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction);
+    
+    void deleteActions();
     
     boolean getButtonState();
     boolean isActiv();

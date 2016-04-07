@@ -392,6 +392,12 @@ void CCServoDevice::operateTask() {
                 return;
             }
         }
+        if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
+            Serial.print(F("[CCServoDevice]: "));
+            Serial.print(deviceName);
+            Serial.print(F(": stopped at sensor: "));
+            Serial.println(sensorValue);
+        }
         targetPosition = currentPosition;
         
     } else {

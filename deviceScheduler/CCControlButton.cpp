@@ -47,13 +47,20 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
     
 
 }
-CCControlButton::~CCControlButton() {}
+CCControlButton::~CCControlButton() {
+    free(action);
+    countOfActions = 0;
+}
 
-void CCControlButton::addAction(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction, char taskAdvance) {
+
+void CCControlButton::evokeTaskJump(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction) {
+    evokeTaskJumpToTask(targetDevice, validTask, targetAction, validTask + 1);
+}
+void CCControlButton::evokeTaskJumpToTask(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction, unsigned char followingTask) {
     action[countOfActions].targetDevice = targetDevice;
     action[countOfActions].validTask = validTask;
     action[countOfActions].targetAction = targetAction;
-    action[countOfActions].taskAdvance = taskAdvance;
+    action[countOfActions].followingTask = followingTask;
 
     action[countOfActions].actionDone = false;
     
@@ -67,14 +74,19 @@ void CCControlButton::addAction(unsigned char targetDevice, unsigned char validT
         Serial.print(action[countOfActions].validTask);
         Serial.print(F(", targetAction: "));
         Serial.print(action[countOfActions].targetAction);
-        Serial.print(F(", taskAdvance: "));
-        Serial.print((int)action[countOfActions].taskAdvance);
+        Serial.print(F(", followingTask: "));
+        Serial.print((int)action[countOfActions].followingTask);
         Serial.println();
     }
 
     countOfActions++;
     
 }
+
+void CCControlButton::deleteActions() {
+    countOfActions = 0; 
+}
+
 
 boolean CCControlButton::getButtonState() {
     state = digitalRead(button_pin);
@@ -84,7 +96,6 @@ boolean CCControlButton::getButtonState() {
 boolean CCControlButton::isActiv() {
     if (getButtonState() == button_activ) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
