@@ -92,7 +92,7 @@ public:
     /// A switching device is a device, that is simply switched on or off. Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param switching_pin the pin number of the device's controll pin.
-    /// @param defaultState the default state of the device.
+    /// @param switchingPin_activ the state of the switching pin, where the device is activ.
     /// @return the device index.
     unsigned char addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
 

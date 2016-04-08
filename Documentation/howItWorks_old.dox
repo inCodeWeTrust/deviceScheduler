@@ -1,5 +1,5 @@
 
-/*! \file CCDeviceScheduler.h
+/*! \file deviceScheduler/CCDeviceScheduler.h
 
     Details out of .txt.
 */
@@ -9,7 +9,7 @@
     Details.
 */
 
-/*! \file deviceScheduler.h
+/*! \file deviceScheduler/deviceScheduler.h
 
     Details out of .txt.
 */

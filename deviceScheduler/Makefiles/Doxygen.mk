@@ -24,13 +24,13 @@
 # 	They are not affected by this license.
 #
 #
-DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen
+DOXYGEN_PATH = /Applications/Doxygen/Doxygen.app/Contents/Resources/doxygen
 ifeq ($(wildcard $(DOXYGEN_PATH)),)
     $(error Error: application doxygen not found)
 endif
 
-DOCUMENTS_PATH = $(CURRENT_DIR)/Utilities
-DOXYFILE       = $(DOCUMENTS_PATH)/doxyfile
+DOCUMENTS_PATH = $(CURRENT_DIR)/../Documentation
+DOXYFILE       = $(DOCUMENTS_PATH)/Doxyfile
 ifeq ($(wildcard $(DOXYFILE)),)
     $(error Error: configuration file doxyfile not found)
 endif
