@@ -660,6 +660,15 @@
 /* Begin PBXFileReference section */
 		40253D941CAF2136008A99E5 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
 		40253D951CAF2136008A99E5 /* CCControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButton.h; sourceTree = "<group>"; };
+		40A4E81F1CB7D954000DE9DD /* classCCDevice.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCDevice.graphml; sourceTree = "<group>"; };
+		40A4E8201CB7D954000DE9DD /* classCCDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classCCDevice.png; sourceTree = "<group>"; };
+		40A4E8211CB7D954000DE9DD /* classCCTask.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCTask.graphml; sourceTree = "<group>"; };
+		40A4E8221CB7D954000DE9DD /* classCCTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classCCTask.png; sourceTree = "<group>"; };
+		40A4E8231CB7D954000DE9DD /* How It Works__.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "How It Works__.md"; sourceTree = "<group>"; };
+		40A4E8241CB7D954000DE9DD /* How It Works.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "How It Works.md"; sourceTree = "<group>"; };
+		40A4E8251CB7D954000DE9DD /* How To Use It.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "How To Use It.md"; sourceTree = "<group>"; };
+		40A4E8261CB7D954000DE9DD /* How to use this.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = "How to use this.html"; sourceTree = "<group>"; };
+		40A4E8281CB7DA49000DE9DD /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
 		A442495B1C9AD1E600C3E457 /* CCDcControllerDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDcControllerDevice.cpp; sourceTree = "<group>"; };
 		A442495C1C9AD1E600C3E457 /* CCDcControllerDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDcControllerDevice.h; sourceTree = "<group>"; };
 		A45F72191B1C70E400B5B7E0 /* Index */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Index; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -723,9 +732,7 @@
 		A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
 		A475640F1CAAF90100902319 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		A47564101CAAF90100902319 /* Funktionsweise.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = Funktionsweise.md; sourceTree = "<group>"; };
-		A47564111CAAF90100902319 /* HowItWorks.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = HowItWorks.md; sourceTree = "<group>"; };
 		A47564121CAAF90100902319 /* howItWorks_old.dox */ = {isa = PBXFileReference; lastKnownFileType = text; path = howItWorks_old.dox; sourceTree = "<group>"; };
-		A47564131CAAF90100902319 /* HowToUseIt.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = HowToUseIt.md; sourceTree = "<group>"; };
 		A47564151CAAF90100902319 /* _c_c_dc_controller_device_8h_source.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = _c_c_dc_controller_device_8h_source.html; sourceTree = "<group>"; };
 		A47564161CAAF90100902319 /* _c_c_device_8h_source.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = _c_c_device_8h_source.html; sourceTree = "<group>"; };
 		A47564171CAAF90100902319 /* _c_c_device_scheduler_8h_source.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = _c_c_device_scheduler_8h_source.html; sourceTree = "<group>"; };
@@ -1502,6 +1509,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		40A4E8271CB7DA49000DE9DD /* MeisterStueckwerk - html */ = {
+			isa = PBXGroup;
+			children = (
+				40A4E8281CB7DA49000DE9DD /* index.html */,
+			);
+			path = "MeisterStueckwerk - html";
+			sourceTree = "<group>";
+		};
 		A45F72071B1C70E400B5B7E0 = {
 			isa = PBXGroup;
 			children = (
@@ -1634,12 +1649,19 @@
 		A475640E1CAAF90100902319 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				A47564141CAAF90100902319 /* html */,
+				A47564981CAAF90200902319 /* text */,
+				40A4E81F1CB7D954000DE9DD /* classCCDevice.graphml */,
+				40A4E8201CB7D954000DE9DD /* classCCDevice.png */,
+				40A4E8211CB7D954000DE9DD /* classCCTask.graphml */,
+				40A4E8221CB7D954000DE9DD /* classCCTask.png */,
 				A475640F1CAAF90100902319 /* Doxyfile */,
 				A47564101CAAF90100902319 /* Funktionsweise.md */,
-				A47564111CAAF90100902319 /* HowItWorks.md */,
+				40A4E8231CB7D954000DE9DD /* How It Works__.md */,
+				40A4E8241CB7D954000DE9DD /* How It Works.md */,
+				40A4E8251CB7D954000DE9DD /* How To Use It.md */,
+				40A4E8261CB7D954000DE9DD /* How to use this.html */,
 				A47564121CAAF90100902319 /* howItWorks_old.dox */,
-				A47564131CAAF90100902319 /* HowToUseIt.md */,
-				A47564141CAAF90100902319 /* html */,
 				A475648F1CAAF90200902319 /* multiTaskMultiDevice.graphml */,
 				A47564901CAAF90200902319 /* multiTaskMultiDevice.png */,
 				A47564911CAAF90200902319 /* oneTaskOneDevice.graphml */,
@@ -1649,7 +1671,6 @@
 				A47564951CAAF90200902319 /* simplestClassSceme.png */,
 				A47564961CAAF90200902319 /* singleTask.graphml */,
 				A47564971CAAF90200902319 /* singleTask.png */,
-				A47564981CAAF90200902319 /* text */,
 				A475649C1CAAF90200902319 /* whatNeededWhen.txt */,
 				A475649D1CAAF90200902319 /* workflowOneDevice.graphml */,
 				A475649E1CAAF90200902319 /* workflowOneDevice.png */,
@@ -1789,6 +1810,7 @@
 		A47564981CAAF90200902319 /* text */ = {
 			isa = PBXGroup;
 			children = (
+				40A4E8271CB7DA49000DE9DD /* MeisterStueckwerk - html */,
 				A47564991CAAF90200902319 /* MeisterStueckwerk.pages */,
 				A475649A1CAAF90200902319 /* MeisterStueckwerk.rtf */,
 				A475649B1CAAF90200902319 /* Sicherungskopie von MeisterStueckwerk.pages */,
