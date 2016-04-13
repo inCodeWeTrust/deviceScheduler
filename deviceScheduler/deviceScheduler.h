@@ -9,7 +9,7 @@
 #define SONGGROOVE_PITCH                 0.2
 #define STARTGROOVE_PITCH                  1
 #define STARTGROOVE_RANGE                   4
-#define ENDGROOVE_PITCH                    5
+#define ENDGROOVE_PITCH                     4.8
 #define ENDGROOVE_RANGE_MIN                 10
 #define CUTTING_RANGE                       38
 #define PLAYTIME_MINUTES                    3
@@ -36,6 +36,21 @@
 
 
 
+#define STEPPER_TABLE_NAME                  "tableStepper"
+
+#define STEPPER_TABLE_STEP_PIN              22
+#define STEPPER_TABLE_DIR_PIN               24
+#define STEPPER_TABLE_ENABLE_PIN            26
+#define STEPPER_TABLE_MICROSTEPPINS         "28, 30, 32"
+
+#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  4
+#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
+#define STEPPER_TABLE_STEPS_PER_ROTATION    200
+#define STEPPER_TABLE_PPS_MAX               800
+#define STEPPER_TABLE_ACC_MAX               2000
+
+
+
 #define STEPPER_CAT_NAME                    "catStepper"
 
 #define STEPPER_CAT_STEP_PIN                23
@@ -43,9 +58,9 @@
 #define STEPPER_CAT_ENABLE_PIN              27
 #define STEPPER_CAT_MICROSTEPPINS           "29, 31, 33"
 
-#define STEPPER_CAT_HIGHEST_STEPPINGMODE    4
-#define STEPPER_CAT_STEPMODECODES           "0x00, 0x01, 0x02, 0x03, 0x07"
-#define STEPPER_CAT_STEPS_PER_ROTATION      400
+#define STEPPER_CAT_HIGHEST_STEPPINGMODE    5
+#define STEPPER_CAT_STEPMODECODES           "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
+#define STEPPER_CAT_STEPS_PER_ROTATION      200
 #define STEPPER_CAT_PPS_MAX                 1000
 #define STEPPER_CAT_ACC_MAX                 4000
 
@@ -70,16 +85,16 @@
 #define SERVO_HEAD_LEFT_NAME                "headLeftServo"
 
 #define SERVO_HEAD_LEFT_PIN                 4
-#define SERVO_HEAD_LEFT_MIN_POSITION        150
-#define SERVO_HEAD_LEFT_MAX_POSITION        600
+#define SERVO_HEAD_LEFT_MIN_POSITION        900
+#define SERVO_HEAD_LEFT_MAX_POSITION        2100
 
 
 
 #define SERVO_HEAD_RIGHT_NAME               "headRightServo"
 
 #define SERVO_HEAD_RIGHT_PIN                5
-#define SERVO_HEAD_RIGHT_MIN_POSITION       150
-#define SERVO_HEAD_RIGHT_MAX_POSITION       600
+#define SERVO_HEAD_RIGHT_MIN_POSITION       900
+#define SERVO_HEAD_RIGHT_MAX_POSITION       2100
 
 
 
@@ -134,10 +149,11 @@
 //  ################## CUTTING TOOL #########################################################################
 
 #define SPIN_PITCH_M6                       1
+//#define CAT_DRIVE_RATIO                     22.0 / 60.0 * 22.0 / 60.0
 #define CAT_DRIVE_RATIO                     36.0 / 60.0 * 22.0 / 60.0
 #define RECORD_TURNS_PER_MINUTE             45
 
-
+#define TABLE_DRIVE_RATIO                   122.0 / 28.0
 
 
 //  ################## MOVE DATA #############################################################################
@@ -196,6 +212,7 @@
 #define STOCK_LOADING_SPEED             520
 #define STOCK_LOADING_ACCEL             260
 
+#define TABLE_STEP_ACCEL                200
 
 #define CAT_SPEED_HIGH                  4800
 #define CAT_SPEED_VERY_HIGH             6400
@@ -205,7 +222,7 @@
 #define CAT_ACCEL_VERY_HIGH             4800
 
 #define CAT_PARK_POSITION               0
-#define CAT_CUTTING_START_POSITION      100000
+#define CAT_CUTTING_START_POSITION      10000
 
 #define VACUUMSOLENOID_FREQUENCY           20
 #define VACUUMSOLENOID_DUTYCYCLE           0.4
@@ -274,7 +291,7 @@ enum approximationMode {
     SKIP_APPROXIMATION_VERY_FAST = 0x01,
     SKIP_APPROXIMATION_FAST = 0x20,
     SKIP_APPROXIMATION_PRECISE = 0x40,
-    SKIP_APPROXIMATION_VERY_PRECISE = 0xC0,
+    SKIP_APPROXIMATION_VERY_PRECISE = 0x60,
     SKIP_APPROXIMATION_NEVER = 0xFF
 };
 

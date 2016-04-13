@@ -58,7 +58,8 @@ void freeRam ();
 // Define variables and constants
 unsigned long catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
 float catMotorSpeed_startGroove, catMotorSpeed_song, catMotorSpeed_endGroove;
-
+unsigned long grooves_all;
+float turnTableSpeed;
 
 extern char _end;
 extern "C" char *sbrk(int i);
@@ -128,6 +129,15 @@ void loop() {
                                                        STEPPER_STOCK_MICROSTEPPINS,
                                                        STEPPER_STOCK_STEPS_PER_ROTATION);
 
+    schedulerDevice tableStepper = scheduler->addStepper(STEPPER_TABLE_NAME,
+                                                         STEPPER_TABLE_STEP_PIN,
+                                                         STEPPER_TABLE_DIR_PIN,
+                                                         STEPPER_TABLE_ENABLE_PIN,
+                                                         STEPPER_TABLE_HIGHEST_STEPPINGMODE,
+                                                         STEPPER_TABLE_STEPMODECODES,
+                                                         STEPPER_TABLE_MICROSTEPPINS,
+                                                         STEPPER_TABLE_STEPS_PER_ROTATION);
+    
     schedulerDevice catStepper = scheduler->addStepper(STEPPER_CAT_NAME,
                                                      STEPPER_CAT_STEP_PIN,
                                                      STEPPER_CAT_DIR_PIN,
@@ -186,7 +196,7 @@ void loop() {
         Serial.println("................................. initialisation .................................");
         
         
-        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
+        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_HIGH, CAT_ACCEL_HIGH, CAT_ACCEL_HIGH);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
         scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
         
@@ -204,7 +214,7 @@ void loop() {
 
         
         scheduler->device[catStepper]->currentPosition = 0;
-        
+        scheduler->device[tableStepper]->currentPosition = 0;
         
         if (digitalRead(NORMAL_CUTTING) == HIGH) {
             
@@ -216,8 +226,8 @@ void loop() {
             scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
             
             //  turn the table:
-            scheduledTask turnTheTable = scheduler->device[tableDrive]->addTask(PWM_FULL_POWER, PWM_FREQUENCY_LOW, PWM_NO_RAMPING, PWM_NO_RAMPING);
-            scheduler->device[tableDrive]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+            scheduledTask turnTheTable = scheduler->device[tableStepper]->addTask(grooves_all * 360, turnTableSpeed, TABLE_STEP_ACCEL, TABLE_STEP_ACCEL);
+            scheduler->device[tableStepper]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
 //            scheduler->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
             
             //  lower head to record surface: start when reached start position of start groove
@@ -241,7 +251,7 @@ void loop() {
             scheduledTask liftHeadLeftAfterCutting = scheduler->device[headLeftServo]->addTask(HEAD_LEFT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
             scheduler->device[headLeftServo]->task[liftHeadLeftAfterCutting]->startAfterCompletionOf(catStepper, makeEndGroove);
             
-            scheduler->device[tableDrive]->task[turnTheTable]->stopAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting, STOP_NORMAL);
+            scheduler->device[tableStepper]->task[turnTheTable]->stopAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting, STOP_NORMAL);
             
             scheduledTask liftHeadRightAfterCutting = scheduler->device[headRightServo]->addTask(HEAD_RIGHT_TOP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
             scheduler->device[headRightServo]->task[liftHeadRightAfterCutting]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting);
@@ -389,7 +399,12 @@ void calculateCuttingParameters() {
     } else {
         Serial.println("desired playing time is too long, using maximal playing time!");
     }
+    
 
+    grooves_all = STARTGROOVE_RANGE / (float)STARTGROOVE_PITCH + songGrooves + endGrooveRange / (float)ENDGROOVE_PITCH;
+    turnTableSpeed = RECORD_TURNS_PER_MINUTE / 60.0 * TABLE_DRIVE_RATIO * STEPPER_TABLE_STEPS_PER_ROTATION;
+    
+    
     float catSpeed_start_mmPerSecond = STARTGROOVE_PITCH * RECORD_TURNS_PER_MINUTE / 60.0;
     float catMotorDegrees_start = 360.0 * STARTGROOVE_RANGE / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     catMotorSpeed_startGroove = 360.0 * catSpeed_start_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
@@ -576,7 +591,11 @@ void freeRam() {
  scheduler->device[liftServo]->startByTriggerpositionOf(lowerForParkPosition, turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
  freeRam();
  
+ scheduledTask turnTheTable = scheduler->device[tableDrive]->addTask(PWM_FULL_POWER, PWM_FREQUENCY_LOW, PWM_NO_RAMPING, PWM_NO_RAMPING);
+ scheduler->device[tableDrive]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+ //            scheduler->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
  
+
  
  //  make the groves: start when cuttinghead is in cutting position
  

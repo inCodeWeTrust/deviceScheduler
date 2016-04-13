@@ -250,7 +250,9 @@ void CCServoDevice::startTask() {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": start move "));
-        Serial.println((int)taskPointer);
+        Serial.print((int)taskPointer);
+        Serial.print(F(", sensor: "));
+        Serial.println(analogRead(A5));
     }
 }
 void CCServoDevice::initiateStop() {
@@ -279,7 +281,9 @@ void CCServoDevice::finishTask() {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stop: move "));
-        Serial.println((int)taskPointer);
+        Serial.print((int)taskPointer);
+        Serial.print(F(", sensor: "));
+        Serial.println(analogRead(A5));
     }
 }
 
@@ -300,6 +304,13 @@ void CCServoDevice::operateTask() {
                 lastCycleTime = 0;
                 c_perform = 1.0 / (initiatePerformanceValue - targetValue);
                 dynamicalStop = true;
+
+                Serial.print("### dynamical stop: sens: ");
+                Serial.print(sensorValue);
+                Serial.print(", init: ");
+                Serial.print(initiatePerformanceValue);
+                Serial.print(", fall: ");
+                Serial.println(sensorValuesFalling);
             }
         }
     }
@@ -355,13 +366,30 @@ void CCServoDevice::operateTask() {
         sensorValue = analogRead(sensor);
         
         performanceFactor = c_perform * (sensorValue - targetValue);
-        if (performanceFactor > 0) {
-            performanceFactor = pow(performanceFactor, stopPerformance);
-        } else {
-            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
-        }
         
+//        int dif = targetValue - sensorValue;
+//        
+//        if (dif < 0) {
+//            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
+//        }
+//        if (dif > 0) {
+//            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
+//        }
+        
+        
+        // = (sensorValue - targetValue) / (initiatePerformanceValue - targetValue)
+        
+//        if (performanceFactor > 0) {
+//            performanceFactor = pow(performanceFactor, stopPerformance);
+//        } else {
+//            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
+//        }
+//
+
         currentPosition += deltaDeltaNorm * performanceFactor;
+        currentPosition = min(currentPosition, maxPosition);
+        currentPosition = max(currentPosition, minPosition);
+        
         theServo.writeMicroseconds(currentPosition);
         
         if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MOVEMENTDEBUG) {

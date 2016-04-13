@@ -1,34 +1,20 @@
 var NAVTREE =
 [
   [ "deviceScheduler", "index.html", [
-    [ "Funktionsweise", "md_Funktionsweise.html", null ],
-    [ "How To Use It", "md_How_To_Use_It.html", null ],
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
-      ] ]
-    ] ],
+    [ "Prinzipielle Programmierung", "md__Users_abakus_my_system_computing_Arduino_Scheduler_deviceScheduler_Documentation_Funktionsweise.html", null ],
+    [ "page1", "page1.html", null ],
+    [ "page2", "page2.html", null ],
+    [ "How It Works", "md__Users_abakus_my_system_computing_Arduino_Scheduler_deviceScheduler_Documentation_How_It_Works.html", null ],
+    [ "How To Use It", "md__Users_abakus_my_system_computing_Arduino_Scheduler_deviceScheduler_Documentation_How_To_Use_It.html", null ],
     [ "Files", null, [
-      [ "File List", "files.html", "files" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", null ]
-      ] ]
+      [ "File List", "files.html", "files" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_c_c_control_button_8cpp.html",
-"device_scheduler_8h.html#a1788b45bcaab9dc914cca63c275a3687"
+"dir_3d6190bf4dc8fdebb5d90fc56b82c920.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
