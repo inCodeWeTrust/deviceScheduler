@@ -120,7 +120,7 @@ void loop() {
                                                        SERVO_HEAD_RIGHT_MAX_POSITION,
                                                        HEAD_RIGHT_PARK_POSITION);
     freeRam();
-    schedulerDevice stockStepper = scheduler->addStepper(STEPPER_STOCK_NAME,
+    schedulerDevice stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
                                                        STEPPER_STOCK_STEP_PIN,
                                                        STEPPER_STOCK_DIR_PIN,
                                                        STEPPER_STOCK_ENABLE_PIN,
@@ -129,7 +129,7 @@ void loop() {
                                                        STEPPER_STOCK_MICROSTEPPINS,
                                                        STEPPER_STOCK_STEPS_PER_ROTATION);
 
-    schedulerDevice tableStepper = scheduler->addStepper(STEPPER_TABLE_NAME,
+    schedulerDevice tableStepper = scheduler->addStepper_A4988(STEPPER_TABLE_NAME,
                                                          STEPPER_TABLE_STEP_PIN,
                                                          STEPPER_TABLE_DIR_PIN,
                                                          STEPPER_TABLE_ENABLE_PIN,
@@ -138,7 +138,7 @@ void loop() {
                                                          STEPPER_TABLE_MICROSTEPPINS,
                                                          STEPPER_TABLE_STEPS_PER_ROTATION);
     
-    schedulerDevice catStepper = scheduler->addStepper(STEPPER_CAT_NAME,
+    schedulerDevice catStepper = scheduler->addStepper_A4988(STEPPER_CAT_NAME,
                                                      STEPPER_CAT_STEP_PIN,
                                                      STEPPER_CAT_DIR_PIN,
                                                      STEPPER_CAT_ENABLE_PIN,
@@ -196,7 +196,7 @@ void loop() {
         Serial.println("................................. initialisation .................................");
         
         
-        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_HIGH, CAT_ACCEL_HIGH, CAT_ACCEL_HIGH);
+        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
         scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
         

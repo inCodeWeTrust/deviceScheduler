@@ -72,7 +72,7 @@ unsigned char CCDeviceScheduler::addServo(String deviceName, unsigned char servo
     return countOfDevices - 1;
 }
 
-unsigned char CCDeviceScheduler::addStepper(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
+unsigned char CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
     
     unsigned char numberOfMicroStepPins = 0;                                                    // first find how many pins are given
     signed char elementBegin = 1;
@@ -128,7 +128,7 @@ unsigned char CCDeviceScheduler::addStepper(String deviceName, unsigned char dir
         elementBegin = elementEnd + 1;
     }
     
-    device[countOfDevices] = new CCStepperDevice(countOfDevices, deviceName, dir_pin, step_pin, enable_pin, highestSteppingMode, stepModeCode, numberOfMicroStepPins, microStepPin, stepsPerRotation);
+    device[countOfDevices] = new CCStepperDevice_A4988(countOfDevices, deviceName, dir_pin, step_pin, enable_pin, highestSteppingMode, stepModeCode, numberOfMicroStepPins, microStepPin, stepsPerRotation);
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {

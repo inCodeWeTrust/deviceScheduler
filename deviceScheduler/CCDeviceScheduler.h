@@ -18,6 +18,7 @@
 #include "CCDevice.h"
 #include "CCServoDevice.h"
 #include "CCStepperDevice.h"
+#include "CCStepperDevice_A4988.h"
 #include "CCDcControllerDevice.h"
 
 #include "CCControlButton.h"
@@ -86,7 +87,7 @@ public:
     /// i.e. "28, 30, 32": micro stepping pins are pin 28, pin 30 and pin 32
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
-    unsigned char addStepper(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
+    unsigned char addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
    
     /// Function adds a switching device to the device array and returns the index of the device.
     /// A switching device is a device, that is simply switched on or off. Device-specific parameters are passed.
