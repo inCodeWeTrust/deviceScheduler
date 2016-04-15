@@ -44,7 +44,7 @@ LOCAL_LIBS_LIST =
 # For example, WiFi may crash on Arduino 1.0.2, Esplora on Arduino 1.0.3, Firmata on Teensy 3.0,
 #   OneWire on MPIDE 0023, HardwareSerial may conflict with MarlinSerial
 #
-EXCLUDE_LIBS = EEPROM SoftwareSerial SPI Wire Audio Bridge Esplora Ethernet Firmata GSM LiquidCrystal Robot_Control Robot_Motor RobotIRremote Scheduler SD SpacebrewYun Stepper Temboo TFT USBHost WiFi Adafruit_GFX Fat16
+EXCLUDE_LIBS = EEPROM SoftwareSerial Wire Audio Bridge Esplora Ethernet Firmata GSM LiquidCrystal Robot_Control Robot_Motor RobotIRremote Scheduler SD SpacebrewYun Stepper Temboo TFT USBHost WiFi Adafruit_GFX Fat16
 
 
 # Warning options

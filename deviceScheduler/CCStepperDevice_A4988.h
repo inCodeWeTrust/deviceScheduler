@@ -30,13 +30,13 @@
 #define CCStepperDevice_A4988_h
 
 
-//  verbosity:
-#define CCSTEPPERDEVICE_BASICOUTPUT         0x01
-#define CCSTEPPERDEVICE_MEMORYDEBUG         0x02
-#define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
-#define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
-
-#define CCSTEPPERDEVICE_VERBOSE             0
+////  verbosity:
+//#define CCSTEPPERDEVICE_BASICOUTPUT         0x01
+//#define CCSTEPPERDEVICE_MEMORYDEBUG         0x02
+//#define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
+//#define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
+//
+//#define CCSTEPPERDEVICE_VERBOSE             0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,8 +66,8 @@ class CCStepperDevice_A4988 : public CCStepperDevice {
     /// 0x07         | 111 |  HIGH |  HIGH |  HIGH | sixteenth step mode
     unsigned char        *stepModeCode;
 
-    void setMicroStepPins();
-    void setMicroStepPins(unsigned char data);
+    void setupMicroSteppingMode();
+    void setupMicroSteppingMode(unsigned char data);
 
     
     

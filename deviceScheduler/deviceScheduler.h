@@ -38,13 +38,13 @@
 
 #define STEPPER_TABLE_NAME                  "tableStepper"
 
-#define STEPPER_TABLE_STEP_PIN              22
-#define STEPPER_TABLE_DIR_PIN               24
-#define STEPPER_TABLE_ENABLE_PIN            26
-#define STEPPER_TABLE_MICROSTEPPINS         "28, 30, 32"
+#define STEPPER_TABLE_STEP_PIN              23
+#define STEPPER_TABLE_DIR_PIN               25
+#define STEPPER_TABLE_ENABLE_PIN            27
+#define STEPPER_TABLE_MICROSTEPPINS         "29, 31, 33"
 
-#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  4
-#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
+#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  5
+#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
 #define STEPPER_TABLE_STEPS_PER_ROTATION    200
 #define STEPPER_TABLE_PPS_MAX               800
 #define STEPPER_TABLE_ACC_MAX               2000
@@ -53,13 +53,12 @@
 
 #define STEPPER_CAT_NAME                    "catStepper"
 
-#define STEPPER_CAT_STEP_PIN                23
-#define STEPPER_CAT_DIR_PIN                 25
-#define STEPPER_CAT_ENABLE_PIN              27
-#define STEPPER_CAT_MICROSTEPPINS           "29, 31, 33"
-
-#define STEPPER_CAT_HIGHEST_STEPPINGMODE    5
-#define STEPPER_CAT_STEPMODECODES           "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
+#define STEPPER_CAT_DIR_PIN                 9
+#define STEPPER_CAT_STEP_PIN                8
+#define STEPPER_CAT_ENABLE_PIN              7
+#define STEPPER_CAT_CHIPSELECT_PIN          10
+#define STEPPER_CAT_CURRENT                 1500
+#define STEPPER_CAT_RESISTOR                1.4
 #define STEPPER_CAT_STEPS_PER_ROTATION      200
 #define STEPPER_CAT_PPS_MAX                 1000
 #define STEPPER_CAT_ACC_MAX                 4000

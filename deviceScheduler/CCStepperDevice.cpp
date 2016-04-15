@@ -24,7 +24,7 @@ void CCStepperDevice::enableDevice() {
 void CCStepperDevice::disableDevice() {
     digitalWrite(enable_pin, HIGH);
     digitalWrite(dir_pin, LOW);
-    setMicroStepPins(0);
+    setupMicroSteppingMode(0);
 }
 
 
@@ -429,7 +429,7 @@ void CCStepperDevice::startTask() {                                 // start thi
         
         // lets start in highest stepping mode
         microSteppingMode = highestSteppingMode;                    // setup stepper driver's highest steppingMode
-        setMicroStepPins();
+        setupMicroSteppingMode();
         
         enableDevice();                                             // setup ENABLE-pin of stepper driver
         
@@ -631,7 +631,7 @@ void CCStepperDevice::kickUp() {
         if (!(currentMicroStep & 0x0F)) {
             microSteppingMode--;
             
-            setMicroStepPins();
+            setupMicroSteppingMode();
             
         }
     }
@@ -642,7 +642,7 @@ void CCStepperDevice::kickDown() {
         if ((currentMicroStep & 0x0F) == 0) {
             microSteppingMode++;
             
-            setMicroStepPins();
+            setupMicroSteppingMode();
             
         }
     }

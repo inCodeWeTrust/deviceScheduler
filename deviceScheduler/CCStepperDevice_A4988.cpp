@@ -137,12 +137,12 @@ void CCStepperDevice_A4988::detachDevice() {
 
 
 
-void CCStepperDevice_A4988::setMicroStepPins() {
+void CCStepperDevice_A4988::setupMicroSteppingMode() {
     for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
         digitalWrite(microStepPin[pinIndex], stepModeCode[microSteppingMode] & (1 << pinIndex));
     }
 }
-void CCStepperDevice_A4988::setMicroStepPins(unsigned char data) {
+void CCStepperDevice_A4988::setupMicroSteppingMode(unsigned char data) {
     for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
         digitalWrite(microStepPin[pinIndex], data & (1 << pinIndex));
     }

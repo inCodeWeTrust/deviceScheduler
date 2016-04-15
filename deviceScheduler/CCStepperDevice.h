@@ -56,15 +56,15 @@ public:
     void                 kickDown();
     void                 kickUp();
     
-    virtual void                 setMicroStepPins();
-    virtual void                 setMicroStepPins(unsigned char data);
+    virtual void                 setupMicroSteppingMode();
+    virtual void                 setupMicroSteppingMode(unsigned char data);
 
     
 //public:
     
     unsigned char        dir_pin, step_pin, enable_pin;
     unsigned char        highestSteppingMode;
-    unsigned int         stepsPerRoation;
+    unsigned int         stepsPerRotation;
     int                  acceleration_max;
     
     

@@ -19,6 +19,7 @@
 #include "CCServoDevice.h"
 #include "CCStepperDevice.h"
 #include "CCStepperDevice_A4988.h"
+#include "CCStepperDevice_TMC260.h"
 #include "CCDcControllerDevice.h"
 
 #include "CCControlButton.h"
@@ -89,6 +90,10 @@ public:
     /// @return the device index.
     unsigned char addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
    
+    
+    unsigned char addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int current, unsigned int resistor, unsigned int stepsPerRotation);
+    
+    
     /// Function adds a switching device to the device array and returns the index of the device.
     /// A switching device is a device, that is simply switched on or off. Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).

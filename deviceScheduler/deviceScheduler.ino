@@ -138,14 +138,15 @@ void loop() {
                                                          STEPPER_TABLE_MICROSTEPPINS,
                                                          STEPPER_TABLE_STEPS_PER_ROTATION);
     
-    schedulerDevice catStepper = scheduler->addStepper_A4988(STEPPER_CAT_NAME,
-                                                     STEPPER_CAT_STEP_PIN,
-                                                     STEPPER_CAT_DIR_PIN,
-                                                     STEPPER_CAT_ENABLE_PIN,
-                                                     STEPPER_CAT_HIGHEST_STEPPINGMODE,
-                                                     STEPPER_CAT_STEPMODECODES,
-                                                     STEPPER_CAT_MICROSTEPPINS,
-                                                     STEPPER_CAT_STEPS_PER_ROTATION);
+    schedulerDevice catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
+                                                              STEPPER_CAT_STEP_PIN,
+                                                              STEPPER_CAT_DIR_PIN,
+                                                              STEPPER_CAT_ENABLE_PIN,
+                                                              STEPPER_CAT_CHIPSELECT_PIN,
+                                                              STEPPER_CAT_CURRENT,
+                                                              STEPPER_CAT_RESISTOR,
+                                                              STEPPER_CAT_STEPS_PER_ROTATION);
+
     freeRam();
     schedulerDevice tableDrive = scheduler->addDcController(TABLEDRIVE_NAME, TABLEDRIVE_PIN, TABLEDRIVE_ACTIV);
     freeRam();
