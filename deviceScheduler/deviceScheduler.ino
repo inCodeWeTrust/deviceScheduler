@@ -144,7 +144,6 @@ void loop() {
                                                               STEPPER_CAT_ENABLE_PIN,
                                                               STEPPER_CAT_CHIPSELECT_PIN,
                                                               STEPPER_CAT_CURRENT,
-                                                              STEPPER_CAT_RESISTOR,
                                                               STEPPER_CAT_STEPS_PER_ROTATION);
 
     freeRam();

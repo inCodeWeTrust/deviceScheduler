@@ -30,13 +30,19 @@
 
 
 
-////  verbosity:
-//#define CCSTEPPERDEVICE_BASICOUTPUT         0x01
-//#define CCSTEPPERDEVICE_MEMORYDEBUG         0x02
-//#define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
-//#define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
-//
-//#define CCSTEPPERDEVICE_VERBOSE             0
+//  verbosity:
+#define CCSTEPPERDEVICE_TMC260_BASICOUTPUT         0x01
+#define CCSTEPPERDEVICE_TMC260_MEMORYDEBUG         0x02
+#define CCSTEPPERDEVICE_TMC260_CALCULATIONDEBUG    0x04
+#define CCSTEPPERDEVICE_TMC260_MOVEMENTDEBUG       0x08
+#define CCSTEPPERDEVICE_TMC260_SPIDEBUG            0x10
+#define CCSTEPPERDEVICE_TMC260_SETUPDEBUG          0x20
+
+#define CCSTEPPERDEVICE_TMC260_VERBOSE             0
+
+#define READOUT_MICROSTEP_POSITION    0
+#define READOUT_STALLGUARD_LEVEL      1
+#define READOUT_CURRENT_LEVEL         2
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,33 +111,43 @@ class CCStepperDevice_TMC260 : public CCStepperDevice {
     
     
     unsigned int resistor; //current sense resitor value in milliohm
-    unsigned int current;
+    unsigned int currentMax;        //  current in mA
+    
+    unsigned long driverControl;
+    unsigned long chopperControl;
+    unsigned long coolStepControl;
+    unsigned long stallGuard2Control;
+    unsigned long driverConfiguration;
+
+    byte currentScaleOf32;
+    boolean senseResistorVoltage165mV;
+
+    void calculateCurrentSetup(unsigned int current);
 	
-	//driver control register copies to easily set & modify the registers
-	unsigned long driver_control_register_value;
-	unsigned long chopper_config_register;
-	unsigned long cool_step_register_value;
-	unsigned long stall_guard2_current_register_value;
-	unsigned long driver_configuration_register_value;
-	//the driver status result
-	unsigned long driver_status_result;
-	
+    unsigned long resultDatagram;
+    void doTransaction(unsigned long datagram);
+    void getReadOut(byte theReadOut);
+    void printDatagram(unsigned long datagram);
 	//helper routione to get the top 10 bit of the readout
-	inline int getReadoutValue();
+//	inline int getReadoutValue();
 	
-	//status values
-	boolean started; //if the stepper has been started yet
-    char constant_off_time; //we need to remember this value in order to enable and disable the motor
-    unsigned char cool_step_lower_threshold; // we need to remember the threshold to enable and disable the CoolStep feature
-    boolean cool_step_enabled; //we need to remember this to configure the coolstep if it si enabled
 	
 	//SPI sender
-	inline void send262(unsigned long datagram);
+//	inline void send262(unsigned long datagram);
     
     
     
 public:
-    CCStepperDevice_TMC260(unsigned int deviceIndex, String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int current, unsigned int resistor, unsigned int stepsPerRotation);
+    //  TMC260 readback:
+    unsigned int microstepPosition, stallGuard2Value;
+    byte coolStepScalingValue, stallGuard2Value_upper;
+    boolean standStil;
+    byte openLoad, shortToGnd;
+    boolean overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
+    
+
+    
+    CCStepperDevice_TMC260(unsigned int deviceIndex, String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int current, unsigned int stepsPerRotation);
     
     
     void attachDevice();

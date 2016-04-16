@@ -58,7 +58,6 @@
 #define STEPPER_CAT_ENABLE_PIN              7
 #define STEPPER_CAT_CHIPSELECT_PIN          10
 #define STEPPER_CAT_CURRENT                 1500
-#define STEPPER_CAT_RESISTOR                1.4
 #define STEPPER_CAT_STEPS_PER_ROTATION      200
 #define STEPPER_CAT_PPS_MAX                 1000
 #define STEPPER_CAT_ACC_MAX                 4000
@@ -109,7 +108,8 @@
 #define VACUUMSOLENOID_ACTIV                LOW
 
 
-
+// TMC260 sensing resistor value in mOhm
+#define R_SENSE                             150
 
 //  ################## BUTTONS AND SENSORS #########################################################################
 

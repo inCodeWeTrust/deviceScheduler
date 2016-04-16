@@ -144,9 +144,9 @@ unsigned char CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned ch
     return countOfDevices - 1;
 }
 
-unsigned char CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int current, unsigned int resistor, unsigned int stepsPerRotation) {
+unsigned char CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int current, unsigned int stepsPerRotation) {
     
-    device[countOfDevices] = new CCStepperDevice_TMC260(countOfDevices, deviceName, step_pin, dir_pin, enable_pin, chipSelect_pin, current, resistor, stepsPerRotation);
+    device[countOfDevices] = new CCStepperDevice_TMC260(countOfDevices, deviceName, step_pin, dir_pin, enable_pin, chipSelect_pin, current, stepsPerRotation);
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
