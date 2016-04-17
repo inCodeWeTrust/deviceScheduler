@@ -38,7 +38,7 @@
 #define CCSTEPPERDEVICE_TMC260_SPIDEBUG            0x10
 #define CCSTEPPERDEVICE_TMC260_SETUPDEBUG          0x20
 
-#define CCSTEPPERDEVICE_TMC260_VERBOSE             0
+#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x3f
 
 #define READOUT_MICROSTEP_POSITION    0
 #define READOUT_STALLGUARD_LEVEL      1
@@ -153,7 +153,12 @@ public:
     void attachDevice();
     void detachDevice();
     
-    
+    void setDriverControlRegister(boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode);
+    void setChopperControlRegister_spreadCycle(byte blankingTimeValue, boolean chopperMode, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime);
+    void setChopperControlRegister_fastDecay(byte blankingTimeValue, boolean chopperMode, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime);
+    void setCoolStepRegister(byte minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold);
+    void setStallGuard2Register(boolean stallGuard2FilterEnable, int stallGuard2Threshold);
+    void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
     
     /*!
      * \brief creates a new represenatation of a stepper motor connected to a TMC26X stepper driver
