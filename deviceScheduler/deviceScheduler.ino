@@ -191,21 +191,29 @@ void loop() {
         // ============================================================================================================================
         
         
-        
+        for (int i = 4; i < 63; i++) {
+            scheduler->device[catStepper]->currentPosition = 0;
+
         
         Serial.println("................................. initialisation .................................");
         
         
-        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
+//        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
+//        scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
+//        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+        
+        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400, 136, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
-        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
-        
-        
+
+        scheduledTask initCatStepper_back = scheduler->device[catStepper]->addTask(400, 136, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+        scheduler->device[catStepper]->task[initCatStepper_back]->startAfterCompletionOf(catStepper, initCatStepper);
         
         scheduler->reviewTasks();
         scheduler->getAllTasks();
         
-        scheduler->run();
+            Serial.print("SGT: "), Serial.print(i);
+            scheduler->device[catStepper]->setStallGuard2Register(0, i);
+            scheduler->run();
         
         scheduler->deleteAllTasks();
         scheduler->deleteAllActions();
@@ -223,7 +231,7 @@ void loop() {
             //  move to start groove:
             scheduledTask driveToCuttingStartPosition = scheduler->device[catStepper]->addTask(CAT_CUTTING_START_POSITION, CAT_SPEED_HIGH, CAT_ACCEL_HIGH, CAT_ACCEL_HIGH);
             scheduler->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
-            scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
+//            scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
             
             //  turn the table:
             scheduledTask turnTheTable = scheduler->device[tableStepper]->addTask(grooves_all * 360, turnTableSpeed, TABLE_STEP_ACCEL, TABLE_STEP_ACCEL);
@@ -237,10 +245,11 @@ void loop() {
             //  lower head to record surface: start when reached start position of start groove
             scheduledTask lowerHeadRightForCutting = scheduler->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
             scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
+//            scheduler->device[headRightServo]->task[lowerHeadRightForCutting]->stopDynamicallyBySensor(A5, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
             
             scheduledTask makeStartGroove = scheduler->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
-            scheduler->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, lowerHeadRightForCutting);
+//            scheduler->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, lowerHeadRightForCutting);
+            scheduler->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headLeftServo, lowerHeadLeftForCutting);
             scheduler->device[catStepper]->task[makeStartGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
             
             scheduledTask makeMainGroove = scheduler->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_song, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
@@ -327,7 +336,7 @@ void loop() {
             scheduler->reviewTasks();
             scheduler->run();
             scheduler->deleteAllTasks();
-            
+        }
             
             
         }

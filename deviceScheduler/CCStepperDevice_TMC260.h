@@ -38,7 +38,7 @@
 #define CCSTEPPERDEVICE_TMC260_SPIDEBUG            0x10
 #define CCSTEPPERDEVICE_TMC260_SETUPDEBUG          0x20
 
-#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x3f
+#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x20
 
 #define READOUT_MICROSTEP_POSITION    0
 #define READOUT_STALLGUARD_LEVEL      1
@@ -126,7 +126,6 @@ class CCStepperDevice_TMC260 : public CCStepperDevice {
 	
     unsigned long resultDatagram;
     void doTransaction(unsigned long datagram);
-    void getReadOut(byte theReadOut);
     void printDatagram(unsigned long datagram);
 	//helper routione to get the top 10 bit of the readout
 //	inline int getReadoutValue();
@@ -159,6 +158,10 @@ public:
     void setCoolStepRegister(byte minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold);
     void setStallGuard2Register(boolean stallGuard2FilterEnable, int stallGuard2Threshold);
     void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
+
+    
+    void getReadOut(byte theReadOut);
+
     
     /*!
      * \brief creates a new represenatation of a stepper motor connected to a TMC26X stepper driver

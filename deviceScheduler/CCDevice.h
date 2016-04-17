@@ -20,7 +20,7 @@
 //  verbosity:
 #define CCDEVICE_BASICOUTPUT            0x01
 
-#define CCDEVICE_VERBOSE                1
+#define CCDEVICE_VERBOSE                0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,6 +304,14 @@ public:
     virtual void stopTask() = 0;
     virtual void finishTask() = 0;
     
+    virtual void setDriverControlRegister(boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode);
+    virtual void setChopperControlRegister_spreadCycle(byte blankingTimeValue, boolean chopperMode, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime);
+    virtual void setChopperControlRegister_fastDecay(byte blankingTimeValue, boolean chopperMode, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime);
+    virtual void setCoolStepRegister(byte minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold);
+    virtual void setStallGuard2Register(boolean stallGuard2FilterEnable, int stallGuard2Threshold);
+    virtual void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
+    virtual void getReadOut(byte theReadOut);
+
     
 private:
     

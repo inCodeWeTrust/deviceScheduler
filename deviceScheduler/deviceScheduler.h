@@ -57,7 +57,7 @@
 #define STEPPER_CAT_STEP_PIN                8
 #define STEPPER_CAT_ENABLE_PIN              7
 #define STEPPER_CAT_CHIPSELECT_PIN          10
-#define STEPPER_CAT_CURRENT                 1500
+#define STEPPER_CAT_CURRENT                 1200
 #define STEPPER_CAT_STEPS_PER_ROTATION      200
 #define STEPPER_CAT_PPS_MAX                 1000
 #define STEPPER_CAT_ACC_MAX                 4000
@@ -214,7 +214,7 @@
 #define TABLE_STEP_ACCEL                200
 
 #define CAT_SPEED_HIGH                  4800
-#define CAT_SPEED_VERY_HIGH             6400
+#define CAT_SPEED_VERY_HIGH             5600
 #define CAT_ACCEL_SLOW                  800
 #define CAT_ACCEL_NORMAL                1800
 #define CAT_ACCEL_HIGH                  3200

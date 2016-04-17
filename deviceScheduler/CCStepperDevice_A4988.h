@@ -79,6 +79,7 @@ public:
     void detachDevice();
 
 
+
 };
 
 #endif

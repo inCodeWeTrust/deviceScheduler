@@ -384,6 +384,7 @@ void CCDeviceScheduler::run() {
     unsigned long taskTime, loopTime;
     unsigned long taskStartTime = millis();
     
+    unsigned long lastPrintTime = taskStartTime;
     
     do {
         loopTime = millis();
@@ -503,7 +504,10 @@ void CCDeviceScheduler::run() {
             
         }
         
-        
+        if (taskTime - lastPrintTime > 400) {
+            device[6]->getReadOut(1);
+            lastPrintTime = taskTime;
+        }
         
         for (unsigned char b = 0; b < countOfControlButtons; b++) {
             for (int theAction = 0; theAction < controlButton[b]->countOfActions; theAction++) {

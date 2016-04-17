@@ -21,7 +21,7 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             0
+#define CCSTEPPERDEVICE_VERBOSE             0x00
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,8 +84,6 @@ public:
     void stopTask();
     void finishTask();
     
-
-
     
 };
 
