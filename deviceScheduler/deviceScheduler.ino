@@ -190,8 +190,10 @@ void loop() {
         // ============================================================================================================================
         // ============================================================================================================================
         
-        
-        for (int i = 4; i < 63; i++) {
+        scheduler->device[catStepper]->setStallGuard2Register(0, 4);
+        scheduler->device[catStepper]->setCurrent(1090);
+
+//        for (int i = 1; i < 3; i ++) {
             scheduler->device[catStepper]->currentPosition = 0;
 
         
@@ -202,17 +204,23 @@ void loop() {
 //        scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
 //        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
         
-        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400, 136, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
 
-        scheduledTask initCatStepper_back = scheduler->device[catStepper]->addTask(400, 136, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+        scheduledTask initCatStepper_back = scheduler->device[catStepper]->addTask(400, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
         scheduler->device[catStepper]->task[initCatStepper_back]->startAfterCompletionOf(catStepper, initCatStepper);
         
         scheduler->reviewTasks();
         scheduler->getAllTasks();
-        
-            Serial.print("SGT: "), Serial.print(i);
-            scheduler->device[catStepper]->setStallGuard2Register(0, i);
+
+//            Serial.print("##### SEMIN: "), Serial.println(i);
+            scheduler->device[catStepper]->setCoolStepRegister(1, 0, 0, 0, 1);
+            
+//            Serial.print("##### SGT: "), Serial.println(i);
+//            scheduler->device[catStepper]->setStallGuard2Register(0, i);
+            
+//            Serial.print("current: "), Serial.println(i);
+//            scheduler->device[catStepper]->setCurrent(i);
             scheduler->run();
         
         scheduler->deleteAllTasks();
@@ -220,7 +228,7 @@ void loop() {
         
         Serial.println("...................................... done ......................................");
 
-        
+//        }
         scheduler->device[catStepper]->currentPosition = 0;
         scheduler->device[tableStepper]->currentPosition = 0;
         
@@ -339,7 +347,7 @@ void loop() {
         }
             
             
-        }
+        
     }
     
     delay(2000);

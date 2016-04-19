@@ -311,7 +311,7 @@ public:
     virtual void setStallGuard2Register(boolean stallGuard2FilterEnable, int stallGuard2Threshold);
     virtual void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
     virtual void getReadOut(byte theReadOut);
-
+    virtual void setCurrent(unsigned int current);
     
 private:
     

@@ -353,7 +353,7 @@ void CCDeviceScheduler::run() {
     unsigned long loopCounter = 0;
     unsigned char ongoingOperations;
     
-    
+    int i = 100;
     
     // prepare the loop
     for (unsigned char s = 0; s < countOfDevices; s++) {
@@ -504,10 +504,13 @@ void CCDeviceScheduler::run() {
             
         }
         
-        if (taskTime - lastPrintTime > 400) {
-            device[6]->getReadOut(1);
-            lastPrintTime = taskTime;
-        }
+//        if (taskTime - lastPrintTime > 200) {
+//            device[6]->getReadOut(2);
+//            Serial.print("current: "), Serial.println(i);
+//            device[6]->setCurrent(i);
+//            i += 100;
+//            lastPrintTime = taskTime;
+//        }
         
         for (unsigned char b = 0; b < countOfControlButtons; b++) {
             for (int theAction = 0; theAction < controlButton[b]->countOfActions; theAction++) {

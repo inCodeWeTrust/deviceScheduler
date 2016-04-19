@@ -74,7 +74,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     
     attachDevice();
 
-    
+    // currentMax: 1600mA | SGT: 10
     
     
     // #################### DriverControlRegister: ####################
@@ -223,7 +223,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
 
     // stallGuard2 threshold value (SGT):
     // The stallGuard2 threshold value controls the optimum measurement range for readout. A lower value results in a higher sensitivity and requires less torque to indicate a stall. The value is a two’s complement signed integer. Values below -10 are not recommended. Range: -64 to +63
-    int stallGuard2Threshold = 6;
+    int stallGuard2Threshold = 10;
 
     // Current scale (scales digital currents A and B) (CS)
     //  Current scaling for SPI and step/direction operation. %00000 ... %11111: 1/32, 2/32, 3/32, ... 32/32
@@ -382,10 +382,15 @@ void CCStepperDevice_TMC260::setupMicroSteppingMode() {
 
 
 void CCStepperDevice_TMC260::calculateCurrentSetup(unsigned int current) {
-    unsigned int VSenseFullScale;                        // voltage in mV
-    //  VsenseMax = R_SENSE * coilCurrentMax [/ 1000]
-    //  here: VsenseMax = 0.15 Ohm * 1000 mA = 150 mV  ==> we choose: VSENSE = 1: Full-scale sense resistor voltage is 165mV;
-    if ((long) R_SENSE * current <= 165000) {
+    // the mesurement full scale on the chip can eiter be set to 165mV or 310mV
+    // the shunt on the shield (R_SENSE) is 150mOhm
+    // VsenseMax = R_SENSE * coilCurrentMax [/ 1000]
+    //  ==> coilCurrentMax = VsenseMax / R_SENSE:
+    // VsenseMax = 165mV ==> coilCurrentMax = 165mV / 150mOhm = 1100mA
+    // VsenseMax = 310mV ==> coilCurrentMax = 310mV / 150mOhm = 2066mA
+    
+    unsigned int VSenseFullScale;                        // voltage in mV - it can either be 165mV or 310MV
+    if ((long) R_SENSE * current < 165000) {
         VSenseFullScale = 165;
         senseResistorVoltage165mV = true;
     }
@@ -398,12 +403,20 @@ void CCStepperDevice_TMC260::calculateCurrentSetup(unsigned int current) {
     //  so: I / 1000 = currentScaleOf32 / 32 * VSenseFullScale / R_SENSE
     //  ==>  currentScaleOf32 = (32 * R_SENSE * I) / VSenseFullScale;
     currentScaleOf32 = (float)(32.0 * R_SENSE * current) / VSenseFullScale / 1000.0 + 0.5;               // (+ 0.5 is for better rounding)
-    //   100 mA: 32 * 0.15 * 0.1 / 0.165 =  2.91 -->  3
     //   300 mA: 32 * 0.15 * 0.3 / 0.165 =  8.73 -->  9
     //   600 mA: 32 * 0.15 * 0.6 / 0.165 = 17.45 --> 17
     //  1000 mA: 32 * 0.15 * 1.0 / 0.165 = 29.09 --> 29
+    //  1090 mA: 32 * 0.15 * 1.09/ 0.165 = 31.71 --> 32
+    //  1100 mA: 32 * 0.15 * 1.1 / 0.310 = 17.03 --> 17
+    //  2060 mA: 32 * 0.15 * 1.0 / 0.310 = 31.89 --> 32
 
     currentScaleOf32 = min(currentScaleOf32, 32);
+
+    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+        Serial.print(F("##### calculateCurrentSetup: currentScaleOf32: "));
+        Serial.println(currentScaleOf32);
+    }
+
 }
 
 
@@ -504,11 +517,13 @@ void CCStepperDevice_TMC260::doTransaction(unsigned long datagram) {
     digitalWrite(chipSelect_pin, LOW);
     
     //write/read the values
-    resultDatagram = SPI.transfer((datagram >> 16) & 0xff);
+    resultDatagram = (SPI.transfer((datagram >> 16) & 0xff)) & 0xff;
     resultDatagram <<= 8;
     resultDatagram |= SPI.transfer((datagram >>  8) & 0xff);
     resultDatagram <<= 8;
     resultDatagram |= SPI.transfer((datagram) & 0xff);
+//    Serial.println(resultDatagram, HEX);
+    resultDatagram &= 0xfffff0;
     resultDatagram >>= 4;
     
     //deselect the TMC chip
@@ -532,10 +547,10 @@ void CCStepperDevice_TMC260::setDriverControlRegister(boolean stepInterpolation,
     
     if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
         Serial.print(F("#####  TMC260 setup: Driver: "));
-        Serial.print(F("  stepInterpolation: ")) + Serial.print(stepInterpolation);
-        Serial.print(F(", doubleEdgeStepPulses: ")) + Serial.print(doubleEdgeStepPulses);
-        Serial.print(F(", microSteppingValue: ")) + Serial.print(8 - microSteppingMode);
-        Serial.print(F(" = mode ")) + Serial.println(microSteppingMode);
+        Serial.print(F("  stepInterpolation: ")) , Serial.print(stepInterpolation);
+        Serial.print(F(", doubleEdgeStepPulses: ")) , Serial.print(doubleEdgeStepPulses);
+        Serial.print(F(", microSteppingValue: ")) , Serial.print(8 - microSteppingMode);
+        Serial.print(F(" = mode ")) , Serial.println(microSteppingMode);
     }
     
     
@@ -582,12 +597,12 @@ void CCStepperDevice_TMC260::setChopperControlRegister_fastDecay(byte blankingTi
     
     if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
         Serial.print(F("#####  TMC260 setup: Chopper Spread Cycle: "));
-        Serial.print(F("  blankingTimeValue: ")) + Serial.print(blankingTimeValue);
-        Serial.print(F(", randomTOffTime: ")) + Serial.print(randomTOffTime);
-        Serial.print(F(", onlyTimerTerminatesDecayPhase: ")) + Serial.print(onlyTimerTerminatesDecayPhase);
-        Serial.print(F(", sinwaveOffset: ")) + Serial.print(sinwaveOffset);
-        Serial.print(F(", fastDecayTime: ")) + Serial.print(fastDecayTime);
-        Serial.print(F(", offTime: ")) + Serial.println(offTime);
+        Serial.print(F("  blankingTimeValue: ")) , Serial.print(blankingTimeValue);
+        Serial.print(F(", randomTOffTime: ")) , Serial.print(randomTOffTime);
+        Serial.print(F(", onlyTimerTerminatesDecayPhase: ")) , Serial.print(onlyTimerTerminatesDecayPhase);
+        Serial.print(F(", sinwaveOffset: ")) , Serial.print(sinwaveOffset);
+        Serial.print(F(", fastDecayTime: ")) , Serial.print(fastDecayTime);
+        Serial.print(F(", offTime: ")) , Serial.println(offTime);
     }
 
     doTransaction(chopperControl);
@@ -607,11 +622,11 @@ void CCStepperDevice_TMC260::setCoolStepRegister(byte minCoolStepCurrentValue, b
     
     if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
         Serial.print(F("#####  TMC260 setup: Cool Step: "));
-        Serial.print(F("  minCoolStepCurrentValue: ")) + Serial.print(minCoolStepCurrentValue);
-        Serial.print(F(", currentDecrementSpeedValue: ")) + Serial.print(currentDecrementSpeedValue);
-        Serial.print(F(", upperCoolStepThreshold: ")) + Serial.print(upperCoolStepThreshold);
-        Serial.print(F(", currentIncrementStepsValue: ")) + Serial.print(currentIncrementStepsValue);
-        Serial.print(F(", lowerCoolStepThreshold: ")) + Serial.println(lowerCoolStepThreshold);
+        Serial.print(F("  minCoolStepCurrentValue: ")) , Serial.print(minCoolStepCurrentValue);
+        Serial.print(F(", currentDecrementSpeedValue: ")) , Serial.print(currentDecrementSpeedValue);
+        Serial.print(F(", upperCoolStepThreshold: ")) , Serial.print(upperCoolStepThreshold);
+        Serial.print(F(", currentIncrementStepsValue: ")) , Serial.print(currentIncrementStepsValue);
+        Serial.print(F(", lowerCoolStepThreshold: ")) , Serial.println(lowerCoolStepThreshold);
     }
 
     doTransaction(coolStepControl);
@@ -627,9 +642,9 @@ void CCStepperDevice_TMC260::setStallGuard2Register(boolean stallGuard2FilterEna
     
     if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
         Serial.print(F("#####  TMC260 setup: Stall Guard 2: "));
-        Serial.print(F("  stallGuard2FilterEnable: ")) + Serial.print(stallGuard2FilterEnable);
-        Serial.print(F(", stallGuard2Threshold: ")) + Serial.print(stallGuard2Threshold);
-        Serial.print(F(", currentScaleOf32: ")) + Serial.println(currentScaleOf32);
+        Serial.print(F("  stallGuard2FilterEnable: ")) , Serial.print(stallGuard2FilterEnable);
+        Serial.print(F(", stallGuard2Threshold: ")) , Serial.print(stallGuard2Threshold);
+        Serial.print(F(", currentScaleOf32: ")) , Serial.println(currentScaleOf32);
     }
 
     doTransaction(stallGuard2Control);
@@ -648,13 +663,13 @@ void CCStepperDevice_TMC260::setDriverConfigurationRegister(byte slopeControlHig
     
     if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
         Serial.print(F("#####  TMC260 setup: Driver Configuration: "));
-        Serial.print(F("  slopeControlHighSide: ")) + Serial.print(slopeControlHighSide);
-        Serial.print(F(", slopeControlLowSide: ")) + Serial.print(slopeControlLowSide);
-        Serial.print(F(", shortToGndProtectionDisable: ")) + Serial.print(shortToGndProtectionDisable);
-        Serial.print(F(", shortToGndDetectionTimerValue: ")) + Serial.print(shortToGndDetectionTimerValue);
-        Serial.print(F(", stepDirInterfaceDisable: ")) + Serial.print(stepDirInterfaceDisable);
-        Serial.print(F(", senseResistorVoltage165mV: ")) + Serial.print(senseResistorVoltage165mV);
-        Serial.print(F(", selectReadOut: ")) + Serial.println(selectReadOut);
+        Serial.print(F("  slopeControlHighSide: ")) , Serial.print(slopeControlHighSide);
+        Serial.print(F(", slopeControlLowSide: ")) , Serial.print(slopeControlLowSide);
+        Serial.print(F(", shortToGndProtectionDisable: ")) , Serial.print(shortToGndProtectionDisable);
+        Serial.print(F(", shortToGndDetectionTimerValue: ")) , Serial.print(shortToGndDetectionTimerValue);
+        Serial.print(F(", stepDirInterfaceDisable: ")) , Serial.print(stepDirInterfaceDisable);
+        Serial.print(F(", senseResistorVoltage165mV: ")) , Serial.print(senseResistorVoltage165mV);
+        Serial.print(F(", selectReadOut: ")) , Serial.println(selectReadOut);
     }
 
     

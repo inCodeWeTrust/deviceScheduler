@@ -19,7 +19,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;try&#13;click menu item &quot;Serieller Monitor&quot; of menu &quot;Werkzeuge&quot; of menu bar item &quot;Werkzeuge&quot; of menu bar 1 of process &quot;Arduino&quot;&#13;--say &quot;clicked serial monitor&quot;&#13;end try&#13;end tell&#13;&apos;">
+               scriptText = "osascript -e &apos;&#10;tell application &quot;System Events&quot;&#13;&#10;&#10;try&#13;click menu item &quot;Serieller Monitor&quot; of menu &quot;Werkzeuge&quot; of menu bar item &quot;Werkzeuge&quot; of menu bar 1 of process &quot;Arduino_152&quot;&#13;--say &quot;clicked serial monitor&quot;&#13;end try&#10;&#10;-- tell application &quot;Arduino&quot; to activate&#13;-- keystroke &quot;M&quot; using command down&#13;end tell&#13;&apos;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>
