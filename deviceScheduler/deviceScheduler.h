@@ -38,13 +38,18 @@
 
 #define STEPPER_TABLE_NAME                  "tableStepper"
 
-#define STEPPER_TABLE_STEP_PIN              23
-#define STEPPER_TABLE_DIR_PIN               25
-#define STEPPER_TABLE_ENABLE_PIN            27
-#define STEPPER_TABLE_MICROSTEPPINS         "29, 31, 33"
-
-#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  5
-#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
+#define STEPPER_TABLE_STEP_PIN              22
+#define STEPPER_TABLE_DIR_PIN               24
+#define STEPPER_TABLE_ENABLE_PIN            26
+#define STEPPER_TABLE_MICROSTEPPINS         "28, 30, 32"
+#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  4
+#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
+//#define STEPPER_TABLE_STEP_PIN              23
+//#define STEPPER_TABLE_DIR_PIN               25
+//#define STEPPER_TABLE_ENABLE_PIN            27
+//#define STEPPER_TABLE_MICROSTEPPINS         "29, 31, 33"
+//#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  5
+//#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
 #define STEPPER_TABLE_STEPS_PER_ROTATION    200
 #define STEPPER_TABLE_PPS_MAX               800
 #define STEPPER_TABLE_ACC_MAX               2000

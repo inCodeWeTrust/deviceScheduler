@@ -504,13 +504,13 @@ void CCDeviceScheduler::run() {
             
         }
         
-//        if (taskTime - lastPrintTime > 200) {
-//            device[6]->getReadOut(2);
+        if (taskTime - lastPrintTime > 200) {
+            device[6]->getReadOut(2);
 //            Serial.print("current: "), Serial.println(i);
 //            device[6]->setCurrent(i);
 //            i += 100;
-//            lastPrintTime = taskTime;
-//        }
+            lastPrintTime = taskTime;
+        }
         
         for (unsigned char b = 0; b < countOfControlButtons; b++) {
             for (int theAction = 0; theAction < controlButton[b]->countOfActions; theAction++) {

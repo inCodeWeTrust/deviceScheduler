@@ -191,6 +191,7 @@ void CCStepperDevice::prepareNextTask() {
     // v * v = 2 * a * n
     // ==> v * v = 2 * a * n ==> n = v * v / (2 * a)
     stepsForDeceleration = (unsigned long)(veloBySquare / deceleration) >> 1;
+    stepsForDeceleration = max(stepsForDeceleration, 1);
     
     //    this takes ca 40us
 //    t_stop = micros() - t_prepTask;
@@ -212,6 +213,8 @@ void CCStepperDevice::prepareNextTask() {
     else {
         stepsForAcceleration = (unsigned long)((veloBySquare - currVeloBySquare) / acceleration) >> 1;
     }
+    stepsForAcceleration = max(stepsForAcceleration, 1);
+    
     
     //    this takes ca 60us
 //    t_stop = micros() - t_prepTask;
@@ -269,12 +272,12 @@ void CCStepperDevice::prepareNextTask() {
 //    t_prepTask = micros();
     
     
-
     // *** recalculate a: ***
     // v * v = 2 * a * n ==> a = v * v / (2 * n)
     deceleration = -veloBySquare / (stepsForDeceleration << 1);
     
     if (deceleration < -acceleration_max) {                             // !!!! too much deceleration !!!!
+        Serial.println(F("!!!! too much deceleration !!!!"));
         deceleration = -acceleration_max;
         // *** recalculate v: ***
         // v * v = 2 * a * n ==> v = sqrt(2 * a * n)
@@ -479,6 +482,7 @@ void CCStepperDevice::finishTask() {
     state = SLEEPING;
     
     disableDevice();
+
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));

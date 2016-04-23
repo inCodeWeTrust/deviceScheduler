@@ -59,7 +59,7 @@ void freeRam ();
 unsigned long catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
 float catMotorSpeed_startGroove, catMotorSpeed_song, catMotorSpeed_endGroove;
 unsigned long grooves_all;
-float turnTableSpeed;
+float turnTableStepperSpeed;
 
 extern char _end;
 extern "C" char *sbrk(int i);
@@ -190,10 +190,12 @@ void loop() {
         // ============================================================================================================================
         // ============================================================================================================================
         
-        scheduler->device[catStepper]->setStallGuard2Register(0, 4);
+        scheduler->device[catStepper]->setStallGuard2Register(0, 10);
         scheduler->device[catStepper]->setCurrent(1090);
 
-//        for (int i = 1; i < 3; i ++) {
+//        for (;;) {
+//            for (int stallVal = 7; stallVal <= 12; stallVal++) {
+
             scheduler->device[catStepper]->currentPosition = 0;
 
         
@@ -201,20 +203,34 @@ void loop() {
         
         
 //        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
-//        scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
-//        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
-        
-        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-100000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
         scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
-
-        scheduledTask initCatStepper_back = scheduler->device[catStepper]->addTask(400, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
-        scheduler->device[catStepper]->task[initCatStepper_back]->startAfterCompletionOf(catStepper, initCatStepper);
+        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
         
+//
+//        scheduledTask initCatStepper_back = scheduler->device[catStepper]->addTask(0, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
+//        scheduler->device[catStepper]->task[initCatStepper_back]->startAfterCompletionOf(catStepper, initCatStepper);
+//        scheduler->device[catStepper]->task[initCatStepper_back]->stopByButton(CAT_END_BUTTON , HIGH, STOP_NORMAL);
+//        
+//                scheduledTask probeCutting = scheduler->device[catStepper]->addTask(-14000, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+//                scheduler->device[catStepper]->task[probeCutting]->startAfterCompletionOf(catStepper, initCatStepper_back);
+//                scheduler->device[catStepper]->task[probeCutting]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+//                
+//                scheduledTask probeCutting_back = scheduler->device[catStepper]->addTask(0, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+//                scheduler->device[catStepper]->task[probeCutting_back]->startAfterCompletionOf(catStepper, probeCutting);
+//                scheduler->device[catStepper]->task[probeCutting_back]->stopByButton(CAT_END_BUTTON , HIGH, STOP_NORMAL);
+//                
         scheduler->reviewTasks();
         scheduler->getAllTasks();
 
+//                scheduler->device[catStepper]->setStallGuard2Register(0, stallVal);
+//               Serial.print(", stallVal: "), Serial.println(stallVal);
+        
+//                , Serial.print(", HEND: "), Serial.println(hdec + 10);
+//            scheduler->device[catStepper]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, 10, 2, 15);
+
 //            Serial.print("##### SEMIN: "), Serial.println(i);
-            scheduler->device[catStepper]->setCoolStepRegister(1, 0, 0, 0, 1);
+//            scheduler->device[catStepper]->setCoolStepRegister(1, 0, 0, 0, 1);
             
 //            Serial.print("##### SGT: "), Serial.println(i);
 //            scheduler->device[catStepper]->setStallGuard2Register(0, i);
@@ -226,8 +242,8 @@ void loop() {
         scheduler->deleteAllTasks();
         scheduler->deleteAllActions();
         
-        Serial.println("...................................... done ......................................");
-
+//        }
+                Serial.println("...................................... done ......................................");
 //        }
         scheduler->device[catStepper]->currentPosition = 0;
         scheduler->device[tableStepper]->currentPosition = 0;
@@ -242,7 +258,7 @@ void loop() {
 //            scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
             
             //  turn the table:
-            scheduledTask turnTheTable = scheduler->device[tableStepper]->addTask(grooves_all * 360, turnTableSpeed, TABLE_STEP_ACCEL, TABLE_STEP_ACCEL);
+            scheduledTask turnTheTable = scheduler->device[tableStepper]->addTask(grooves_all * 3600, turnTableStepperSpeed, TABLE_STEP_ACCEL, TABLE_STEP_ACCEL);
             scheduler->device[tableStepper]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
 //            scheduler->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
             
@@ -419,7 +435,8 @@ void calculateCuttingParameters() {
     
 
     grooves_all = STARTGROOVE_RANGE / (float)STARTGROOVE_PITCH + songGrooves + endGrooveRange / (float)ENDGROOVE_PITCH;
-    turnTableSpeed = RECORD_TURNS_PER_MINUTE / 60.0 * TABLE_DRIVE_RATIO * STEPPER_TABLE_STEPS_PER_ROTATION;
+    //    turnTableStepperSpeed = RECORD_TURNS_PER_MINUTE / 60.0 * TABLE_DRIVE_RATIO * 360.0;
+    turnTableStepperSpeed = 6 * RECORD_TURNS_PER_MINUTE * TABLE_DRIVE_RATIO;
     
     
     float catSpeed_start_mmPerSecond = STARTGROOVE_PITCH * RECORD_TURNS_PER_MINUTE / 60.0;

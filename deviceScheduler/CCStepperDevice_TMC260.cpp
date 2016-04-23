@@ -111,7 +111,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     //  %00: 16; %01: 24; %10: 36; %11: 54
     //  internal clock: 15 MHz ==> 1 systemClockPeriod is 67 ns
     //  16: 1.06 us [= 0]; 24: 1.6 us [= 1]; 36: 2.4 us [= 2]; 54: 3.6 us [= 3]
-    byte blankingTimeValue = 3;
+    byte blankingTimeValue = 0;
     
     // chopper mode (CHM):
     //  This mode bit affects the interpretation of the HDEC, HEND, and HSTRT parameters shown below.
@@ -131,7 +131,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     //  %0001: 1 (use with TBL of minimum 24 clocks) %0010 ... %1111: 2 ... 15
     //  internal clock: 15 MHz ==> 1 systemClockPeriod is 67 ns, clocks = 12 + 32 * offTime
     //  offTime 0: MOSFET shut off; 2: (76 cycles): 5.1 us; 3: (108 cycles): 7.2 us; 15 (492 cycles): 32.8 us
-    byte offTime = 3;
+    byte offTime = 15;
     
     if (chopperMode == 0) {
         // spreadCycleMode
@@ -144,13 +144,13 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
         // hysteresis end (low) value (HEND):
         //  %0000 ... %1111: Hysteresis is -3, -2, -1, 0, 1, ..., 12
         //  (1/512 of this setting adds to current setting) This is the hysteresis value which becomes used for the hysteresis chopper.
-        int hysteresisEnd = 4;
+        int hysteresisEnd = 10;
         
         // hysteresis start value (HSTRT)
         //  hysteresis start offset from HEND
         //  %000: 1; %001: 2; %010: 3; %011: 4; ... %111: 8
         //  Effective: HEND + HSTRT must be ≤ 15
-        byte hysteresisStart = 1;
+        byte hysteresisStart = 2;
     
         setChopperControlRegister_spreadCycle(blankingTimeValue, chopperMode, randomTOffTime, hysteresisDecrementPeriodValue, hysteresisEnd, hysteresisStart, offTime);
 
@@ -189,12 +189,12 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     
     // Minimum coolStep current (SEIMIN):
     // 0: 1⁄2 CS current setting; 1: 1⁄4 CS current setting
-    byte minCoolStepCurrentValue = 1;
+    byte minCoolStepCurrentValue = 0;
     
     // current decrerment speed (SEDN):
     //  Number of times that the stallGuard2 value must be sampled equal to or above the upper threshold for each decrement of the coil current:
     //  %00: 32; %01: 8; %10: 2; %11: 1
-    byte currentDecrementSpeedValue = 0x11;
+    byte currentDecrementSpeedValue = 0x01;
     
     // upper cool step treshold as an offset from the lower threshold (SEMAX):
     //  If the stallGuard2 measurement value SG is sampled equal to or above (SEMIN+SEMAX+1) x 32 enough times, then the coil current scaling factor is decremented.
@@ -203,11 +203,11 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     // current increment size (SEUP):
     // Number of current increment steps for each time that the stallGuard2 value SG is sampled below the lower threshold:
     //  %00: 1; %01: 2; %10: 4; %11: 8
-    byte currentIncrementStepsValue = 3;
+    byte currentIncrementStepsValue = 0x01;
     
     // lower coolStep threshold / coolStep disable (SEMIN)
     // If SEMIN is 0, coolStep is disabled. If SEMIN is nonzero and the stallGuard2 value SG falls below SEMIN x 32, the coolStep current scaling factor is increased.
-    byte lowerCoolStepThreshold = 0;
+    byte lowerCoolStepThreshold = 1;
     
     setCoolStepRegister(minCoolStepCurrentValue, currentDecrementSpeedValue, upperCoolStepThreshold, currentIncrementStepsValue, lowerCoolStepThreshold);
     
@@ -219,7 +219,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     // stallGuard2 filter enable (SFILT):
     //  0: Standard mode, fastest response time.
     //  1: Filtered mode, updated once for each four fullsteps to compensate for variation in motor construction, highest accuracy.
-    boolean stallGuard2FilterEnable = true;
+    boolean stallGuard2FilterEnable = false;
 
     // stallGuard2 threshold value (SGT):
     // The stallGuard2 threshold value controls the optimum measurement range for readout. A lower value results in a higher sensitivity and requires less torque to indicate a stall. The value is a two’s complement signed integer. Values below -10 are not recommended. Range: -64 to +63
