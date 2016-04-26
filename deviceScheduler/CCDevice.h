@@ -312,6 +312,7 @@ public:
     virtual void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
     virtual void getReadOut(byte theReadOut);
     virtual void setCurrent(unsigned int current);
+    virtual void setCurrentScale(unsigned int currentScale);
     
 private:
     

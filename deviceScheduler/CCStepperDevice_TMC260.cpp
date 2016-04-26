@@ -139,18 +139,18 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
         // hysteresis decrement interval (HDEC):
         //  Hysteresis decrement period setting, in system clock periods:
         //  %00: 16; %01: 32; %10: 48; %11: 64
-        byte hysteresisDecrementPeriodValue = 0;
+        byte hysteresisDecrementPeriodValue = 1;
         
         // hysteresis end (low) value (HEND):
         //  %0000 ... %1111: Hysteresis is -3, -2, -1, 0, 1, ..., 12
         //  (1/512 of this setting adds to current setting) This is the hysteresis value which becomes used for the hysteresis chopper.
-        int hysteresisEnd = 10;
+        int hysteresisEnd = 12;
         
         // hysteresis start value (HSTRT)
         //  hysteresis start offset from HEND
         //  %000: 1; %001: 2; %010: 3; %011: 4; ... %111: 8
         //  Effective: HEND + HSTRT must be ≤ 15
-        byte hysteresisStart = 2;
+        byte hysteresisStart = 4;
     
         setChopperControlRegister_spreadCycle(blankingTimeValue, chopperMode, randomTOffTime, hysteresisDecrementPeriodValue, hysteresisEnd, hysteresisStart, offTime);
 
@@ -194,7 +194,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     // current decrerment speed (SEDN):
     //  Number of times that the stallGuard2 value must be sampled equal to or above the upper threshold for each decrement of the coil current:
     //  %00: 32; %01: 8; %10: 2; %11: 1
-    byte currentDecrementSpeedValue = 0x01;
+    byte currentDecrementSpeedValue = 0x00;
     
     // upper cool step treshold as an offset from the lower threshold (SEMAX):
     //  If the stallGuard2 measurement value SG is sampled equal to or above (SEMIN+SEMAX+1) x 32 enough times, then the coil current scaling factor is decremented.
@@ -207,7 +207,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
     
     // lower coolStep threshold / coolStep disable (SEMIN)
     // If SEMIN is 0, coolStep is disabled. If SEMIN is nonzero and the stallGuard2 value SG falls below SEMIN x 32, the coolStep current scaling factor is increased.
-    byte lowerCoolStepThreshold = 1;
+    byte lowerCoolStepThreshold = 1; // 1
     
     setCoolStepRegister(minCoolStepCurrentValue, currentDecrementSpeedValue, upperCoolStepThreshold, currentIncrementStepsValue, lowerCoolStepThreshold);
     
@@ -434,6 +434,14 @@ void CCStepperDevice_TMC260::setCurrent(unsigned int current) {
     bitWrite(driverConfiguration, 6, senseResistorVoltage165mV);
     doTransaction(driverConfiguration);
 	
+}
+void CCStepperDevice_TMC260::setCurrentScale(unsigned int currentScale) {
+    currentScaleOf32 = currentScale;
+    //delete the old value
+	stallGuard2Control &= ~0x1F;
+	//set the new current scaling
+	stallGuard2Control |= (currentScaleOf32 - 1) & 0x1F;
+	doTransaction(stallGuard2Control);
 }
 
 

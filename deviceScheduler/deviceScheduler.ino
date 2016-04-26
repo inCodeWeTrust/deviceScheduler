@@ -193,7 +193,7 @@ void loop() {
         scheduler->device[catStepper]->setStallGuard2Register(0, 10);
         scheduler->device[catStepper]->setCurrent(1090);
 
-//        for (;;) {
+        for (;;) {
 //            for (int stallVal = 7; stallVal <= 12; stallVal++) {
 
             scheduler->device[catStepper]->currentPosition = 0;
@@ -203,23 +203,32 @@ void loop() {
         
         
 //        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
-        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-100000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
-        scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
-        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+//        scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-100000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
+//        scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
+//        scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
         
 //
 //        scheduledTask initCatStepper_back = scheduler->device[catStepper]->addTask(0, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
 //        scheduler->device[catStepper]->task[initCatStepper_back]->startAfterCompletionOf(catStepper, initCatStepper);
 //        scheduler->device[catStepper]->task[initCatStepper_back]->stopByButton(CAT_END_BUTTON , HIGH, STOP_NORMAL);
 //        
-//                scheduledTask probeCutting = scheduler->device[catStepper]->addTask(-14000, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+                scheduledTask probeCutting = scheduler->device[catStepper]->addTask(-4000, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
 //                scheduler->device[catStepper]->task[probeCutting]->startAfterCompletionOf(catStepper, initCatStepper_back);
-//                scheduler->device[catStepper]->task[probeCutting]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
-//                
-//                scheduledTask probeCutting_back = scheduler->device[catStepper]->addTask(0, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
-//                scheduler->device[catStepper]->task[probeCutting_back]->startAfterCompletionOf(catStepper, probeCutting);
-//                scheduler->device[catStepper]->task[probeCutting_back]->stopByButton(CAT_END_BUTTON , HIGH, STOP_NORMAL);
-//                
+            scheduler->device[catStepper]->task[probeCutting]->startByDate(100);
+            scheduler->device[catStepper]->task[probeCutting]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+                
+                scheduledTask probeCutting_back = scheduler->device[catStepper]->addTask(0, 244, CAT_ACCEL_SLOW, CAT_ACCEL_SLOW);
+                scheduler->device[catStepper]->task[probeCutting_back]->startAfterCompletionOf(catStepper, probeCutting);
+                scheduler->device[catStepper]->task[probeCutting_back]->stopByButton(CAT_END_BUTTON , HIGH, STOP_NORMAL);
+            
+            scheduledTask probeStartGroove = scheduler->device[catStepper]->addTask(-10000, 1228, CAT_ACCEL_NORMAL, CAT_ACCEL_NORMAL);
+            scheduler->device[catStepper]->task[probeStartGroove]->startAfterCompletionOf(catStepper, probeCutting_back);
+            scheduler->device[catStepper]->task[probeStartGroove]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+            
+            scheduledTask probeEndGroove = scheduler->device[catStepper]->addTask(0, 5600, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
+            scheduler->device[catStepper]->task[probeEndGroove]->startAfterCompletionOf(catStepper, probeStartGroove);
+            scheduler->device[catStepper]->task[probeEndGroove]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
+//
         scheduler->reviewTasks();
         scheduler->getAllTasks();
 
@@ -242,7 +251,7 @@ void loop() {
         scheduler->deleteAllTasks();
         scheduler->deleteAllActions();
         
-//        }
+        }
                 Serial.println("...................................... done ......................................");
 //        }
         scheduler->device[catStepper]->currentPosition = 0;

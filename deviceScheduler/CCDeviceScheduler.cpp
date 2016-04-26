@@ -354,6 +354,8 @@ void CCDeviceScheduler::run() {
     unsigned char ongoingOperations;
     
     int i = 100;
+    int c32, hend, hstrt, tof = 0;
+    
     
     // prepare the loop
     for (unsigned char s = 0; s < countOfDevices; s++) {
@@ -503,12 +505,46 @@ void CCDeviceScheduler::run() {
             ongoingOperations += device[s]->state;                                                              // ongoing operations on any device?
             
         }
-        
+        /*
+        if (taskTime & 0x1000) {
+            i = analogRead(A8) >> 5;
+            i = (c32 * 3 + i) >> 2;
+            if (i != c32) {
+                c32 = i;
+                device[6]->setCurrentScale(c32);
+                Serial.print(" *** c32: "), Serial.println(c32);
+            }
+        }
+        if (taskTime & 0x1010) {
+            i = (analogRead(A9) >> 6 ) - 3;
+            i = (hend * 3 + i) >> 2;
+            if (i != hend) {
+                hend = i;
+                device[6]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, hend, hstrt, tof);
+                Serial.print("*** hend: "), Serial.print(hend);
+            }
+        }
+        if (taskTime & 0x1100) {
+            i = (analogRead(A10) >> 7) + 1;
+            i = (hstrt * 3 + i) >> 2;
+            if (i != hstrt) {
+                hstrt = i;
+                device[6]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, hend, hstrt, tof);
+                Serial.print("*** hstrt: "), Serial.print(hstrt);
+            }
+        }
+        if (taskTime & 0x1110) {
+            i = analogRead(A11) >> 6;
+            i = (tof * 3 + i) >> 2;
+            if (i != tof) {
+                tof = i;
+                device[6]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, hend, hstrt, tof);
+                Serial.print("*** t_off: "), Serial.println(tof);
+            }
+        }
+         */
         if (taskTime - lastPrintTime > 200) {
             device[6]->getReadOut(2);
-//            Serial.print("current: "), Serial.println(i);
-//            device[6]->setCurrent(i);
-//            i += 100;
             lastPrintTime = taskTime;
         }
         

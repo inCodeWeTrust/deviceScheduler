@@ -161,6 +161,7 @@ public:
 
     
     void getReadOut(byte theReadOut);
+    void setCurrentScale(unsigned int currentScale);
 
     
     /*!
