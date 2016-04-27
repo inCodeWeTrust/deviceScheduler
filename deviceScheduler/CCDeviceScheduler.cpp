@@ -144,9 +144,9 @@ unsigned char CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned ch
     return countOfDevices - 1;
 }
 
-unsigned char CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int current, unsigned int stepsPerRotation) {
+unsigned char CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation) {
     
-    device[countOfDevices] = new CCStepperDevice_TMC260(countOfDevices, deviceName, step_pin, dir_pin, enable_pin, chipSelect_pin, current, stepsPerRotation);
+    device[countOfDevices] = new CCStepperDevice_TMC260(countOfDevices, deviceName, step_pin, dir_pin, enable_pin, chipSelect_pin, currentMax, stepsPerRotation);
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
@@ -371,7 +371,7 @@ void CCDeviceScheduler::run() {
             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                 Serial.print(F("setup first Task for "));
                 Serial.print(device[s]->deviceName);
-                Serial.print(F(": current: "));
+                Serial.print(F(": current Position: "));
                 Serial.print((int)device[s]->currentPosition);
                 Serial.print(F(", target: "));
                 Serial.println((int)device[s]->target);
@@ -453,7 +453,7 @@ void CCDeviceScheduler::run() {
                                 Serial.print(device[s]->deviceName);
                                 Serial.print(F(" prepare Task "));
                                 Serial.print((int)device[s]->taskPointer);
-                                Serial.print(F(": current: "));
+                                Serial.print(F(": current Position: "));
                                 Serial.print(device[s]->currentPosition);
                                 Serial.print(F(" target: "));
                                 Serial.println((int)device[s]->target);
@@ -520,7 +520,7 @@ void CCDeviceScheduler::run() {
             i = (hend * 3 + i) >> 2;
             if (i != hend) {
                 hend = i;
-                device[6]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, hend, hstrt, tof);
+                device[6]->setChopperControlRegister_spreadCycle(0, 0, 1, hend, hstrt, tof);
                 Serial.print("*** hend: "), Serial.print(hend);
             }
         }
@@ -529,7 +529,7 @@ void CCDeviceScheduler::run() {
             i = (hstrt * 3 + i) >> 2;
             if (i != hstrt) {
                 hstrt = i;
-                device[6]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, hend, hstrt, tof);
+                device[6]->setChopperControlRegister_spreadCycle(0, 0, 1, hend, hstrt, tof);
                 Serial.print("*** hstrt: "), Serial.print(hstrt);
             }
         }
@@ -538,7 +538,7 @@ void CCDeviceScheduler::run() {
             i = (tof * 3 + i) >> 2;
             if (i != tof) {
                 tof = i;
-                device[6]->setChopperControlRegister_spreadCycle(0, 0, 0, 1, hend, hstrt, tof);
+                device[6]->setChopperControlRegister_spreadCycle(0, 0, 1, hend, hstrt, tof);
                 Serial.print("*** t_off: "), Serial.println(tof);
             }
         }
