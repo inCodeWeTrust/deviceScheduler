@@ -13,16 +13,15 @@
 
 
 
-CCDcControllerDevice::CCDcControllerDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, boolean switchingPin_activ) : CCDevice() {
-    this->deviceIndex = deviceIndex;
+CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) : CCDevice() {
     this->deviceName = deviceName;
     this->switching_pin = switching_pin;
     this->switchingPin_activ = switchingPin_activ;
     
-    type = DCCONTROLLERDEVICE;
-    state = SLEEPING;
-    taskPointer = 0;
-    countOfTasks = 0;
+    this->type = DCCONTROLLERDEVICE;
+    this->state = SLEEPING;
+    this->taskPointer = 0;
+    this->countOfTasks = 0;
     
     //    defaultVelocity = 0;
     //    defaultAcceleration = 0;

@@ -52,12 +52,12 @@ void CCTask::startByButton(unsigned char startButton, boolean startButtonState) 
     this->startButton = startButton;
     this->startButtonState = startButtonState;
 }
-void CCTask::startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask) {
+void CCTask::startAfterCompletionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask) {
     this->startEvent = FOLLOW;
     this->startTriggerDevice = startTriggerDevice;
     this->startTriggerTask = startTriggerTask;
 }
-void CCTask::startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask, signed long startTriggerPosition) {
+void CCTask::startByTriggerpositionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask, signed long startTriggerPosition) {
     this->startEvent = POSITION;
     this->startTriggerDevice = startTriggerDevice;
     this->startTriggerTask = startTriggerTask;
@@ -75,13 +75,13 @@ void CCTask::switchToNextTaskByButton(unsigned char switchingButton, boolean swi
     this->stopButtonState = switchingButtonState;
     this->switchTaskPromptly = true;
 }
-void CCTask::switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask) {
+void CCTask::switchToNextTaskAfterCompletionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = switchingTriggerDevice;
     this->stopTriggerTask = switchingTriggerTask;
     this->switchTaskPromptly = true;
 }
-void CCTask::switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask, signed long switchingTriggerPosition) {
+void CCTask::switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long switchingTriggerPosition) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = switchingTriggerDevice;
     this->stopTriggerTask = switchingTriggerTask;
@@ -100,13 +100,13 @@ void CCTask::stopByButton(unsigned char stopButton, boolean stopButtonState, sto
     this->stopButtonState = stopButtonState;
     this->stopping = stopping;
 }
-void CCTask::stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, stoppingMode stopping) {
+void CCTask::stopAfterCompletionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, stoppingMode stopping) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = stopTriggerDevice;
     this->stopTriggerTask = stopTriggerTask;
     this->stopping = stopping;
 }
-void CCTask::stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping) {
+void CCTask::stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = stopTriggerDevice;
     this->stopTriggerTask = stopTriggerTask;

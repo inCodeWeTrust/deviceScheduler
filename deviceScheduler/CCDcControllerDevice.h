@@ -52,7 +52,7 @@ public:
     unsigned char        switching_pin, switchingPin_activ;
     
     
-    CCDcControllerDevice(unsigned int deviceIndex, String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
+    CCDcControllerDevice(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
     ~CCDcControllerDevice();
     
     

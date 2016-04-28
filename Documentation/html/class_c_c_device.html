@@ -108,6 +108,8 @@ Inheritance diagram for CCDevice:</div>
 <area shape="rect" id="node2" href="class_c_c_dc_controller_device.html" title="Device class for devices controlled by PWM&#45;signals or spimply switched on and off. " alt="" coords="5,80,160,107"/>
 <area shape="rect" id="node3" href="class_c_c_servo_device.html" title="Device class for servo motor devices. " alt="" coords="185,80,303,107"/>
 <area shape="rect" id="node4" href="class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="327,80,456,107"/>
+<area shape="rect" id="node5" href="class_c_c_stepper_device___a4988.html" title="CCStepperDevice_A4988" alt="" coords="202,155,376,181"/>
+<area shape="rect" id="node6" href="class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="401,155,588,181"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -153,6 +155,24 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad36b328e3441f185761b01ca050e99e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add3529df45250163cbc46280ff0f07a4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#add3529df45250163cbc46280ff0f07a4">finishTask</a> ()=0</td></tr>
 <tr class="separator:add3529df45250163cbc46280ff0f07a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4df87e637024f638c1c6f51bd33b4b7c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4df87e637024f638c1c6f51bd33b4b7c">setDriverControlRegister</a> (boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode)</td></tr>
+<tr class="separator:a4df87e637024f638c1c6f51bd33b4b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5907fdcfeb006bc27e10a6a30a11e26d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5907fdcfeb006bc27e10a6a30a11e26d">setChopperControlRegister_spreadCycle</a> (byte blankingTimeValue, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime)</td></tr>
+<tr class="separator:a5907fdcfeb006bc27e10a6a30a11e26d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eb20f1358e3165c8519d442945fc975"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a9eb20f1358e3165c8519d442945fc975">setChopperControlRegister_fastDecay</a> (byte blankingTimeValue, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime)</td></tr>
+<tr class="separator:a9eb20f1358e3165c8519d442945fc975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae51e7f004e5970d1f6ae751e3499e7ec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae51e7f004e5970d1f6ae751e3499e7ec">setCoolStepRegister</a> (boolean minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold)</td></tr>
+<tr class="separator:ae51e7f004e5970d1f6ae751e3499e7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad936788959c439a198663c31cc7e3cc9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad936788959c439a198663c31cc7e3cc9">setStallGuard2Register</a> (boolean stallGuard2FilterEnable, int stallGuard2Threshold)</td></tr>
+<tr class="separator:ad936788959c439a198663c31cc7e3cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591729e205cd6f0a2f3fca131a26bbe5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a591729e205cd6f0a2f3fca131a26bbe5">setDriverConfigurationRegister</a> (byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut)</td></tr>
+<tr class="separator:a591729e205cd6f0a2f3fca131a26bbe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aefd098d6142b9fec836f89165bb4ef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4aefd098d6142b9fec836f89165bb4ef">getReadOut</a> (byte theReadOut)</td></tr>
+<tr class="separator:a4aefd098d6142b9fec836f89165bb4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90ef33326250da127715c47bbf3fc841"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a90ef33326250da127715c47bbf3fc841">setCurrent</a> (unsigned int current)</td></tr>
+<tr class="separator:a90ef33326250da127715c47bbf3fc841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a322b661552cf840314b75c5ef2de74dc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a322b661552cf840314b75c5ef2de74dc">setCurrentScale</a> (unsigned int currentScale)</td></tr>
+<tr class="separator:a322b661552cf840314b75c5ef2de74dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -480,7 +500,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a787753d94403d776bd2c90bce3e675ee">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device.html#a13f7a0f104a3162c556c2487b145e07b">CCDcControllerDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a319a8680ee09b69567f91500e1fd8409">CCStepperDevice_TMC260</a>, <a class="el" href="class_c_c_stepper_device___a4988.html#aaf820e4be5d6ea6a8bc102d6e129455c">CCStepperDevice_A4988</a>, <a class="el" href="class_c_c_stepper_device.html#a08fef44809309464dc99568552c90df6">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a787753d94403d776bd2c90bce3e675ee">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device.html#a13f7a0f104a3162c556c2487b145e07b">CCDcControllerDevice</a>.</p>
 
 </div>
 </div>
@@ -505,7 +525,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a884763465990489915dbebecca980d3d">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device.html#a7d6cce93c2bf85204897a6f3e7915e33">CCDcControllerDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a6c7210f0961997687574aa0b5ee3c47a">CCStepperDevice_TMC260</a>, <a class="el" href="class_c_c_stepper_device___a4988.html#a64253ab2ee2cb0e9ab3fe7576dd402a6">CCStepperDevice_A4988</a>, <a class="el" href="class_c_c_stepper_device.html#aea9240fac12347f3ef5b56c0f7eceb3e">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a884763465990489915dbebecca980d3d">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device.html#a7d6cce93c2bf85204897a6f3e7915e33">CCDcControllerDevice</a>.</p>
 
 </div>
 </div>
@@ -805,6 +825,406 @@ Here is the caller graph for this function:</div>
 </map>
 </div>
 </p>
+
+</div>
+</div>
+<a class="anchor" id="a4df87e637024f638c1c6f51bd33b4b7c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setDriverControlRegister </td>
+          <td>(</td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>stepInterpolation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>doubleEdgeStepPulses</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>microSteppingMode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#afffbb9efc673af4f9a0764eb5e3e3ef8">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5907fdcfeb006bc27e10a6a30a11e26d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setChopperControlRegister_spreadCycle </td>
+          <td>(</td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>blankingTimeValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>randomTOffTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>hysteresisDecrementPeriodValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>hysteresisEnd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>hysteresisStart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>offTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ae6465bd2f6198a00341f1b6dcf55ce40">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9eb20f1358e3165c8519d442945fc975"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setChopperControlRegister_fastDecay </td>
+          <td>(</td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>blankingTimeValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>randomTOffTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>onlyTimerTerminatesDecayPhase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sinwaveOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>fastDecayTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>offTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a271dbe97649b6516b8e76e82da475d00">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae51e7f004e5970d1f6ae751e3499e7ec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setCoolStepRegister </td>
+          <td>(</td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>minCoolStepCurrentValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>currentDecrementSpeedValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>upperCoolStepThreshold</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>currentIncrementStepsValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>lowerCoolStepThreshold</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#abb3b7f91379de343cfdeccb9e997a2b3">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad936788959c439a198663c31cc7e3cc9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setStallGuard2Register </td>
+          <td>(</td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>stallGuard2FilterEnable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stallGuard2Threshold</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ac998019fd295b3a094fc833588c1c1c4">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a591729e205cd6f0a2f3fca131a26bbe5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setDriverConfigurationRegister </td>
+          <td>(</td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>slopeControlHighSide</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>slopeControlLowSide</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>shortToGndProtectionDisable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>shortToGndDetectionTimerValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>stepDirInterfaceDisable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>selectReadOut</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#af387421e9c205dc522db4d77ae0afe59">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4aefd098d6142b9fec836f89165bb4ef"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::getReadOut </td>
+          <td>(</td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>theReadOut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ad43f34c831a7c35540cab46bbef1826c">CCStepperDevice_TMC260</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a4aefd098d6142b9fec836f89165bb4ef_icgraph.png" border="0" usemap="#class_c_c_device_a4aefd098d6142b9fec836f89165bb4ef_icgraph" alt=""/></div>
+<map name="class_c_c_device_a4aefd098d6142b9fec836f89165bb4ef_icgraph" id="class_c_c_device_a4aefd098d6142b9fec836f89165bb4ef_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a55be212e5303af5995ca94e4421396eb" title="CCDeviceScheduler::run" alt="" coords="217,5,386,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a90ef33326250da127715c47bbf3fc841"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setCurrent </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>current</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a65041cf826921346c74d79472fa47a85">CCStepperDevice_TMC260</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a322b661552cf840314b75c5ef2de74dc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCDevice::setCurrentScale </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>currentScale</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a3849244a371b3d2c16201075c6cba1e1">CCStepperDevice_TMC260</a>.</p>
 
 </div>
 </div>
@@ -1379,8 +1799,8 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a></li>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_8cpp.html">CCDevice.cpp</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_8cpp.html">CCDevice.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

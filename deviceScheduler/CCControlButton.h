@@ -42,10 +42,10 @@ public:
     
     struct buttonAction {
     public:
-        unsigned char       targetDevice;
-        unsigned char       validTask;
+        schedulerDevice     targetDevice;
+        scheduledTask       validTask;
         deviceAction        targetAction;
-        unsigned char       followingTask;
+        scheduledTask       followingTask;
         boolean             actionDone;
     };
     buttonAction        action[8];
@@ -54,8 +54,8 @@ public:
     CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean button_activ);
     ~CCControlButton();
     
-    void evokeTaskJumpToTask(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction, unsigned char followingTask);
-    void evokeTaskJump(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction);
+    void evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask);
+    void evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction);
     
     void deleteActions();
     

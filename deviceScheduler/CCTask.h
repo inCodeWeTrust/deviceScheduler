@@ -38,11 +38,11 @@ public:
     unsigned char       stopButton;
     boolean             startButtonState;
     boolean             stopButtonState;
-    unsigned char       startTriggerDevice;
-    unsigned char       startTriggerTask;
+    schedulerDevice     startTriggerDevice;
+    scheduledTask       startTriggerTask;
     signed long         startTriggerPosition;
-    unsigned char       stopTriggerDevice;
-    unsigned char       stopTriggerTask;
+    schedulerDevice     stopTriggerDevice;
+    scheduledTask       stopTriggerTask;
     signed long         stopTriggerPosition;
     unsigned char       sensor;
     signed int          initiatePerformanceValue;
@@ -58,18 +58,18 @@ public:
 
     void startByDate(unsigned long startTime);
     void startByButton(unsigned char startButton, boolean startButtonState);
-    void startAfterCompletionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask);
-    void startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask, signed long startTriggerPosition);
+    void startAfterCompletionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask);
+    void startByTriggerpositionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
     void switchToNextTaskByButton(unsigned char switchingButton, boolean switchingButtonState);
-    void switchToNextTaskAfterCompletionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask);
-    void switchToNextTaskByTriggerpositionOf(unsigned char switchingTriggerDevice, unsigned char switchingTriggerTask, signed long switchingTriggerPosition);
+    void switchToNextTaskAfterCompletionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask);
+    void switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
     void stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping);
-    void stopAfterCompletionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, stoppingMode stopping);
-    void stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
+    void stopAfterCompletionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, stoppingMode stopping);
+    void stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     
     void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
     

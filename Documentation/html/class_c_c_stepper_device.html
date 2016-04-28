@@ -105,7 +105,9 @@ Inheritance diagram for CCStepperDevice:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_c_stepper_device__inherit__graph.png" border="0" usemap="#_c_c_stepper_device_inherit__map" alt="Inheritance graph"/></div>
 <map name="_c_c_stepper_device_inherit__map" id="_c_c_stepper_device_inherit__map">
-<area shape="rect" id="node2" href="class_c_c_device.html" title="base class for all devices " alt="" coords="28,5,111,32"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device___a4988.html" title="CCStepperDevice_A4988" alt="" coords="5,155,179,181"/>
+<area shape="rect" id="node4" href="class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="204,155,391,181"/>
+<area shape="rect" id="node2" href="class_c_c_device.html" title="base class for all devices " alt="" coords="153,5,236,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -120,14 +122,20 @@ Collaboration diagram for CCStepperDevice:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aeb91ad69412a7ba6f8343903de33e097"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aeb91ad69412a7ba6f8343903de33e097">CCStepperDevice</a> (unsigned int <a class="el" href="class_c_c_device.html#ae5a38a33149eca2f44fcd21eab080fb5">deviceIndex</a>, String <a class="el" href="class_c_c_device.html#af1afcf08ebcd33db60108bb1d5cb2cd9">deviceName</a>, unsigned char <a class="el" href="class_c_c_stepper_device.html#a2fdb652c9853ee9bd6a2eb18bfc65229">step_pin</a>, unsigned char <a class="el" href="class_c_c_stepper_device.html#a7942d286a0d4ff373c0736c7fb78b8a3">dir_pin</a>, unsigned char <a class="el" href="class_c_c_stepper_device.html#a96912b12d670c919c0a0264f3a0d9b8f">enable_pin</a>, unsigned char <a class="el" href="class_c_c_stepper_device.html#a50886f3154c5c534fac226e1479ec3a3">highestSteppingMode</a>, unsigned char *stepModeCodes, unsigned char <a class="el" href="class_c_c_stepper_device.html#a4389d6a664f21e84c3e5e2379f881d13">numberOfMicroStepPins</a>, unsigned char *<a class="el" href="class_c_c_stepper_device.html#a545ebf980c9c28b0b85f9ad07b4ba975">microStepPin</a>, unsigned int stepsPerRotation)</td></tr>
-<tr class="separator:aeb91ad69412a7ba6f8343903de33e097"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2e4663a26143a6d764cc78a0a3aae1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ac2e4663a26143a6d764cc78a0a3aae1c">kickDown</a> ()</td></tr>
+<tr class="separator:ac2e4663a26143a6d764cc78a0a3aae1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0bc89786eede1ae2a6ba34d062d0bcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ac0bc89786eede1ae2a6ba34d062d0bcb">kickUp</a> ()</td></tr>
+<tr class="separator:ac0bc89786eede1ae2a6ba34d062d0bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfa77e6cbedd33f0eb83a704d31acf5e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e">setupMicroSteppingMode</a> ()</td></tr>
+<tr class="separator:adfa77e6cbedd33f0eb83a704d31acf5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa035ebbf822375467e5dfc38f2769ee6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aa035ebbf822375467e5dfc38f2769ee6">setupMicroSteppingMode</a> (unsigned char data)</td></tr>
+<tr class="separator:aa035ebbf822375467e5dfc38f2769ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a16937cd79aa54ffd242eb459d91205"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a4a16937cd79aa54ffd242eb459d91205">~CCStepperDevice</a> ()</td></tr>
 <tr class="separator:a4a16937cd79aa54ffd242eb459d91205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61b5729c1acfb250b2653e349668da25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25">attachDevice</a> ()</td></tr>
-<tr class="separator:a61b5729c1acfb250b2653e349668da25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fde2b4d00ab0f48d337b885819c2c3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c">detachDevice</a> ()</td></tr>
-<tr class="separator:a8fde2b4d00ab0f48d337b885819c2c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08fef44809309464dc99568552c90df6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a08fef44809309464dc99568552c90df6">attachDevice</a> ()</td></tr>
+<tr class="separator:a08fef44809309464dc99568552c90df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea9240fac12347f3ef5b56c0f7eceb3e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aea9240fac12347f3ef5b56c0f7eceb3e">detachDevice</a> ()</td></tr>
+<tr class="separator:aea9240fac12347f3ef5b56c0f7eceb3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a51528d2a0b7a9504bc17b75e7fe8f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3">enableDevice</a> ()</td></tr>
 <tr class="separator:a0a51528d2a0b7a9504bc17b75e7fe8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac372f7c2f54db906ae6390ea0386f18b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ac372f7c2f54db906ae6390ea0386f18b">disableDevice</a> ()</td></tr>
@@ -157,25 +165,97 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a67e2c32ef6ab69edee83225279785131 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab206bc33a07b29e88b2c3bfa69518ef3 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab206bc33a07b29e88b2c3bfa69518ef3">deleteTasks</a> ()</td></tr>
 <tr class="separator:ab206bc33a07b29e88b2c3bfa69518ef3 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4df87e637024f638c1c6f51bd33b4b7c inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4df87e637024f638c1c6f51bd33b4b7c">setDriverControlRegister</a> (boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode)</td></tr>
+<tr class="separator:a4df87e637024f638c1c6f51bd33b4b7c inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5907fdcfeb006bc27e10a6a30a11e26d inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5907fdcfeb006bc27e10a6a30a11e26d">setChopperControlRegister_spreadCycle</a> (byte blankingTimeValue, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime)</td></tr>
+<tr class="separator:a5907fdcfeb006bc27e10a6a30a11e26d inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eb20f1358e3165c8519d442945fc975 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a9eb20f1358e3165c8519d442945fc975">setChopperControlRegister_fastDecay</a> (byte blankingTimeValue, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime)</td></tr>
+<tr class="separator:a9eb20f1358e3165c8519d442945fc975 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae51e7f004e5970d1f6ae751e3499e7ec inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae51e7f004e5970d1f6ae751e3499e7ec">setCoolStepRegister</a> (boolean minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold)</td></tr>
+<tr class="separator:ae51e7f004e5970d1f6ae751e3499e7ec inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad936788959c439a198663c31cc7e3cc9 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad936788959c439a198663c31cc7e3cc9">setStallGuard2Register</a> (boolean stallGuard2FilterEnable, int stallGuard2Threshold)</td></tr>
+<tr class="separator:ad936788959c439a198663c31cc7e3cc9 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591729e205cd6f0a2f3fca131a26bbe5 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a591729e205cd6f0a2f3fca131a26bbe5">setDriverConfigurationRegister</a> (byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut)</td></tr>
+<tr class="separator:a591729e205cd6f0a2f3fca131a26bbe5 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aefd098d6142b9fec836f89165bb4ef inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4aefd098d6142b9fec836f89165bb4ef">getReadOut</a> (byte theReadOut)</td></tr>
+<tr class="separator:a4aefd098d6142b9fec836f89165bb4ef inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90ef33326250da127715c47bbf3fc841 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a90ef33326250da127715c47bbf3fc841">setCurrent</a> (unsigned int current)</td></tr>
+<tr class="separator:a90ef33326250da127715c47bbf3fc841 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a322b661552cf840314b75c5ef2de74dc inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a322b661552cf840314b75c5ef2de74dc">setCurrentScale</a> (unsigned int currentScale)</td></tr>
+<tr class="separator:a322b661552cf840314b75c5ef2de74dc inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a79f30ea30b0f965f146d40329a2abee8"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a79f30ea30b0f965f146d40329a2abee8">stepsToGo</a></td></tr>
+<tr class="separator:a79f30ea30b0f965f146d40329a2abee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43b58584495648182dfc8c2450a28421"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a43b58584495648182dfc8c2450a28421">stepsForAcceleration</a></td></tr>
+<tr class="separator:a43b58584495648182dfc8c2450a28421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47620749bd9f2f75b428ac7b92cd43f0"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a47620749bd9f2f75b428ac7b92cd43f0">stepsForDeceleration</a></td></tr>
+<tr class="separator:a47620749bd9f2f75b428ac7b92cd43f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70c5cbc73a5d3f882ffbf867a02553ee"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a70c5cbc73a5d3f882ffbf867a02553ee">stepsForAccAndConstSpeed</a></td></tr>
+<tr class="separator:a70c5cbc73a5d3f882ffbf867a02553ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea799b6caf4a80a10ea51a7a8bf2ca95"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aea799b6caf4a80a10ea51a7a8bf2ca95">timeForAcceleration</a></td></tr>
+<tr class="separator:aea799b6caf4a80a10ea51a7a8bf2ca95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a290ed4d0fd173ae74fb265ad54ae1ac2"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a290ed4d0fd173ae74fb265ad54ae1ac2">timeForAccAndConstSpeed</a></td></tr>
+<tr class="separator:a290ed4d0fd173ae74fb265ad54ae1ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dcc2dcb80eb9619d2983ca061058ca5"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a8dcc2dcb80eb9619d2983ca061058ca5">microStepsToGo</a></td></tr>
+<tr class="separator:a8dcc2dcb80eb9619d2983ca061058ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf3028797e30326a8abb0f2402069cae"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#adf3028797e30326a8abb0f2402069cae">microStepsForAcceleration</a></td></tr>
+<tr class="separator:adf3028797e30326a8abb0f2402069cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adae5f5cd6b8407d1f382c1058162175e"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#adae5f5cd6b8407d1f382c1058162175e">microStepsForAccAndConstSpeed</a></td></tr>
+<tr class="separator:adae5f5cd6b8407d1f382c1058162175e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ee434f62c0d8a1864030871f478358"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ab1ee434f62c0d8a1864030871f478358">accelerateDown</a></td></tr>
+<tr class="separator:ab1ee434f62c0d8a1864030871f478358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a675a35ddfca003ecba5ee8b39b761a50"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a675a35ddfca003ecba5ee8b39b761a50">currentVelocity</a></td></tr>
+<tr class="separator:a675a35ddfca003ecba5ee8b39b761a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a070b7409a5e4d542099493b375c072a0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a070b7409a5e4d542099493b375c072a0">currVeloBySquare</a></td></tr>
+<tr class="separator:a070b7409a5e4d542099493b375c072a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a972b53425f48977206e0f365b0072ae3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a972b53425f48977206e0f365b0072ae3">veloBySquare</a></td></tr>
+<tr class="separator:a972b53425f48977206e0f365b0072ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d2afa9d2587d9a15b773d3866d62e3"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a91d2afa9d2587d9a15b773d3866d62e3">t0</a></td></tr>
+<tr class="separator:a91d2afa9d2587d9a15b773d3866d62e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafa72d2c1d8bfd4f0dd05fc9ff9776db"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aafa72d2c1d8bfd4f0dd05fc9ff9776db">stepExpiration</a></td></tr>
+<tr class="separator:aafa72d2c1d8bfd4f0dd05fc9ff9776db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdca258cd7b5453ed96453b4a281f208"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#afdca258cd7b5453ed96453b4a281f208">elapsedTime</a></td></tr>
+<tr class="separator:afdca258cd7b5453ed96453b4a281f208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671b0ce0c758195027dfe0e5890917bd"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a671b0ce0c758195027dfe0e5890917bd">lastStepTime</a></td></tr>
+<tr class="separator:a671b0ce0c758195027dfe0e5890917bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2477d9cad8fd73af660940266d1e1dc2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a2477d9cad8fd73af660940266d1e1dc2">c0_acc</a></td></tr>
+<tr class="separator:a2477d9cad8fd73af660940266d1e1dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46658445628b14da1f43187e9238ed5d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a46658445628b14da1f43187e9238ed5d">c0_dec</a></td></tr>
+<tr class="separator:a46658445628b14da1f43187e9238ed5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39dddd487edbfcad16cfca877014c924"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a39dddd487edbfcad16cfca877014c924">c1</a></td></tr>
+<tr class="separator:a39dddd487edbfcad16cfca877014c924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad252b4abd4ad510882f306d748258e55"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ad252b4abd4ad510882f306d748258e55">acceleration_inv</a></td></tr>
+<tr class="separator:ad252b4abd4ad510882f306d748258e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affb05d92a5349c40a0bbf0efb70419ef"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#affb05d92a5349c40a0bbf0efb70419ef">deceleration_inv</a></td></tr>
+<tr class="separator:affb05d92a5349c40a0bbf0efb70419ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab54af150105d30d5307de7573fa70d89"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ab54af150105d30d5307de7573fa70d89">microSteppingMode</a></td></tr>
+<tr class="separator:ab54af150105d30d5307de7573fa70d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f2c5ac633d87b4bf9ef5922e1836c3c"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a8f2c5ac633d87b4bf9ef5922e1836c3c">steppingUnit</a></td></tr>
+<tr class="separator:a8f2c5ac633d87b4bf9ef5922e1836c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa48a32753fa965c0572c40f7f3c57dc2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aa48a32753fa965c0572c40f7f3c57dc2">stepsPerDegree</a></td></tr>
+<tr class="separator:aa48a32753fa965c0572c40f7f3c57dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e57bd7842a896864d90b10c64986157"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a1e57bd7842a896864d90b10c64986157">degreesPerMicroStep</a></td></tr>
+<tr class="separator:a1e57bd7842a896864d90b10c64986157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5fade84879c928f59b8460ea9ba4278"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aa5fade84879c928f59b8460ea9ba4278">currentMicroStep</a></td></tr>
+<tr class="separator:aa5fade84879c928f59b8460ea9ba4278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeae3d76011d884db6cf1d9fec284e55b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aeae3d76011d884db6cf1d9fec284e55b">startPosition</a></td></tr>
+<tr class="separator:aeae3d76011d884db6cf1d9fec284e55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57be44791514ba26ffe15a39d4e6de34"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a57be44791514ba26ffe15a39d4e6de34">prepareAndStartNextTaskWhenFinished</a></td></tr>
+<tr class="separator:a57be44791514ba26ffe15a39d4e6de34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac79225f46245cec2f0de81659efc8853"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#ac79225f46245cec2f0de81659efc8853">switchAtNextFullStep</a></td></tr>
+<tr class="separator:ac79225f46245cec2f0de81659efc8853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7942d286a0d4ff373c0736c7fb78b8a3"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a7942d286a0d4ff373c0736c7fb78b8a3">dir_pin</a></td></tr>
 <tr class="separator:a7942d286a0d4ff373c0736c7fb78b8a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fdb652c9853ee9bd6a2eb18bfc65229"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a2fdb652c9853ee9bd6a2eb18bfc65229">step_pin</a></td></tr>
 <tr class="separator:a2fdb652c9853ee9bd6a2eb18bfc65229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96912b12d670c919c0a0264f3a0d9b8f"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a96912b12d670c919c0a0264f3a0d9b8f">enable_pin</a></td></tr>
 <tr class="separator:a96912b12d670c919c0a0264f3a0d9b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4389d6a664f21e84c3e5e2379f881d13"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a4389d6a664f21e84c3e5e2379f881d13">numberOfMicroStepPins</a></td></tr>
-<tr class="separator:a4389d6a664f21e84c3e5e2379f881d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a545ebf980c9c28b0b85f9ad07b4ba975"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a545ebf980c9c28b0b85f9ad07b4ba975">microStepPin</a></td></tr>
-<tr class="separator:a545ebf980c9c28b0b85f9ad07b4ba975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50886f3154c5c534fac226e1479ec3a3"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a50886f3154c5c534fac226e1479ec3a3">highestSteppingMode</a></td></tr>
 <tr class="separator:a50886f3154c5c534fac226e1479ec3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65074bf73ea38032ad6b74c8772cb587"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a65074bf73ea38032ad6b74c8772cb587">stepModeCode</a></td></tr>
-<tr class="separator:a65074bf73ea38032ad6b74c8772cb587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe5c08d8be085cd292e5733346cf416f"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#afe5c08d8be085cd292e5733346cf416f">stepsPerRoation</a></td></tr>
-<tr class="separator:afe5c08d8be085cd292e5733346cf416f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea4a864c4bcb00a5dee9ae3fa97a25fb"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#aea4a864c4bcb00a5dee9ae3fa97a25fb">stepsPerRotation</a></td></tr>
+<tr class="separator:aea4a864c4bcb00a5dee9ae3fa97a25fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0058fe9c9703ed2a1aa496fc43d13e1b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_stepper_device.html#a0058fe9c9703ed2a1aa496fc43d13e1b">acceleration_max</a></td></tr>
 <tr class="separator:a0058fe9c9703ed2a1aa496fc43d13e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_class_c_c_device"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_c_c_device')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_c_c_device.html">CCDevice</a></td></tr>
@@ -259,90 +339,6 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Device class for stepper motor devices. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aeb91ad69412a7ba6f8343903de33e097"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CCStepperDevice::CCStepperDevice </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>deviceIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>deviceName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char&#160;</td>
-          <td class="paramname"><em>step_pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char&#160;</td>
-          <td class="paramname"><em>dir_pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char&#160;</td>
-          <td class="paramname"><em>enable_pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char&#160;</td>
-          <td class="paramname"><em>highestSteppingMode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char *&#160;</td>
-          <td class="paramname"><em>stepModeCodes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char&#160;</td>
-          <td class="paramname"><em>numberOfMicroStepPins</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned char *&#160;</td>
-          <td class="paramname"><em>microStepPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>stepsPerRotation</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_c_c_stepper_device_aeb91ad69412a7ba6f8343903de33e097_cgraph.png" border="0" usemap="#class_c_c_stepper_device_aeb91ad69412a7ba6f8343903de33e097_cgraph" alt=""/></div>
-<map name="class_c_c_stepper_device_aeb91ad69412a7ba6f8343903de33e097_cgraph" id="class_c_c_stepper_device_aeb91ad69412a7ba6f8343903de33e097_cgraph">
-<area shape="rect" id="node2" href="class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25" title="CCStepperDevice::attachDevice" alt="" coords="256,12,469,39"/>
-</map>
-</div>
-</p>
-
-</div>
-</div>
 <a class="anchor" id="a4a16937cd79aa54ffd242eb459d91205"></a>
 <div class="memitem">
 <div class="memproto">
@@ -362,7 +358,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_c_c_stepper_device_a4a16937cd79aa54ffd242eb459d91205_cgraph.png" border="0" usemap="#class_c_c_stepper_device_a4a16937cd79aa54ffd242eb459d91205_cgraph" alt=""/></div>
 <map name="class_c_c_stepper_device_a4a16937cd79aa54ffd242eb459d91205_cgraph" id="class_c_c_stepper_device_a4a16937cd79aa54ffd242eb459d91205_cgraph">
 <area shape="rect" id="node2" href="class_c_c_device.html#ab206bc33a07b29e88b2c3bfa69518ef3" title="CCDevice::deleteTasks" alt="" coords="293,5,454,32"/>
-<area shape="rect" id="node3" href="class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c" title="CCStepperDevice::detachDevice" alt="" coords="265,56,482,83"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#aea9240fac12347f3ef5b56c0f7eceb3e" title="CCStepperDevice::detachDevice" alt="" coords="265,56,482,83"/>
 </map>
 </div>
 </p>
@@ -370,7 +366,79 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a61b5729c1acfb250b2653e349668da25"></a>
+<a class="anchor" id="ac2e4663a26143a6d764cc78a0a3aae1c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCStepperDevice::kickDown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_cgraph.png" border="0" usemap="#class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_cgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_cgraph" id="class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_cgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e" title="CCStepperDevice::setupMicro\lSteppingMode" alt="" coords="249,5,450,46"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_icgraph.png" border="0" usemap="#class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_icgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_icgraph" id="class_c_c_stepper_device_ac2e4663a26143a6d764cc78a0a3aae1c_icgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8" title="CCStepperDevice::operateTask" alt="" coords="248,5,459,32"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e" title="CCStepperDevice::startTask" alt="" coords="507,5,698,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ac0bc89786eede1ae2a6ba34d062d0bcb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCStepperDevice::kickUp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_cgraph.png" border="0" usemap="#class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_cgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_cgraph" id="class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_cgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e" title="CCStepperDevice::setupMicro\lSteppingMode" alt="" coords="230,5,431,46"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_icgraph.png" border="0" usemap="#class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_icgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_icgraph" id="class_c_c_stepper_device_ac0bc89786eede1ae2a6ba34d062d0bcb_icgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8" title="CCStepperDevice::operateTask" alt="" coords="229,5,440,32"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e" title="CCStepperDevice::startTask" alt="" coords="489,5,679,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="adfa77e6cbedd33f0eb83a704d31acf5e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -378,7 +446,69 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void CCStepperDevice::attachDevice </td>
+          <td class="memname">virtual void CCStepperDevice::setupMicroSteppingMode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_stepper_device_adfa77e6cbedd33f0eb83a704d31acf5e_icgraph.png" border="0" usemap="#class_c_c_stepper_device_adfa77e6cbedd33f0eb83a704d31acf5e_icgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_adfa77e6cbedd33f0eb83a704d31acf5e_icgraph" id="class_c_c_stepper_device_adfa77e6cbedd33f0eb83a704d31acf5e_icgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#ac372f7c2f54db906ae6390ea0386f18b" title="CCStepperDevice::disable\lDevice" alt="" coords="264,5,443,46"/>
+<area shape="rect" id="node4" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e" title="CCStepperDevice::startTask" alt="" coords="258,71,449,97"/>
+<area shape="rect" id="node6" href="class_c_c_stepper_device.html#ac0bc89786eede1ae2a6ba34d062d0bcb" title="CCStepperDevice::kickUp" alt="" coords="265,121,441,148"/>
+<area shape="rect" id="node7" href="class_c_c_stepper_device.html#ac2e4663a26143a6d764cc78a0a3aae1c" title="CCStepperDevice::kickDown" alt="" coords="257,172,450,199"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#ab70b3b82a5772237514eb77111d64ff5" title="CCStepperDevice::finishTask" alt="" coords="506,12,702,39"/>
+<area shape="rect" id="node5" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8" title="CCStepperDevice::operateTask" alt="" coords="499,96,709,123"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aa035ebbf822375467e5dfc38f2769ee6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCStepperDevice::setupMicroSteppingMode </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a08fef44809309464dc99568552c90df6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CCStepperDevice::attachDevice </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -393,19 +523,11 @@ Here is the call graph for this function:</div>
 
 <p>Implements <a class="el" href="class_c_c_device.html#a83ea989dc1fe663bfb57a0d8a988d795">CCDevice</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_c_c_stepper_device_a61b5729c1acfb250b2653e349668da25_icgraph.png" border="0" usemap="#class_c_c_stepper_device_a61b5729c1acfb250b2653e349668da25_icgraph" alt=""/></div>
-<map name="class_c_c_stepper_device_a61b5729c1acfb250b2653e349668da25_icgraph" id="class_c_c_stepper_device_a61b5729c1acfb250b2653e349668da25_icgraph">
-<area shape="rect" id="node2" href="class_c_c_stepper_device.html#aeb91ad69412a7ba6f8343903de33e097" title="CCStepperDevice::CCStepper\lDevice" alt="" coords="267,5,469,46"/>
-</map>
-</div>
-</p>
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a319a8680ee09b69567f91500e1fd8409">CCStepperDevice_TMC260</a>, and <a class="el" href="class_c_c_stepper_device___a4988.html#aaf820e4be5d6ea6a8bc102d6e129455c">CCStepperDevice_A4988</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8fde2b4d00ab0f48d337b885819c2c3c"></a>
+<a class="anchor" id="aea9240fac12347f3ef5b56c0f7eceb3e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -413,7 +535,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void CCStepperDevice::detachDevice </td>
+          <td class="memname">virtual void CCStepperDevice::detachDevice </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -428,11 +550,13 @@ Here is the caller graph for this function:</div>
 
 <p>Implements <a class="el" href="class_c_c_device.html#a733c8f049208466f6bd1695a4b9ae037">CCDevice</a>.</p>
 
+<p>Reimplemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a6c7210f0961997687574aa0b5ee3c47a">CCStepperDevice_TMC260</a>, and <a class="el" href="class_c_c_stepper_device___a4988.html#a64253ab2ee2cb0e9ab3fe7576dd402a6">CCStepperDevice_A4988</a>.</p>
+
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_c_c_stepper_device_a8fde2b4d00ab0f48d337b885819c2c3c_icgraph.png" border="0" usemap="#class_c_c_stepper_device_a8fde2b4d00ab0f48d337b885819c2c3c_icgraph" alt=""/></div>
-<map name="class_c_c_stepper_device_a8fde2b4d00ab0f48d337b885819c2c3c_icgraph" id="class_c_c_stepper_device_a8fde2b4d00ab0f48d337b885819c2c3c_icgraph">
+<div class="center"><img src="class_c_c_stepper_device_aea9240fac12347f3ef5b56c0f7eceb3e_icgraph.png" border="0" usemap="#class_c_c_stepper_device_aea9240fac12347f3ef5b56c0f7eceb3e_icgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_aea9240fac12347f3ef5b56c0f7eceb3e_icgraph" id="class_c_c_stepper_device_aea9240fac12347f3ef5b56c0f7eceb3e_icgraph">
 <area shape="rect" id="node2" href="class_c_c_stepper_device.html#a4a16937cd79aa54ffd242eb459d91205" title="CCStepperDevice::~CCStepper\lDevice" alt="" coords="273,5,482,46"/>
 </map>
 </div>
@@ -498,6 +622,16 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_c_c_device.html#aea6f373f7581e188fbd58b98f9f8b1bf">CCDevice</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_stepper_device_ac372f7c2f54db906ae6390ea0386f18b_cgraph.png" border="0" usemap="#class_c_c_stepper_device_ac372f7c2f54db906ae6390ea0386f18b_cgraph" alt=""/></div>
+<map name="class_c_c_stepper_device_ac372f7c2f54db906ae6390ea0386f18b_cgraph" id="class_c_c_stepper_device_ac372f7c2f54db906ae6390ea0386f18b_cgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e" title="CCStepperDevice::setupMicro\lSteppingMode" alt="" coords="233,5,434,46"/>
+</map>
+</div>
+</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -610,11 +744,14 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_c_stepper_device_a4b529905b1e3101976fe4da369ac9f8e_cgraph.png" border="0" usemap="#class_c_c_stepper_device_a4b529905b1e3101976fe4da369ac9f8e_cgraph" alt=""/></div>
 <map name="class_c_c_stepper_device_a4b529905b1e3101976fe4da369ac9f8e_cgraph" id="class_c_c_stepper_device_a4b529905b1e3101976fe4da369ac9f8e_cgraph">
-<area shape="rect" id="node2" href="class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1" title="CCStepperDevice::stopTask" alt="" coords="513,5,703,32"/>
-<area shape="rect" id="node3" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3" title="CCStepperDevice::enableDevice" alt="" coords="246,35,463,61"/>
-<area shape="rect" id="node4" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8" title="CCStepperDevice::operateTask" alt="" coords="249,85,460,112"/>
-<area shape="rect" id="node5" href="class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a" title="CCStepperDevice::prepare\lNextTask" alt="" coords="517,78,699,119"/>
-<area shape="rect" id="node6" href="class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a" title="CCStepperDevice::initiateStop" alt="" coords="752,85,955,112"/>
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1" title="CCStepperDevice::stopTask" alt="" coords="514,43,705,70"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e" title="CCStepperDevice::setupMicro\lSteppingMode" alt="" coords="755,87,957,128"/>
+<area shape="rect" id="node4" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3" title="CCStepperDevice::enableDevice" alt="" coords="246,94,463,121"/>
+<area shape="rect" id="node5" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8" title="CCStepperDevice::operateTask" alt="" coords="249,145,460,171"/>
+<area shape="rect" id="node6" href="class_c_c_stepper_device.html#ac2e4663a26143a6d764cc78a0a3aae1c" title="CCStepperDevice::kickDown" alt="" coords="513,145,706,171"/>
+<area shape="rect" id="node7" href="class_c_c_stepper_device.html#ac0bc89786eede1ae2a6ba34d062d0bcb" title="CCStepperDevice::kickUp" alt="" coords="521,94,697,121"/>
+<area shape="rect" id="node8" href="class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a" title="CCStepperDevice::prepare\lNextTask" alt="" coords="518,196,701,237"/>
+<area shape="rect" id="node9" href="class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a" title="CCStepperDevice::initiateStop" alt="" coords="755,203,957,230"/>
 </map>
 </div>
 </p>
@@ -659,11 +796,14 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_c_stepper_device_a4c490f65d534909db16c866c3ee916d8_cgraph.png" border="0" usemap="#class_c_c_stepper_device_a4c490f65d534909db16c866c3ee916d8_cgraph" alt=""/></div>
 <map name="class_c_c_stepper_device_a4c490f65d534909db16c866c3ee916d8_cgraph" id="class_c_c_stepper_device_a4c490f65d534909db16c866c3ee916d8_cgraph">
-<area shape="rect" id="node2" href="class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a" title="CCStepperDevice::prepare\lNextTask" alt="" coords="269,5,451,46"/>
-<area shape="rect" id="node4" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e" title="CCStepperDevice::startTask" alt="" coords="265,121,455,148"/>
-<area shape="rect" id="node5" href="class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1" title="CCStepperDevice::stopTask" alt="" coords="518,71,709,97"/>
-<area shape="rect" id="node3" href="class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a" title="CCStepperDevice::initiateStop" alt="" coords="512,12,715,39"/>
-<area shape="rect" id="node6" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3" title="CCStepperDevice::enableDevice" alt="" coords="505,121,722,148"/>
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#ac2e4663a26143a6d764cc78a0a3aae1c" title="CCStepperDevice::kickDown" alt="" coords="265,5,458,32"/>
+<area shape="rect" id="node4" href="class_c_c_stepper_device.html#ac0bc89786eede1ae2a6ba34d062d0bcb" title="CCStepperDevice::kickUp" alt="" coords="273,56,449,83"/>
+<area shape="rect" id="node5" href="class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a" title="CCStepperDevice::prepare\lNextTask" alt="" coords="270,209,453,250"/>
+<area shape="rect" id="node7" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e" title="CCStepperDevice::startTask" alt="" coords="266,107,457,133"/>
+<area shape="rect" id="node8" href="class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1" title="CCStepperDevice::stopTask" alt="" coords="521,157,711,184"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e" title="CCStepperDevice::setupMicro\lSteppingMode" alt="" coords="515,41,717,82"/>
+<area shape="rect" id="node6" href="class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a" title="CCStepperDevice::initiateStop" alt="" coords="515,216,717,243"/>
+<area shape="rect" id="node9" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3" title="CCStepperDevice::enableDevice" alt="" coords="507,107,725,133"/>
 </map>
 </div>
 </p>
@@ -782,6 +922,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_c_c_stepper_device_ab70b3b82a5772237514eb77111d64ff5_cgraph.png" border="0" usemap="#class_c_c_stepper_device_ab70b3b82a5772237514eb77111d64ff5_cgraph" alt=""/></div>
 <map name="class_c_c_stepper_device_ab70b3b82a5772237514eb77111d64ff5_cgraph" id="class_c_c_stepper_device_ab70b3b82a5772237514eb77111d64ff5_cgraph">
 <area shape="rect" id="node2" href="class_c_c_stepper_device.html#ac372f7c2f54db906ae6390ea0386f18b" title="CCStepperDevice::disable\lDevice" alt="" coords="251,5,429,46"/>
+<area shape="rect" id="node3" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e" title="CCStepperDevice::setupMicro\lSteppingMode" alt="" coords="478,5,679,46"/>
 </map>
 </div>
 </p>
@@ -789,6 +930,366 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a79f30ea30b0f965f146d40329a2abee8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed long CCStepperDevice::stepsToGo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a43b58584495648182dfc8c2450a28421"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::stepsForAcceleration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a47620749bd9f2f75b428ac7b92cd43f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::stepsForDeceleration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a70c5cbc73a5d3f882ffbf867a02553ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::stepsForAccAndConstSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aea799b6caf4a80a10ea51a7a8bf2ca95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::timeForAcceleration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a290ed4d0fd173ae74fb265ad54ae1ac2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::timeForAccAndConstSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8dcc2dcb80eb9619d2983ca061058ca5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::microStepsToGo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adf3028797e30326a8abb0f2402069cae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::microStepsForAcceleration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adae5f5cd6b8407d1f382c1058162175e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::microStepsForAccAndConstSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab1ee434f62c0d8a1864030871f478358"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CCStepperDevice::accelerateDown</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a675a35ddfca003ecba5ee8b39b761a50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::currentVelocity</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a070b7409a5e4d542099493b375c072a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::currVeloBySquare</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a972b53425f48977206e0f365b0072ae3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::veloBySquare</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a91d2afa9d2587d9a15b773d3866d62e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed long CCStepperDevice::t0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aafa72d2c1d8bfd4f0dd05fc9ff9776db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::stepExpiration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afdca258cd7b5453ed96453b4a281f208"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::elapsedTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a671b0ce0c758195027dfe0e5890917bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::lastStepTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2477d9cad8fd73af660940266d1e1dc2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::c0_acc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a46658445628b14da1f43187e9238ed5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::c0_dec</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a39dddd487edbfcad16cfca877014c924"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::c1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad252b4abd4ad510882f306d748258e55"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::acceleration_inv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="affb05d92a5349c40a0bbf0efb70419ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::deceleration_inv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab54af150105d30d5307de7573fa70d89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char CCStepperDevice::microSteppingMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8f2c5ac633d87b4bf9ef5922e1836c3c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char* CCStepperDevice::steppingUnit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa48a32753fa965c0572c40f7f3c57dc2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::stepsPerDegree</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1e57bd7842a896864d90b10c64986157"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::degreesPerMicroStep</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa5fade84879c928f59b8460ea9ba4278"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long CCStepperDevice::currentMicroStep</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aeae3d76011d884db6cf1d9fec284e55b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CCStepperDevice::startPosition</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a57be44791514ba26ffe15a39d4e6de34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CCStepperDevice::prepareAndStartNextTaskWhenFinished</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac79225f46245cec2f0de81659efc8853"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CCStepperDevice::switchAtNextFullStep</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a7942d286a0d4ff373c0736c7fb78b8a3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -825,30 +1326,6 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a4389d6a664f21e84c3e5e2379f881d13"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned char CCStepperDevice::numberOfMicroStepPins</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a545ebf980c9c28b0b85f9ad07b4ba975"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned char* CCStepperDevice::microStepPin</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a50886f3154c5c534fac226e1479ec3a3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -861,38 +1338,12 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a65074bf73ea38032ad6b74c8772cb587"></a>
+<a class="anchor" id="aea4a864c4bcb00a5dee9ae3fa97a25fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char* CCStepperDevice::stepModeCode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="doxtable">
-<tr>
-<th>i.e. "0x00, 0x01, 0x02, 0x03, 0x07": stepModeCode </th><th>bin </th><th>pin 2 </th><th>pin 1 </th><th>pin 0 </th><th>description  </th></tr>
-<tr>
-<td>0x00 </td><td>000 </td><td>LOW </td><td>LOW </td><td>LOW </td><td>full step mode </td></tr>
-<tr>
-<td>0x01 </td><td>001 </td><td>LOW </td><td>LOW </td><td>HIGH </td><td>half step mode </td></tr>
-<tr>
-<td>0x02 </td><td>010 </td><td>LOW </td><td>HIGH </td><td>LOW </td><td>quarter step mode </td></tr>
-<tr>
-<td>0x03 </td><td>011 </td><td>LOW </td><td>HIGH </td><td>HIGH </td><td>eighth step mode </td></tr>
-<tr>
-<td>0x07 </td><td>111 </td><td>HIGH </td><td>HIGH </td><td>HIGH </td><td>sixteenth step mode </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="afe5c08d8be085cd292e5733346cf416f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int CCStepperDevice::stepsPerRoation</td>
+          <td class="memname">unsigned int CCStepperDevice::stepsPerRotation</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -912,8 +1363,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_stepper_device_8h_source.html">CCStepperDevice.h</a></li>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_stepper_device_8cpp.html">CCStepperDevice.cpp</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_stepper_device_8h_source.html">CCStepperDevice.h</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_stepper_device_8cpp.html">CCStepperDevice.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

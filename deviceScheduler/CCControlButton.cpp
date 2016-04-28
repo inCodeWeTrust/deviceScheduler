@@ -53,10 +53,10 @@ CCControlButton::~CCControlButton() {
 }
 
 
-void CCControlButton::evokeTaskJump(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction) {
+void CCControlButton::evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction) {
     evokeTaskJumpToTask(targetDevice, validTask, targetAction, validTask + 1);
 }
-void CCControlButton::evokeTaskJumpToTask(unsigned char targetDevice, unsigned char validTask, deviceAction targetAction, unsigned char followingTask) {
+void CCControlButton::evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask) {
     action[countOfActions].targetDevice = targetDevice;
     action[countOfActions].validTask = validTask;
     action[countOfActions].targetAction = targetAction;

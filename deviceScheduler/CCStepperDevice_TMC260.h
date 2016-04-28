@@ -106,7 +106,7 @@ public:
      * \param rms_current the maximum current to privide to the motor in mA. (A value of 200 would send up to 200mA to the motor.)
      * \param number_of_steps the number of steps the motor makes per rotation.
      */
-    CCStepperDevice_TMC260(unsigned int deviceIndex, String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
+    CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
     
     
     void attachDevice();

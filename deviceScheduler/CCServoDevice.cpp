@@ -15,8 +15,7 @@
 #include <Servo.h>
 
 
-CCServoDevice::CCServoDevice(unsigned int deviceIndex, String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
-    this->deviceIndex = deviceIndex;
+CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
     this->deviceName = deviceName;
     this->servo_pin = servo_pin;
     this->minPosition = minPosition;

@@ -38,26 +38,9 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
 }
 
-unsigned char CCDeviceScheduler::addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) {
+schedulerDevice CCDeviceScheduler::addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) {
     
-    device[countOfDevices] = new CCDcControllerDevice(countOfDevices, deviceName, switching_pin, switchingPin_activ);
-    
-    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->type));
-        Serial.print(F(": "));
-        Serial.println(device[countOfDevices]->deviceName);
-    }
-    
-    countOfDevices++;
-    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
-    
-    return countOfDevices - 1;
-}
-
-unsigned char CCDeviceScheduler::addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) {
-    
-    device[countOfDevices] = new CCServoDevice(countOfDevices, deviceName, servo_pin, minPosition, maxPosition, parkPosition);
+    device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_activ);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: provided "));
@@ -72,7 +55,24 @@ unsigned char CCDeviceScheduler::addServo(String deviceName, unsigned char servo
     return countOfDevices - 1;
 }
 
-unsigned char CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
+schedulerDevice CCDeviceScheduler::addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) {
+    
+    device[countOfDevices] = new CCServoDevice(deviceName, servo_pin, minPosition, maxPosition, parkPosition);
+    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: provided "));
+        Serial.print(getNameOfDeviceType(device[countOfDevices]->type));
+        Serial.print(F(": "));
+        Serial.println(device[countOfDevices]->deviceName);
+    }
+    
+    countOfDevices++;
+    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
+    
+    return countOfDevices - 1;
+}
+
+schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
     
     unsigned char numberOfMicroStepPins = 0;                                                    // first find how many pins are given
     signed char elementBegin = 1;
@@ -128,7 +128,7 @@ unsigned char CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned ch
         elementBegin = elementEnd + 1;
     }
     
-    device[countOfDevices] = new CCStepperDevice_A4988(countOfDevices, deviceName, dir_pin, step_pin, enable_pin, highestSteppingMode, stepModeCode, numberOfMicroStepPins, microStepPin, stepsPerRotation);
+    device[countOfDevices] = new CCStepperDevice_A4988(deviceName, dir_pin, step_pin, enable_pin, highestSteppingMode, stepModeCode, numberOfMicroStepPins, microStepPin, stepsPerRotation);
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
@@ -144,9 +144,9 @@ unsigned char CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned ch
     return countOfDevices - 1;
 }
 
-unsigned char CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation) {
+schedulerDevice CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation) {
     
-    device[countOfDevices] = new CCStepperDevice_TMC260(countOfDevices, deviceName, step_pin, dir_pin, enable_pin, chipSelect_pin, currentMax, stepsPerRotation);
+    device[countOfDevices] = new CCStepperDevice_TMC260(deviceName, step_pin, dir_pin, enable_pin, chipSelect_pin, currentMax, stepsPerRotation);
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
@@ -189,7 +189,7 @@ void CCDeviceScheduler::getAllTasks() {
 }
 
 
-void CCDeviceScheduler::getTasksForDevice(unsigned char theDevice) {
+void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
     Serial.print(F("[CCDeviceScheduler]: Tasks of Device "));
     Serial.print(device[theDevice]->deviceName);
     Serial.println(F(": "));
@@ -395,7 +395,7 @@ void CCDeviceScheduler::run() {
         ongoingOperations = 0;
         
         
-        for (unsigned char s = 0; s < countOfDevices; s++) {
+        for (schedulerDevice s = 0; s < countOfDevices; s++) {
             if (device[s]->state > SLEEPING) {                                                         // (== MOVING || MOVE_DONE || PENDING_MOVES)
                 if (device[s]->state == MOVING) {                                                // if device is moving...
                     device[s]->operateTask();                                                  // so: move on!
@@ -608,7 +608,7 @@ void CCDeviceScheduler::run() {
 }
 
 
-void CCDeviceScheduler::handleStartEvent(unsigned long taskTime, unsigned char s, event startEvent) {
+void CCDeviceScheduler::handleStartEvent(unsigned long taskTime, schedulerDevice s, event startEvent) {
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
         Serial.print(taskTime);
         Serial.print(F(": "));
@@ -633,7 +633,7 @@ void CCDeviceScheduler::handleStartEvent(unsigned long taskTime, unsigned char s
         device[s]->startTask();
     }
 }
-void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, unsigned char s, event stopEvent) {
+void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, schedulerDevice s, event stopEvent) {
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
         Serial.print(taskTime);
         Serial.print(F(": "));

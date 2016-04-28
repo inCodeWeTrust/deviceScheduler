@@ -59,6 +59,7 @@ public:
     /// The Scheduler's device array.
     /// Array of all devices.
     CCDevice *device[8];
+    /// Array of all control-inputs.
     CCControlButton *controlButton[8];
     
     CCDeviceScheduler();
@@ -74,7 +75,7 @@ public:
     /// @param maxPosition the maximum PCM pulse width in microseconds corresponding to other end position.
     /// @param parkPosition the PCM pulse width in microseconds corresponding to the default position.
     /// @return the device index.
-    unsigned char addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
+    schedulerDevice addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
     
     /// Function adds a stepper device to the device array and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -88,10 +89,10 @@ public:
     /// i.e. "28, 30, 32": micro stepping pins are pin 28, pin 30 and pin 32
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
-    unsigned char addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
+    schedulerDevice addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
    
     
-    unsigned char addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
+    schedulerDevice addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
     
     
     /// Function adds a switching device to the device array and returns the index of the device.
@@ -100,7 +101,7 @@ public:
     /// @param switching_pin the pin number of the device's controll pin.
     /// @param switchingPin_activ the state of the switching pin, where the device is activ.
     /// @return the device index.
-    unsigned char addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
+    schedulerDevice addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
 
   
     
@@ -116,7 +117,7 @@ public:
     
     /// Function lists all tasks of the specified device.
     /// A list with all tasks and bare informations are presented.
-    void getTasksForDevice(unsigned char theDevice);
+    void getTasksForDevice(schedulerDevice theDevice);
     
     /// Function calls the <reviewValues()> function of all devices.
     /// This causes the devices to approve, if all tasks are possible and do some basic calculations.
@@ -141,15 +142,13 @@ public:
     
     
     void run();
-    void handleStartEvent(unsigned long taskTime, unsigned char device, event startEvent);
-    void handleStopEvent(unsigned long taskTime, unsigned char device, event stopEvent);
     
 
 private:
-    deviceAction action;
-    unsigned char actionDevice;
-    char increaseTaskPointerBy;
-    
+
+    void handleStartEvent(unsigned long taskTime, schedulerDevice device, event startEvent);
+    void handleStopEvent(unsigned long taskTime, schedulerDevice device, event stopEvent);
+
     String getNameOfDeviceType(deviceType t);
     String getNameOfTaskEvent(event e);
     String getNameOfState(deviceState s);

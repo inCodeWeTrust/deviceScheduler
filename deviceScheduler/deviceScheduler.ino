@@ -172,17 +172,17 @@ void loop() {
         
         // ########## startByDate(unsigned long startTime)
         // ########## startByButton(unsigned char startButton, boolean startButtonState)
-        // ########## startByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask, signed long startTriggerPosition)
+        // ########## startByTriggerpositionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask, signed long startTriggerPosition)
         
         // ########## setDisposeAfterTask(unsigned char stopTriggerDevice, unsigned char stopTriggerTask)
         
         // ########## switchToNextTaskByDate(unsigned long startTime);
         // ########## switchToNextTaskByButton(unsigned char startButton, boolean startButtonState);
-        // ########## switchToNextTaskByTriggerpositionOf(unsigned char startTriggerDevice, unsigned char startTriggerTask, signed long startTriggerPosition);
+        // ########## switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long startTriggerPosition);
         
         // ########## stopByTimeout(unsigned long timeout, stoppingMode stopping)
         // ########## stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping)
-        // ########## stopByTriggerpositionOf(unsigned char stopTriggerDevice, unsigned char stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping)
+        // ########## stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping)
         
         //  stopping:  STOP_IMMEDIATELY, STOP_NORMAL
         

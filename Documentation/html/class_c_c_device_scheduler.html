@@ -120,8 +120,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1c9a06dd1a108096aefc6252e1af0f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6f5cf70702b7d8c76d463a66ec1be7f"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device_scheduler.html#ac6f5cf70702b7d8c76d463a66ec1be7f">addServo</a> (String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition)</td></tr>
 <tr class="separator:ac6f5cf70702b7d8c76d463a66ec1be7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a475855e14e3c81eea911aa68167a5ae4"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device_scheduler.html#a475855e14e3c81eea911aa68167a5ae4">addStepper</a> (String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation)</td></tr>
-<tr class="separator:a475855e14e3c81eea911aa68167a5ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f4d3d0bcaf4dd421ae434eb5d07b8a"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device_scheduler.html#a72f4d3d0bcaf4dd421ae434eb5d07b8a">addStepper_A4988</a> (String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation)</td></tr>
+<tr class="separator:a72f4d3d0bcaf4dd421ae434eb5d07b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d837eff7c20487445bd167c448bcc12"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device_scheduler.html#a5d837eff7c20487445bd167c448bcc12">addStepper_TMC260</a> (String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation)</td></tr>
+<tr class="separator:a5d837eff7c20487445bd167c448bcc12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e77844375b408f187d2b320db17946e"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device_scheduler.html#a9e77844375b408f187d2b320db17946e">addDcController</a> (String deviceName, unsigned char switching_pin, boolean switchingPin_activ)</td></tr>
 <tr class="separator:a9e77844375b408f187d2b320db17946e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba6aefa93793d483bcba0bccff20da75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device_scheduler.html#aba6aefa93793d483bcba0bccff20da75">getAllDevices</a> ()</td></tr>
@@ -253,12 +255,12 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a475855e14e3c81eea911aa68167a5ae4"></a>
+<a class="anchor" id="a72f4d3d0bcaf4dd421ae434eb5d07b8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char CCDeviceScheduler::addStepper </td>
+          <td class="memname">unsigned char CCDeviceScheduler::addStepper_A4988 </td>
           <td>(</td>
           <td class="paramtype">String&#160;</td>
           <td class="paramname"><em>deviceName</em>, </td>
@@ -329,6 +331,62 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5d837eff7c20487445bd167c448bcc12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char CCDeviceScheduler::addStepper_TMC260 </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>deviceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>step_pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>dir_pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>enable_pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>chipSelect_pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>currentMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>stepsPerRotation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a9e77844375b408f187d2b320db17946e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -362,7 +420,7 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">deviceName</td><td>the human-readable name of the device (used for verbose output). </td></tr>
     <tr><td class="paramname">switching_pin</td><td>the pin number of the device's controll pin. </td></tr>
-    <tr><td class="paramname">defaultState</td><td>the default state of the device. </td></tr>
+    <tr><td class="paramname">switchingPin_activ</td><td>the state of the switching pin, where the device is activ. </td></tr>
   </table>
   </dd>
 </dl>
@@ -633,14 +691,15 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_c_device_scheduler_a55be212e5303af5995ca94e4421396eb_cgraph.png" border="0" usemap="#class_c_c_device_scheduler_a55be212e5303af5995ca94e4421396eb_cgraph" alt=""/></div>
 <map name="class_c_c_device_scheduler_a55be212e5303af5995ca94e4421396eb_cgraph" id="class_c_c_device_scheduler_a55be212e5303af5995ca94e4421396eb_cgraph">
-<area shape="rect" id="node2" href="class_c_c_device.html#a500aeabd359ceb3d40df54f82f5c77fe" title="CCDevice::prepareNextTask" alt="" coords="437,5,629,32"/>
-<area shape="rect" id="node3" href="class_c_c_device.html#a0dca533192bfd8e1c0d37c03199fd538" title="CCDevice::operateTask" alt="" coords="225,41,389,68"/>
-<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#ac4cf6d6e0250fd78e2b58c6fdd2659ab" title="CCDeviceScheduler::\lhandleStopEvent" alt="" coords="232,93,381,134"/>
-<area shape="rect" id="node7" href="class_c_c_device.html#add3529df45250163cbc46280ff0f07a4" title="CCDevice::finishTask" alt="" coords="232,159,381,185"/>
-<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#a1cad7f73525cf569654924b2988c67b5" title="CCDeviceScheduler::\lhandleStartEvent" alt="" coords="232,210,381,251"/>
-<area shape="rect" id="node5" href="class_c_c_device.html#ad36b328e3441f185761b01ca050e99e1" title="CCDevice::stopTask" alt="" coords="461,85,605,112"/>
-<area shape="rect" id="node6" href="class_c_c_device.html#a4a02795984febc672953b7bfb9b7531a" title="CCDevice::initiateStop" alt="" coords="455,136,611,163"/>
-<area shape="rect" id="node9" href="class_c_c_device.html#a7cafaa7df661e230addb57ea59294f19" title="CCDevice::startTask" alt="" coords="461,217,605,244"/>
+<area shape="rect" id="node2" href="class_c_c_device.html#a500aeabd359ceb3d40df54f82f5c77fe" title="CCDevice::prepareNextTask" alt="" coords="437,7,629,33"/>
+<area shape="rect" id="node3" href="class_c_c_device.html#a0dca533192bfd8e1c0d37c03199fd538" title="CCDevice::operateTask" alt="" coords="225,43,389,69"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#ac4cf6d6e0250fd78e2b58c6fdd2659ab" title="CCDeviceScheduler::\lhandleStopEvent" alt="" coords="232,94,381,135"/>
+<area shape="rect" id="node7" href="class_c_c_device.html#add3529df45250163cbc46280ff0f07a4" title="CCDevice::finishTask" alt="" coords="232,160,381,187"/>
+<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#a1cad7f73525cf569654924b2988c67b5" title="CCDeviceScheduler::\lhandleStartEvent" alt="" coords="232,211,381,253"/>
+<area shape="rect" id="node10" href="class_c_c_device.html#a4aefd098d6142b9fec836f89165bb4ef" title="CCDevice::getReadOut" alt="" coords="226,277,387,304"/>
+<area shape="rect" id="node5" href="class_c_c_device.html#ad36b328e3441f185761b01ca050e99e1" title="CCDevice::stopTask" alt="" coords="461,87,605,113"/>
+<area shape="rect" id="node6" href="class_c_c_device.html#a4a02795984febc672953b7bfb9b7531a" title="CCDevice::initiateStop" alt="" coords="455,137,611,164"/>
+<area shape="rect" id="node9" href="class_c_c_device.html#a7cafaa7df661e230addb57ea59294f19" title="CCDevice::startTask" alt="" coords="461,219,605,245"/>
 </map>
 </div>
 </p>
@@ -805,8 +864,8 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_scheduler_8h_source.html">CCDeviceScheduler.h</a></li>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_scheduler_8cpp.html">CCDeviceScheduler.cpp</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_scheduler_8h_source.html">CCDeviceScheduler.h</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_device_scheduler_8cpp.html">CCDeviceScheduler.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -101,8 +101,11 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>addServo()
 : <a class="el" href="class_c_c_device_scheduler.html#ac6f5cf70702b7d8c76d463a66ec1be7f">CCDeviceScheduler</a>
 </li>
-<li>addStepper()
-: <a class="el" href="class_c_c_device_scheduler.html#a475855e14e3c81eea911aa68167a5ae4">CCDeviceScheduler</a>
+<li>addStepper_A4988()
+: <a class="el" href="class_c_c_device_scheduler.html#a72f4d3d0bcaf4dd421ae434eb5d07b8a">CCDeviceScheduler</a>
+</li>
+<li>addStepper_TMC260()
+: <a class="el" href="class_c_c_device_scheduler.html#a5d837eff7c20487445bd167c448bcc12">CCDeviceScheduler</a>
 </li>
 <li>addTask()
 : <a class="el" href="class_c_c_device.html#a2be246608e36f0ade9902ccad7e62d1e">CCDevice</a>
@@ -114,7 +117,9 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_c_c_dc_controller_device.html#a13f7a0f104a3162c556c2487b145e07b">CCDcControllerDevice</a>
 , <a class="el" href="class_c_c_device.html#a83ea989dc1fe663bfb57a0d8a988d795">CCDevice</a>
 , <a class="el" href="class_c_c_servo_device.html#a787753d94403d776bd2c90bce3e675ee">CCServoDevice</a>
-, <a class="el" href="class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25">CCStepperDevice</a>
+, <a class="el" href="class_c_c_stepper_device.html#a08fef44809309464dc99568552c90df6">CCStepperDevice</a>
+, <a class="el" href="class_c_c_stepper_device___a4988.html#aaf820e4be5d6ea6a8bc102d6e129455c">CCStepperDevice_A4988</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a319a8680ee09b69567f91500e1fd8409">CCStepperDevice_TMC260</a>
 </li>
 </ul>
 
@@ -132,8 +137,11 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>CCServoDevice()
 : <a class="el" href="class_c_c_servo_device.html#a536bf0d889b4e54f53cc04d45ac33670">CCServoDevice</a>
 </li>
-<li>CCStepperDevice()
-: <a class="el" href="class_c_c_stepper_device.html#aeb91ad69412a7ba6f8343903de33e097">CCStepperDevice</a>
+<li>CCStepperDevice_A4988()
+: <a class="el" href="class_c_c_stepper_device___a4988.html#a086f31ecd22ab8d5a54a0dd947d4009c">CCStepperDevice_A4988</a>
+</li>
+<li>CCStepperDevice_TMC260()
+: <a class="el" href="class_c_c_stepper_device___t_m_c260.html#adc6f0d94b896763bf2492e5309d4188a">CCStepperDevice_TMC260</a>
 </li>
 <li>CCTask()
 : <a class="el" href="class_c_c_task.html#a7a48b355a064213328b0cad629fce43d">CCTask</a>
@@ -161,7 +169,9 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_c_c_dc_controller_device.html#a7d6cce93c2bf85204897a6f3e7915e33">CCDcControllerDevice</a>
 , <a class="el" href="class_c_c_device.html#a733c8f049208466f6bd1695a4b9ae037">CCDevice</a>
 , <a class="el" href="class_c_c_servo_device.html#a884763465990489915dbebecca980d3d">CCServoDevice</a>
-, <a class="el" href="class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c">CCStepperDevice</a>
+, <a class="el" href="class_c_c_stepper_device.html#aea9240fac12347f3ef5b56c0f7eceb3e">CCStepperDevice</a>
+, <a class="el" href="class_c_c_stepper_device___a4988.html#a64253ab2ee2cb0e9ab3fe7576dd402a6">CCStepperDevice_A4988</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a6c7210f0961997687574aa0b5ee3c47a">CCStepperDevice_TMC260</a>
 </li>
 <li>disableDevice()
 : <a class="el" href="class_c_c_dc_controller_device.html#ad38317bcc80eb831819f5be5280a551e">CCDcControllerDevice</a>
@@ -217,6 +227,10 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>getButtonState()
 : <a class="el" href="class_c_c_control_button.html#af6f0428b6b9c2dd33902d5d91b794cbe">CCControlButton</a>
 </li>
+<li>getReadOut()
+: <a class="el" href="class_c_c_device.html#a4aefd098d6142b9fec836f89165bb4ef">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ad43f34c831a7c35540cab46bbef1826c">CCStepperDevice_TMC260</a>
+</li>
 <li>getTasksForDevice()
 : <a class="el" href="class_c_c_device_scheduler.html#a8e71e46e2a79d287cd79f45684892ae8">CCDeviceScheduler</a>
 </li>
@@ -242,6 +256,16 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 </li>
 <li>isActiv()
 : <a class="el" href="class_c_c_control_button.html#a12f0579b3d428f57ccc0a4a6bd243071">CCControlButton</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_k"></a>- k -</h3><ul>
+<li>kickDown()
+: <a class="el" href="class_c_c_stepper_device.html#ac2e4663a26143a6d764cc78a0a3aae1c">CCStepperDevice</a>
+</li>
+<li>kickUp()
+: <a class="el" href="class_c_c_stepper_device.html#ac0bc89786eede1ae2a6ba34d062d0bcb">CCStepperDevice</a>
 </li>
 </ul>
 
@@ -283,6 +307,41 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>setChopperControlRegister_fastDecay()
+: <a class="el" href="class_c_c_device.html#a9eb20f1358e3165c8519d442945fc975">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a271dbe97649b6516b8e76e82da475d00">CCStepperDevice_TMC260</a>
+</li>
+<li>setChopperControlRegister_spreadCycle()
+: <a class="el" href="class_c_c_device.html#a5907fdcfeb006bc27e10a6a30a11e26d">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ae6465bd2f6198a00341f1b6dcf55ce40">CCStepperDevice_TMC260</a>
+</li>
+<li>setCoolStepRegister()
+: <a class="el" href="class_c_c_device.html#ae51e7f004e5970d1f6ae751e3499e7ec">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#abb3b7f91379de343cfdeccb9e997a2b3">CCStepperDevice_TMC260</a>
+</li>
+<li>setCurrent()
+: <a class="el" href="class_c_c_device.html#a90ef33326250da127715c47bbf3fc841">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a65041cf826921346c74d79472fa47a85">CCStepperDevice_TMC260</a>
+</li>
+<li>setCurrentScale()
+: <a class="el" href="class_c_c_device.html#a322b661552cf840314b75c5ef2de74dc">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a3849244a371b3d2c16201075c6cba1e1">CCStepperDevice_TMC260</a>
+</li>
+<li>setDriverConfigurationRegister()
+: <a class="el" href="class_c_c_device.html#a591729e205cd6f0a2f3fca131a26bbe5">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#af387421e9c205dc522db4d77ae0afe59">CCStepperDevice_TMC260</a>
+</li>
+<li>setDriverControlRegister()
+: <a class="el" href="class_c_c_device.html#a4df87e637024f638c1c6f51bd33b4b7c">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#afffbb9efc673af4f9a0764eb5e3e3ef8">CCStepperDevice_TMC260</a>
+</li>
+<li>setStallGuard2Register()
+: <a class="el" href="class_c_c_device.html#ad936788959c439a198663c31cc7e3cc9">CCDevice</a>
+, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ac998019fd295b3a094fc833588c1c1c4">CCStepperDevice_TMC260</a>
+</li>
+<li>setupMicroSteppingMode()
+: <a class="el" href="class_c_c_stepper_device.html#adfa77e6cbedd33f0eb83a704d31acf5e">CCStepperDevice</a>
+</li>
 <li>startAfterCompletionOf()
 : <a class="el" href="class_c_c_task.html#a26eddc13824de55718fc703da34e034c">CCTask</a>
 </li>

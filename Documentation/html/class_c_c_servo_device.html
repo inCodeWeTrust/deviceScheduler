@@ -157,6 +157,24 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a67e2c32ef6ab69edee83225279785131 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab206bc33a07b29e88b2c3bfa69518ef3 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab206bc33a07b29e88b2c3bfa69518ef3">deleteTasks</a> ()</td></tr>
 <tr class="separator:ab206bc33a07b29e88b2c3bfa69518ef3 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4df87e637024f638c1c6f51bd33b4b7c inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4df87e637024f638c1c6f51bd33b4b7c">setDriverControlRegister</a> (boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode)</td></tr>
+<tr class="separator:a4df87e637024f638c1c6f51bd33b4b7c inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5907fdcfeb006bc27e10a6a30a11e26d inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5907fdcfeb006bc27e10a6a30a11e26d">setChopperControlRegister_spreadCycle</a> (byte blankingTimeValue, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime)</td></tr>
+<tr class="separator:a5907fdcfeb006bc27e10a6a30a11e26d inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eb20f1358e3165c8519d442945fc975 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a9eb20f1358e3165c8519d442945fc975">setChopperControlRegister_fastDecay</a> (byte blankingTimeValue, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime)</td></tr>
+<tr class="separator:a9eb20f1358e3165c8519d442945fc975 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae51e7f004e5970d1f6ae751e3499e7ec inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae51e7f004e5970d1f6ae751e3499e7ec">setCoolStepRegister</a> (boolean minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold)</td></tr>
+<tr class="separator:ae51e7f004e5970d1f6ae751e3499e7ec inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad936788959c439a198663c31cc7e3cc9 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad936788959c439a198663c31cc7e3cc9">setStallGuard2Register</a> (boolean stallGuard2FilterEnable, int stallGuard2Threshold)</td></tr>
+<tr class="separator:ad936788959c439a198663c31cc7e3cc9 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591729e205cd6f0a2f3fca131a26bbe5 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a591729e205cd6f0a2f3fca131a26bbe5">setDriverConfigurationRegister</a> (byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut)</td></tr>
+<tr class="separator:a591729e205cd6f0a2f3fca131a26bbe5 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aefd098d6142b9fec836f89165bb4ef inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4aefd098d6142b9fec836f89165bb4ef">getReadOut</a> (byte theReadOut)</td></tr>
+<tr class="separator:a4aefd098d6142b9fec836f89165bb4ef inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90ef33326250da127715c47bbf3fc841 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a90ef33326250da127715c47bbf3fc841">setCurrent</a> (unsigned int current)</td></tr>
+<tr class="separator:a90ef33326250da127715c47bbf3fc841 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a322b661552cf840314b75c5ef2de74dc inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a322b661552cf840314b75c5ef2de74dc">setCurrentScale</a> (unsigned int currentScale)</td></tr>
+<tr class="separator:a322b661552cf840314b75c5ef2de74dc inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -743,8 +761,8 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_servo_device_8h_source.html">CCServoDevice.h</a></li>
-<li>/Users/abakus/my_system/computing/Arduino/Scheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_servo_device_8cpp.html">CCServoDevice.cpp</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_servo_device_8h_source.html">CCServoDevice.h</a></li>
+<li>/Users/ikarus/my_system/computing/Arduino/deviceScheduler/deviceScheduler/deviceScheduler/<a class="el" href="_c_c_servo_device_8cpp.html">CCServoDevice.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

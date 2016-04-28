@@ -45,10 +45,32 @@
 class CCDevice {
     
 public:
-
-    /// Device parameter:
-    /// Value, set by the owner of the device (CCDeviceScheduler) to be recognized by him.
-    unsigned int         deviceIndex;
+    String getName();
+    deviceType getType();
+    unsigned char getCountOfTasks();
+    unsigned char getTaskPointer();
+    float getCurrentPosition();
+    bool getDirectionDown();
+    deviceState getState();
+    float getTarget();
+    float getVelocity();
+    float getAcceleration();
+    float getDeceleration();
+    unsigned long getStartDelay();
+    event getStartEvent();
+    event getStopEvent();
+    unsigned long getStartTime();
+    unsigned long getTimeOut();
+    unsigned char getStartButtonState();
+    unsigned char getStopButtonState();
+    schedulerDevice getStartTriggerDevice();
+    schedulerDevice getStopTriggerDevice();
+    scheduledTask getStartTriggerTask();
+    scheduledTask getStopTriggerTask();
+    signed long getStartTriggerPosition();
+    signed long getStopTriggerPosition();
+    stoppingMode getStopping();
+    boolean getSwitchTaskPromptly();
     
     /// Parameters of the device
     /// Value, set by the user to be recognized by him.
@@ -72,18 +94,6 @@ public:
     /// Value, that holds the index of the current task.
     unsigned char        taskPointer;
     
-    
-    /// Default parameters for the device.
-    /// A value for the device's default velocity is provided here.
-    float                defaultVelocity;
-    
-    /// Default parameters for the device.
-    /// A value for the device's default acceleration is provided here.
-    float                defaultAcceleration;
-    
-    /// Default parameters for the device.
-    /// A value for the device's default deceleration is provided here.
-    float                defaultDeceleration;
     
     /// Device parameter:
     /// The device's current position.
@@ -175,19 +185,19 @@ public:
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the index of a device, that shall trigger the start of this task.
-    unsigned char        startTriggerDevice;
+    schedulerDevice        startTriggerDevice;
 
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the index of a device, that shall trigger the stop of this task.
-    unsigned char        stopTriggerDevice;
+    schedulerDevice        stopTriggerDevice;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the index of a task of a device, on which the start of this task shall be triggered.
-    unsigned char        startTriggerTask;
+    scheduledTask        startTriggerTask;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the index of a task of a device, on which the stop of this task shall be triggered.
-    unsigned char        stopTriggerTask;
+    scheduledTask        stopTriggerTask;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the position of a device on a task, on whitch the start of this task shall be triggered.
@@ -252,6 +262,18 @@ public:
     
     virtual ~CCDevice();
 
+    /// Default parameters for the device.
+    /// A value for the device's default velocity is provided here.
+    float                defaultVelocity;
+    
+    /// Default parameters for the device.
+    /// A value for the device's default acceleration is provided here.
+    float                defaultAcceleration;
+    
+    /// Default parameters for the device.
+    /// A value for the device's default deceleration is provided here.
+    float                defaultDeceleration;
+    
 
 
     /// Function sets up device-specific default values for velocity, acceleration and deceleration.
@@ -315,6 +337,10 @@ public:
     virtual void setCurrentScale(unsigned int currentScale);
     
 private:
+    
+    /// Device parameter:
+    /// Value, set by the owner of the device (CCDeviceScheduler) to be recognized by him.
+    unsigned int         deviceIndex;
     
 
 

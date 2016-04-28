@@ -30,10 +30,9 @@
 
 
 
-CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation) : CCStepperDevice() {
+CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation) : CCStepperDevice() {
     
     
-    this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
@@ -51,24 +50,24 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(unsigned int deviceIndex, String 
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
     }
     
-    stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
-    degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
+    this->stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
+    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
     
-    acceleration_max = 4000;
+    this->acceleration_max = 4000;
     
-    type = STEPPERDEVICE;
-    state = SLEEPING;
-    taskPointer = 0;
-    countOfTasks = 0;
+    this->type = STEPPERDEVICE;
+    this->state = SLEEPING;
+    this->taskPointer = 0;
+    this->countOfTasks = 0;
     
-    defaultVelocity = 0;
-    defaultAcceleration = 0;
-    defaultDeceleration = 0;
+    this->defaultVelocity = 0;
+    this->defaultAcceleration = 0;
+    this->defaultDeceleration = 0;
 
-    currentMicroStep = 0;
-    currentPosition = 0;
+    this->currentMicroStep = 0;
+    this->currentPosition = 0;
     
-    prepareAndStartNextTaskWhenFinished = false;
+    this->prepareAndStartNextTaskWhenFinished = false;
 
     
     

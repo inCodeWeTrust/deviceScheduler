@@ -20,9 +20,8 @@
 #include "Arduino.h"
 #include "CCStepperDevice_A4988.h"
 
-CCStepperDevice_A4988::CCStepperDevice_A4988(unsigned int deviceIndex, String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCStepperDevice() {
+CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCStepperDevice() {
     
-    this->deviceIndex = deviceIndex;
     this->deviceName = deviceName;
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
