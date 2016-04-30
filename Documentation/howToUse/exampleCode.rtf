@@ -1,0 +1,167 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red63\green110\blue116;\red170\green13\blue145;\red0\green116\blue0;
+\red38\green71\blue75;\red100\green56\blue32;\red196\green26\blue22;\red28\green0\blue207;}
+\paperw16840\paperh23820\margl1011\margr1011\margb1445\margt1011\vieww14000\viewh16000\viewkind1\viewscale202
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs14 \cf0 \CocoaLigature0 \
+\
+\cf2 scheduler\cf0  = \cf3 new\cf0  \cf2 CCDeviceScheduler\cf0 ;\
+\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============= devices ======================================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\cf2 schedulerDevice\cf0  headLeftServo = \cf2 scheduler\cf0 ->\cf5 addServo\cf0 (\cf6 SERVO_HEAD_LEFT_NAME\cf0 , \cf6 SERVO_HEAD_LEFT_PIN\cf0 , \cf6 SERVO_HEAD_LEFT_MIN_POSITION\cf0 , \cf6 SERVO_HEAD_LEFT_MAX_POSITION\cf0 , \cf6 HEAD_LEFT_PARK_POSITION\cf0 );\
+\cf2 schedulerDevice\cf0  headRightServo = \cf2 scheduler\cf0 ->\cf5 addServo\cf0 (\cf6 SERVO_HEAD_RIGHT_NAME\cf0 , \cf6 SERVO_HEAD_RIGHT_PIN\cf0 , \cf6 SERVO_HEAD_RIGHT_MIN_POSITION\cf0 , \cf6 SERVO_HEAD_RIGHT_MAX_POSITION\cf0 , \cf6 HEAD_RIGHT_PARK_POSITION\cf0 );\
+\cf2 schedulerDevice\cf0  tableStepper = \cf2 scheduler\cf0 ->\cf5 addStepper_A4988\cf0 (\cf6 STEPPER_TABLE_NAME\cf0 , \cf6 STEPPER_TABLE_STEP_PIN\cf0 , \cf6 STEPPER_TABLE_DIR_PIN\cf0 , \cf6 STEPPER_TABLE_ENABLE_PIN\cf0 , \cf6 STEPPER_TABLE_HIGHEST_STEPPINGMODE\cf0 , \cf6 STEPPER_TABLE_STEPMODECODES\cf0 , \cf6 STEPPER_TABLE_MICROSTEPPINS\cf0 , \cf6 STEPPER_TABLE_STEPS_PER_ROTATION\cf0 );\
+\cf2 schedulerDevice\cf0  catStepper = \cf2 scheduler\cf0 ->\cf5 addStepper_TMC260\cf0 (\cf6 STEPPER_CAT_NAME\cf0 , \cf6 STEPPER_CAT_STEP_PIN\cf0 , \cf6 STEPPER_CAT_DIR_PIN\cf0 , \cf6 STEPPER_CAT_ENABLE_PIN\cf0 , \cf6 STEPPER_CAT_CHIPSELECT_PIN\cf0 , \cf6 STEPPER_CAT_CURRENT\cf0 , \cf6 STEPPER_CAT_STEPS_PER_ROTATION\cf0 );\
+\
+\
+\cf2 scheduler\cf0 ->\cf5 getAllDevices\cf0 ();\
+\
+\
+\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============== control buttons =============================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\cf2 schedulerControlButton\cf0  songEndButton = \cf2 scheduler\cf0 ->\cf5 addControlButton\cf0 (\cf6 SONG_END_BUTTON_NAME\cf0 , \cf6 SONG_END_PIN\cf0 , \cf6 SONG_END_ACTIV\cf0 );\
+\cf2 schedulerControlButton\cf0  songCancelButton = \cf2 scheduler\cf0 ->\cf5 addControlButton\cf0 (\cf6 SONG_CANCEL_BUTTON_NAME\cf0 , \cf6 SONG_CANCEL_PIN\cf0 , \cf6 SONG_CANCEL_ACTIV\cf0 );\
+\
+\
+\cf2 scheduler\cf0 ->\cf5 getAllControlButtons\cf0 ();\
+\
+\
+\
+\
+\
+\cf2 Serial\cf0 .\cf5 println\cf0 (\cf7 "................................. initialisation ................................."\cf0 );\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============= initialisation tasks =========================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\cf2 scheduledTask\cf0  initCatStepper = scheduler->device[catStepper]->addTask(-CAT_FULLRANGE, \cf6 CAT_SPEED_VERY_HIGH\cf0 , \cf6 CAT_ACCEL_VERY_HIGH\cf0 , \cf6 CAT_ACCEL_VERY_HIGH\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [initCatStepper]->\cf5 startByDate\cf0 (\cf8 100\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [initCatStepper]->\cf5 stopByButton\cf0 (\cf6 CAT_PARK_BUTTON\cf0 , \cf6 HIGH\cf0 , \cf5 STOP_NORMAL\cf0 );\
+\
+\
+\cf2 scheduler\cf0 ->\cf5 reviewTasks\cf0 ();\
+\cf2 scheduler\cf0 ->\cf5 getAllTasks\cf0 ();\
+\
+\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============== run initialisation ==========================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\cf2 scheduler\cf0 ->\cf5 run\cf0 ();\
+\
+\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============== cleaning up =================================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\cf2 scheduler\cf0 ->\cf5 deleteAllTasks\cf0 ();\
+\cf2 scheduler\cf0 ->\cf5 deleteAllActions\cf0 ();\
+\
+\
+\cf2 Serial\cf0 .\cf5 println\cf0 (\cf7 "...................................... done ......................................"\cf0 );\
+\
+\
+\
+\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============= main tasks ===================================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\cf4 //  move to start groove:\cf0 \
+\cf2 scheduledTask\cf0  driveToCuttingStartPosition = \cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf5 addTask\cf0 (\cf6 CAT_CUTTING_START_POSITION\cf0 , \cf6 CAT_SPEED_HIGH\cf0 , \cf6 CAT_ACCEL_HIGH\cf0 , \cf6 CAT_ACCEL_HIGH\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [driveToCuttingStartPosition]->\cf5 startByDate\cf0 (\cf8 100\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [driveToCuttingStartPosition]->\cf5 stopByButton\cf0 (\cf6 CAT_END_BUTTON\cf0 , \cf6 HIGH\cf0 , \cf5 STOP_NORMAL\cf0 );\
+\
+\cf4 //  turn the table:\cf0 \
+\cf2 scheduledTask\cf0  turnTheTable = \cf2 scheduler\cf0 ->\cf2 device\cf0 [tableStepper]->\cf5 addTask\cf0 (\cf2 grooves_all\cf0  * \cf8 3600\cf0 , \cf2 turnTableStepperSpeed\cf0 , \cf6 TABLE_STEP_ACCEL\cf0 , \cf6 TABLE_STEP_ACCEL\cf0 );\
+scheduler->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, \cf6 CAT_CUTTING_START_POSITION\cf0  - \cf8 10000\cf0 );\
+\
+\cf4 //  lower head to record surface: start when reached start position of start groove\cf0 \
+\cf2 scheduledTask\cf0  lowerHeadLeftForCutting = \cf2 scheduler\cf0 ->\cf2 device\cf0 [headLeftServo]->\cf5 addTask\cf0 (\cf6 HEAD_LEFT_CUT_POSITION\cf0 , \cf6 LIFT_SPEED_FAST\cf0 , \cf6 LIFT_ACCEL_FAST\cf0 , \cf6 LIFT_ACCEL_FAST\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [headLeftServo]->\cf2 task\cf0 [lowerHeadLeftForCutting]->\cf5 startAfterCompletionOf\cf0 (catStepper, driveToCuttingStartPosition);\
+\
+\cf4 //  lower head to record surface: start when reached start position of start groove\cf0 \
+\cf2 scheduledTask\cf0  lowerHeadRightForCutting = \cf2 scheduler\cf0 ->\cf2 device\cf0 [headRightServo]->\cf5 addTask\cf0 (\cf6 HEAD_RIGHT_CUT_POSITION\cf0 , \cf6 LIFT_SPEED_VERY_SLOW\cf0 , \cf6 LIFT_ACCEL_VERY_SLOW\cf0 , \cf6 LIFT_ACCEL_VERY_SLOW\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [headRightServo]->\cf2 task\cf0 [lowerHeadRightForCutting]->\cf5 startAfterCompletionOf\cf0 (catStepper, driveToCuttingStartPosition);\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [headRightServo]->\cf2 task\cf0 [lowerHeadRightForCutting]->\cf5 stopDynamicallyBySensor\cf0 (\cf2 A5\cf0 , \cf8 600\cf0 , \cf8 460\cf0 , \cf8 0.6\cf0 , \cf5 SKIP_APPROXIMATION_PRECISE\cf0 );\
+\
+\cf4 //  make the start groove: start when cutting head reached cutting position\cf0 \
+\cf2 scheduledTask\cf0  makeStartGroove = \cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf5 addTask\cf0 (\cf2 catCuttingEndPosition\cf0 , \cf2 catMotorSpeed_startGroove\cf0 , \cf6 CAT_ACCEL_SLOW\cf0 , \cf6 CAT_ACCEL_SLOW\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [makeStartGroove]->\cf5 startAfterCompletionOf\cf0 (headRightServo, lowerHeadRightForCutting);\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [makeStartGroove]->\cf5 switchToNextTaskByTriggerpositionOf\cf0 (catStepper, makeStartGroove, \cf2 catSongStartPosition\cf0 );\
+\
+\cf4 //  make the main groove, cut the song: change head speed to appropriate song-cutting-speed when start groove is done\cf0 \
+\cf2 scheduledTask\cf0  makeMainGroove = \cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf5 addTask\cf0 (\cf2 catCuttingEndPosition\cf0 , \cf2 catMotorSpeed_song\cf0 , \cf6 CAT_ACCEL_SLOW\cf0 , \cf6 CAT_ACCEL_SLOW\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [makeMainGroove]->\cf5 switchToNextTaskByTriggerpositionOf\cf0 (catStepper, makeMainGroove, \cf2 catSongEndPosition\cf0 );\
+\
+\cf4 //  make the end groove: change head speed to end groove speed, when song is done\cf0 \
+\cf2 scheduledTask\cf0  makeEndGroove = \cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf5 addTask\cf0 (\cf2 catCuttingEndPosition\cf0 , \cf2 catMotorSpeed_endGroove\cf0 , \cf6 CAT_ACCEL_NORMAL\cf0 , \cf6 CAT_ACCEL_NORMAL\cf0 );\
+\
+\cf4 //  lift head after cutting: start when end groove is finished\cf0 \
+\cf2 scheduledTask\cf0  liftHeadLeftAfterCutting = \cf2 scheduler\cf0 ->\cf2 device\cf0 [headLeftServo]->\cf5 addTask\cf0 (\cf6 HEAD_LEFT_TOP_POSITION\cf0 , \cf6 LIFT_SPEED_FAST\cf0 , \cf6 LIFT_ACCEL_SLOW\cf0 , \cf6 LIFT_ACCEL_SLOW\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [headLeftServo]->\cf2 task\cf0 [liftHeadLeftAfterCutting]->\cf5 startAfterCompletionOf\cf0 (catStepper, makeEndGroove);\
+\
+\cf4 //  stop turning the table:\cf0 \
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [tableStepper]->\cf2 task\cf0 [turnTheTable]->\cf5 stopAfterCompletionOf\cf0 (headLeftServo, liftHeadLeftAfterCutting, \cf5 STOP_NORMAL\cf0 );\
+\
+\cf4 //  lift head complete after cutting: start when other servo finished\cf0 \
+\cf2 scheduledTask\cf0  liftHeadRightAfterCutting = \cf2 scheduler\cf0 ->\cf2 device\cf0 [headRightServo]->\cf5 addTask\cf0 (\cf6 HEAD_RIGHT_TOP_POSITION\cf0 , \cf6 LIFT_SPEED_FAST\cf0 , \cf6 LIFT_ACCEL_SLOW\cf0 , \cf6 LIFT_ACCEL_SLOW\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [headRightServo]->\cf2 task\cf0 [liftHeadRightAfterCutting]->\cf5 startAfterCompletionOf\cf0 (headLeftServo, liftHeadLeftAfterCutting);\
+\
+\cf4 //  drive to park position after all\cf0 \
+\cf2 scheduledTask\cf0  driveToParkPosition = \cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf5 addTask\cf0 (\cf6 CAT_PARK_POSITION\cf0 , \cf6 CAT_SPEED_HIGH\cf0 , \cf6 CAT_ACCEL_HIGH\cf0 , \cf6 CAT_ACCEL_HIGH\cf0 );\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [driveToParkPosition]->\cf5 startAfterCompletionOf\cf0 (headLeftServo, liftHeadLeftAfterCutting);\
+\cf2 scheduler\cf0 ->\cf2 device\cf0 [catStepper]->\cf2 task\cf0 [driveToParkPosition]->\cf5 stopByButton\cf0 (\cf6 CAT_PARK_BUTTON\cf0 , \cf6 HIGH\cf0 , \cf5 STOP_NORMAL\cf0 );\
+\
+\
+\cf4 //  do the end groove when the button is pressed\cf0 \
+\cf2 scheduler\cf0 ->\cf2 controlButton\cf0 [songEndButton]->\cf5 evokeTaskJumpToTask\cf0 (catStepper, makeMainGroove, \cf5 STOP_AND_SWITCH\cf0 , makeEndGroove);\
+\
+\cf4 //  cancel recording, when button is pressed\cf0 \
+\cf2 scheduler\cf0 ->\cf2 controlButton\cf0 [songCancelButton]->\cf5 evokeTaskJumpToTask\cf0 (catStepper, makeStartGroove, \cf5 STOP_AND_SWITCH\cf0 , driveToParkPosition);\
+\cf2 scheduler\cf0 ->\cf2 controlButton\cf0 [songCancelButton]->\cf5 evokeTaskJumpToTask\cf0 (catStepper, makeMainGroove, \cf5 STOP_AND_SWITCH\cf0 , driveToParkPosition);\
+\cf2 scheduler\cf0 ->\cf2 controlButton\cf0 [songCancelButton]->\cf5 evokeTaskJump\cf0 (catStepper, makeEndGroove, \cf5 STOP\cf0 );\
+\
+\
+\
+\cf2 scheduler\cf0 ->\cf5 reviewTasks\cf0 ();\
+\cf2 scheduler\cf0 ->\cf5 getAllTasks\cf0 ();\
+\
+\cf2 scheduler\cf0 ->\cf5 getAllControlButtons\cf0 ();\
+\cf2 scheduler\cf0 ->\cf5 getAllActions\cf0 ();\
+\
+\
+\
+\cf4 // ============================================================================================================================\cf0 \
+\cf4 // ============== run it ======================================================================================================\cf0 \
+\cf4 // ============================================================================================================================\cf0 \
+\
+\
+\
+\cf2 scheduler\cf0 ->\cf5 run\cf0 ();\
+\
+\cf2 scheduler\cf0 ->\cf5 deleteAllTasks\cf0 ();\
+\cf2 scheduler\cf0 ->\cf5 deleteAllActions\cf0 ();\
+\
+\
+\
+\
+\
+\
+
+{\*\beandata789c9d935d6f82301486aff157748db752d876b12d8851c1c4cc2099b86497153a65e32ba5cef1ef57444aeb66b68c1bda73fabe4f7b4e6b8d3ed3047c105ac6793684a66e4040b2308fe26c3b84eb6036b88323bb675d39cb69f0e2bba048e292017f3d59cca7000e101a17454210720207f88bf92a00dc0321d78300ee182b1e103a1c0e3aae57e9619ed60b4be4d3bc2094550b6e36e0023d6211e498c65dd90e8f4671c8ec9e66bd93caee631aee62bec242f594474b46f9666d6ff5482a128d45fa146f75f9e68d84ac14324c29ae07c2a09fed934492692d573b3984092e855e4e37f9e9acbf9e3b5d5eb3e28c912da1f6ad85dae1518854636fa5f39fec2cf6a6502e603aceb5ca5140a8f36ca16715f93ff7e64fdc2eda567ce28ebd27f6ead6f78d778ef1e866cf48f9dcf4dfdba71ba591d2490dd334ee0df5c03ff68b5c3a9fb8360e57711aa6958c92572c8f8552b2dfead9d0329c1289f70b4354a4736bbc585e887b2a8a56cf2704670e665830cece7cde24513053ad540756ded6e9e109b6501bf52759b43a0b1d5facddfb02aa1d4161}}
