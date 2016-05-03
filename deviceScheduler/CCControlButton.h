@@ -18,7 +18,7 @@
 #define CCCONTROLBUTTON_MEMORYDEBUG           0x02
 #define CCCONTROLBUTTON_MOVEMENTDEBUG         0x04
 
-#define CCCONTROLBUTTON_VERBOSE               0
+#define CCCONTROLBUTTON_VERBOSE               1
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,16 +30,6 @@
 
 class CCControlButton {
     
-    
-    unsigned int        buttonIndex;
-    unsigned char       button_pin;
-    boolean             button_activ;
-    
-public:
-    String              buttonName;
-    boolean             state;
-    unsigned char       countOfActions;
-    
     struct buttonAction {
     public:
         schedulerDevice     targetDevice;
@@ -48,7 +38,16 @@ public:
         scheduledTask       followingTask;
         boolean             actionDone;
     };
-    buttonAction        action[8];
+    buttonAction        *action;
+
+public:
+    
+    String getButtonName();
+    boolean isActiv();
+    unsigned char getCountOfActions();
+    buttonAction getAction(unsigned char a);
+    void setActionDone(unsigned char a);
+    
     
     
     CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean button_activ);
@@ -59,8 +58,22 @@ public:
     
     void deleteActions();
     
-    boolean getButtonState();
-    boolean isActiv();
+    
+    
+private:
+    
+    String              buttonName;
+    boolean             state;
+    unsigned char       countOfActions;
+    
+    boolean             getButtonState();
+
+
+    unsigned int        buttonIndex;
+    unsigned char       button_pin;
+    boolean             button_activ;
+    
+
     
 };
 

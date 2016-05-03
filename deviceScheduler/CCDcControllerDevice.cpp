@@ -44,7 +44,6 @@ CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char swit
 
 
 CCDcControllerDevice::~CCDcControllerDevice() {
-    deleteTasks();
     detachDevice();
 }
 
@@ -82,30 +81,29 @@ void CCDcControllerDevice::prepareNextTask() {
         currentRatio = 0;
     }
 
-    target = task[taskPointer]->target;
-    velocity = task[taskPointer]->velocity;
-    acceleration = task[taskPointer]->acceleration;
-    deceleration = task[taskPointer]->deceleration;
+    target = task[taskPointer]->getTarget();
+    velocity = task[taskPointer]->getVelocity();
+    acceleration = task[taskPointer]->getAcceleration();
+    deceleration = task[taskPointer]->getDeceleration();
     
-    startEvent = task[taskPointer]->startEvent;
-    stopEvent = task[taskPointer]->stopEvent;
-    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
-    startDelay = task[taskPointer]->startDelay;
-    startTime = task[taskPointer]->startTime;
-    timeout = task[taskPointer]->timeout;
-    startButton = task[taskPointer]->startButton;
-    stopButton = task[taskPointer]->stopButton;
-    startButtonState = task[taskPointer]->startButtonState;
-    stopButtonState = task[taskPointer]->stopButtonState;
-    startTriggerDevice = task[taskPointer]->startTriggerDevice;
-    startTriggerTask = task[taskPointer]->startTriggerTask;
-    startTriggerPosition = task[taskPointer]->startTriggerPosition;
-    stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
-    stopTriggerTask = task[taskPointer]->stopTriggerTask;
-    stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
+    startEvent = task[taskPointer]->getStartEvent();
+    stopEvent = task[taskPointer]->getStopEvent();
+    startDelay = task[taskPointer]->getStartDelay();
+    startTime = task[taskPointer]->getStartTime();
+    timeout = task[taskPointer]->getTimeout();
+    startButton = task[taskPointer]->getStartButton();
+    stopButton = task[taskPointer]->getStopButton();
+    startButtonState = task[taskPointer]->getStartButtonState();
+    stopButtonState = task[taskPointer]->getStopButtonState();
+    startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
+    startTriggerTask = task[taskPointer]->getStartTriggerTask();
+    startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
+    stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
+    stopTriggerTask = task[taskPointer]->getStopTriggerTask();
+    stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();
     
-    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
-    stopping = task[taskPointer]->stopping;
+    switchTaskPromptly = task[taskPointer]->getSwitchTaskPromptly();
+    stopping = task[taskPointer]->getStopping();
 
     
     // target: dutycycle

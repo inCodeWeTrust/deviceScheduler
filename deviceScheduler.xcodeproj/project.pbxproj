@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		40253D961CAF2136008A99E5 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40253D941CAF2136008A99E5 /* CCControlButton.cpp */; };
+		40861E071CD77B050092D2D4 /* freeRam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40861E061CD77B050092D2D4 /* freeRam.cpp */; };
 		40ABDFB91CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40ABDFB81CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp */; };
 		40B3F88F1CC045F600443547 /* CCStepperDevice_A4988.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40B3F88E1CC045F600443547 /* CCStepperDevice_A4988.cpp */; };
 		A42F72541B1C70E400B5B7E0 /* deviceScheduler.ino in Sources */ = {isa = PBXBuildFile; fileRef = A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */; };
@@ -662,6 +663,8 @@
 /* Begin PBXFileReference section */
 		40253D941CAF2136008A99E5 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
 		40253D951CAF2136008A99E5 /* CCControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButton.h; sourceTree = "<group>"; };
+		40861E061CD77B050092D2D4 /* freeRam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = freeRam.cpp; sourceTree = "<group>"; };
+		40861E081CD77B1A0092D2D4 /* freeRam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = freeRam.h; sourceTree = "<group>"; };
 		40A4E81F1CB7D954000DE9DD /* classCCDevice.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCDevice.graphml; sourceTree = "<group>"; };
 		40A4E8201CB7D954000DE9DD /* classCCDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classCCDevice.png; sourceTree = "<group>"; };
 		40A4E8211CB7D954000DE9DD /* classCCTask.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCTask.graphml; sourceTree = "<group>"; };
@@ -1547,6 +1550,8 @@
 				A45F72421B1C70E400B5B7E0 /* ReadMe.txt */,
 				A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */,
 				A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */,
+				40861E061CD77B050092D2D4 /* freeRam.cpp */,
+				40861E081CD77B1A0092D2D4 /* freeRam.h */,
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
 				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
 				A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */,
@@ -4178,6 +4183,7 @@
 				AA2A150601125914AA0000D2 /* EthernetUdp.cpp in Sources */,
 				AA2A150601125914AA0000D3 /* EthernetUdp.h in Sources */,
 				AA2A150601125914AA0000D5 /* socket.cpp in Sources */,
+				40861E071CD77B050092D2D4 /* freeRam.cpp in Sources */,
 				AA2A150601125914AA0000D6 /* socket.h in Sources */,
 				AA2A150601125914AA0000D7 /* util.h in Sources */,
 				AA2A150601125914AA0000D8 /* w5100.cpp in Sources */,
@@ -4858,6 +4864,7 @@
 		A45F72761B1C70E400B5B7E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BOARD_PORT = "/dev/cu.usbmodem*";
 			};
 			name = Debug;
 		};

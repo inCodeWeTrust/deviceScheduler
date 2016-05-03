@@ -122,3 +122,36 @@ void CCTask::stopDynamicallyBySensor(unsigned char sensor, unsigned int initiate
     this->approximation = approximation;
 }
 
+float CCTask::getTarget(){return target;}
+void CCTask::setTarget(float target){this->target = target;}
+float CCTask::getVelocity(){return velocity;}
+void CCTask::setVelocity(float velocity){this->velocity = velocity;}
+float CCTask::getAcceleration(){return acceleration;}
+void CCTask::setAcceleration(float acceleration){this->acceleration = acceleration;}
+float CCTask::getDeceleration(){return deceleration;}
+void CCTask::setDeceleration(float deceleration){this->deceleration = deceleration;}
+unsigned long CCTask::getStartDelay(){return startDelay;}
+event CCTask::getStartEvent(){return startEvent;}
+event CCTask::getStopEvent(){return stopEvent;}
+unsigned long CCTask::getStartTime(){return startTime;}
+unsigned long CCTask::getTimeout(){return timeout;}
+boolean CCTask::getStartButton(){return startButton;}
+boolean CCTask::getStopButton(){return stopButton;}
+boolean CCTask::getStartButtonState(){return startButtonState;}
+boolean CCTask::getStopButtonState(){return stopButtonState;}
+schedulerDevice CCTask::getStartTriggerDevice(){return startTriggerDevice;}
+schedulerDevice CCTask::getStopTriggerDevice(){return stopTriggerDevice;}
+scheduledTask CCTask::getStartTriggerTask(){return startTriggerTask;}
+scheduledTask CCTask::getStopTriggerTask(){return stopTriggerTask;}
+signed long CCTask::getStartTriggerPosition(){return startTriggerPosition;}
+signed long CCTask::getStopTriggerPosition(){return stopTriggerPosition;}
+stoppingMode CCTask::getStopping(){return stopping;}
+boolean CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
+unsigned char CCTask::getSensor(){return sensor;}
+signed int CCTask::getInitiatePerformanceValue(){return initiatePerformanceValue;}
+signed int CCTask::getTargetValue(){return targetValue;}
+float CCTask::getStopPerformance(){return stopPerformance;}
+approximationMode CCTask::getApproximation(){return approximation;}
+
+
+

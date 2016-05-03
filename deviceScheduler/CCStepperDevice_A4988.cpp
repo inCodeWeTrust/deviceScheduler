@@ -17,7 +17,7 @@
 //
 
 
-#include "Arduino.h"
+
 #include "CCStepperDevice_A4988.h"
 
 CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCStepperDevice() {
@@ -43,26 +43,26 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
     }
     
-    stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
-    degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
+    this->stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
+    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
     
-    acceleration_max = 4000;
+    this->acceleration_max = 4000;
     
-    type = STEPPERDEVICE;
-    state = SLEEPING;
-    taskPointer = 0;
-    countOfTasks = 0;
+    this->type = STEPPERDEVICE;
+    this->state = SLEEPING;
+    this->taskPointer = 0;
+    this->countOfTasks = 0;
     
-    defaultVelocity = 0;
-    defaultAcceleration = 0;
-    defaultDeceleration = 0;
+    this->defaultVelocity = 0;
+    this->defaultAcceleration = 0;
+    this->defaultDeceleration = 0;
     
-    currentMicroStep = 0;
-    currentPosition = 0;
+    this->currentMicroStep = 0;
+    this->currentPosition = 0;
     
-    prepareAndStartNextTaskWhenFinished = false;
+    this->prepareAndStartNextTaskWhenFinished = false;
     
-    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+    if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_A4988]: setup "));
         Serial.print(deviceName);
         Serial.print(F(": currentPosition: "));
@@ -98,6 +98,13 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
 }
 
 
+CCStepperDevice_A4988::~CCStepperDevice_A4988() {
+    detachDevice();
+    free(stepModeCode);
+    free(microStepPin);
+}
+
+
 
 void CCStepperDevice_A4988::attachDevice() {
     pinMode(dir_pin, OUTPUT);
@@ -110,7 +117,7 @@ void CCStepperDevice_A4988::attachDevice() {
         digitalWrite(microStepPin[pinIndex], LOW);
     }
     
-    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+    if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_A4988]: "));
         Serial.print(deviceName);
         Serial.println(F(" attached"));
@@ -127,7 +134,7 @@ void CCStepperDevice_A4988::detachDevice() {
         pinMode(microStepPin[pinIndex], INPUT);
     }
     
-    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+    if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_A4988]: device "));
         Serial.print(deviceName);
         Serial.println(F(" detached"));

@@ -21,7 +21,7 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             0x00
+#define CCSTEPPERDEVICE_VERBOSE             0x01
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +37,26 @@ class CCStepperDevice : public CCDevice {
 
 public:
 
+    virtual ~CCStepperDevice();
+    
+    
+    virtual void attachDevice() = 0;
+    virtual void detachDevice() = 0;
+    void enableDevice();
+    void disableDevice();
+    
+    void reviewValues();
+    void prepareNextTask();
+    void startTask();
+    void operateTask();
+    void initiateStop();
+    void stopTask();
+    void finishTask();
+
+    
+    
+protected:
+    
     signed long          stepsToGo;
     unsigned long        stepsForAcceleration, stepsForDeceleration, stepsForAccAndConstSpeed;
     unsigned long        timeForAcceleration, timeForAccAndConstSpeed;
@@ -56,34 +76,15 @@ public:
     void                 kickDown();
     void                 kickUp();
     
-    virtual void                 setupMicroSteppingMode();
-    virtual void                 setupMicroSteppingMode(unsigned char data);
-
+    virtual void         setupMicroSteppingMode() = 0;
+    virtual void         setupMicroSteppingMode(unsigned char data) = 0;
     
-//public:
+    
     
     unsigned char        dir_pin, step_pin, enable_pin;
     unsigned char        highestSteppingMode;
     unsigned int         stepsPerRotation;
     int                  acceleration_max;
-    
-    
-    ~CCStepperDevice();
-    
-    
-    virtual void attachDevice();
-    virtual void detachDevice();
-    void enableDevice();
-    void disableDevice();
-    
-    void reviewValues();
-    void prepareNextTask();
-    void startTask();
-    void operateTask();
-    void initiateStop();
-    void stopTask();
-    void finishTask();
-    
     
 };
 

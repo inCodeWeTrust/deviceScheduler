@@ -44,11 +44,11 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
         Serial.println((long)this, HEX);
     }
     
-    
+    action = new buttonAction[8];
 
 }
 CCControlButton::~CCControlButton() {
-    free(action);
+    delete [] action;
     countOfActions = 0;
 }
 
@@ -99,3 +99,12 @@ boolean CCControlButton::isActiv() {
     }
     return false;
 }
+
+
+String CCControlButton::getButtonName(){return buttonName;}
+unsigned char CCControlButton::getCountOfActions(){return countOfActions;}
+CCControlButton::buttonAction CCControlButton::getAction(unsigned char a){return action[a];}
+void CCControlButton::setActionDone(unsigned char a){action[a].actionDone = true;}
+
+
+

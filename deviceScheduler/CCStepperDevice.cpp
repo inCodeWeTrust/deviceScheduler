@@ -13,10 +13,11 @@
 
 
 
+
 CCStepperDevice::~CCStepperDevice() {
-    deleteTasks();
-    detachDevice();
+    free(steppingUnit);
 }
+
 
 void CCStepperDevice::enableDevice() {
     digitalWrite(enable_pin, LOW);
@@ -28,6 +29,7 @@ void CCStepperDevice::disableDevice() {
 }
 
 
+
 void CCStepperDevice::reviewValues() {
     Serial.print(F("[CCStepperDevice]: device "));
     Serial.print(deviceName);
@@ -36,26 +38,26 @@ void CCStepperDevice::reviewValues() {
         Serial.print(" #");
         Serial.print(m);
 
-        if (task[m]->velocity == 0) {
-            task[m]->velocity = defaultVelocity;
+        if (task[m]->getVelocity() == 0) {
+            task[m]->setVelocity(defaultVelocity);
         }
-        if (task[m]->acceleration == 0) {
-            task[m]->acceleration = defaultAcceleration;
+        if (task[m]->getAcceleration() == 0) {
+            task[m]->setAcceleration(defaultAcceleration);
         }
-        if (task[m]->deceleration == 0) {
-            task[m]->deceleration = defaultDeceleration;
+        if (task[m]->getDeceleration() == 0) {
+            task[m]->setDeceleration(defaultDeceleration);
         }
 
-        if (task[m]->deceleration == 0) {
-            task[m]->deceleration = task[m]->acceleration;
+        if (task[m]->getDeceleration() == 0) {
+            task[m]->setDeceleration(task[m]->getAcceleration());
         }
 
         // v[steps/sec] = v[angle/sec] * stepsPerAngle
-        task[m]->velocity *= stepsPerDegree;
+        task[m]->setVelocity(task[m]->getVelocity() * stepsPerDegree);
 
         // a[steps/sec/sec] = a[angle/sec/sec] * stepsPerAngle
-        task[m]->acceleration *= stepsPerDegree;
-        task[m]->deceleration *= stepsPerDegree;
+        task[m]->setAcceleration(task[m]->getAcceleration() * stepsPerDegree);
+        task[m]->setDeceleration(task[m]->getDeceleration() * stepsPerDegree);
     }
     Serial.println("   done");
 
@@ -67,7 +69,7 @@ void CCStepperDevice::prepareNextTask() {
 
     if (state == MOVING) {
         if (switchTaskPromptly) {
-            if ((task[taskPointer]->target - currentPosition) < 0) {             // when switching to move in different direction
+            if ((task[taskPointer]->getTarget() - currentPosition) < 0) {             // when switching to move in different direction
                 if (!directionDown) {
                     prepareAndStartNextTaskWhenFinished = true;
                     initiateStop();
@@ -114,10 +116,10 @@ void CCStepperDevice::prepareNextTask() {
     
     startPosition = currentPosition;
     
-    target = task[taskPointer]->target;
-    velocity = task[taskPointer]->velocity;
-    acceleration = task[taskPointer]->acceleration;
-    deceleration = task[taskPointer]->deceleration;
+    target = task[taskPointer]->getTarget();
+    velocity = task[taskPointer]->getVelocity();
+    acceleration = task[taskPointer]->getAcceleration();
+    deceleration = task[taskPointer]->getDeceleration();
     
     
 //    Serial.print(F("### currentPosition: "));
@@ -133,23 +135,23 @@ void CCStepperDevice::prepareNextTask() {
 //    Serial.println(this->deceleration);
 
     
-    startEvent = task[taskPointer]->startEvent;
-    stopEvent = task[taskPointer]->stopEvent;
-    startDelay = task[taskPointer]->startDelay;
-    startTime = task[taskPointer]->startTime;
-    timeout = task[taskPointer]->timeout;
-    startButton = task[taskPointer]->startButton;
-    stopButton = task[taskPointer]->stopButton;
-    startButtonState = task[taskPointer]->startButtonState;
-    stopButtonState = task[taskPointer]->stopButtonState;
-    startTriggerDevice = task[taskPointer]->startTriggerDevice;
-    startTriggerTask = task[taskPointer]->startTriggerTask;
-    startTriggerPosition = task[taskPointer]->startTriggerPosition;
-    stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
-    stopTriggerTask = task[taskPointer]->stopTriggerTask;
-    stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
-    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
-    stopping = task[taskPointer]->stopping;
+    startEvent = task[taskPointer]->getStartEvent();
+    stopEvent = task[taskPointer]->getStopEvent();
+    startDelay = task[taskPointer]->getStartDelay();
+    startTime = task[taskPointer]->getStartTime();
+    timeout = task[taskPointer]->getTimeout();
+    startButton = task[taskPointer]->getStartButton();
+    stopButton = task[taskPointer]->getStopButton();
+    startButtonState = task[taskPointer]->getStartButtonState();
+    stopButtonState = task[taskPointer]->getStopButtonState();
+    startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
+    startTriggerTask = task[taskPointer]->getStartTriggerTask();
+    startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
+    stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
+    stopTriggerTask = task[taskPointer]->getStopTriggerTask();
+    stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();
+    switchTaskPromptly = task[taskPointer]->getSwitchTaskPromptly();
+    stopping = task[taskPointer]->getStopping();
     
     //    this takes ca 24us
 //    t_stop = micros() - t_prepTask;

@@ -21,7 +21,7 @@
 #define CCDcControllerDevice_CALCULATIONDEBUG    0x04
 #define CCDcControllerDevice_MOVEMENTDEBUG       0x08
 
-#define CCDcControllerDevice_VERBOSE             0
+#define CCDcControllerDevice_VERBOSE             1
 
 
 
@@ -36,8 +36,10 @@
 
 class CCDcControllerDevice : public CCDevice {
     
-
+private:
     
+    unsigned char        switching_pin, switchingPin_activ;
+
     unsigned long        t0;
     signed long          elapsedTime, timeForAcceleration, timeForDeceleration, timeForAccAndConstSpeed;
     unsigned int         switchingInterval, targetOnDuration;
@@ -48,9 +50,6 @@ class CCDcControllerDevice : public CCDevice {
     
     
 public:
-    
-    unsigned char        switching_pin, switchingPin_activ;
-    
     
     CCDcControllerDevice(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
     ~CCDcControllerDevice();

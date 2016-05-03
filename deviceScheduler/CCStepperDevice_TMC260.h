@@ -19,11 +19,12 @@
 ///
 
 
-#include "Arduino.h"
+#include <Arduino.h>
+#include <avr/pgmspace.h>
+#include <SPI.h>
+
 #include "deviceScheduler.h"
 #include "CCStepperDevice.h"
-#include "CCDevice.h"
-
 
 #ifndef CCStepperDevice_TMC260_h
 #define CCStepperDevice_TMC260_h
@@ -38,7 +39,7 @@
 #define CCSTEPPERDEVICE_TMC260_SPIDEBUG            0x10
 #define CCSTEPPERDEVICE_TMC260_SETUPDEBUG          0x20
 
-#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x20
+#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x21
 
 #define READOUT_MICROSTEP_POSITION    0
 #define READOUT_STALLGUARD_LEVEL      1
@@ -56,32 +57,6 @@
 
 
 class CCStepperDevice_TMC260 : public CCStepperDevice {
-    
-    
-   
-    void setupMicroSteppingMode();
-    void setupMicroSteppingMode(unsigned char data);
-    
-    unsigned char chipSelect_pin;
-    
-    
-    
-    unsigned int currentMax;        //  current in mA
-    
-    unsigned long driverControl;
-    unsigned long chopperControl;
-    unsigned long coolStepControl;
-    unsigned long stallGuard2Control;
-    unsigned long driverConfiguration;
-
-    byte currentScaleOf32;
-    boolean senseResistorVoltage165mV;
-    unsigned long resultDatagram;
-
-    void calculateCurrentSetup(unsigned int current);
-	
-    void doTransaction(unsigned long datagram);
-    
     
     
 public:
@@ -108,6 +83,7 @@ public:
      */
     CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
     
+    ~CCStepperDevice_TMC260();
     
     void attachDevice();
     void detachDevice();
@@ -211,6 +187,35 @@ public:
      * \sa getCurrent(), getCurrentCurrent()
      */
 	void setCurrent(unsigned int current);
+    
+    
+    
+private:
+    
+    void setupMicroSteppingMode();
+    void setupMicroSteppingMode(unsigned char data);
+    
+    unsigned char chipSelect_pin;
+    
+    
+    
+    unsigned int currentMax;        //  current in mA
+    
+    unsigned long driverControl;
+    unsigned long chopperControl;
+    unsigned long coolStepControl;
+    unsigned long stallGuard2Control;
+    unsigned long driverConfiguration;
+    
+    byte currentScaleOf32;
+    boolean senseResistorVoltage165mV;
+    unsigned long resultDatagram;
+    
+    void calculateCurrentSetup(unsigned int current);
+	
+    void doTransaction(unsigned long datagram);
+    
+
     
 };
 

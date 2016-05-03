@@ -50,11 +50,6 @@
 class CCDeviceScheduler {
     
 public:
-
-
-    /// Scheduler parameter:
-    /// Value holds the number of devices managed by him.
-    unsigned char countOfDevices, countOfControlButtons;
     
     /// The Scheduler's device array.
     /// Array of all devices.
@@ -77,7 +72,7 @@ public:
     /// @return the device index.
     schedulerDevice addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
     
-    /// Function adds a stepper device to the device array and returns the index of the device.
+    /// Function adds a stepper device to the device array, that is driven by da driver like the A4988, and returns the index of the device.
     /// Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param dir_pin the pin number of the stepper driver's direction pin.
@@ -92,6 +87,16 @@ public:
     schedulerDevice addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
    
     
+    /// Function adds a stepper device to the device array, that is driven by da driver like the TMC260, and returns the index of the device.
+    /// Device-specific parameters are passed.
+    /// @param deviceName the human-readable name of the device (used for verbose output).
+    /// @param dir_pin the pin number of the stepper driver's direction pin.
+    /// @param step_pin the pin number of the stepper driver's step pin.
+    /// @param enable_pin the pin number of the stepper driver's enable pin.
+    /// @param chipSelect_pin the number of the drivers chip select pin (CS) for the SPI communication.
+    /// @param currentMax the current, that is applied to the motor coils in mA RMS.
+    /// @param stepsPerRotation the number of steps needed to make a full rotation.
+    /// @return the device index.
     schedulerDevice addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
     
     
@@ -132,19 +137,42 @@ public:
     
     
     
+    /// Function adds a control button to the control button array and returns the index of the button.
+    /// A control button is a input device, that can provide either a HIGH or a LOW level at a input pin or simply connect the pin and GND using the internal inputPullup-function. Specific parameters are passed.
+    /// @param buttonName the human-readable name of the device (used for verbose output).
+    /// @param button_pin the pin number of the button's pin.
+    /// @param button_activ the state of the pin, where the button should trigger actions. If "LOW" is passed, the input pullup is activated.
+    /// @return the button index.
     unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean button_activ);
+    
+    /// Function lists all registered control buttons.
+    /// A list with all buttons and bare informations are presented.
     void getAllControlButtons();
+    
+    /// Function lists all actions of all registered buttons.
+    /// A list with all actions and bare informations are presented.
     void getAllActions();
+    
+    
+    /// Function lists all actions of the specified button.
+    /// A list with all actions and bare informations are presented.
+    /// \param theButton the index of the button in question.
     void getActionsForControlButton(unsigned char theButton);
-
+    
+    /// Function deletes all actions of all registered buttons.
     void deleteAllActions();
     
     
-    
+    /// Function starts the scheduler, all registered tasks are driven as specified.
     void run();
     
-
+    
 private:
+    
+    /// Scheduler parameter:
+    /// Value holds the number of devices managed by him.
+    unsigned char countOfDevices, countOfControlButtons;
+
 
     void handleStartEvent(unsigned long taskTime, schedulerDevice device, event startEvent);
     void handleStopEvent(unsigned long taskTime, schedulerDevice device, event stopEvent);

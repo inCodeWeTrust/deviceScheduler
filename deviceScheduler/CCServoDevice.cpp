@@ -6,13 +6,11 @@
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
 //
 
-
-#include <Arduino.h>
+#include <Servo.h>
 #include <avr/pgmspace.h>
 
 #include "CCServoDevice.h"
 
-#include <Servo.h>
 
 
 CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
@@ -55,8 +53,12 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int min
 
 
 CCServoDevice::~CCServoDevice() {
-    deleteTasks();
     detachDevice();
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
+        Serial.print(F("[CCServoDevice]: "));
+        Serial.print(deviceName);
+        Serial.println(F(": detached"));
+    }
 }
 
 
@@ -84,36 +86,37 @@ void CCServoDevice::detachDevice() {
 void CCServoDevice::reviewValues() {}
 
 void CCServoDevice::prepareNextTask() {
-    target = task[taskPointer]->target;
-    velocity = task[taskPointer]->velocity;
-    acceleration = task[taskPointer]->acceleration;
-    startDelay = task[taskPointer]->startDelay;
+    target = task[taskPointer]->getTarget();
+    velocity = task[taskPointer]->getVelocity();
+    acceleration = task[taskPointer]->getAcceleration();
+    deceleration = task[taskPointer]->getDeceleration();
+    startDelay = task[taskPointer]->getStartDelay();
     
-    startEvent = task[taskPointer]->startEvent;
-    startTime = task[taskPointer]->startTime;
-    startButton = task[taskPointer]->startButton;
-    startButtonState = task[taskPointer]->startButtonState;
-    startTriggerDevice = task[taskPointer]->startTriggerDevice;
-    startTriggerTask = task[taskPointer]->startTriggerTask;
-    startTriggerPosition = task[taskPointer]->startTriggerPosition;
+    startEvent = task[taskPointer]->getStartEvent();
+    startTime = task[taskPointer]->getStartTime();
+    startButton = task[taskPointer]->getStartButton();
+    startButtonState = task[taskPointer]->getStartButtonState();
+    startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
+    startTriggerTask = task[taskPointer]->getStartTriggerTask();
+    startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
     
-    stopEvent = task[taskPointer]->stopEvent;
-    timeout = task[taskPointer]->timeout;
-    stopButton = task[taskPointer]->stopButton;
-    stopButtonState = task[taskPointer]->stopButtonState;
-    stopTriggerDevice = task[taskPointer]->stopTriggerDevice;
-    stopTriggerTask = task[taskPointer]->stopTriggerTask;
-    stopTriggerPosition = task[taskPointer]->stopTriggerPosition;
+    stopEvent = task[taskPointer]->getStopEvent();
+    timeout = task[taskPointer]->getTimeout();
+    stopButton = task[taskPointer]->getStopButton();
+    stopButtonState = task[taskPointer]->getStopButtonState();
+    stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
+    stopTriggerTask = task[taskPointer]->getStopTriggerTask();
+    stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();
     
-    switchTaskPromptly = task[taskPointer]->switchTaskPromptly;
-    stopping = task[taskPointer]->stopping;
+    switchTaskPromptly = task[taskPointer]->getSwitchTaskPromptly();
+    stopping = task[taskPointer]->getStopping();
 
     
-    sensor = task[taskPointer]->sensor;
-    initiatePerformanceValue = task[taskPointer]->initiatePerformanceValue;
-    targetValue = task[taskPointer]->targetValue;
-    stopPerformance = task[taskPointer]->stopPerformance;
-    approximation = task[taskPointer]->approximation;
+    sensor = task[taskPointer]->getSensor();
+    initiatePerformanceValue = task[taskPointer]->getInitiatePerformanceValue();
+    targetValue = task[taskPointer]->getTargetValue();
+    stopPerformance = task[taskPointer]->getStopPerformance();
+    approximation = task[taskPointer]->getApproximation();
 
     dynamicalStop = false;
     valueCounter = 0;

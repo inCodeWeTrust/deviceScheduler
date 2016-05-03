@@ -18,9 +18,9 @@
 
 
 
+#include <Arduino.h>
 #include <SPI.h>
 
-#include "Arduino.h"
 #include "CCStepperDevice_TMC260.h"
 
 
@@ -302,6 +302,15 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     
 
     
+}
+
+CCStepperDevice_TMC260::~CCStepperDevice_TMC260() {
+    detachDevice();
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice_TMC260]: "));
+        Serial.print(deviceName);
+        Serial.println(F(" detached"));
+    }
 }
 
 
