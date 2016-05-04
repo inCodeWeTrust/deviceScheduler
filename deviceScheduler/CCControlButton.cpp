@@ -17,17 +17,18 @@
 
 
 
-CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv) {
+CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
     
     this->buttonIndex = buttonIndex;
     this->buttonName = buttonName;
     this->button_pin = button_pin;
     this->buttonActiv = buttonActiv;
+    this->pullup = pullup;
     
-    if (buttonActiv) {
-        pinMode(button_pin, INPUT);
-    } else {
+    if (pullup) {
         pinMode(button_pin, INPUT_PULLUP);
+    } else {
+        pinMode(button_pin, INPUT);
     }
     
     countOfActions = 0;
@@ -89,8 +90,23 @@ void CCControlButton::deleteActions() {
 
 
 void CCControlButton::readButtonState() {
+//    boolean newState = digitalRead(button_pin);
+//    if (state != newState) {
+//        Serial.print("§");
+//    } else {
+//        Serial.print("*");
+//    }
+//    state = newState;
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
+//
+//    Serial.print(button_pin);
+//    Serial.print(state);
+//    if (activ) {
+//        Serial.print("+");
+//    } else {
+//        Serial.print("-");
+//    }
 }
 
 boolean CCControlButton::isActiv(){return activ;}

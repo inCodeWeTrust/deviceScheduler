@@ -28,6 +28,7 @@
 
 //  log visuals:
 #define DEVICESCHEDULER_BASICOUTPUT                     0x01
+#define DEVICESCHEDULER_MEMORYDEBUG                     0x02
 
 #define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
@@ -143,7 +144,7 @@ public:
     /// @param button_pin the pin number of the button's pin.
     /// @param buttonActiv the state of the pin, where the button should trigger actions. If "LOW" is passed, the input pullup is activated.
     /// @return the button index.
-    unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv);
+    unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.

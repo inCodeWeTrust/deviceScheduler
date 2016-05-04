@@ -19,6 +19,9 @@ CCDeviceScheduler::CCDeviceScheduler() {
     countOfControlButtons = 0;
 
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+        Serial.println(F("[CCDeviceScheduler]: CCDeviceScheduler constructed"));
+    }
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: CCDeviceScheduler constructed at $"));
         Serial.println((long)this, HEX);
     }
@@ -50,7 +53,11 @@ schedulerDevice CCDeviceScheduler::addDcController(String deviceName, unsigned c
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
     }
-    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: CCDcControllerDevice constructed at $"));
+        Serial.println((long)device[countOfDevices], HEX);
+    }
+
     countOfDevices++;
     //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
     
@@ -67,6 +74,10 @@ schedulerDevice CCDeviceScheduler::addServo(String deviceName, unsigned char ser
         Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
+    }
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: CCServoDevice constructed at $"));
+        Serial.println((long)device[countOfDevices], HEX);
     }
     
     countOfDevices++;
@@ -141,7 +152,11 @@ schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned 
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
     }
-    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: CCStepperDevice_A4988 constructed at $"));
+        Serial.println((long)device[countOfDevices], HEX);
+    }
+
     free(microStepPin);
     free(stepModeCode);
     
@@ -162,6 +177,10 @@ schedulerDevice CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned
         Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
+    }
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: CCStepperDevice_TMC260 constructed at $"));
+        Serial.println((long)device[countOfDevices], HEX);
     }
     
     countOfDevices++;
@@ -295,14 +314,18 @@ void CCDeviceScheduler::reviewTasks() {
     }
 }
 
-unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv) {
-    controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv);
+unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
+    controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv, pullup);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: provided controlButton "));
         Serial.println(controlButton[countOfControlButtons]->getButtonName());
     }
-    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: CCDcControlButton constructed at $"));
+        Serial.println((long)controlButton[countOfControlButtons], HEX);
+    }
+
     countOfControlButtons++;
     //	control button index = countOfControlButtons - 1 [8 buttons: index of first: 0, last: 7]
     
@@ -388,7 +411,9 @@ void CCDeviceScheduler::run() {
             }
         }
     }
-    delay(200);
+    for (schedulerControlButton b = 0; b < countOfControlButtons; b++) {
+        controlButton[b]->readButtonState();
+    }
     
     //  start the workflow
     long loopTime_min = 10000;
@@ -559,30 +584,30 @@ void CCDeviceScheduler::run() {
             lastPrintTime = taskTime;
         }
         */
-        for (unsigned char b = 0; b < countOfControlButtons; b++) {
-            controlButton[b]->readButtonState();
-            if (controlButton[b]->isActiv()) {
-                for (int theAction = 0; theAction < controlButton[b]->getCountOfActions(); theAction++) {
-                    if (!controlButton[b]->getAction(theAction).actionDone) {
-                        if (controlButton[b]->getAction(theAction).validTask == device[controlButton[b]->getAction(theAction).targetDevice]->getTaskPointer()) {
-                            device[controlButton[b]->getAction(theAction).targetDevice]->setTaskPointer(controlButton[b]->getAction(theAction).followingTask - 1);
-                            switch (controlButton[b]->getAction(theAction).targetAction) {
+        for (schedulerControlButton theButton = 0; theButton < countOfControlButtons; theButton++) {
+            controlButton[theButton]->readButtonState();
+            if (controlButton[theButton]->isActiv()) {
+                for (unsigned char theAction = 0; theAction < controlButton[theButton]->getCountOfActions(); theAction++) {
+                    if (!controlButton[theButton]->getAction(theAction).actionDone) {
+                        if (controlButton[theButton]->getAction(theAction).validTask == device[controlButton[theButton]->getAction(theAction).targetDevice]->getTaskPointer()) {
+                            device[controlButton[theButton]->getAction(theAction).targetDevice]->setTaskPointer(controlButton[theButton]->getAction(theAction).followingTask - 1);
+                            switch (controlButton[theButton]->getAction(theAction).targetAction) {
                                 case START:
-                                    handleStartEvent(taskTime, controlButton[b]->getAction(theAction).targetDevice, CONTROLBUTTON);
+                                    handleStartEvent(taskTime, controlButton[theButton]->getAction(theAction).targetDevice, CONTROLBUTTON);
                                     break;
                                 case STOP_AND_SWITCH:
-                                    device[controlButton[b]->getAction(theAction).targetDevice]->setSwitchTaskPromptly(true);
+                                    device[controlButton[theButton]->getAction(theAction).targetDevice]->setSwitchTaskPromptly(true);
                                 case STOP:
-                                    device[controlButton[b]->getAction(theAction).targetDevice]->setStopping(STOP_NORMAL);
-                                    handleStopEvent(taskTime, controlButton[b]->getAction(theAction).targetDevice, CONTROLBUTTON);
+                                    device[controlButton[theButton]->getAction(theAction).targetDevice]->setStopping(STOP_NORMAL);
+                                    handleStopEvent(taskTime, controlButton[theButton]->getAction(theAction).targetDevice, CONTROLBUTTON);
                                     break;
                                 case STOP_SHARP_AND_SWITCH:
-                                    device[controlButton[b]->getAction(theAction).targetDevice]->setSwitchTaskPromptly(true);
+                                    device[controlButton[theButton]->getAction(theAction).targetDevice]->setSwitchTaskPromptly(true);
                                 case STOP_SHARP:
-                                    device[controlButton[b]->getAction(theAction).targetDevice]->setStopping(STOP_IMMEDIATELY);
-                                    handleStopEvent(taskTime, controlButton[b]->getAction(theAction).targetDevice, CONTROLBUTTON);
+                                    device[controlButton[theButton]->getAction(theAction).targetDevice]->setStopping(STOP_IMMEDIATELY);
+                                    handleStopEvent(taskTime, controlButton[theButton]->getAction(theAction).targetDevice, CONTROLBUTTON);
                             }
-                            controlButton[b]->setActionDone(theAction);
+                            controlButton[theButton]->setActionDone(theAction);
                         }
                     }
                 }

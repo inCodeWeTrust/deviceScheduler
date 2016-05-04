@@ -16,7 +16,6 @@
 
 #define CCCONTROLBUTTON_BASICOUTPUT           0x01
 #define CCCONTROLBUTTON_MEMORYDEBUG           0x02
-#define CCCONTROLBUTTON_MOVEMENTDEBUG         0x04
 
 #define CCCONTROLBUTTON_VERBOSE               0
 
@@ -49,10 +48,10 @@ public:
     void                setActionDone(unsigned char a);
     String              getButtonName();
     unsigned char       getCountOfActions();
-    String             getButtonActiv();
+    String              getButtonActiv();
     
     
-    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv);
+    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     ~CCControlButton();
     
     void evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask);
@@ -72,6 +71,7 @@ private:
     String              buttonName;
     unsigned int        buttonIndex;
     unsigned char       button_pin;
+    boolean             pullup;
     boolean             buttonActiv;
     unsigned char       countOfActions;
     

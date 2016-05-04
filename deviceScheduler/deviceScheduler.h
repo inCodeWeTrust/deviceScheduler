@@ -12,7 +12,7 @@
 #define ENDGROOVE_PITCH                     4.8
 #define ENDGROOVE_RANGE_MIN                 10
 #define CUTTING_RANGE                       38
-#define PLAYTIME_MINUTES                    0.5
+#define PLAYTIME_MINUTES                    3
 
 #define ADJUSTGROOVEPITCH_TO_PLAYTIME      false
 
@@ -119,21 +119,25 @@
 //  ################## BUTTONS AND SENSORS #########################################################################
 
 
-#define SONG_END_BUTTON_NAME                "songEndButton"
-#define SONG_END_PIN                        50
-#define SONG_END_ACTIV                      LOW
+#define SONG_ENDBUTTON_NAME                "songEndButton"
+#define SONG_ENDBUTTON_PIN                        50
+#define SONG_ENDBUTTON_ACTIV                      LOW
+#define SONG_ENDBUTTON_PULLUP                     true
 
-#define SONG_CANCEL_BUTTON_NAME             "songCancelButton"
-#define SONG_CANCEL_PIN                     51
-#define SONG_CANCEL_ACTIV                   LOW
+#define SONG_CANCELBUTTON_NAME             "songCancelButton"
+#define SONG_CANCELBUTTON_PIN                     51
+#define SONG_CANCELBUTTON_ACTIV                   LOW
+#define SONG_CANCELBUTTON_PULLUP                  true
 
-#define CAT_PARK_BUTTON_NAME                "bridgeParkButton"
-#define CAT_PARK_BUTTON                     52
-#define CAT_PARK_BUTTON_ACTIV               HIGH
+#define CAT_PARKBUTTON_NAME                "bridgeParkButton"
+#define CAT_PARKBUTTON_PIN                     52
+#define CAT_PARKBUTTON_ACTIV               HIGH
+#define CAT_PARKBUTTON_PULLUP                     true
 
-#define CAT_END_BUTTON_NAME                 "bridgeEndButton"
-#define CAT_END_BUTTON                      53
-#define CAT_END_BUTTON_ACTIV                HIGH
+#define CAT_ENDBUTTON_NAME                 "bridgeEndButton"
+#define CAT_ENDBUTTON_PIN                      53
+#define CAT_ENDBUTTON_ACTIV                HIGH
+#define CAT_ENDBUTTON_PULLUP                     true
 
 
 #define NORMAL_CUTTING                      A4
@@ -148,7 +152,7 @@
 //#define START_BUTTON                        A2
 //#define LOADING_BUTTON                      A1
 //#define RECORD_AVAILABLE_BUTTON             A0
-//#define CAT_PARK_BUTTON                     A3
+//#define CAT_PARKBUTTON_PIN                     A3
 
 #define I_AM_LATE_LED                       12
 
@@ -231,8 +235,7 @@
 #define CAT_ACCEL_VERY_HIGH             4800
 
 #define CAT_PARK_POSITION               0
-#define CAT_CUTTING_START_POSITION      10000
-//#define CAT_CUTTING_START_POSITION      100000
+#define CAT_CUTTING_START_POSITION      88600
 
 #define VACUUMSOLENOID_FREQUENCY           20
 #define VACUUMSOLENOID_DUTYCYCLE           0.4
