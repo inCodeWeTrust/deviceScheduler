@@ -17,14 +17,14 @@
 
 
 
-CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean button_activ) {
+CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv) {
     
     this->buttonIndex = buttonIndex;
     this->buttonName = buttonName;
     this->button_pin = button_pin;
-    this->button_activ = button_activ;
+    this->buttonActiv = buttonActiv;
     
-    if (button_activ) {
+    if (buttonActiv) {
         pinMode(button_pin, INPUT);
     } else {
         pinMode(button_pin, INPUT_PULLUP);
@@ -38,8 +38,8 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
         Serial.print(buttonName);
         Serial.print(F(", button_pin: "));
         Serial.print(button_pin);
-        Serial.print(F(", button_activ: "));
-        Serial.print(button_activ);
+        Serial.print(F(", buttonActiv: "));
+        Serial.print(buttonActiv);
         Serial.print(F(", at $"));
         Serial.println((long)this, HEX);
     }
@@ -88,23 +88,19 @@ void CCControlButton::deleteActions() {
 }
 
 
-boolean CCControlButton::getButtonState() {
+void CCControlButton::readButtonState() {
     state = digitalRead(button_pin);
-    return state;
+    activ = (state == buttonActiv);
 }
 
-boolean CCControlButton::isActiv() {
-    if (getButtonState() == button_activ) {
-        return true;
-    }
-    return false;
-}
+boolean CCControlButton::isActiv(){return activ;}
+boolean CCControlButton::getState(){return state;}
 
-
-String CCControlButton::getButtonName(){return buttonName;}
-unsigned char CCControlButton::getCountOfActions(){return countOfActions;}
 CCControlButton::buttonAction CCControlButton::getAction(unsigned char a){return action[a];}
 void CCControlButton::setActionDone(unsigned char a){action[a].actionDone = true;}
+String CCControlButton::getButtonName(){return buttonName;}
+String CCControlButton::getButtonActiv(){if (buttonActiv) return "HIGH"; return "LOW";}
+unsigned char CCControlButton::getCountOfActions(){return countOfActions;}
 
 
 

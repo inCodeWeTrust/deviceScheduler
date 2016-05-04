@@ -144,6 +144,9 @@ void loop() {
     scheduler->getAllDevices();
 
     
+    schedulerControlButton bridgeParkButton = scheduler->addControlButton(CAT_PARK_BUTTON_NAME, CAT_PARK_BUTTON, CAT_PARK_BUTTON_ACTIV);
+    schedulerControlButton bridgeEndButton = scheduler->addControlButton(CAT_END_BUTTON_NAME, CAT_END_BUTTON, CAT_END_BUTTON_ACTIV);
+
     
     schedulerControlButton songEndButton = scheduler->addControlButton(SONG_END_BUTTON_NAME, SONG_END_PIN, SONG_END_ACTIV);
     schedulerControlButton songCancelButton = scheduler->addControlButton(SONG_CANCEL_BUTTON_NAME, SONG_CANCEL_PIN, SONG_CANCEL_ACTIV);
@@ -164,17 +167,15 @@ void loop() {
     
     
     // ########## startByDate(unsigned long startTime)
-    // ########## startByButton(unsigned char startButton, boolean startButtonState)
+    // ########## startByButton(schedulerControlButton startButton)
     // ########## startByTriggerpositionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask, signed long startTriggerPosition)
     
-    // ########## setDisposeAfterTask(unsigned char stopTriggerDevice, unsigned char stopTriggerTask)
-    
     // ########## switchToNextTaskByDate(unsigned long startTime);
-    // ########## switchToNextTaskByButton(unsigned char startButton, boolean startButtonState);
+    // ########## switchToNextTaskByButton(schedulerControlButton switchingButton);
     // ########## switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long startTriggerPosition);
     
     // ########## stopByTimeout(unsigned long timeout, stoppingMode stopping)
-    // ########## stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping)
+    // ########## stopByButton(schedulerControlButton stopButton, stoppingMode stopping)
     // ########## stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping)
     
     //  stopping:  STOP_IMMEDIATELY, STOP_NORMAL
@@ -193,7 +194,7 @@ void loop() {
     
     scheduledTask initCatStepper = scheduler->device[catStepper]->addTask(-400000, CAT_SPEED_VERY_HIGH, CAT_ACCEL_VERY_HIGH, CAT_ACCEL_VERY_HIGH);
     scheduler->device[catStepper]->task[initCatStepper]->startByDate(100);
-    scheduler->device[catStepper]->task[initCatStepper]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+    scheduler->device[catStepper]->task[initCatStepper]->stopByButton(bridgeParkButton, STOP_NORMAL);
     
     scheduler->reviewTasks();
     scheduler->getAllTasks();
@@ -222,7 +223,7 @@ void loop() {
         //  move to start groove:
         scheduledTask driveToCuttingStartPosition = scheduler->device[catStepper]->addTask(CAT_CUTTING_START_POSITION, CAT_SPEED_HIGH, CAT_ACCEL_HIGH, CAT_ACCEL_HIGH);
         scheduler->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
-        scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
+        scheduler->device[catStepper]->task[driveToCuttingStartPosition]->stopByButton(bridgeEndButton, STOP_NORMAL);
         
         //  turn the table:
         scheduledTask turnTheTable = scheduler->device[tableStepper]->addTask(grooves_all * 3600, turnTableStepperSpeed, TABLE_STEP_ACCEL, TABLE_STEP_ACCEL);
@@ -258,7 +259,7 @@ void loop() {
         
         scheduledTask driveToParkPosition = scheduler->device[catStepper]->addTask(CAT_PARK_POSITION, CAT_SPEED_HIGH, CAT_ACCEL_HIGH, CAT_ACCEL_HIGH);
         scheduler->device[catStepper]->task[driveToParkPosition]->startAfterCompletionOf(headLeftServo, liftHeadLeftAfterCutting);
-        scheduler->device[catStepper]->task[driveToParkPosition]->stopByButton(CAT_PARK_BUTTON, HIGH, STOP_NORMAL);
+        scheduler->device[catStepper]->task[driveToParkPosition]->stopByButton(bridgeParkButton, STOP_NORMAL);
         
         
         scheduler->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, makeEndGroove);
@@ -292,7 +293,7 @@ void loop() {
         //  move to start groove:
         scheduledTask driveToCuttingStartPositionMan = scheduler->device[catStepper]->addTask(CAT_CUTTING_START_POSITION, 4800, 3200, 3200);
         scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(100);
-        scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
+//        scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_END_BUTTON, HIGH, STOP_NORMAL);
         
         scheduler->reviewTasks();
         scheduler->run();
@@ -302,7 +303,7 @@ void loop() {
             if (digitalRead(CAT_FWD) == LOW) {
                 driveToCuttingStartPositionMan = scheduler->device[catStepper]->addTask(catCuttingEndPosition, 4800, 3200, 3200);
                 scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
-                scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_FWD, HIGH, STOP_NORMAL);
+//                scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_FWD, HIGH, STOP_NORMAL);
                 
                 scheduler->reviewTasks();
                 scheduler->run();
@@ -311,7 +312,7 @@ void loop() {
             if (digitalRead(CAT_RWD) == LOW) {
                 driveToCuttingStartPositionMan = scheduler->device[catStepper]->addTask(CAT_PARK_POSITION, 4800, 3200, 3200);
                 scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
-                scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_RWD, HIGH, STOP_NORMAL);
+//                scheduler->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(CAT_RWD, HIGH, STOP_NORMAL);
                 
                 scheduler->reviewTasks();
                 scheduler->run();
@@ -461,8 +462,6 @@ void setup() {
     pinMode(START_CUTTING_BUTTON, INPUT_PULLUP);
     pinMode(STOP_CUTTING_BUTTON, INPUT_PULLUP);
     
-    pinMode(CAT_PARK_BUTTON, INPUT_PULLUP);
-    pinMode(CAT_END_BUTTON, INPUT_PULLUP);
     
     pinMode(I_AM_LATE_LED, OUTPUT);
     

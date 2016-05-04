@@ -75,22 +75,14 @@ public:
     /// \sa timeOut;
     unsigned long getTimeout();
     
-    /// Getter method for getting the startButtonState of the device
-    /// \sa startButtonState;
-    boolean getStartButton();
+    /// Getter method for getting the startButton of the device
+    /// \sa startButton;
+    schedulerControlButton getStartButton();
     
-    /// Getter method for getting the stopButtonState of the device
-    /// \sa stopButtonState;
-    boolean getStopButton();
+    /// Getter method for getting the stopButton of the device
+    /// \sa stopButton;
+    schedulerControlButton getStopButton();
   
-    /// Getter method for getting the startButtonState of the device
-    /// \sa startButtonState;
-    boolean getStartButtonState();
-    
-    /// Getter method for getting the stopButtonState of the device
-    /// \sa stopButtonState;
-    boolean getStopButtonState();
-    
     /// Getter method for getting the startTriggerDevice of the device
     /// \sa startTriggerDevice;
     schedulerDevice getStartTriggerDevice();
@@ -153,17 +145,17 @@ public:
 
 
     void startByDate(unsigned long startTime);
-    void startByButton(unsigned char startButton, boolean startButtonState);
+    void startByButton(schedulerControlButton startButton);
     void startAfterCompletionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask);
     void startByTriggerpositionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
-    void switchToNextTaskByButton(unsigned char switchingButton, boolean switchingButtonState);
+    void switchToNextTaskByButton(schedulerControlButton switchingButton);
     void switchToNextTaskAfterCompletionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask);
     void switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
-    void stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping);
+    void stopByButton(schedulerControlButton stopButton, stoppingMode stopping);
     void stopAfterCompletionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, stoppingMode stopping);
     void stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     
@@ -172,32 +164,30 @@ public:
     
 private:
     
-    event       startEvent;
-    event       stopEvent;
-    boolean     switchTaskPromptly;
-    float               target;
-    float               velocity;
-    float               acceleration;
-    float               deceleration;
-    unsigned long       startDelay;
-    unsigned long       startTime;
-    unsigned long       timeout;
-    unsigned char       startButton;
-    unsigned char       stopButton;
-    boolean             startButtonState;
-    boolean             stopButtonState;
-    schedulerDevice     startTriggerDevice;
-    scheduledTask       startTriggerTask;
-    signed long         startTriggerPosition;
-    schedulerDevice     stopTriggerDevice;
-    scheduledTask       stopTriggerTask;
-    signed long         stopTriggerPosition;
-    unsigned char       sensor;
-    signed int          initiatePerformanceValue;
-    signed int          targetValue;
-    float               stopPerformance;
-    stoppingMode        stopping;
-    approximationMode   approximation;
+    event                   startEvent;
+    event                   stopEvent;
+    boolean                 switchTaskPromptly;
+    float                   target;
+    float                   velocity;
+    float                   acceleration;
+    float                   deceleration;
+    unsigned long           startDelay;
+    unsigned long           startTime;
+    unsigned long           timeout;
+    schedulerControlButton  startButton;
+    schedulerControlButton  stopButton;
+    schedulerDevice         startTriggerDevice;
+    scheduledTask           startTriggerTask;
+    signed long             startTriggerPosition;
+    schedulerDevice         stopTriggerDevice;
+    scheduledTask           stopTriggerTask;
+    signed long             stopTriggerPosition;
+    unsigned char           sensor;
+    signed int              initiatePerformanceValue;
+    signed int              targetValue;
+    float                   stopPerformance;
+    stoppingMode            stopping;
+    approximationMode       approximation;
     
 
 };

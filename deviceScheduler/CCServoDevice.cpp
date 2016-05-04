@@ -95,7 +95,6 @@ void CCServoDevice::prepareNextTask() {
     startEvent = task[taskPointer]->getStartEvent();
     startTime = task[taskPointer]->getStartTime();
     startButton = task[taskPointer]->getStartButton();
-    startButtonState = task[taskPointer]->getStartButtonState();
     startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
     startTriggerTask = task[taskPointer]->getStartTriggerTask();
     startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
@@ -103,7 +102,6 @@ void CCServoDevice::prepareNextTask() {
     stopEvent = task[taskPointer]->getStopEvent();
     timeout = task[taskPointer]->getTimeout();
     stopButton = task[taskPointer]->getStopButton();
-    stopButtonState = task[taskPointer]->getStopButtonState();
     stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
     stopTriggerTask = task[taskPointer]->getStopTriggerTask();
     stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();

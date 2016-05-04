@@ -126,10 +126,8 @@ void CCDevice::setStopEvent(event stopEvent){this->stopEvent = stopEvent;}
 unsigned long CCDevice::getStartTime(){return startTime;}
 void CCDevice::setStartTime(unsigned long startTime){this->startTime = startTime;};
 unsigned long CCDevice::getTimeout(){return timeout;}
-boolean CCDevice::getStartButton(){return startButton;}
-boolean CCDevice::getStopButton(){return stopButton;}
-boolean CCDevice::getStartButtonState(){return startButtonState;}
-boolean CCDevice::getStopButtonState(){return stopButtonState;}
+schedulerControlButton CCDevice::getStartButton(){return startButton;}
+schedulerControlButton CCDevice::getStopButton(){return stopButton;}
 schedulerDevice CCDevice::getStartTriggerDevice(){return startTriggerDevice;}
 schedulerDevice CCDevice::getStopTriggerDevice(){return stopTriggerDevice;}
 scheduledTask CCDevice::getStartTriggerTask(){return startTriggerTask;}

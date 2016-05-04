@@ -21,7 +21,7 @@
 #define CCDcControllerDevice_CALCULATIONDEBUG    0x04
 #define CCDcControllerDevice_MOVEMENTDEBUG       0x08
 
-#define CCDcControllerDevice_VERBOSE             1
+#define CCDcControllerDevice_VERBOSE             0
 
 
 

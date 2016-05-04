@@ -93,8 +93,6 @@ void CCDcControllerDevice::prepareNextTask() {
     timeout = task[taskPointer]->getTimeout();
     startButton = task[taskPointer]->getStartButton();
     stopButton = task[taskPointer]->getStopButton();
-    startButtonState = task[taskPointer]->getStartButtonState();
-    stopButtonState = task[taskPointer]->getStopButtonState();
     startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
     startTriggerTask = task[taskPointer]->getStartTriggerTask();
     startTriggerPosition = task[taskPointer]->getStartTriggerPosition();

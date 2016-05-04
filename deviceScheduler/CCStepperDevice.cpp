@@ -31,13 +31,16 @@ void CCStepperDevice::disableDevice() {
 
 
 void CCStepperDevice::reviewValues() {
-    Serial.print(F("[CCStepperDevice]: device "));
-    Serial.print(deviceName);
-    Serial.print(F(" review Values for move "));
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice]: device "));
+        Serial.print(deviceName);
+        Serial.print(F(" review Values for move "));
+    }
     for (unsigned char m = 0; m < countOfTasks; m++) {
-        Serial.print(" #");
-        Serial.print(m);
-
+        if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+            Serial.print(" #");
+            Serial.print(m);
+        }
         if (task[m]->getVelocity() == 0) {
             task[m]->setVelocity(defaultVelocity);
         }
@@ -59,8 +62,9 @@ void CCStepperDevice::reviewValues() {
         task[m]->setAcceleration(task[m]->getAcceleration() * stepsPerDegree);
         task[m]->setDeceleration(task[m]->getDeceleration() * stepsPerDegree);
     }
-    Serial.println("   done");
-
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+        Serial.println(F("   done"));
+    }
 }
 
 void CCStepperDevice::prepareNextTask() {
@@ -142,8 +146,6 @@ void CCStepperDevice::prepareNextTask() {
     timeout = task[taskPointer]->getTimeout();
     startButton = task[taskPointer]->getStartButton();
     stopButton = task[taskPointer]->getStopButton();
-    startButtonState = task[taskPointer]->getStartButtonState();
-    stopButtonState = task[taskPointer]->getStopButtonState();
     startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
     startTriggerTask = task[taskPointer]->getStartTriggerTask();
     startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
@@ -259,11 +261,6 @@ void CCStepperDevice::prepareNextTask() {
         }
         stepsForAcceleration = stepsToGo - 2 - stepsForDeceleration--;
         
-        Serial.print(F(" stepsForDeceleration: "));
-        Serial.print(this->stepsForDeceleration);
-        Serial.print(F(", stepsForAcceleration: "));
-        Serial.println(this->stepsForAcceleration);
-
     }
     
     //    this takes ca 4us (no recalculation)

@@ -221,9 +221,9 @@ void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
                 break;
             case BUTTON:
                 Serial.print(F(", startButton: "));
-                Serial.print(device[theDevice]->task[i]->getStartButton());
+                Serial.print(controlButton[device[theDevice]->task[i]->getStartButton()]->getButtonName());
                 Serial.print(F(", at state: "));
-                Serial.print(device[theDevice]->task[i]->getStartButtonState());
+                Serial.print(controlButton[device[theDevice]->task[i]->getStartButton()]->getButtonActiv());
                 break;
             case FOLLOW:
                 Serial.print(F(", of: "));
@@ -253,9 +253,9 @@ void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
                     break;
                 case BUTTON:
                     Serial.print(F(", stopButton: "));
-                    Serial.print(device[theDevice]->task[i]->getStopButton());
+                    Serial.print(controlButton[device[theDevice]->task[i]->getStopButton()]->getButtonName());
                     Serial.print(F(", at state: "));
-                    Serial.print(device[theDevice]->task[i]->getStopButtonState());
+                    Serial.print(controlButton[device[theDevice]->task[i]->getStopButton()]->getButtonActiv());
                     break;
                 case FOLLOW:
                     Serial.print(F(", of: "));
@@ -295,8 +295,8 @@ void CCDeviceScheduler::reviewTasks() {
     }
 }
 
-unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean button_activ) {
-    controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, button_activ);
+unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv) {
+    controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: provided controlButton "));
@@ -316,6 +316,8 @@ void CCDeviceScheduler::getAllControlButtons() {
         Serial.print(i);
         Serial.print(F(", name: "));
         Serial.print(controlButton[i]->getButtonName());
+        Serial.print(F(", activ: "));
+        Serial.print(controlButton[i]->getButtonActiv());
         Serial.print(F(", actions: "));
         Serial.println(controlButton[i]->getCountOfActions());
     }
@@ -386,11 +388,11 @@ void CCDeviceScheduler::run() {
             }
         }
     }
+    delay(200);
     
-    
-    //  start the task
-    int loopTime_min = 10000;
-    int loopTime_max = 0;
+    //  start the workflow
+    long loopTime_min = 10000;
+    long loopTime_max = 0;
     unsigned long taskTime, loopTime;
     unsigned long taskStartTime = millis();
     
@@ -416,7 +418,7 @@ void CCDeviceScheduler::run() {
                             break;
                             
                         case BUTTON:                                                                            // device shall stop by button
-                            if (digitalRead(device[s]->getStopButton()) == device[s]->getStopButtonState()) {             // it's time to stop!
+                            if (controlButton[device[s]->getStopButton()]->isActiv()) {             // it's time to stop!
                                 handleStopEvent(taskTime, s, device[s]->getStopEvent());
                             }
                             break;
@@ -487,7 +489,7 @@ void CCDeviceScheduler::run() {
                                 break;
                                 
                             case BUTTON:                                                                        //  start the next move by button
-                                if (digitalRead(device[s]->getStartButton()) == device[s]->getStartButtonState()) {
+                                if (controlButton[device[s]->getStartButton()]->isActiv()) {
                                     handleStartEvent(taskTime, s, device[s]->getStartEvent());
                                 }
                                 break;
@@ -558,8 +560,9 @@ void CCDeviceScheduler::run() {
         }
         */
         for (unsigned char b = 0; b < countOfControlButtons; b++) {
-            for (int theAction = 0; theAction < controlButton[b]->getCountOfActions(); theAction++) {
-                if (controlButton[b]->isActiv()) {
+            controlButton[b]->readButtonState();
+            if (controlButton[b]->isActiv()) {
+                for (int theAction = 0; theAction < controlButton[b]->getCountOfActions(); theAction++) {
                     if (!controlButton[b]->getAction(theAction).actionDone) {
                         if (controlButton[b]->getAction(theAction).validTask == device[controlButton[b]->getAction(theAction).targetDevice]->getTaskPointer()) {
                             device[controlButton[b]->getAction(theAction).targetDevice]->setTaskPointer(controlButton[b]->getAction(theAction).followingTask - 1);
@@ -591,10 +594,10 @@ void CCDeviceScheduler::run() {
         loopCounter++;
         
         
-        loopTime -= millis();
-        loopTime_min = fmin(loopTime, loopTime_min);
-        loopTime_max = fmax(loopTime, loopTime_max);
-        
+//        loopTime -= millis();
+//        loopTime_min = MIN(loopTime, loopTime_min);
+//        loopTime_max = max(loopTime, loopTime_max);
+
         
     } while (ongoingOperations > 0);
     
@@ -605,12 +608,12 @@ void CCDeviceScheduler::run() {
     Serial.print((signed long)loopCounter);
     Serial.print(F(", elapsed time: "));
     Serial.print((int)((millis() - taskStartTime) / 1000));
-    Serial.print(F(", loops second: "));
+    Serial.print(F(", loops/second: "));
     Serial.print(1000.0 * loopCounter / (millis() - taskStartTime));
-    Serial.print(F(", minimal loop time: "));
-    Serial.print((int)loopTime_min);
-    Serial.print(F(", maximal loop time: "));
-    Serial.println((int)loopTime_max);
+//    Serial.print(F(", minimal loop time: "));
+//    Serial.print(loopTime_min);
+//    Serial.print(F(", maximal loop time: "));
+//    Serial.println(loopTime_max);
     Serial.println();
     Serial.println();
     

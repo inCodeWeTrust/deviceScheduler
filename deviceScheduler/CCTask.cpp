@@ -27,8 +27,6 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->timeout = 0;
     this->startButton = 0;
     this->stopButton = 0;
-    this->startButtonState = 0;
-    this->stopButtonState = 0;
     this->startTriggerDevice = 0;
     this->startTriggerTask = 0;
     this->startTriggerPosition = 0;
@@ -47,10 +45,9 @@ void CCTask::startByDate(unsigned long startTime) {
     this->startEvent = DATE;
     this->startTime = startTime;
 }
-void CCTask::startByButton(unsigned char startButton, boolean startButtonState) {
+void CCTask::startByButton(schedulerControlButton startButton) {
     this->startEvent = BUTTON;
     this->startButton = startButton;
-    this->startButtonState = startButtonState;
 }
 void CCTask::startAfterCompletionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask) {
     this->startEvent = FOLLOW;
@@ -69,10 +66,9 @@ void CCTask::switchToNextTaskByDate(unsigned long switchingTimeout) {
     this->timeout = switchingTimeout;
     this->switchTaskPromptly = true;
 }
-void CCTask::switchToNextTaskByButton(unsigned char switchingButton, boolean switchingButtonState) {
+void CCTask::switchToNextTaskByButton(schedulerControlButton switchingButton) {
     this->stopEvent = BUTTON;
     this->stopButton = switchingButton;
-    this->stopButtonState = switchingButtonState;
     this->switchTaskPromptly = true;
 }
 void CCTask::switchToNextTaskAfterCompletionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask) {
@@ -94,10 +90,9 @@ void CCTask::stopByTimeout(unsigned long timeout, stoppingMode stopping) {
     this->timeout = timeout;
     this->stopping = stopping;
 }
-void CCTask::stopByButton(unsigned char stopButton, boolean stopButtonState, stoppingMode stopping) {
+void CCTask::stopByButton(schedulerControlButton stopButton, stoppingMode stopping) {
     this->stopEvent = BUTTON;
     this->stopButton = stopButton;
-    this->stopButtonState = stopButtonState;
     this->stopping = stopping;
 }
 void CCTask::stopAfterCompletionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, stoppingMode stopping) {
@@ -135,10 +130,8 @@ event CCTask::getStartEvent(){return startEvent;}
 event CCTask::getStopEvent(){return stopEvent;}
 unsigned long CCTask::getStartTime(){return startTime;}
 unsigned long CCTask::getTimeout(){return timeout;}
-boolean CCTask::getStartButton(){return startButton;}
-boolean CCTask::getStopButton(){return stopButton;}
-boolean CCTask::getStartButtonState(){return startButtonState;}
-boolean CCTask::getStopButtonState(){return stopButtonState;}
+schedulerControlButton CCTask::getStartButton(){return startButton;}
+schedulerControlButton CCTask::getStopButton(){return stopButton;}
 schedulerDevice CCTask::getStartTriggerDevice(){return startTriggerDevice;}
 schedulerDevice CCTask::getStopTriggerDevice(){return stopTriggerDevice;}
 scheduledTask CCTask::getStartTriggerTask(){return startTriggerTask;}

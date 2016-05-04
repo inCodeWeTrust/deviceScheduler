@@ -20,7 +20,7 @@
 //  verbosity:
 #define CCDEVICE_BASICOUTPUT            0x01
 
-#define CCDEVICE_VERBOSE                1
+#define CCDEVICE_VERBOSE                0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,21 +144,13 @@ public:
     
     /// Getter method for getting the startButton of the device
     /// \sa startButton;
-    boolean getStartButton();
+    schedulerControlButton getStartButton();
     
     /// Getter method for getting the stopButton of the device
     /// \sa stopButton;
-    boolean getStopButton();
+    schedulerControlButton getStopButton();
     
-    /// Getter method for getting the startButtonState of the device
-    /// \sa startButtonState;
-    boolean getStartButtonState();
-    
-    /// Getter method for getting the stopButtonState of the device
-    /// \sa stopButtonState;
-    boolean getStopButtonState();
-    
-    /// Getter method for getting the startTriggerDevice of the device
+   /// Getter method for getting the startTriggerDevice of the device
     /// \sa startTriggerDevice;
     schedulerDevice getStartTriggerDevice();
    
@@ -395,19 +387,11 @@ protected:
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the pin number of a required hardware event to start this task.
-    unsigned char        startButton;
+    schedulerControlButton        startButton;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the pin number of a required hardware event to stop this task.
-    unsigned char        stopButton;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the required state of the pin to trigger the start of this task.
-    bool                 startButtonState;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the required state of the pin to trigger the stop of this task.
-    bool                 stopButtonState;
+    schedulerControlButton        stopButton;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the index of a device, that shall trigger the start of this task.

@@ -20,7 +20,7 @@
 #define CCSERVODEVICE_CALCULATIONDEBUG      0x04
 #define CCSERVODEVICE_MOVEMENTDEBUG         0x08
 
-#define CCSERVODEVICE_VERBOSE               1
+#define CCSERVODEVICE_VERBOSE               0
 
 
 

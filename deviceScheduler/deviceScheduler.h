@@ -12,7 +12,7 @@
 #define ENDGROOVE_PITCH                     4.8
 #define ENDGROOVE_RANGE_MIN                 10
 #define CUTTING_RANGE                       38
-#define PLAYTIME_MINUTES                    3
+#define PLAYTIME_MINUTES                    0.5
 
 #define ADJUSTGROOVEPITCH_TO_PLAYTIME      false
 
@@ -127,6 +127,13 @@
 #define SONG_CANCEL_PIN                     51
 #define SONG_CANCEL_ACTIV                   LOW
 
+#define CAT_PARK_BUTTON_NAME                "bridgeParkButton"
+#define CAT_PARK_BUTTON                     52
+#define CAT_PARK_BUTTON_ACTIV               HIGH
+
+#define CAT_END_BUTTON_NAME                 "bridgeEndButton"
+#define CAT_END_BUTTON                      53
+#define CAT_END_BUTTON_ACTIV                HIGH
 
 
 #define NORMAL_CUTTING                      A4
@@ -135,8 +142,6 @@
 #define START_CUTTING_BUTTON                A1
 #define STOP_CUTTING_BUTTON                 A0
 
-#define CAT_PARK_BUTTON                     52
-#define CAT_END_BUTTON                      53
 
 #define HEAD_INCLINATION_SENSOR             A5
 
@@ -227,6 +232,7 @@
 
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      10000
+//#define CAT_CUTTING_START_POSITION      100000
 
 #define VACUUMSOLENOID_FREQUENCY           20
 #define VACUUMSOLENOID_DUTYCYCLE           0.4

@@ -141,9 +141,9 @@ public:
     /// A control button is a input device, that can provide either a HIGH or a LOW level at a input pin or simply connect the pin and GND using the internal inputPullup-function. Specific parameters are passed.
     /// @param buttonName the human-readable name of the device (used for verbose output).
     /// @param button_pin the pin number of the button's pin.
-    /// @param button_activ the state of the pin, where the button should trigger actions. If "LOW" is passed, the input pullup is activated.
+    /// @param buttonActiv the state of the pin, where the button should trigger actions. If "LOW" is passed, the input pullup is activated.
     /// @return the button index.
-    unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean button_activ);
+    unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.
