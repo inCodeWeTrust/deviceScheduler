@@ -236,7 +236,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function adds a servo device to the device array and returns the index of the device. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Function adds a servo device to the device array and returns the index of the device. Any type of servo motor can be used, that works with a pulswidth of 600 thru 2400us at a pulsing frequency of 50Hz. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceName</td><td>the human-readable name of the device (used for verbose output). </td></tr>
     <tr><td class="paramname">servo_pin</td><td>the pin number of the servo's pwm-pin. </td></tr>
@@ -309,7 +309,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function adds a stepper device to the device array and returns the index of the device. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Function adds a stepper device to the device array and returns the index of the device. This routine is used for generic stepper driver circuits like A4988 or DRV7888. If micro stepping is available, the stepping mode is selected by microstepping pins. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceName</td><td>the human-readable name of the device (used for verbose output). </td></tr>
     <tr><td class="paramname">dir_pin</td><td>the pin number of the stepper driver's direction pin. </td></tr>
@@ -379,14 +379,14 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function adds a stepper device to the device array and returns the index of the device. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Function adds a stepper device to the device array and returns the index of the device. Use this method to register a stepper driver circuit, that is controlled by SPI. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceName</td><td>the human-readable name of the device (used for verbose output). </td></tr>
     <tr><td class="paramname">dir_pin</td><td>the pin number of the stepper driver's direction pin. </td></tr>
     <tr><td class="paramname">step_pin</td><td>the pin number of the stepper driver's step pin. </td></tr>
     <tr><td class="paramname">enable_pin</td><td>the pin number of the stepper driver's enable pin. </td></tr>
-    <tr><td class="paramname">chipSelect_pin</td><td>the pin number of the stepper driver's chip select (CS) pin. </td></tr>
-    <tr><td class="paramname">currentMax</td><td>the maximum coil current [in mA]. </td></tr>
+    <tr><td class="paramname">chipSelect_pin</td><td>the pin number of the stepper driver's chip select (CS) pin, to be addressed for SPI communication. </td></tr>
+    <tr><td class="paramname">currentMax</td><td>the maximum coil current [in mA RMS]. </td></tr>
     <tr><td class="paramname">stepsPerRotation</td><td>the number of steps needed to make a full rotation. </td></tr>
   </table>
   </dd>
@@ -424,7 +424,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function adds a switching device to the device array and returns the index of the device. A switching device is a device, that is simply switched on or off. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Function adds a dc-controller device to the device array and returns the index of the device. A dc-controller device is a device, that is simply switched on or off, respectivly driven by a PWM-pulse. Device-specific parameters are passed. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceName</td><td>the human-readable name of the device (used for verbose output). </td></tr>
     <tr><td class="paramname">switching_pin</td><td>the pin number of the device's controll pin. </td></tr>

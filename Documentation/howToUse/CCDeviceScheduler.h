@@ -70,7 +70,7 @@ public:
     
 
 
-    /// Function adds a servo device to the device array and returns the index of the device.
+    /// Function adds a servo device to the device array and returns the index of the device. Any type of servo motor can be used, that works with a pulswidth of 600 thru 2400us at a pulsing frequency of 50Hz.
     /// Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param servo_pin the pin number of the servo's pwm-pin.
@@ -80,7 +80,7 @@ public:
     /// @return the device index to identify this device.
     schedulerDevice addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
     
-    /// Function adds a stepper device to the device array and returns the index of the device.
+    /// Function adds a stepper device to the device array and returns the index of the device. This routine is used for generic stepper driver circuits like A4988 or DRV7888. If micro stepping is available, the stepping mode is selected by microstepping pins.
     /// Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param dir_pin the pin number of the stepper driver's direction pin.
@@ -95,21 +95,21 @@ public:
     schedulerDevice addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
    
     
-    /// Function adds a stepper device to the device array and returns the index of the device.
+    /// Function adds a stepper device to the device array and returns the index of the device. Use this method to register a stepper driver circuit, that is controlled by SPI.
     /// Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param dir_pin the pin number of the stepper driver's direction pin.
     /// @param step_pin the pin number of the stepper driver's step pin.
     /// @param enable_pin the pin number of the stepper driver's enable pin.
-    /// @param chipSelect_pin the pin number of the stepper driver's chip select (CS) pin.
-    /// @param currentMax the maximum coil current [in mA].
+    /// @param chipSelect_pin the pin number of the stepper driver's chip select (CS) pin, to be addressed for SPI communication.
+    /// @param currentMax the maximum coil current [in mA RMS].
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index to identify this device.
     schedulerDevice addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
     
     
-    /// Function adds a switching device to the device array and returns the index of the device.
-    /// A switching device is a device, that is simply switched on or off. Device-specific parameters are passed.
+    /// Function adds a dc-controller device to the device array and returns the index of the device.
+    /// A dc-controller device is a device, that is simply switched on or off, respectivly driven by a PWM-pulse. Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param switching_pin the pin number of the device's controll pin.
     /// @param switchingPin_activ the state of the switching pin, where the device is activ.
@@ -236,6 +236,7 @@ public:
 /// Die Aufgabe "lowerHeadForCutting" wird entsprechend der Sensorwerte des Distanzsensors im Schneidekopf dynamisch gestoppt. Die Fahrgeschwindigkeit wird entsprechend der Sensorwerte geregelt. <br>
 /// Die implementierten Methoden sind:
 /// - \code CCTask->startByDate(...) \endcode
+/// - \code CCTask->startByButton(...) \endcode
 /// - \code CCTask->startAfterCompletionOf(...) \endcode
 /// - \code CCTask->startByTriggerpositionOf(...) \endcode
 /// - \code CCTask->switchToNextTaskByDate(...) \endcode

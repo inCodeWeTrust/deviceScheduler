@@ -386,8 +386,8 @@ void CCDeviceScheduler::run() {
     unsigned long loopCounter = 0;
     unsigned char ongoingOperations;
     
-    int i = 100;
-    int c32, hend, hstrt, tof = 0;
+//    int i = 100;
+//    int c32, hend, hstrt, tof = 0;
     
     
     // prepare the loop
@@ -416,12 +416,14 @@ void CCDeviceScheduler::run() {
     }
     
     //  start the workflow
-    long loopTime_min = 10000;
-    long loopTime_max = 0;
+//    long loopTime_min = 10000;
+//    long loopTime_max = 0;
     unsigned long taskTime, loopTime;
     unsigned long taskStartTime = millis();
     
-    unsigned long lastPrintTime = taskStartTime;
+//    unsigned long lastPrintTime = taskStartTime;
+    
+    schedulerControlButton theButton = 0;
     
     do {
         loopTime = millis();
@@ -429,7 +431,7 @@ void CCDeviceScheduler::run() {
         
         ongoingOperations = 0;
         
-        
+       
         for (schedulerDevice s = 0; s < countOfDevices; s++) {
             if (device[s]->getState() > SLEEPING) {                                                         // (== MOVING || MOVE_DONE || PENDING_MOVES)
                 if (device[s]->getState() == MOVING) {                                                // if device is moving...
@@ -584,7 +586,8 @@ void CCDeviceScheduler::run() {
             lastPrintTime = taskTime;
         }
         */
-        for (schedulerControlButton theButton = 0; theButton < countOfControlButtons; theButton++) {
+        
+        if (theButton < countOfControlButtons) {
             controlButton[theButton]->readButtonState();
             if (controlButton[theButton]->isActiv()) {
                 for (unsigned char theAction = 0; theAction < controlButton[theButton]->getCountOfActions(); theAction++) {
@@ -612,6 +615,9 @@ void CCDeviceScheduler::run() {
                     }
                 }
             }
+            theButton++;
+        } else {
+            theButton = 0;
         }
         
         
