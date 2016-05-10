@@ -267,3 +267,6 @@ void CCDcControllerDevice::operateTask() {
         }
     }
 }
+
+void CCDcControllerDevice::getReadOut(byte theReadOut) {}
+

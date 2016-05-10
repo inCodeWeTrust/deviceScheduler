@@ -53,6 +53,8 @@ public:
     void stopTask();
     void finishTask();
 
+    virtual void getReadOut(byte theReadOut) = 0;
+
     
     
 protected:
@@ -67,7 +69,7 @@ protected:
     unsigned long        stepExpiration, elapsedTime, lastStepTime;
     float                c0_acc, c0_dec, c1, acceleration_inv, deceleration_inv;
     unsigned char        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
-    unsigned char        *steppingUnit;
+    unsigned int         *steppingUnit;
     float                stepsPerDegree, degreesPerMicroStep;
     unsigned long        currentMicroStep;
     float                startPosition;

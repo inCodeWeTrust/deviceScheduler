@@ -60,6 +60,8 @@ public:
     void attachDevice();
     void detachDevice();
 
+    void getReadOut(byte theReadOut);
+
     
 private:
     unsigned char        numberOfMicroStepPins;

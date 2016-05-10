@@ -68,6 +68,8 @@ public:
     void stopTask();
     void finishTask();
     
+    void getReadOut(byte theReadOut);
+
 
     
 };

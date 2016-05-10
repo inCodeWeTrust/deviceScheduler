@@ -284,7 +284,9 @@ public:
 //    virtual void setCoolStepRegister(boolean minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold);
 //    virtual void setStallGuard2Register(boolean stallGuard2FilterEnable, int stallGuard2Threshold);
 //    virtual void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
-//    virtual void getReadOut(byte theReadOut);
+
+    virtual void getReadOut(byte theReadOut) = 0;
+
 //    virtual void setCurrent(unsigned int current);
 //    virtual void setCurrentScale(unsigned int currentScale);
    

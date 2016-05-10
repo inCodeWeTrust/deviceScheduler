@@ -464,3 +464,6 @@ void CCServoDevice::operateTask() {
     stopTask();
     
 }
+
+void CCServoDevice::getReadOut(byte theReadOut) {}
+

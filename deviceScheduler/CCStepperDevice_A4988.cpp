@@ -36,8 +36,8 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
     
     this->highestSteppingMode = highestSteppingMode;
     this->stepModeCode = new unsigned char[highestSteppingMode + 1];                        // create array for microStep pin configuration
-    this->steppingUnit = new unsigned char[highestSteppingMode + 1];                        // create array for increment of microSteps according to microSteppingMode
-    
+    this->steppingUnit = new unsigned int[highestSteppingMode + 1];                        // create array for increment of microSteps according to microSteppingMode
+
     for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
         this->stepModeCode[codeIndex] = stepModeCode[codeIndex];
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
@@ -153,5 +153,7 @@ void CCStepperDevice_A4988::setupMicroSteppingMode(unsigned char data) {
         digitalWrite(microStepPin[pinIndex], data & (1 << pinIndex));
     }
 }
+
+void CCStepperDevice_A4988::getReadOut(byte theReadOut) {}
 
 

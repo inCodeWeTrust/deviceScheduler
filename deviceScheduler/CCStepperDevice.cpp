@@ -631,7 +631,7 @@ void CCStepperDevice::operateTask() {
 
 void CCStepperDevice::kickUp() {
     if (microSteppingMode > 0) {
-        if (!(currentMicroStep & 0x0F)) {
+        if ((currentMicroStep & 0x0F) == 0) {
             microSteppingMode--;
             
             setupMicroSteppingMode();
