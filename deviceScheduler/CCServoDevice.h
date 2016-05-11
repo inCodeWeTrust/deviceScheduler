@@ -57,7 +57,7 @@ class CCServoDevice : public CCDevice {
 
     
 public:
-
+    
     CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
     ~CCServoDevice();
 

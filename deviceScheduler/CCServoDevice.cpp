@@ -257,7 +257,7 @@ void CCServoDevice::startTask() {
 }
 void CCServoDevice::initiateStop() {
     elapsedTime = millis() - t0;
-    if (elapsedTime < timeForAcceleration) {
+    if (elapsedTime < (signed long)timeForAcceleration) {
         timeForAcceleration = elapsedTime;
         timeForConstantSpeed = 0;
         targetPosition = currentPosition + currentPosition - startPosition;
@@ -265,7 +265,7 @@ void CCServoDevice::initiateStop() {
     }
     
     elapsedTime -= timeForAcceleration;
-    if (elapsedTime < timeForConstantSpeed) {
+    if (elapsedTime < (signed long)timeForConstantSpeed) {
         timeForConstantSpeed = elapsedTime;
         targetPosition = currentPosition + wayForAcceleration;
     }
@@ -305,7 +305,7 @@ void CCServoDevice::operateTask() {
                 c_perform = 1.0 / (initiatePerformanceValue - targetValue);
                 dynamicalStop = true;
 
-                Serial.print("### dynamical stop: sens: ");
+                Serial.print("### init dynamical stop: sens: ");
                 Serial.print(sensorValue);
                 Serial.print(", init: ");
                 Serial.print(initiatePerformanceValue);
@@ -316,7 +316,7 @@ void CCServoDevice::operateTask() {
     }
     
     // ramp up
-    if (elapsedTime < timeForAcceleration) {
+    if (elapsedTime < (signed long)timeForAcceleration) {
         // s = s0 + 0.5 * a * t^2 * (1000ms / sec)^2
         deltaS = elapsedTime * elapsedTime * acceleration / 2000000;
         currentPosition = startPosition + deltaS;
@@ -338,7 +338,7 @@ void CCServoDevice::operateTask() {
     
     // go with constant speed
     elapsedTime -= timeForAcceleration;
-    if (elapsedTime < timeForConstantSpeed) {
+    if (elapsedTime < (signed long)timeForConstantSpeed) {
         // s = s0 + s1 + deltaS = s0 + s1 + v * t
         deltaS = elapsedTime * velocity / 1000;
         currentPosition = startPosition + wayForAcceleration + deltaS;
@@ -420,6 +420,12 @@ void CCServoDevice::operateTask() {
                 return;
             }
         }
+        
+        Serial.print("### end dynamical stop: sens: ");
+        Serial.print(sensorValue);
+        Serial.print(", position: ");
+        Serial.println(currentPosition);
+
         if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
@@ -431,7 +437,7 @@ void CCServoDevice::operateTask() {
     } else {
         // generic ramp down
         elapsedTime -= timeForConstantSpeed;
-        if (elapsedTime < timeForAcceleration) {
+        if (elapsedTime < (signed long)timeForAcceleration) {
             //  t^2 = (timeForAcceleration - elapsedTime)^2 = (elapsedTime - timeForAcceleration)^2;
             elapsedTime -= timeForAcceleration;
             // s = sges - deltaS = 0.5 * a * t^2 = 0.5 * a * (time_in_millis / 1000)^2 = 1/2 * 1/1000000 * a * t^2
@@ -458,7 +464,6 @@ void CCServoDevice::operateTask() {
     // if we didnt return up to here, we are done!
     
     theServo.writeMicroseconds(targetPosition);
-    //    currentPosition = theServo.readMicroseconds();
     currentPosition = targetPosition;
         
     stopTask();

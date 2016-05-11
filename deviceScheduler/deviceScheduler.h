@@ -23,8 +23,8 @@
 
 #define STEPPER_STOCK_NAME                  "stockStepper"
 
-#define STEPPER_STOCK_STEP_PIN              22
-#define STEPPER_STOCK_DIR_PIN               24
+#define STEPPER_STOCK_DIR_PIN               22
+#define STEPPER_STOCK_STEP_PIN              24
 #define STEPPER_STOCK_ENABLE_PIN            26
 #define STEPPER_STOCK_MICROSTEPPINS         "28, 30, 32"
 
@@ -38,10 +38,10 @@
 
 #define STEPPER_TABLE_NAME                  "tableStepper"
 
-#define STEPPER_TABLE_STEP_PIN              22
-#define STEPPER_TABLE_DIR_PIN               24
-#define STEPPER_TABLE_ENABLE_PIN            26
-#define STEPPER_TABLE_MICROSTEPPINS         "28, 30, 32"
+#define STEPPER_TABLE_DIR_PIN               34
+#define STEPPER_TABLE_STEP_PIN              36
+#define STEPPER_TABLE_ENABLE_PIN            38
+#define STEPPER_TABLE_MICROSTEPPINS         "40, 42, 44"
 #define STEPPER_TABLE_HIGHEST_STEPPINGMODE  4
 #define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
 //#define STEPPER_TABLE_STEP_PIN              23
@@ -61,8 +61,8 @@
 #define STEPPER_CAT_DIR_PIN                 9
 #define STEPPER_CAT_STEP_PIN                8
 #define STEPPER_CAT_ENABLE_PIN              7
-#define STEPPER_CAT_CHIPSELECT_PIN          10
-#define STEPPER_CAT_CURRENT                 1600
+#define STEPPER_CAT_CHIPSELECT_PIN          6
+#define STEPPER_CAT_CURRENT                 1100
 #define STEPPER_CAT_STEPS_PER_ROTATION      200
 #define STEPPER_CAT_PPS_MAX                 1000
 #define STEPPER_CAT_ACC_MAX                 4000
@@ -71,7 +71,7 @@
 
 #define SERVO_LIFT_NAME                     "liftServo"
 
-#define SERVO_LIFT_PIN                      2
+#define SERVO_LIFT_PIN                      14
 #define SERVO_LIFT_MIN_POSITION             150
 #define SERVO_LIFT_MAX_POSITION             600
 
@@ -79,7 +79,7 @@
 
 #define SERVO_TURN_NAME                     "turnServo"
 
-#define SERVO_TURN_PIN                      3
+#define SERVO_TURN_PIN                      15
 #define SERVO_TURN_MIN_POSITION             150
 #define SERVO_TURN_MAX_POSITION             600
 
@@ -87,7 +87,7 @@
 
 #define SERVO_HEAD_LEFT_NAME                "headLeftServo"
 
-#define SERVO_HEAD_LEFT_PIN                 4
+#define SERVO_HEAD_LEFT_PIN                 16
 #define SERVO_HEAD_LEFT_MIN_POSITION        900
 #define SERVO_HEAD_LEFT_MAX_POSITION        2100
 
@@ -95,7 +95,7 @@
 
 #define SERVO_HEAD_RIGHT_NAME               "headRightServo"
 
-#define SERVO_HEAD_RIGHT_PIN                5
+#define SERVO_HEAD_RIGHT_PIN                17
 #define SERVO_HEAD_RIGHT_MIN_POSITION       900
 #define SERVO_HEAD_RIGHT_MAX_POSITION       2100
 
@@ -119,25 +119,25 @@
 //  ################## BUTTONS AND SENSORS #########################################################################
 
 
-#define SONG_ENDBUTTON_NAME                "songEndButton"
-#define SONG_ENDBUTTON_PIN                        50
-#define SONG_ENDBUTTON_ACTIV                      LOW
-#define SONG_ENDBUTTON_PULLUP                     true
+#define SONG_ENDBUTTON_NAME                 "songEndButton"
+#define SONG_ENDBUTTON_PIN                  50
+#define SONG_ENDBUTTON_ACTIV                LOW
+#define SONG_ENDBUTTON_PULLUP               true
 
-#define SONG_CANCELBUTTON_NAME             "songCancelButton"
-#define SONG_CANCELBUTTON_PIN                     51
-#define SONG_CANCELBUTTON_ACTIV                   LOW
-#define SONG_CANCELBUTTON_PULLUP                  true
+#define SONG_CANCELBUTTON_NAME              "songCancelButton"
+#define SONG_CANCELBUTTON_PIN               51
+#define SONG_CANCELBUTTON_ACTIV             LOW
+#define SONG_CANCELBUTTON_PULLUP            true
 
-#define CAT_PARKBUTTON_NAME                "bridgeParkButton"
-#define CAT_PARKBUTTON_PIN                     52
-#define CAT_PARKBUTTON_ACTIV               HIGH
-#define CAT_PARKBUTTON_PULLUP                     true
+#define CAT_PARKBUTTON_NAME                 "bridgeParkButton"
+#define CAT_PARKBUTTON_PIN                  52
+#define CAT_PARKBUTTON_ACTIV                HIGH
+#define CAT_PARKBUTTON_PULLUP               true
 
-#define CAT_ENDBUTTON_NAME                 "bridgeEndButton"
-#define CAT_ENDBUTTON_PIN                      53
-#define CAT_ENDBUTTON_ACTIV                HIGH
-#define CAT_ENDBUTTON_PULLUP                     true
+#define CAT_ENDBUTTON_NAME                  "bridgeEndButton"
+#define CAT_ENDBUTTON_PIN                   53
+#define CAT_ENDBUTTON_ACTIV                 HIGH
+#define CAT_ENDBUTTON_PULLUP                true
 
 
 #define NORMAL_CUTTING                      A4
@@ -173,8 +173,8 @@
 
 
 #define LIFT_SPEED_FAST                 1600
-#define LIFT_SPEED_SLOW                 600
-#define LIFT_SPEED_VERY_SLOW            200
+#define LIFT_SPEED_SLOW                 400
+#define LIFT_SPEED_VERY_SLOW            120
 #define LIFT_ACCEL_FAST                 1600
 #define LIFT_ACCEL_SLOW                 400
 #define LIFT_ACCEL_VERY_SLOW            200

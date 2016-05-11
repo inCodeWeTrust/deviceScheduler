@@ -68,8 +68,8 @@ void CCStepperDevice::reviewValues() {
 }
 
 void CCStepperDevice::prepareNextTask() {
-    unsigned long t_prepTask = micros();
-    unsigned long t_stop, t_sum = 0;
+//    unsigned long t_prepTask = micros();
+//    unsigned long t_stop, t_sum = 0;
 
     if (state == MOVING) {
         if (switchTaskPromptly) {
@@ -242,7 +242,7 @@ void CCStepperDevice::prepareNextTask() {
     
     
     // *** does acceleration and deceleration fit into the move? ***
-    if (stepsForAcceleration + stepsForDeceleration > stepsToGo - 2) {
+    if ((signed long)stepsForAcceleration + (signed long)stepsForDeceleration > stepsToGo - 2) {
         
         Serial.println(F("!!!! too less steps !!!!"));
 

@@ -258,6 +258,8 @@ void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
                 Serial.print(F(", at position: "));
                 Serial.print(device[theDevice]->task[i]->getStartTriggerPosition());
                 break;
+            default:
+                Serial.print(F(", no start event given"));
         }
         Serial.print(F(", terminated by: "));
         Serial.print(getNameOfTaskEvent(device[theDevice]->task[i]->getStopEvent()));
@@ -290,6 +292,8 @@ void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
                     Serial.print(F(", at position: "));
                     Serial.print(device[theDevice]->task[i]->getStopTriggerPosition());
                     break;
+                default:
+                    Serial.print(F(", no stop event given"));
             }
         
             if (device[theDevice]->task[i]->getSwitchTaskPromptly()) {
@@ -463,6 +467,8 @@ void CCDeviceScheduler::run() {
                                 }
                             }
                             break;
+                        default:
+                            break;
                     }
                 }                                                                                               // (device[s]->getState() == MOVING)
                 else {                                                                                          // if device is stopped
@@ -535,7 +541,10 @@ void CCDeviceScheduler::run() {
                                         handleStartEvent(taskTime, s, device[s]->getStartEvent());
                                     }
                                 }
-                        }
+                                break;
+                            default:
+                                break;
+                       }
                     }
                 }
             }
