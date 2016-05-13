@@ -502,7 +502,6 @@ void CCStepperDevice::operateTask() {
     if (timeDif <= 0) {
         digitalWrite(step_pin, LOW);
         digitalWrite(step_pin, HIGH);
-        
         if (timeDif < -100) {
             if (currentMicroStep < microStepsToGo) {
                 digitalWrite(I_AM_LATE_LED, HIGH);

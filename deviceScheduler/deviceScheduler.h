@@ -21,6 +21,77 @@
 
 //  ################## Hardware #############################################################################
 
+/// | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|
+/// |   A0  |               |                               |
+/// |   A1  |               |                               |
+/// |   A2  |               |                               |
+/// |   A3  |               |                               |
+/// |   A4  |               |                               |
+/// |   A5  |               |                               |
+/// |   A6  |               |                               |
+/// |   A7  |               |                               |
+/// |   A8  |  <header 01>  |  head inclination sensor      |
+/// |   A9  |  <header 01>  |                               |
+/// |  A10  |  <header 02>  |                               |
+/// |  A11  |  <header 02>  |                               |
+/// |  A12  |  <header 02>  |                               |
+/// |  A13  |  <header 02>  |                               |
+/// |  A14  |               |                               |
+/// |  A15  |               |                               |
+
+/// | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|
+/// |    0  |               |                               |
+/// |    1  |               |                               |
+/// |    2  |               |                               |
+/// |    3  |               |                               |
+/// |    4  |               |                               |
+/// |    5  |               |                               |
+/// |    6  |               |                               |
+/// |    7  |               |  TMC260 enable                |
+
+/// | pin   | header        | function on shields           | function on board             |
+/// |-------|---------------|-------------------------------|-------------------------------|
+/// |    8  |               |  TMC260 step                  |   */*                         |
+/// |    9  |               |  TMC260 dir                   |   */*                         |
+/// |   10  |               |  TMC260 chipSelect            |   */*                         |
+/// |   11  |  SPI / nc     |  TMC260                       |                               |
+/// |   12  |  SPI / nc     |  TMC260                       |  i_am_late pin                |
+/// |   13  |  SPI / nc     |  TMC260                       |                               |
+
+/// | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|
+/// |   14  |  <header 03>  |  liftServo                    |
+/// |   15  |  <header 03>  |  turnServo                    |
+/// |   16  |  <header 03>  |  headLeftServo                |
+/// |   17  |  <header 03>  |  headRightServo               |
+/// |   18  |  <header 03>  |                               |
+/// |   19  |  <header 03>  |                               |
+/// |   20  |  <header 03>  |                               |
+/// |   21  |  <header 03>  |                               |
+
+/// | pin   | header        | function                      || pin   | header        | function                      |
+/// |-------|---------------|-------------------------------||-------|---------------|-------------------------------|
+/// |   22  |   A4988 01    |  stockStepper dir             ||   23  |               |                               |
+/// |   24  |   A4988 01    |  stockStepper step            ||   25  |               |                               |
+/// |   26  |   A4988 01    |  stockStepper enable          ||   27  |               |                               |
+/// |   28  |   A4988 01    |  stockStepper microstep 00    ||   29  |               |                               |
+/// |   30  |   A4988 01    |  stockStepper microstep 01    ||   31  |               |                               |
+/// |   32  |   A4988 01    |  stockStepper microstep 02    ||   33  |               |                               |
+/// |   34  |   A4988 02    |  tableStepper dir             ||   23  |               |                               |
+/// |   36  |   A4988 02    |  tableStepper step            ||   25  |               |                               |
+/// |   38  |   A4988 02    |  tableStepper enable          ||   27  |               |                               |
+/// |   40  |   A4988 02    |  tableStepper microstep 00    ||   29  |               |                               |
+/// |   42  |   A4988 02    |  tableStepper microstep 01    ||   31  |  <header 10>  |                               |
+/// |   44  |   A4988 02    |  tableStepper microstep 02    ||   33  |  <header 10>  |                               |
+/// |   46  |               |  songCancelButton             ||   47  |  <header 10>  |                               |
+/// |   48  |               |  songEndButton                ||   49  |  <header 10>  |  recordAvaliableButton        |
+/// |   50  |               |  startCuttingButton           ||   51  |  <header 10>  |  bridgeEndButton              |
+/// |   52  |               |  fetchRecordButton            ||   53  |  <header 10>  |  bridgeParkButton             |
+///
+
+
 #define STEPPER_STOCK_NAME                  "stockStepper"
 
 #define STEPPER_STOCK_DIR_PIN               22
@@ -101,16 +172,6 @@
 
 
 
-#define TABLEDRIVE_NAME                     "tableDrive"
-
-#define TABLEDRIVE_PIN                      40
-#define TABLEDRIVE_ACTIV                    HIGH
-
-
-#define VACUUMSOLENOID_NAME                 "vacuumSolenoid"
-
-#define VACUUMSOLENOID_PIN                  9
-#define VACUUMSOLENOID_ACTIV                LOW
 
 
 // TMC260 sensing resistor value in mOhm
@@ -120,39 +181,40 @@
 
 
 #define SONG_ENDBUTTON_NAME                 "songEndButton"
-#define SONG_ENDBUTTON_PIN                  50
+#define SONG_ENDBUTTON_PIN                  48
 #define SONG_ENDBUTTON_ACTIV                LOW
 #define SONG_ENDBUTTON_PULLUP               true
 
 #define SONG_CANCELBUTTON_NAME              "songCancelButton"
-#define SONG_CANCELBUTTON_PIN               51
+#define SONG_CANCELBUTTON_PIN               46
 #define SONG_CANCELBUTTON_ACTIV             LOW
 #define SONG_CANCELBUTTON_PULLUP            true
 
 #define CAT_PARKBUTTON_NAME                 "bridgeParkButton"
-#define CAT_PARKBUTTON_PIN                  52
+#define CAT_PARKBUTTON_PIN                  53
 #define CAT_PARKBUTTON_ACTIV                HIGH
 #define CAT_PARKBUTTON_PULLUP               true
 
 #define CAT_ENDBUTTON_NAME                  "bridgeEndButton"
-#define CAT_ENDBUTTON_PIN                   53
+#define CAT_ENDBUTTON_PIN                   51
 #define CAT_ENDBUTTON_ACTIV                 HIGH
 #define CAT_ENDBUTTON_PULLUP                true
 
 
-#define NORMAL_CUTTING                      A4
-#define CAT_FWD                             A3
-#define CAT_RWD                             A2
-#define START_CUTTING_BUTTON                A1
-#define STOP_CUTTING_BUTTON                 A0
+#define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
+#define RECORDAVAILABLE_BUTTON_PIN          49
+#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
+#define RECORDAVAILABLE_BUTTON_PULLUP       true
 
 
-#define HEAD_INCLINATION_SENSOR             A5
+//#define CAT_FWD                             A3
+//#define CAT_RWD                             A2
+#define START_CUTTING_BUTTON                50
+#define FETCH_RECORD_BUTTON                 52
 
-//#define START_BUTTON                        A2
-//#define LOADING_BUTTON                      A1
-//#define RECORD_AVAILABLE_BUTTON             A0
-//#define CAT_PARKBUTTON_PIN                     A3
+
+#define HEAD_INCLINATION_SENSOR             A8
+
 
 #define I_AM_LATE_LED                       12
 
@@ -179,12 +241,12 @@
 #define LIFT_ACCEL_SLOW                 400
 #define LIFT_ACCEL_VERY_SLOW            200
 
-#define LIFT_UP_POSITION                840
-#define LIFT_FROM_STOCK_TRIGGER_TURN    1400
+#define LIFT_UP_POSITION               1000
+#define LIFT_FROM_STOCK_TRIGGER_TURN   1560
 #define LIFT_UP_TRIGGER_TURN            1240
-#define LIFT_TABLE_POSITION             1460
-#define LIFT_STOCK_POSITION             1480
-#define LIFT_PARK_POSITION              1484
+#define LIFT_TABLE_POSITION            1700
+#define LIFT_STOCK_POSITION            1700
+#define LIFT_PARK_POSITION              1496
 
 
 #define TURN_SPEED_FAST                 320
@@ -192,12 +254,12 @@
 #define TURN_ACCEL_FAST                 280
 #define TURN_ACCEL_SLOW                 150
 
-#define TURN_TABLE_POSITION             1800
-#define TURN_TO_PARK_TRIGGER_LIFT       1600
-#define TURN_TO_TABLE_TRIGGER_LIFT      1600
+#define TURN_TABLE_POSITION             1760
+#define TURN_TO_PARK_TRIGGER_LIFT       1400
+#define TURN_TO_TABLE_TRIGGER_LIFT      1660
 #define TURN_PARK_POSITION              1300
-#define TURN_TO_STOCK_TRIGGER_LIFT      900
-#define TURN_STOCK_POSITION             800
+#define TURN_TO_STOCK_TRIGGER_LIFT      1080
+#define TURN_STOCK_POSITION             980
 
 
 #define HEAD_LEFT_PARK_POSITION         2100

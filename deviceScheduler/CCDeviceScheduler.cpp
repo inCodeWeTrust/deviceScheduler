@@ -425,7 +425,7 @@ void CCDeviceScheduler::run() {
     unsigned long taskTime, loopTime;
     unsigned long taskStartTime = millis();
     
-//    unsigned long lastPrintTime = taskStartTime;
+    unsigned long lastPrintTime = taskStartTime;
     
     schedulerControlButton theButton = 0;
     
@@ -589,13 +589,12 @@ void CCDeviceScheduler::run() {
             }
         }
          */
-        /*
-        if (taskTime - lastPrintTime > 200) {
-            device[6]->getReadOut(2);
+ /*
+        if (taskTime - lastPrintTime > 1000) {
+            device[6]->getReadOut(0);
             lastPrintTime = taskTime;
         }
-        */
-        
+   */     
         if (theButton < countOfControlButtons) {
             controlButton[theButton]->readButtonState();
             if (controlButton[theButton]->isActiv()) {

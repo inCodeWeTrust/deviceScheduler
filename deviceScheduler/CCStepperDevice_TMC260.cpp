@@ -470,7 +470,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
                 Serial.print(F("[CCStepperDevice_TMC260]: "));
                 Serial.print(deviceName);
                 Serial.print(": microstepPosition: ");
-                Serial.print(microstepPosition);
+                Serial.println(microstepPosition);
             }
             break;
         case READOUT_STALLGUARD_LEVEL:
@@ -479,7 +479,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
                 Serial.print(F("[CCStepperDevice_TMC260]: "));
                 Serial.print(deviceName);
                 Serial.print(": stallGuard2: ");
-                Serial.print(stallGuard2Value);
+                Serial.println(stallGuard2Value);
             }
             break;
         default:
@@ -492,7 +492,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
                 Serial.print(": coolStepScaling: ");
                 Serial.print(coolStepScalingValue);
                 Serial.print(", stallGuard2: ");
-                Serial.print(stallGuard2Value_upper);
+                Serial.println(stallGuard2Value_upper);
             }
     }
     
@@ -511,16 +511,16 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
     if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
-        //    Serial.print("  standStil: ");
-        //    Serial.print(standStil);
-        //    Serial.print("  openLoad: ");
-        //    Serial.print(openLoad);
-        //    Serial.print("  shortToGnd: ");
-        //    Serial.print(shortToGnd);
-        //    Serial.print("  overTemperatureWarning: ");
-        //    Serial.print(overTemperatureWarning);
-        //    Serial.print("  overTemperatureShutdown: ");
-        //    Serial.print(overTemperatureShutdown);
+        Serial.print("  standStil: ");
+        Serial.print(standStil);
+        Serial.print("  openLoad: ");
+        Serial.print(openLoad);
+        Serial.print("  shortToGnd: ");
+        Serial.print(shortToGnd);
+        Serial.print("  overTemperatureWarning: ");
+        Serial.print(overTemperatureWarning);
+        Serial.print("  overTemperatureShutdown: ");
+        Serial.print(overTemperatureShutdown);
         Serial.print(": stallGuard2Status: ");
         Serial.println(stallGuard2Status);
     }
