@@ -29,7 +29,7 @@
 /// |   A3  |               |                               |
 /// |   A4  |               |                               |
 /// |   A5  |               |                               |
-/// |   A6  |               |                               |
+/// |   A6  |               |  match head impact button     |
 /// |   A7  |               |                               |
 /// |   A8  |  <header 01>  |  head inclination sensor      |
 /// |   A9  |  <header 01>  |                               |
@@ -79,13 +79,13 @@
 /// |   28  |   A4988 01    |  stockStepper microstep 00    ||   29  |               |                               |
 /// |   30  |   A4988 01    |  stockStepper microstep 01    ||   31  |               |                               |
 /// |   32  |   A4988 01    |  stockStepper microstep 02    ||   33  |               |                               |
-/// |   34  |   A4988 02    |  tableStepper dir             ||   23  |               |                               |
-/// |   36  |   A4988 02    |  tableStepper step            ||   25  |               |                               |
-/// |   38  |   A4988 02    |  tableStepper enable          ||   27  |               |                               |
-/// |   40  |   A4988 02    |  tableStepper microstep 00    ||   29  |               |                               |
-/// |   42  |   A4988 02    |  tableStepper microstep 01    ||   31  |  <header 10>  |                               |
-/// |   44  |   A4988 02    |  tableStepper microstep 02    ||   33  |  <header 10>  |                               |
-/// |   46  |               |  songCancelButton             ||   47  |  <header 10>  |                               |
+/// |   34  |   A4988 02    |  tableStepper dir             ||   35  |               |                               |
+/// |   36  |   A4988 02    |  tableStepper step            ||   37  |               |                               |
+/// |   38  |   A4988 02    |  tableStepper enable          ||   39  |               |                               |
+/// |   40  |   A4988 02    |  tableStepper microstep 00    ||   41  |               |                               |
+/// |   42  |   A4988 02    |  tableStepper microstep 01    ||   43  |  <header 10>  |                               |
+/// |   44  |   A4988 02    |  tableStepper microstep 02    ||   45  |  <header 10>  |  stockBottomReachedButton     |
+/// |   46  |               |  songCancelButton             ||   47  |  <header 10>  |  stockTopReachedButton        |
 /// |   48  |               |  songEndButton                ||   49  |  <header 10>  |  recordAvaliableButton        |
 /// |   50  |               |  startCuttingButton           ||   51  |  <header 10>  |  bridgeEndButton              |
 /// |   52  |               |  fetchRecordButton            ||   53  |  <header 10>  |  bridgeParkButton             |
@@ -206,12 +206,24 @@
 #define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
 #define RECORDAVAILABLE_BUTTON_PULLUP       true
 
+#define STOCKBOTTOMREACHED_BUTTON_NAME      "stockBottomReachedButton"
+#define STOCKBOTTOMREACHED_BUTTON_PIN       47
+#define STOCKBOTTOMREACHED_BUTTON_ACTIV     HIGH
+#define STOCKBOTTOMREACHED_BUTTON_PULLUP    true
+
+#define STOCKTOPREACHED_BUTTON_NAME         "stockTopReachedButton"
+#define STOCKTOPREACHED_BUTTON_PIN          45
+#define STOCKTOPREACHED_BUTTON_ACTIV        HIGH
+#define STOCKTOPREACHED_BUTTON_PULLUP       true
+
+
 
 //#define CAT_FWD                             A3
 //#define CAT_RWD                             A2
 #define START_CUTTING_BUTTON                50
 #define FETCH_RECORD_BUTTON                 52
 
+#define MATCH_HEADIMPACT_BUTTON             A6
 
 #define HEAD_INCLINATION_SENSOR             A8
 
@@ -281,7 +293,7 @@
 #define HEAD_RIGHT_TOP_POSITION         900
 
 
-#define STOCK_SUPPLY_RECORD_SPEED       640
+#define STOCK_SUPPLY_RECORD_SPEED       1000
 #define STOCK_SUPPLY_RECORD_ACCEL       320
 
 #define STOCK_LOADING_SPEED             520

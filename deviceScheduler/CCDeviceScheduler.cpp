@@ -14,24 +14,24 @@
 
 
 
-CCDeviceScheduler::CCDeviceScheduler() {
+CCDeviceScheduler::CCDeviceScheduler(String name) {
+    schedulerName = name;
     countOfDevices = 0;
     countOfControlButtons = 0;
 
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.println(F("[CCDeviceScheduler]: CCDeviceScheduler constructed"));
+        Serial.print(F("[CCDeviceScheduler]: constructed scheduler "));
+        Serial.println(schedulerName);
     }
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: CCDeviceScheduler constructed at $"));
+        Serial.print(F("[CCDeviceScheduler]: constructed scheduler "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at $"));
         Serial.println((long)this, HEX);
     }
 }
 
 CCDeviceScheduler::~CCDeviceScheduler() {
-    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.println(F("[CCDeviceScheduler]: destruct CCDeviceScheduler"));
-    }
-    
     for (int i = countOfDevices - 1; i >= 0; i--) {
         delete device[i];
         device[i] = NULL;
@@ -40,6 +40,12 @@ CCDeviceScheduler::~CCDeviceScheduler() {
         delete controlButton[i];
         controlButton[i] = NULL;
     }
+
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: destructed scheduler "));
+        Serial.println(schedulerName);
+    }
+    
 }
 
 
@@ -48,13 +54,17 @@ schedulerDevice CCDeviceScheduler::addDcController(String deviceName, unsigned c
     device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_activ);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided "));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided "));
         Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
     }
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: CCDcControllerDevice constructed at $"));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCDcControllerDevice constructed at $"));
         Serial.println((long)device[countOfDevices], HEX);
     }
 
@@ -70,13 +80,17 @@ schedulerDevice CCDeviceScheduler::addServo(String deviceName, unsigned char ser
     device[countOfDevices] = new CCServoDevice(deviceName, servo_pin, minPosition, maxPosition, parkPosition);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided "));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided "));
         Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
     }
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: CCServoDevice constructed at $"));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCServoDevice constructed at $"));
         Serial.println((long)device[countOfDevices], HEX);
     }
     
@@ -147,13 +161,17 @@ schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned 
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided "));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided "));
         Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
     }
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: CCStepperDevice_A4988 constructed at $"));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCStepperDevice_A4988 constructed at $"));
         Serial.println((long)device[countOfDevices], HEX);
     }
 
@@ -173,13 +191,17 @@ schedulerDevice CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided "));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided "));
         Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getDeviceName());
     }
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: CCStepperDevice_TMC260 constructed at $"));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCStepperDevice_TMC260 constructed at $"));
         Serial.println((long)device[countOfDevices], HEX);
     }
     
@@ -195,7 +217,9 @@ schedulerDevice CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned
 
 
 void CCDeviceScheduler::getAllDevices() {
-    Serial.println(F("[CCDeviceScheduler]: My Devices: "));
+    Serial.print(F("[CCDeviceScheduler]: "));
+    Serial.print(schedulerName);
+    Serial.println(F(": Devices: "));
     for (int i = 0; i < countOfDevices; i++) {
         Serial.print(F("   # "));
         Serial.print(i);
@@ -217,7 +241,9 @@ void CCDeviceScheduler::getAllTasks() {
 
 
 void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
-    Serial.print(F("[CCDeviceScheduler]: Tasks of Device "));
+    Serial.print(F("[CCDeviceScheduler]: "));
+    Serial.print(schedulerName);
+    Serial.print(F(": Tasks of Device "));
     Serial.print(device[theDevice]->getDeviceName());
     Serial.println(F(": "));
     for (int i = 0; i < device[theDevice]->getCountOfTasks(); i++) {
@@ -322,11 +348,15 @@ unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned ch
     controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv, pullup);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: provided controlButton "));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided controlButton "));
         Serial.println(controlButton[countOfControlButtons]->getButtonName());
     }
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: CCDcControlButton constructed at $"));
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCDcControlButton constructed at $"));
         Serial.println((long)controlButton[countOfControlButtons], HEX);
     }
 
@@ -337,7 +367,9 @@ unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned ch
 
 }
 void CCDeviceScheduler::getAllControlButtons() {
-    Serial.println(F("[CCDeviceScheduler]: My ControlButtons: "));
+    Serial.print(F("[CCDeviceScheduler]: "));
+    Serial.print(schedulerName);
+    Serial.println(F(": ControlButtons: "));
     for (int i = 0; i < countOfControlButtons; i++) {
         Serial.print(F("   # "));
         Serial.print(i);
@@ -358,7 +390,9 @@ void CCDeviceScheduler::getAllActions() {
 }
 
 void CCDeviceScheduler::getActionsForControlButton(unsigned char theButton) {
-    Serial.print(F("[CCDeviceScheduler]: Actions of ControlButton "));
+    Serial.print(F("[CCDeviceScheduler]: "));
+    Serial.print(schedulerName);
+    Serial.print(F(": Actions of ControlButton "));
     Serial.print(controlButton[theButton]->getButtonName());
     Serial.println(F(": "));
     for (int i = 0; i < controlButton[theButton]->getCountOfActions(); i++) {

@@ -33,7 +33,7 @@
 #define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
 
-#define DEVICESCHEDULER_VERBOSE                         (DEVICESCHEDULER_BASICOUTPUT | DEVICESCHEDULER_SHOW_TASK_VIEW)
+#define DEVICESCHEDULER_VERBOSE                         0x10
 
 
 
@@ -52,13 +52,17 @@ class CCDeviceScheduler {
     
 public:
     
+    
+    /// The Scheduler's name
+    /// Value, set by the user to be recognized by him.
+    String   schedulerName;
     /// The Scheduler's device array.
     /// Array of all devices.
     CCDevice *device[8];
     /// Array of all control-inputs.
     CCControlButton *controlButton[8];
     
-    CCDeviceScheduler();
+    CCDeviceScheduler(String name);
     ~CCDeviceScheduler();
     
 
