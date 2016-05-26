@@ -13,13 +13,15 @@
 
 
 
-CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay) {
+CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset) {
 
     this->target = target;
     this->velocity = velocity;
     this->acceleration = acceleration;
     this->deceleration = deceleration;
-    this->startDelay = startDelay;
+    this->moveRelativ = moveRelativ;
+    this->withPositionReset = withPositionReset;
+    this->startDelay = 0;
     this->startEvent = NONE;
     this->stopEvent = NONE;
     this->switchTaskPromptly = false;
@@ -39,6 +41,10 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->targetValue = 0;
     this->stopPerformance = 0;
  
+}
+
+void CCTask::setStartDelay(unsigned long startDelay) {
+    this->startDelay = startDelay;
 }
 
 void CCTask::startByDate(unsigned long startTime) {
@@ -125,6 +131,8 @@ float CCTask::getAcceleration(){return acceleration;}
 void CCTask::setAcceleration(float acceleration){this->acceleration = acceleration;}
 float CCTask::getDeceleration(){return deceleration;}
 void CCTask::setDeceleration(float deceleration){this->deceleration = deceleration;}
+boolean CCTask::getMoveRelativ() {return moveRelativ;}
+boolean CCTask::getWithPositionReset(){return withPositionReset;}
 unsigned long CCTask::getStartDelay(){return startDelay;}
 event CCTask::getStartEvent(){return startEvent;}
 event CCTask::getStopEvent(){return stopEvent;}

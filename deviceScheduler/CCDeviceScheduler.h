@@ -89,7 +89,7 @@ public:
     /// i.e. "28, 30, 32": micro stepping pins are pin 28, pin 30 and pin 32
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
-    schedulerDevice addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
+    schedulerDevice addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
    
     
     /// Function adds a stepper device to the device array, that is driven by da driver like the TMC260, and returns the index of the device.

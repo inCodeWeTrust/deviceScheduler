@@ -32,8 +32,8 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
  return addTaskWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
  }
  */
-unsigned char CCDevice::addTask(float target, float velocity, float acceleration, float deceleration) {
-    return addTaskWithStartDelay(target, 0UL, velocity, acceleration, deceleration);
+scheduledTask CCDevice::addTask(float target, float velocity, float acceleration, float deceleration) {
+    return registerTask(target, velocity, acceleration, deceleration, false, false);
 }
 
 /*
@@ -47,9 +47,18 @@ unsigned char CCDevice::addTask(float target, float velocity, float acceleration
  return addTaskWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
  }
  */
-unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration) {
+
+scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity, float acceleration, float deceleration) {
+    return registerTask(target, velocity, acceleration, deceleration, true, false);
+}
+
+scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity, float acceleration, float deceleration) {
+    return registerTask(target, velocity, acceleration, deceleration, false, true);
+}
+
+scheduledTask CCDevice::registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset) {
 //    task[countOfTasks] = new onEventTask(target, velocity, acceleration, deceleration, startDelay);
-    task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, startDelay);
+    task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, moveRelativ, withPositionReset);
     
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCDevice]: add Task for "));

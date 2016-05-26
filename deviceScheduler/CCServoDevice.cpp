@@ -46,9 +46,6 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int min
         Serial.println((long)&theServo, HEX);
     }
 
-    
-    attachDevice();
-    
 }
 
 
@@ -80,7 +77,17 @@ void CCServoDevice::attachDevice() {
     }
 }
 void CCServoDevice::detachDevice() {
+
+    Serial.print(F("try to detach Servo at $"));
+    Serial.print((long)&theServo, HEX);
+    
     theServo.detach();
+
+    Serial.print(F(" done"));
+
+    Serial.print(F(" >> now at $"));
+    Serial.println((long)&theServo, HEX);
+    
 }
 
 void CCServoDevice::reviewValues() {}
@@ -90,6 +97,7 @@ void CCServoDevice::prepareNextTask() {
     velocity = task[taskPointer]->getVelocity();
     acceleration = task[taskPointer]->getAcceleration();
     deceleration = task[taskPointer]->getDeceleration();
+    moveRelativ = task[taskPointer]->getMoveRelativ();
     startDelay = task[taskPointer]->getStartDelay();
     
     startEvent = task[taskPointer]->getStartEvent();
@@ -125,7 +133,12 @@ void CCServoDevice::prepareNextTask() {
         sensorTreshold = 256.0 / approximation;
     }
     
-    targetPosition = target;
+    
+    if (moveRelativ) {
+        targetPosition += target;
+    } else {
+        targetPosition = target;
+    }
     startPosition = currentPosition;
     
     wayToGo = (signed long) targetPosition - startPosition;

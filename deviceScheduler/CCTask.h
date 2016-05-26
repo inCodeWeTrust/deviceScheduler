@@ -55,6 +55,14 @@ public:
     /// \sa deceleration;
     void setDeceleration(float deceleration);
     
+    /// Getter method for getting the moveRelativ bit of the device
+    /// \sa moveRelativ;
+    boolean getMoveRelativ();
+
+    /// Getter method for getting the withPositionReset bit of the device
+    /// \sa withPositionReset;
+    boolean getWithPositionReset();
+    
     /// Getter method for getting the startDelay of the device
     /// \sa startDelay;
     unsigned long getStartDelay();
@@ -140,9 +148,10 @@ public:
     
     
     
-    CCTask(float target, float velocity, float acceleration, float deceleration, unsigned long startDelay);
+    CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset);
 
 
+    void setStartDelay(unsigned long startDelay);
 
     void startByDate(unsigned long startTime);
     void startByButton(schedulerControlButton startButton);
@@ -171,6 +180,8 @@ private:
     float                   velocity;
     float                   acceleration;
     float                   deceleration;
+    boolean                 moveRelativ;
+    boolean                 withPositionReset;
     unsigned long           startDelay;
     unsigned long           startTime;
     unsigned long           timeout;

@@ -89,7 +89,7 @@ void CCControlButton::deleteActions() {
 }
 
 
-void CCControlButton::readButtonState() {
+boolean CCControlButton::readButtonState() {
 //    boolean newState = digitalRead(button_pin);
 //    if (state != newState) {
 //        Serial.print("§");
@@ -107,6 +107,7 @@ void CCControlButton::readButtonState() {
 //    } else {
 //        Serial.print("-");
 //    }
+    return activ;
 }
 
 boolean CCControlButton::isActiv(){return activ;}

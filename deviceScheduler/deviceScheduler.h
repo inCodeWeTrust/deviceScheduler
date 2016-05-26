@@ -73,19 +73,19 @@
 
 /// | pin   | header        | function                      || pin   | header        | function                      |
 /// |-------|---------------|-------------------------------||-------|---------------|-------------------------------|
-/// |   22  |   A4988 01    |  stockStepper dir             ||   23  |               |                               |
-/// |   24  |   A4988 01    |  stockStepper step            ||   25  |               |                               |
-/// |   26  |   A4988 01    |  stockStepper enable          ||   27  |               |                               |
-/// |   28  |   A4988 01    |  stockStepper microstep 00    ||   29  |               |                               |
-/// |   30  |   A4988 01    |  stockStepper microstep 01    ||   31  |               |                               |
-/// |   32  |   A4988 01    |  stockStepper microstep 02    ||   33  |               |                               |
-/// |   34  |   A4988 02    |  tableStepper dir             ||   35  |               |                               |
-/// |   36  |   A4988 02    |  tableStepper step            ||   37  |               |                               |
-/// |   38  |   A4988 02    |  tableStepper enable          ||   39  |               |                               |
-/// |   40  |   A4988 02    |  tableStepper microstep 00    ||   41  |               |                               |
-/// |   42  |   A4988 02    |  tableStepper microstep 01    ||   43  |  <header 10>  |                               |
-/// |   44  |   A4988 02    |  tableStepper microstep 02    ||   45  |  <header 10>  |  stockBottomReachedButton     |
-/// |   46  |               |  songCancelButton             ||   47  |  <header 10>  |  stockTopReachedButton        |
+/// |   22  |   A4988 01    |  stockStepper dir             ||   23  |   A4988 02    |  conveyorStepper enable       |
+/// |   24  |   A4988 01    |  stockStepper step            ||   25  |   A4988 02    |  conveyorStepper microstep 00 |
+/// |   26  |   A4988 01    |  stockStepper enable          ||   27  |   A4988 02    |  conveyorStepper microstep 01 |
+/// |   28  |   A4988 01    |  stockStepper microstep 00    ||   29  |   A4988 02    |  conveyorStepper microstep 02 |
+/// |   30  |   A4988 01    |  stockStepper microstep 01    ||   31  |   A4988 02    |  conveyorStepper step         |
+/// |   32  |   A4988 01    |  stockStepper microstep 02    ||   33  |   A4988 02    |  conveyorStepper dir          |
+/// |   34  |   DRV8825     |  tableStepper dir             ||   35  |               |                               |
+/// |   36  |   DRV8825     |  tableStepper step            ||   37  |               |                               |
+/// |   38  |   DRV8825     |  tableStepper enable          ||   39  |               |                               |
+/// |   40  |   DRV8825     |  tableStepper microstep 00    ||   41  |               |                               |
+/// |   42  |   DRV8825     |  tableStepper microstep 01    ||   43  |  <header 10>  |                               |
+/// |   44  |   DRV8825     |  tableStepper microstep 02    ||   45  |  <header 10>  |  stockBottomButton            |
+/// |   46  |               |  songCancelButton             ||   47  |  <header 10>  |  stockTopButton               |
 /// |   48  |               |  songEndButton                ||   49  |  <header 10>  |  recordAvaliableButton        |
 /// |   50  |               |  startCuttingButton           ||   51  |  <header 10>  |  bridgeEndButton              |
 /// |   52  |               |  fetchRecordButton            ||   53  |  <header 10>  |  bridgeParkButton             |
@@ -106,21 +106,37 @@
 #define STEPPER_STOCK_ACC_MAX               2000
 
 
+#define STEPPER_CONVEYOR_NAME                  "conveyorStepper"
+
+#define STEPPER_CONVEYOR_DIR_PIN               33
+#define STEPPER_CONVEYOR_STEP_PIN              31
+#define STEPPER_CONVEYOR_ENABLE_PIN            23
+#define STEPPER_CONVEYOR_MICROSTEPPINS         "25, 27, 29"
+
+#define STEPPER_CONVEYOR_HIGHEST_STEPPINGMODE  4
+#define STEPPER_CONVEYOR_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
+#define STEPPER_CONVEYOR_STEPS_PER_ROTATION    48
+#define STEPPER_CONVEYOR_PPS_MAX               800
+#define STEPPER_CONVEYOR_ACC_MAX               2000
+
+
 
 #define STEPPER_TABLE_NAME                  "tableStepper"
 
+//#define STEPPER_TABLE_CHIPSELECT_PIN          6
+//#define STEPPER_TABLE_DIR_PIN                 5
+//#define STEPPER_TABLE_STEP_PIN                4
+//#define STEPPER_TABLE_ENABLE_PIN              3
+//#define STEPPER_TABLE_CURRENT                 600
+//#define STEPPER_TABLE_STEPS_PER_ROTATION      200
+//#define STEPPER_TABLE_PPS_MAX                 1000
+//#define STEPPER_TABLE_ACC_MAX                 4000
 #define STEPPER_TABLE_DIR_PIN               34
 #define STEPPER_TABLE_STEP_PIN              36
 #define STEPPER_TABLE_ENABLE_PIN            38
 #define STEPPER_TABLE_MICROSTEPPINS         "40, 42, 44"
-#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  4
-#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x07"
-//#define STEPPER_TABLE_STEP_PIN              23
-//#define STEPPER_TABLE_DIR_PIN               25
-//#define STEPPER_TABLE_ENABLE_PIN            27
-//#define STEPPER_TABLE_MICROSTEPPINS         "29, 31, 33"
-//#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  5
-//#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
+#define STEPPER_TABLE_HIGHEST_STEPPINGMODE  5
+#define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
 #define STEPPER_TABLE_STEPS_PER_ROTATION    200
 #define STEPPER_TABLE_PPS_MAX               800
 #define STEPPER_TABLE_ACC_MAX               2000
@@ -129,10 +145,10 @@
 
 #define STEPPER_CAT_NAME                    "catStepper"
 
+#define STEPPER_CAT_CHIPSELECT_PIN          10
 #define STEPPER_CAT_DIR_PIN                 9
 #define STEPPER_CAT_STEP_PIN                8
 #define STEPPER_CAT_ENABLE_PIN              7
-#define STEPPER_CAT_CHIPSELECT_PIN          6
 #define STEPPER_CAT_CURRENT                 1100
 #define STEPPER_CAT_STEPS_PER_ROTATION      200
 #define STEPPER_CAT_PPS_MAX                 1000
@@ -206,15 +222,15 @@
 #define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
 #define RECORDAVAILABLE_BUTTON_PULLUP       true
 
-#define STOCKBOTTOMREACHED_BUTTON_NAME      "stockBottomReachedButton"
-#define STOCKBOTTOMREACHED_BUTTON_PIN       47
-#define STOCKBOTTOMREACHED_BUTTON_ACTIV     HIGH
-#define STOCKBOTTOMREACHED_BUTTON_PULLUP    true
+#define STOCKBOTTOM_BUTTON_NAME      "stockBottomButton"
+#define STOCKBOTTOM_BUTTON_PIN       47
+#define STOCKBOTTOM_BUTTON_ACTIV     HIGH
+#define STOCKBOTTOM_BUTTON_PULLUP    true
 
-#define STOCKTOPREACHED_BUTTON_NAME         "stockTopReachedButton"
-#define STOCKTOPREACHED_BUTTON_PIN          45
-#define STOCKTOPREACHED_BUTTON_ACTIV        HIGH
-#define STOCKTOPREACHED_BUTTON_PULLUP       true
+#define STOCKTOP_BUTTON_NAME         "stockTopButton"
+#define STOCKTOP_BUTTON_PIN          45
+#define STOCKTOP_BUTTON_ACTIV        HIGH
+#define STOCKTOP_BUTTON_PULLUP       true
 
 
 
@@ -240,7 +256,7 @@
 #define CAT_DRIVE_RATIO                     36.0 / 60.0 * 22.0 / 60.0
 #define RECORD_TURNS_PER_MINUTE             45
 
-#define TABLE_DRIVE_RATIO                   122.0 / 28.0
+#define TABLE_DRIVE_RATIO                   123.0 / 28.0
 
 
 //  ################## MOVE DATA #############################################################################
@@ -253,23 +269,22 @@
 #define LIFT_ACCEL_SLOW                 400
 #define LIFT_ACCEL_VERY_SLOW            200
 
-#define LIFT_UP_POSITION               1000
-#define LIFT_FROM_STOCK_TRIGGER_TURN   1560
-#define LIFT_UP_TRIGGER_TURN            1240
-#define LIFT_TABLE_POSITION            1700
-#define LIFT_STOCK_POSITION            1700
+#define LIFT_UP_POSITION                900
+#define LIFT_UP_TRIGGER_TURN           1100
+#define LIFT_TABLE_POSITION            2000
+#define LIFT_STOCK_POSITION            2000
 #define LIFT_PARK_POSITION              1496
 
 
 #define TURN_SPEED_FAST                 320
-#define TURN_SPEED_SLOW                 180
+#define TURN_SPEED_SLOW                 480
 #define TURN_ACCEL_FAST                 280
 #define TURN_ACCEL_SLOW                 150
 
-#define TURN_TABLE_POSITION             1760
+#define TURN_TABLE_POSITION             1780
 #define TURN_TO_PARK_TRIGGER_LIFT       1400
 #define TURN_TO_TABLE_TRIGGER_LIFT      1660
-#define TURN_PARK_POSITION              1300
+#define TURN_PARK_POSITION              1400
 #define TURN_TO_STOCK_TRIGGER_LIFT      1080
 #define TURN_STOCK_POSITION             980
 

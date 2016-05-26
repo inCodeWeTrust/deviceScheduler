@@ -101,7 +101,7 @@ schedulerDevice CCDeviceScheduler::addServo(String deviceName, unsigned char ser
 }
 
 
-schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char dir_pin, unsigned char step_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
+schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
     
     unsigned char numberOfMicroStepPins = 0;                                                    // first find how many pins are given
     signed char elementBegin = 1;
@@ -157,7 +157,7 @@ schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned 
         elementBegin = elementEnd + 1;
     }
     
-    device[countOfDevices] = new CCStepperDevice_A4988(deviceName, dir_pin, step_pin, enable_pin, highestSteppingMode, stepModeCode, numberOfMicroStepPins, microStepPin, stepsPerRotation);
+    device[countOfDevices] = new CCStepperDevice_A4988(deviceName, step_pin, dir_pin, enable_pin, highestSteppingMode, stepModeCode, numberOfMicroStepPins, microStepPin, stepsPerRotation);
     
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
@@ -255,6 +255,12 @@ void CCDeviceScheduler::getTasksForDevice(schedulerDevice theDevice) {
         Serial.print(device[theDevice]->task[i]->getVelocity());
         Serial.print(F(", acceleration: "));
         Serial.print(device[theDevice]->task[i]->getAcceleration());
+        if (device[theDevice]->task[i]->getMoveRelativ()) {
+            Serial.print(F(", move relativ"));
+        }
+        if (device[theDevice]->task[i]->getWithPositionReset()) {
+            Serial.print(F(", with position reset"));
+        }
         Serial.print(F(", startDelay: "));
         Serial.print(device[theDevice]->task[i]->getStartDelay());
         Serial.print(F(", started by "));
@@ -426,11 +432,15 @@ void CCDeviceScheduler::run() {
     
 //    int i = 100;
 //    int c32, hend, hstrt, tof = 0;
-    
+//    boolean ottdp, roft;
+//    int sinof, fdt, ot;
     
     // prepare the loop
     for (unsigned char s = 0; s < countOfDevices; s++) {
         if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
+            
+            device[s]->attachDevice();
+            
             device[s]->setTaskPointer(0);
             device[s]->setState(PENDING_MOVES);
             
@@ -585,44 +595,55 @@ void CCDeviceScheduler::run() {
             ongoingOperations += device[s]->getState();                                                              // ongoing operations on any device?
             
         }
-        /*
+
+/*
+        if (taskTime & 0x0000) {
+            roft = analogRead(A4) >> 9;
+        }
+        if (taskTime & 0x0010) {
+            ottdp = analogRead(A5) >> 9;
+        }
+        
         if (taskTime & 0x1000) {
-            i = analogRead(A8) >> 5;
+            i = analogRead(A0) >> 5;
             i = (c32 * 3 + i) >> 2;
             if (i != c32) {
                 c32 = i;
-                device[6]->setCurrentScale(c32);
+                device[2]->setCurrentScale(c32);
                 Serial.print(" *** c32: "), Serial.println(c32);
             }
         }
+        
+
         if (taskTime & 0x1010) {
-            i = (analogRead(A9) >> 6 ) - 3;
-            i = (hend * 3 + i) >> 2;
-            if (i != hend) {
-                hend = i;
-                device[6]->setChopperControlRegister_spreadCycle(0, 0, 1, hend, hstrt, tof);
-                Serial.print("*** hend: "), Serial.print(hend);
+            i = (analogRead(A1) >> 6) - 3;
+            i = (sinof * 3 + i) >> 2;
+            if (i != sinof) {
+                sinof = i;
+                device[2]->setChopperControlRegister_fastDecay(2, roft, ottdp, sinof, fdt, ot);
+                Serial.print("*** sinof: "), Serial.print(sinof);
             }
         }
         if (taskTime & 0x1100) {
-            i = (analogRead(A10) >> 7) + 1;
-            i = (hstrt * 3 + i) >> 2;
-            if (i != hstrt) {
-                hstrt = i;
-                device[6]->setChopperControlRegister_spreadCycle(0, 0, 1, hend, hstrt, tof);
-                Serial.print("*** hstrt: "), Serial.print(hstrt);
+            i = (analogRead(A2) >> 6);
+            i = (fdt * 3 + i) >> 2;
+            if (i != fdt) {
+                fdt = i;
+                device[2]->setChopperControlRegister_fastDecay(2, roft, ottdp, sinof, fdt, ot);
+                Serial.print("*** fdt: "), Serial.print(hstrt);
             }
         }
         if (taskTime & 0x1110) {
-            i = analogRead(A11) >> 6;
-            i = (tof * 3 + i) >> 2;
-            if (i != tof) {
-                tof = i;
-                device[6]->setChopperControlRegister_spreadCycle(0, 0, 1, hend, hstrt, tof);
-                Serial.print("*** t_off: "), Serial.println(tof);
+            i = analogRead(A3) >> 6;
+            i = (ot * 3 + i) >> 2;
+            if (i != ot) {
+                ot = i;
+                device[2]->setChopperControlRegister_fastDecay(2, roft, ottdp, sinof, fdt, ot);
+                Serial.print("*** ot: "), Serial.println(tof);
             }
         }
-         */
+ */
+
  /*
         if (taskTime - lastPrintTime > 1000) {
             device[6]->getReadOut(0);
@@ -630,8 +651,7 @@ void CCDeviceScheduler::run() {
         }
    */     
         if (theButton < countOfControlButtons) {
-            controlButton[theButton]->readButtonState();
-            if (controlButton[theButton]->isActiv()) {
+            if (controlButton[theButton]->readButtonState()) {
                 for (unsigned char theAction = 0; theAction < controlButton[theButton]->getCountOfActions(); theAction++) {
                     if (!controlButton[theButton]->getAction(theAction).actionDone) {
                         if (controlButton[theButton]->getAction(theAction).validTask == device[controlButton[theButton]->getAction(theAction).targetDevice]->getTaskPointer()) {
@@ -689,6 +709,19 @@ void CCDeviceScheduler::run() {
 //    Serial.println(loopTime_max);
     Serial.println();
     Serial.println();
+    
+    for (unsigned char s = 0; s < countOfDevices; s++) {
+        if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
+            
+            device[s]->detachDevice();
+            
+            if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+                Serial.print(F("detached "));
+                Serial.println(device[s]->getDeviceName());
+            }
+        }
+    }
+
     
 }
 

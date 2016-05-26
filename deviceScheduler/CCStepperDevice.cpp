@@ -125,6 +125,8 @@ void CCStepperDevice::prepareNextTask() {
     acceleration = task[taskPointer]->getAcceleration();
     deceleration = task[taskPointer]->getDeceleration();
     
+    moveRelativ = task[taskPointer]->getMoveRelativ();
+    withPositionReset = task[taskPointer]->getWithPositionReset();
     
 //    Serial.print(F("### currentPosition: "));
 //    Serial.println(currentPosition);
@@ -162,8 +164,16 @@ void CCStepperDevice::prepareNextTask() {
 //    t_sum += t_stop;
 //    t_prepTask = micros();
 
-    stepsToGo = (float)(target - currentPosition) * stepsPerDegree;
-
+    if (withPositionReset) {
+        currentPosition = 0;
+    }
+    
+    if (moveRelativ) {
+        stepsToGo = target * stepsPerDegree;
+    } else {
+        stepsToGo = (target - currentPosition) * stepsPerDegree;
+    }
+    
     //    this takes ca 4us
 //    t_stop = micros() - t_prepTask;
 //    Serial.print("== stepsToGo: ");

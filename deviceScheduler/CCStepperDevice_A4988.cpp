@@ -93,8 +93,6 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
         Serial.println((long) this, HEX);
     }
     
-    attachDevice();
-    
 }
 
 
@@ -126,9 +124,9 @@ void CCStepperDevice_A4988::attachDevice() {
 void CCStepperDevice_A4988::detachDevice() {
     digitalWrite(enable_pin, HIGH);
     
-    pinMode(dir_pin, INPUT);
-    pinMode(step_pin, INPUT);
-    pinMode(enable_pin, INPUT);
+    pinMode(dir_pin, INPUT_PULLUP);
+    pinMode(step_pin, INPUT_PULLUP);
+    pinMode(enable_pin, INPUT_PULLUP);
     
     for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
         pinMode(microStepPin[pinIndex], INPUT);

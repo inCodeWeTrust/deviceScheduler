@@ -245,7 +245,7 @@ public:
     /// @param acceleration the current task's acceleration.
     /// @param deceleration the current task's deceleration.
     /// @return the task index.
-    unsigned char addTask(float target, float velocity, float acceleration, float deceleration);
+    scheduledTask addTask(float target, float velocity, float acceleration, float deceleration);
     
     
     /// Function declares a task to be executed and returns its index.
@@ -256,7 +256,17 @@ public:
     /// @param acceleration the current task's acceleration.
     /// @param deceleration the current task's deceleration.
     /// @return the task index.
-    unsigned char addTaskWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration, float deceleration);
+    scheduledTask addTaskMoveRelativ(float relativTarget, float velocity, float acceleration, float deceleration);
+
+    /// Function declares a task to be executed and returns its index.
+    /// It creates an instance of [CCTask](@ref task) and puts it into the task array of the device.
+    /// @param target the current task's target.
+    /// @param startDelay the current task's startDelay.
+    /// @param velocity the current task's velocity.
+    /// @param acceleration the current task's acceleration.
+    /// @param deceleration the current task's deceleration.
+    /// @return the task index.
+    scheduledTask addTaskWithPositionReset(float target, float velocity, float acceleration, float deceleration);
     
     
     /// Function deletes all tasks of the device.
@@ -350,6 +360,14 @@ protected:
     /// Parameter, related to the current task operation.
     /// The value means different things, depending on the device type.
     float               deceleration;
+    
+    /// Parameter, related to the current task operation.
+    /// The value determines, if the provided target value is meant absolute or relativ.
+    boolean             moveRelativ;
+    
+    /// Parameter, related to the current task operation.
+    /// The value determines, if current position is set to zero before job start.
+    boolean             withPositionReset;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds a delay to wait after occurance of the startEvent to start this task.
@@ -481,6 +499,7 @@ private:
     unsigned int         deviceIndex;
     
     
+    scheduledTask registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset);
 
 
     
