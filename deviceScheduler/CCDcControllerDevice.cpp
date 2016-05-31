@@ -37,6 +37,7 @@ CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char swit
         Serial.println(switchingPin_activ);
     }
 
+    attachDevice();
 }
 
 

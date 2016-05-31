@@ -440,6 +440,7 @@ void CCDeviceScheduler::run() {
         if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
             
             device[s]->attachDevice();
+            device[s]->enableDevice();
             
             device[s]->setTaskPointer(0);
             device[s]->setState(PENDING_MOVES);
@@ -712,13 +713,8 @@ void CCDeviceScheduler::run() {
     
     for (unsigned char s = 0; s < countOfDevices; s++) {
         if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
-            
+            device[s]->disableDevice();
             device[s]->detachDevice();
-            
-            if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-                Serial.print(F("detached "));
-                Serial.println(device[s]->getDeviceName());
-            }
         }
     }
 

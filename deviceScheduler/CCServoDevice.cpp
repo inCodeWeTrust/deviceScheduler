@@ -46,6 +46,8 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int min
         Serial.println((long)&theServo, HEX);
     }
 
+//    attachDevice();
+    
 }
 
 
@@ -77,17 +79,9 @@ void CCServoDevice::attachDevice() {
     }
 }
 void CCServoDevice::detachDevice() {
-
-    Serial.print(F("try to detach Servo at $"));
-    Serial.print((long)&theServo, HEX);
-    
-    theServo.detach();
-
-    Serial.print(F(" done"));
-
-    Serial.print(F(" >> now at $"));
-    Serial.println((long)&theServo, HEX);
-    
+    if (theServo.attached()) {
+        theServo.detach();
+    }
 }
 
 void CCServoDevice::reviewValues() {}

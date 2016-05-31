@@ -476,27 +476,44 @@ void loop() {
     // ============= tasks of ejectingRecord: =====================================================================================
     // ============================================================================================================================
     
+        //  remove record from turntable: started after cuttingProcess is finished
 
         scheduledTask drive = ejectingRecord->device[conveyStepper]->addTask(20000ul, 400, 200, 200);
         ejectingRecord->device[conveyStepper]->task[drive]->startByDate(100);
-            /*
-    //  supply a new record: started by START-button, terminated by RECORD_AVAILABLE_BUTTON
-    scheduledTask supplyRecord = ejectingRecord->device[stockStepper]->addTask(140000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
-    ejectingRecord->device[stockStepper]->task[supplyRecord]->startByDate(100);
-    ejectingRecord->device[stockStepper]->task[supplyRecord]->stopByButton(recordAvailableButton, STOP_NORMAL);
-    
-    
-    // lift grappler: start when RECORD_AVAILABLE_BUTTON indicates new record available
+        
+    // lift grappler: start when cuttingProcess is finished
     scheduledTask liftFromParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
-    ejectingRecord->device[liftServo]->task[liftFromParkPosition]->startByButton(recordAvailableButton);
+        ejectingRecord->device[liftServo]->task[liftFromParkPosition]->startByDate(100);
     
-    //  turn grappler to stock: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-    scheduledTask turnToStock = ejectingRecord->device[turnServo]->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, TURN_ACCEL_FAST);
-    ejectingRecord->device[turnServo]->task[turnToStock]->startByTriggerpositionOf(liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
-    
-    //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
-    scheduledTask lowerToStock = ejectingRecord->device[liftServo]->addTask(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
-    ejectingRecord->device[liftServo]->task[lowerToStock]->startByTriggerpositionOf(turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
+        //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        scheduledTask turnToTable = ejectingRecord->device[turnServo]->addTask(TURN_TABLE_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, TURN_ACCEL_FAST);
+        ejectingRecord->device[turnServo]->task[turnToTable]->startByTriggerpositionOf(liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
+        
+        //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
+        scheduledTask lowerToTable = ejectingRecord->device[liftServo]->addTask(LIFT_TABLE_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
+        ejectingRecord->device[liftServo]->task[lowerToTable]->startByTriggerpositionOf(turnServo, turnToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+        
+        //  ejectingRecord->device[vacuumSolenoid]->setStopEventForMove(gripNewRecord, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
+        
+        //  lift the cutted record: start with startDelay after table was reached (LIFT_TABLE_POSITION)
+        scheduledTask liftCuttedRecord = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        ejectingRecord->device[liftServo]->task[liftCuttedRecord]->startByTriggerpositionOf(liftServo, lowerToTable, LIFT_TABLE_POSITION);
+        
+        //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        scheduledTask turnToConveyor = ejectingRecord->device[turnServo]->addTask(TURN_PARK_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, TURN_ACCEL_SLOW);
+        ejectingRecord->device[turnServo]->task[turnToConveyor]->startByTriggerpositionOf(liftServo, liftCuttedRecord, LIFT_UP_TRIGGER_TURN);
+        
+        //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
+        scheduledTask lowerToConveyor = ejectingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+        ejectingRecord->device[liftServo]->task[lowerToConveyor]->startByTriggerpositionOf(turnServo, turnToConveyor, TURN_TO_PARK_TRIGGER_LIFT);
+
+//        //  turn grappler to conveyer: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+//    scheduledTask turnToStock = ejectingRecord->device[turnServo]->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, TURN_ACCEL_FAST);
+//    ejectingRecord->device[turnServo]->task[turnToStock]->startByTriggerpositionOf(liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
+//    
+//    //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
+//    scheduledTask lowerToStock = ejectingRecord->device[liftServo]->addTask(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
+//    ejectingRecord->device[liftServo]->task[lowerToStock]->startByTriggerpositionOf(turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
     
     
     //             //  grip new record: start when grappler reached stock (LIFT_STOCK_POSITION)
@@ -505,33 +522,9 @@ void loop() {
     //             freeRam();
     
     
-    //  lift the new record: start with startDelay after stock was reached (LIFT_STOCK_POSITION)
-    scheduledTask liftNewRecord = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-    ejectingRecord->device[liftServo]->task[liftNewRecord]->startByTriggerpositionOf(liftServo, lowerToStock, LIFT_STOCK_POSITION);
-    
-    //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-    scheduledTask turnRecordToTable = ejectingRecord->device[turnServo]->addTask(TURN_TABLE_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, TURN_ACCEL_SLOW);
-    ejectingRecord->device[turnServo]->task[turnRecordToTable]->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
-    
-    //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
-    scheduledTask lowerRecordToTable = ejectingRecord->device[liftServo]->addTask(LIFT_TABLE_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-    ejectingRecord->device[liftServo]->task[lowerRecordToTable]->startByTriggerpositionOf(turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
-    //  ejectingRecord->device[vacuumSolenoid]->setStopEventForMove(gripNewRecord, liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
-    
-    //  lift for going to park position: start with startDelay after turn table was reached (LIFT_TABLE_POSITION)
-    scheduledTask liftForParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
-    ejectingRecord->device[liftServo]->task[liftForParkPosition]->startByTriggerpositionOf(liftServo, lowerRecordToTable, LIFT_TABLE_POSITION);
-    
-    //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-    scheduledTask turnToParkPosition = ejectingRecord->device[turnServo]->addTask(TURN_PARK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, TURN_ACCEL_FAST);
-    ejectingRecord->device[turnServo]->task[turnToParkPosition]->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
-    
-    //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
-    scheduledTask lowerForParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
-    ejectingRecord->device[liftServo]->task[lowerForParkPosition]->startByTriggerpositionOf(turnServo, turnToParkPosition, TURN_TO_PARK_TRIGGER_LIFT);
     
     
-    
+    /*
     //  cancel cutting if songCancelButton is pressed
     ejectingRecord->controlButton[stockTopButton]->evokeTaskJump(stockStepper, supplyRecord, STOP);
     ejectingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(liftServo, liftFromParkPosition, STOP_SHARP_AND_SWITCH, lowerForParkPosition + 1);

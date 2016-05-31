@@ -94,42 +94,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
         Serial.println((long) this, HEX);
     }
     
-
-    
-}
-
-CCStepperDevice_TMC260::~CCStepperDevice_TMC260() {
-    detachDevice();
-    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice_TMC260]: "));
-        Serial.print(deviceName);
-        Serial.println(F(" detached"));
-    }
-}
-
-
-
-
-void CCStepperDevice_TMC260::attachDevice() {
-    pinMode(dir_pin, OUTPUT);
-    digitalWrite(dir_pin, LOW);
-
-    pinMode(step_pin, OUTPUT);
-    digitalWrite(step_pin, LOW);
-    
-    pinMode(chipSelect_pin, OUTPUT);
-    digitalWrite(chipSelect_pin, HIGH);
-
-    pinMode(enable_pin, OUTPUT);
-    digitalWrite(enable_pin, HIGH);
-    
-   
-    SPI.setBitOrder(MSBFIRST);
-    SPI.setClockDivider(SPI_CLOCK_DIV8);
-    SPI.setDataMode(SPI_MODE3);
-    
-    SPI.begin();
-    
+    attachDevice();
     
     setCurrent(currentMax);
     
@@ -334,6 +299,40 @@ void CCStepperDevice_TMC260::attachDevice() {
     setDriverConfigurationRegister(slopeControlHighSide, slopeControlLowSide, shortToGndProtectionDisable, shortToGndDetectionTimerValue, stepDirInterfaceDisable, selectReadOut);
     
 
+}
+
+CCStepperDevice_TMC260::~CCStepperDevice_TMC260() {
+    detachDevice();
+    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice_TMC260]: "));
+        Serial.print(deviceName);
+        Serial.println(F(" detached"));
+    }
+}
+
+
+
+
+void CCStepperDevice_TMC260::attachDevice() {
+    pinMode(dir_pin, OUTPUT);
+    digitalWrite(dir_pin, LOW);
+
+    pinMode(step_pin, OUTPUT);
+    digitalWrite(step_pin, LOW);
+    
+    pinMode(chipSelect_pin, OUTPUT);
+    digitalWrite(chipSelect_pin, HIGH);
+
+    pinMode(enable_pin, OUTPUT);
+    digitalWrite(enable_pin, HIGH);
+    
+   
+    SPI.setBitOrder(MSBFIRST);
+    SPI.setClockDivider(SPI_CLOCK_DIV8);
+    SPI.setDataMode(SPI_MODE3);
+    
+    SPI.begin();
+    
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
