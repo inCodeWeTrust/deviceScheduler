@@ -83,14 +83,14 @@ void loop() {
     pinMode(STEPPER_STOCK_ENABLE_PIN, OUTPUT);
     pinMode(STEPPER_CONVEYOR_ENABLE_PIN, OUTPUT);
     
-        digitalWrite(STEPPER_TABLE_ENABLE_PIN, HIGH);
-        digitalWrite(STEPPER_STOCK_ENABLE_PIN, HIGH);
-        digitalWrite(STEPPER_CONVEYOR_ENABLE_PIN, HIGH);
-        
+    digitalWrite(STEPPER_TABLE_ENABLE_PIN, HIGH);
+    digitalWrite(STEPPER_STOCK_ENABLE_PIN, HIGH);
+    digitalWrite(STEPPER_CONVEYOR_ENABLE_PIN, HIGH);
+    
     
     
     freeRam();
-
+    
     // ============================================================================================================================
     // ============= create fetchingRecord scheduler object: ======================================================================
     // ============================================================================================================================
@@ -152,35 +152,41 @@ void loop() {
         
         if (true) {
             
-//            Serial.println("................................. initialisation of stockStepper .................................");
-//            
-//            scheduledTask initLift_up = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-//            fetchingRecord->device[liftServo]->task[initLift_up]->startByDate(100);
-//            
-//            scheduledTask initStockStepper_down = fetchingRecord->device[stockStepper]->addTask(-4000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
-//            fetchingRecord->device[stockStepper]->task[initStockStepper_down]->startAfterCompletionOf(liftServo, initLift_up);
-//            fetchingRecord->device[stockStepper]->task[initStockStepper_down]->stopByButton(stockBottomButton, STOP_NORMAL);
-//            
-//            scheduledTask initStockStepper_up = fetchingRecord->device[stockStepper]->addTaskWithPositionReset(10000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
-//            fetchingRecord->device[stockStepper]->task[initStockStepper_up]->startAfterCompletionOf(stockStepper, initStockStepper_down);
-//            fetchingRecord->device[stockStepper]->task[initStockStepper_up]->stopByButton(recordAvailableButton, STOP_NORMAL);
-//            
-//            scheduledTask initLift_park = fetchingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
-//            fetchingRecord->device[liftServo]->task[initLift_park]->startAfterCompletionOf(stockStepper, initStockStepper_up);
-//
-//            
-//            fetchingRecord->reviewTasks();
-//            fetchingRecord->getAllTasks();
-//            
-//            
-//            fetchingRecord->run();
-//            
-//            
-//            fetchingRecord->deleteAllTasks();
-//            fetchingRecord->deleteAllActions();
-//            
-//            
-//            Serial.println("...................................... done ......................................................");
+            //            Serial.println("................................. initialisation of stockStepper .................................");
+            //
+            //            scheduledTask init_liftFromParkPosition = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+            //            fetchingRecord->device[liftServo]->task[init_liftFromParkPosition]->startByDate(100);
+            //
+            //            // move down first
+            //            scheduledTask init_moveStockStepperDown = fetchingRecord->device[stockStepper]->addTask(-4000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
+            //            fetchingRecord->device[stockStepper]->task[init_moveStockStepperDown]->startByDate(100);
+            //            fetchingRecord->device[stockStepper]->task[init_moveStockStepperDown]->stopByButton(stockBottomButton, STOP_NORMAL);
+            //
+            //            //  supply a new record, terminated by recordAvailableButton
+            //            scheduledTask init_supplyRecord = fetchingRecord->device[stockStepper]->addTask(140000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
+            //            fetchingRecord->device[stockStepper]->task[init_supplyRecord]->startAfterCompletionOf(stockStepper, init_moveStockStepperDown);
+            //            fetchingRecord->device[stockStepper]->task[init_supplyRecord]->stopByButton(recordAvailableButton, STOP_NORMAL);
+            //
+            //            //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
+            //            scheduledTask init_lowerToStock = fetchingRecord->device[liftServo]->addTask(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
+            //            fetchingRecord->device[liftServo]->task[init_lowerToStock]->startByButton(recordAvailableButton);
+            //            scheduledTask initLift_up = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
+            //            fetchingRecord->device[liftServo]->task[initLift_up]->startByDate(100);
+            //
+            //
+            //
+            //            fetchingRecord->reviewTasks();
+            //            fetchingRecord->getAllTasks();
+            //
+            //
+            //            fetchingRecord->run();
+            //
+            //
+            //            fetchingRecord->deleteAllTasks();
+            //            fetchingRecord->deleteAllActions();
+            //
+            //
+            //            Serial.println("...................................... done ......................................................");
         }
         
         freeRam();
@@ -193,8 +199,8 @@ void loop() {
         // ============================================================================================================================
         
         // lift grappler
-   /*
-        scheduledTask liftFromParkPosition = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+        
+        scheduledTask liftFromParkPosition = fetchingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION + 500, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
         fetchingRecord->device[liftServo]->task[liftFromParkPosition]->startByDate(100);
         
         // move down first
@@ -203,35 +209,36 @@ void loop() {
         fetchingRecord->device[stockStepper]->task[moveStockStepperDown]->stopByButton(stockBottomButton, STOP_NORMAL);
         
         //  supply a new record, terminated by recordAvailableButton
-        scheduledTask supplyRecord = fetchingRecord->device[stockStepper]->addTask(140000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
+        scheduledTask supplyRecord = fetchingRecord->device[stockStepper]->addTask(14000ul, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL, STOCK_SUPPLY_RECORD_ACCEL);
         fetchingRecord->device[stockStepper]->task[supplyRecord]->startAfterCompletionOf(stockStepper, moveStockStepperDown);
         fetchingRecord->device[stockStepper]->task[supplyRecord]->stopByButton(recordAvailableButton, STOP_NORMAL);
         
         //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
-        scheduledTask lowerToStock = fetchingRecord->device[liftServo]->addTask(LIFT_STOCK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
+        scheduledTask lowerToStock = fetchingRecord->device[liftServo]->addTask(LIFT_STOCK_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         fetchingRecord->device[liftServo]->task[lowerToStock]->startByButton(recordAvailableButton);
-        */
+        
         // pump prepare
         scheduledTask pumpForGrip_down = fetchingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
-        fetchingRecord->device[pumpServo]->task[pumpForGrip_down]->startByDate(100);
-//        fetchingRecord->device[pumpServo]->task[pumpForGrip_down]->startAfterCompletionOf(liftServo, lowerToStock);
-
+        //        fetchingRecord->device[pumpServo]->task[pumpForGrip_down]->startByDate(100);
+        fetchingRecord->device[pumpServo]->task[pumpForGrip_down]->startByTriggerpositionOf(liftServo, lowerToStock, LIFT_STOCK_POSITION + 60);
+        
         // pump make vaccum
         scheduledTask pumpForGrip_up = fetchingRecord->device[pumpServo]->addTask(PUMP_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
         fetchingRecord->device[pumpServo]->task[pumpForGrip_up]->startAfterCompletionOf(pumpServo, pumpForGrip_down);
-
+        
         //  lift the new record
         scheduledTask liftNewRecord = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         fetchingRecord->device[liftServo]->task[liftNewRecord]->startAfterCompletionOf(pumpServo, pumpForGrip_up);
         
         //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-         scheduledTask turnRecordToTable = fetchingRecord->device[turnServo]->addTask(TURN_TABLE_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, TURN_ACCEL_SLOW);
-        fetchingRecord->device[turnServo]->task[turnRecordToTable]->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
+        scheduledTask turnRecordToTable = fetchingRecord->device[turnServo]->addTask(TURN_TABLE_POSITION, TURN_SPEED_SLOW, TURN_ACCEL_SLOW, TURN_ACCEL_SLOW);
+        fetchingRecord->device[turnServo]->task[turnRecordToTable]->startAfterCompletionOf(liftServo, liftNewRecord);
+//        fetchingRecord->device[turnServo]->task[turnRecordToTable]->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
         
         //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
         scheduledTask lowerRecordToTable = fetchingRecord->device[liftServo]->addTask(LIFT_TABLE_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         fetchingRecord->device[liftServo]->task[lowerRecordToTable]->startByTriggerpositionOf(turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
-
+        
         //  release new record, release vacuum
         scheduledTask pumpForRelease_down = fetchingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
         fetchingRecord->device[pumpServo]->task[pumpForRelease_down]->startAfterCompletionOf(liftServo, lowerRecordToTable);
@@ -255,8 +262,8 @@ void loop() {
         
         
         //  cancel cutting if songCancelButton is pressed
-//        fetchingRecord->controlButton[stockTopButton]->evokeTaskJump(stockStepper, supplyRecord, STOP);
-//        fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(liftServo, liftFromParkPosition, STOP_SHARP_AND_SWITCH, lowerForParkPosition + 1);
+        //        fetchingRecord->controlButton[stockTopButton]->evokeTaskJump(stockStepper, supplyRecord, STOP);
+        //        fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(liftServo, liftFromParkPosition, STOP_SHARP_AND_SWITCH, lowerForParkPosition + 1);
         fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(turnServo, turnRecordToTable, STOP_SHARP_AND_SWITCH, turnToStockPosition + 1);
         
         
@@ -265,11 +272,9 @@ void loop() {
         fetchingRecord->getAllTasks();
         fetchingRecord->getAllActions();
         
-        fetchingRecord->run();
-        
         freeRam();
     }
-
+    
     // ============================================================================================================================
     // ============= create cuttingProcess scheduler object: ======================================================================
     // ============================================================================================================================
@@ -325,20 +330,6 @@ void loop() {
         
         freeRam();
         
-        //
-        //        scheduledTask turn = cuttingProcess->device[tableStepper]->addTaskWithPositionReset(turnTableStepperDegrees + 7200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL, TABLE_STEP_ACCEL);
-        //        cuttingProcess->device[tableStepper]->task[turn]->startByDate(100);
-        //        // cuttingProcess->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
-        //        cuttingProcess->reviewTasks();
-        //        cuttingProcess->getAllTasks();
-        //
-        //    while (true) {
-        //
-        //        cuttingProcess->run();
-        //
-        //
-        //    }
-        //
         
         // ============================================================================================================================
         // ============= initialisation of cuttingProcess: =====================================================================================
@@ -387,7 +378,7 @@ void loop() {
         cuttingProcess->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
         
         //  turn the table:
-        scheduledTask turnTheTable = cuttingProcess->device[tableStepper]->addTaskWithPositionReset(turnTableStepperDegrees + 7200.0, turnTableStepperSpeed, 100, TABLE_STEP_ACCEL);
+        scheduledTask turnTheTable = cuttingProcess->device[tableStepper]->addTaskWithPositionReset(turnTableStepperDegrees + 7200.0, turnTableStepperSpeed, TABLE_STEPPER_ACCEL, TABLE_STEPPER_ACCEL);
         cuttingProcess->device[tableStepper]->task[turnTheTable]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
         // cuttingProcess->device[tableDrive]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
         
@@ -480,8 +471,6 @@ void loop() {
                                                              SERVO_PUMP_MIN_POSITION,
                                                              SERVO_PUMP_MAX_POSITION,
                                                              PUMP_PARK_POSITION);
-        Serial.println("pump done");
-        delay(200);
         
         schedulerDevice conveyStepper = ejectingRecord->addStepper_A4988(STEPPER_CONVEYOR_NAME,
                                                                          STEPPER_CONVEYOR_STEP_PIN,
@@ -544,17 +533,17 @@ void loop() {
         //  lower grappler to conveyer position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
         scheduledTask lowerToConveyor = ejectingRecord->device[liftServo]->addTask(LIFT_CONVEYER_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW, LIFT_ACCEL_SLOW);
         ejectingRecord->device[liftServo]->task[lowerToConveyor]->startByTriggerpositionOf(turnServo, turnToConveyor, TURN_TO_CONVEYER_TRIGGER_LIFT);
-
+        
         //  release new record, release vacuum
         scheduledTask pumpForRelease_down = ejectingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
         ejectingRecord->device[pumpServo]->task[pumpForRelease_down]->startAfterCompletionOf(liftServo, lowerToConveyor);
         
         //  lift for parking
         scheduledTask liftForParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
-        ejectingRecord->device[liftServo]->task[liftForParkPosition]->startAfterCompletionOf(liftServo, lowerToConveyor);
+        ejectingRecord->device[liftServo]->task[liftForParkPosition]->startAfterCompletionOf(pumpServo, pumpForRelease_down);
         
         //  move it to the user
-        scheduledTask driveIt = ejectingRecord->device[conveyStepper]->addTaskWithPositionReset(2000ul, 4000, 2200, 2200);
+        scheduledTask driveIt = ejectingRecord->device[conveyStepper]->addTaskWithPositionReset(6000ul, 600, 100, 100);
         ejectingRecord->device[conveyStepper]->task[driveIt]->startAfterCompletionOf(liftServo, liftForParkPosition);
         
         //  release pump
@@ -564,7 +553,7 @@ void loop() {
         //  turn grappler for parking
         scheduledTask turnToStock = ejectingRecord->device[turnServo]->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST, TURN_ACCEL_FAST);
         ejectingRecord->device[turnServo]->task[turnToStock]->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
-
+        
         //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
         scheduledTask lowerToPark = ejectingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST, LIFT_ACCEL_FAST);
         ejectingRecord->device[liftServo]->task[lowerToPark]->startByTriggerpositionOf(turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
@@ -598,7 +587,7 @@ void loop() {
     Serial.println(F("ready to run!"));
     
     while (true) {
-    
+        
         if (digitalRead(FETCH_RECORD_BUTTON) == LOW) {
             
             fetchingRecord->run();
@@ -608,12 +597,14 @@ void loop() {
         
         if (digitalRead(START_CUTTING_BUTTON) == LOW) {
             
-            //            cuttingProcess->device[catStepper]->setCurrentPosition(0.0);
-            //            cuttingProcess->device[tableStepper]->setCurrentPosition(0.0);
-            //
             cuttingProcess->run();
             
             ejectingRecord->run();
+
+            
+            //            cuttingProcess->device[catStepper]->setCurrentPosition(0.0);
+            //            cuttingProcess->device[tableStepper]->setCurrentPosition(0.0);
+            //
             
         }
         
@@ -681,7 +672,7 @@ void loop() {
             //
             //            cuttingProcess->deleteAllTasks();
         }
-   }
+    }
     
     
     delay(2000);

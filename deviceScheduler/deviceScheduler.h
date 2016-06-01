@@ -275,12 +275,12 @@
 #define LIFT_ACCEL_SLOW                 400
 #define LIFT_ACCEL_VERY_SLOW            200
 
+#define LIFT_TABLE_POSITION            1100
+#define LIFT_STOCK_POSITION            1100
+#define LIFT_CONVEYER_POSITION         1100
+#define LIFT_PARK_POSITION             1100
 #define LIFT_UP_POSITION               2200
-#define LIFT_UP_TRIGGER_TURN           1800
-#define LIFT_TABLE_POSITION            1000
-#define LIFT_STOCK_POSITION            1000
-#define LIFT_CONVEYER_POSITION         1000
-#define LIFT_PARK_POSITION             1000
+#define LIFT_UP_TRIGGER_TURN           1300
 
 
 #define TURN_SPEED_FAST                 320
@@ -289,7 +289,7 @@
 #define TURN_ACCEL_SLOW                 150
 
 #define TURN_TABLE_POSITION             2022
-#define TURN_CONVEYOR_POSITION          1520
+#define TURN_CONVEYOR_POSITION          1470
 #define TURN_STOCK_POSITION             1010
 #define TURN_TO_CONVEYER_TRIGGER_LIFT   TURN_CONVEYOR_POSITION + 60
 #define TURN_TO_TABLE_TRIGGER_LIFT      TURN_TABLE_POSITION - 60
@@ -315,7 +315,7 @@
 #define HEAD_RIGHT_TOP_POSITION         900
 
 #define PUMP_PARK_POSITION              2000
-#define PUMP_DOWN_POSITION              800
+#define PUMP_DOWN_POSITION              760
 
 
 #define STOCK_SUPPLY_RECORD_SPEED       1000
@@ -324,7 +324,7 @@
 #define STOCK_LOADING_SPEED             520
 #define STOCK_LOADING_ACCEL             260
 
-#define TABLE_STEP_ACCEL                200
+#define TABLE_STEPPER_ACCEL                600
 
 #define CAT_SPEED_HIGH                  4800
 #define CAT_SPEED_VERY_HIGH             5600

@@ -4745,7 +4745,7 @@
 		A45F72581B1C70E400B5B7E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BOARD_PORT = "/dev/tty.usbmodem1*";
+				BOARD_PORT = "/dev/cu.usbmodem*";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
