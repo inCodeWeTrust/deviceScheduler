@@ -15,6 +15,7 @@
 
 CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
     this->deviceName = deviceName;
+    
     this->servo_pin = servo_pin;
     this->minPosition = minPosition;
     this->maxPosition = maxPosition;
@@ -45,9 +46,6 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int min
         Serial.print(F(", Servo at $"));
         Serial.println((long)&theServo, HEX);
     }
-
-//    attachDevice();
-    
 }
 
 
@@ -56,7 +54,7 @@ CCServoDevice::~CCServoDevice() {
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
-        Serial.println(F(": detached"));
+        Serial.println(F(": destructed"));
     }
 }
 
@@ -69,7 +67,7 @@ void CCServoDevice::attachDevice() {
     currentPosition = parkPosition;
     unsigned char channel = theServo.attach(servo_pin, minPosition, maxPosition);                                                      // substitute with attatchDevice()
     
-    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(", park: "));
@@ -81,6 +79,18 @@ void CCServoDevice::attachDevice() {
 void CCServoDevice::detachDevice() {
     if (theServo.attached()) {
         theServo.detach();
+        if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
+            Serial.print(F("[CCServoDevice]: "));
+            Serial.print(deviceName);
+            Serial.println(F(": detached"));
+        }
+
+    } else {
+        if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
+            Serial.print(F("[CCServoDevice]: "));
+            Serial.print(deviceName);
+            Serial.println(F(": detach: servo was not attached"));
+        }
     }
 }
 

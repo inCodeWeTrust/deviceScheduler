@@ -18,6 +18,9 @@ CCStepperDevice::~CCStepperDevice() {
     free(steppingUnit);
 }
 
+void CCStepperDevice::attachDevice() {}
+void CCStepperDevice::detachDevice() {}
+
 
 void CCStepperDevice::enableDevice() {
     digitalWrite(enable_pin, LOW);
@@ -442,9 +445,7 @@ void CCStepperDevice::startTask() {                                 // start thi
         // lets start in highest stepping mode
         microSteppingMode = highestSteppingMode;                    // setup stepper driver's highest steppingMode
         setupMicroSteppingMode();
-        
-        enableDevice();                                             // setup ENABLE-pin of stepper driver
-        
+                
         if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
             Serial.print(F("[CCStepperDevice]: "));
             Serial.print(deviceName);
@@ -489,9 +490,6 @@ void CCStepperDevice::stopTask() {
 }
 void CCStepperDevice::finishTask() {
     state = SLEEPING;
-    
-    disableDevice();
-
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));

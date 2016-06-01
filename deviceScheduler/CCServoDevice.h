@@ -20,7 +20,7 @@
 #define CCSERVODEVICE_CALCULATIONDEBUG      0x04
 #define CCSERVODEVICE_MOVEMENTDEBUG         0x08
 
-#define CCSERVODEVICE_VERBOSE               0x03
+#define CCSERVODEVICE_VERBOSE               0x00
 
 
 
@@ -36,7 +36,8 @@
 
 class CCServoDevice : public CCDevice {
 
-
+protected:
+    
     unsigned long        t0;
     signed long          elapsedTime;
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;

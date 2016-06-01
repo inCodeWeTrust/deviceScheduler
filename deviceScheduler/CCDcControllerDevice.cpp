@@ -15,9 +15,15 @@
 
 CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) : CCDevice() {
     this->deviceName = deviceName;
+    
     this->switching_pin = switching_pin;
     this->switchingPin_activ = switchingPin_activ;
     
+    pinMode(switching_pin, OUTPUT);
+    digitalWrite(switching_pin, !switchingPin_activ);
+    isActiv = false;
+    
+
     this->type = DCCONTROLLERDEVICE;
     this->state = SLEEPING;
     this->taskPointer = 0;
@@ -36,33 +42,19 @@ CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char swit
         Serial.print(F(", switchingPin_activ: "));
         Serial.println(switchingPin_activ);
     }
-
-    attachDevice();
 }
 
 
 CCDcControllerDevice::~CCDcControllerDevice() {
-    detachDevice();
+    pinMode(switching_pin, INPUT);
 }
 
 
 void CCDcControllerDevice::enableDevice() {}
 void CCDcControllerDevice::disableDevice() {}
 
-void CCDcControllerDevice::attachDevice() {
-    pinMode(switching_pin, OUTPUT);
-    digitalWrite(switching_pin, !switchingPin_activ);
-    isActiv = false;
-    
-    if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_BASICOUTPUT) {
-        Serial.print(F("[CCDcControllerDevice]: "));
-        Serial.print(deviceName);
-        Serial.println(F(" attached"));
-    }
-}
-void CCDcControllerDevice::detachDevice() {
-    pinMode(switching_pin, INPUT);
-}
+void CCDcControllerDevice::attachDevice() {}
+void CCDcControllerDevice::detachDevice() {}
 
 void CCDcControllerDevice::reviewValues() {}
 
@@ -146,8 +138,6 @@ void CCDcControllerDevice::startTask() {
         stopTask();
     }
     else {
-        enableDevice();                                             // setup ENABLE-pin of stepper driver
-        
         state = MOVING;                                             // tag device as MOVING
         t0 = millis();
         
@@ -194,7 +184,6 @@ void CCDcControllerDevice::finishTask() {
         Serial.print(F(" done: state: "));
         Serial.println((bool)digitalRead(switching_pin));
     }
-    disableDevice();
 }
 
 

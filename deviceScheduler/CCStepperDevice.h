@@ -40,8 +40,8 @@ public:
     virtual ~CCStepperDevice();
     
     
-    virtual void attachDevice() = 0;
-    virtual void detachDevice() = 0;
+    void attachDevice();
+    void detachDevice();
     void enableDevice();
     void disableDevice();
     

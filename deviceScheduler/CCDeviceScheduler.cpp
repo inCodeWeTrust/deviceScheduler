@@ -99,6 +99,35 @@ schedulerDevice CCDeviceScheduler::addServo(String deviceName, unsigned char ser
     
     return countOfDevices - 1;
 }
+schedulerDevice CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigned char servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned char servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition) {
+    
+    device[countOfDevices] = new CCServoDevice_cross(deviceName, servo_00_pin, minPosition_00, midPosition_00, maxPosition_00, servo_01_pin, minPosition_01, midPosition_01, maxPosition_01, parkPosition);
+    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided "));
+        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(F(": "));
+        Serial.println(device[countOfDevices]->getDeviceName());
+    }
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCServoDevice constructed at $"));
+        Serial.println((long)device[countOfDevices], HEX);
+    }
+    
+    countOfDevices++;
+    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
+    
+    return countOfDevices - 1;
+}
+
+
+
+
+
 
 
 schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
@@ -434,13 +463,19 @@ void CCDeviceScheduler::run() {
 //    int c32, hend, hstrt, tof = 0;
 //    boolean ottdp, roft;
 //    int sinof, fdt, ot;
-    
+
     // prepare the loop
+    
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.println(F(": prepare run ..."));
+    }
+ 
     for (unsigned char s = 0; s < countOfDevices; s++) {
         if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
             
             device[s]->attachDevice();
-            device[s]->enableDevice();
             
             device[s]->setTaskPointer(0);
             device[s]->setState(PENDING_MOVES);
@@ -460,6 +495,13 @@ void CCDeviceScheduler::run() {
             }
         }
     }
+
+    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.println(F(": run ..."));
+    }
+
     for (schedulerControlButton b = 0; b < countOfControlButtons; b++) {
         controlButton[b]->readButtonState();
     }
@@ -520,6 +562,7 @@ void CCDeviceScheduler::run() {
                     
                     if (device[s]->getState() == MOVE_DONE) {                                                         // finished right now?
                         device[s]->finishTask();
+                        device[s]->disableDevice();
                         
                         if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                             Serial.print(taskTime);
@@ -695,7 +738,14 @@ void CCDeviceScheduler::run() {
         
     } while (ongoingOperations > 0);
     
+    for (unsigned char s = 0; s < countOfDevices; s++) {
+        if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
+            device[s]->disableDevice();
+            device[s]->detachDevice();
+        }
+    }
     
+   
     
     Serial.print(F("\n"));
     Serial.print(F("loops: "));
@@ -711,13 +761,6 @@ void CCDeviceScheduler::run() {
     Serial.println();
     Serial.println();
     
-    for (unsigned char s = 0; s < countOfDevices; s++) {
-        if (device[s]->getCountOfTasks() > 0) {                                                      // (== MOVING || MOVE_DONE || PENDING_MOVES)
-            device[s]->disableDevice();
-            device[s]->detachDevice();
-        }
-    }
-
     
 }
 
@@ -744,6 +787,7 @@ void CCDeviceScheduler::handleStartEvent(unsigned long taskTime, schedulerDevice
     }
     else {
         device[s]->setStartTime(taskTime);
+        device[s]->enableDevice();
         device[s]->startTask();
     }
 }

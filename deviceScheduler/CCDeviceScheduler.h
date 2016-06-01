@@ -17,6 +17,7 @@
 
 #include "CCDevice.h"
 #include "CCServoDevice.h"
+#include "CCServoDevice_cross.h"
 #include "CCStepperDevice.h"
 #include "CCStepperDevice_A4988.h"
 #include "CCStepperDevice_TMC260.h"
@@ -33,7 +34,7 @@
 #define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
 
-#define DEVICESCHEDULER_VERBOSE                         0x10
+#define DEVICESCHEDULER_VERBOSE                         0x13
 
 
 
@@ -76,6 +77,21 @@ public:
     /// @param parkPosition the PCM pulse width in microseconds corresponding to the default position.
     /// @return the device index.
     schedulerDevice addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
+    
+    /// Function adds a double-servo device to the device array and returns the index of the device.
+    /// Device-specific parameters are passed.
+    /// @param deviceName the human-readable name of the device (used for verbose output).
+    /// @param servo_00_pin the pin number of the first servo's pwm-pin.
+    /// @param minPosition_00 the minimum PCM pulse width in microseconds corresponding to one end position.
+    /// @param midPosition_00 the PCM pulse width in microseconds corresponding to the middle position.
+    /// @param maxPosition_00 the maximum PCM pulse width in microseconds corresponding to other end position.
+    /// @param servo_01_pin the pin number of the first servo's pwm-pin.
+    /// @param minPosition_01 the minimum PCM pulse width in microseconds corresponding to one end position.
+    /// @param midPosition_01 the minimum PCM pulse width in microseconds corresponding to one end position.
+    /// @param maxPosition_01 the maximum PCM pulse width in microseconds corresponding to other end position.
+    /// @param parkPosition the PCM pulse width in microseconds corresponding to the default position of the first servo. The position of the second servo is to be calculated.
+    /// @return the device index.
+    schedulerDevice addServoWithCounterServo(String deviceName, unsigned char servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned char servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition);
     
     /// Function adds a stepper device to the device array, that is driven by da driver like the A4988, and returns the index of the device.
     /// Device-specific parameters are passed.

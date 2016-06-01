@@ -85,8 +85,6 @@ public:
     
     ~CCStepperDevice_TMC260();
     
-    void attachDevice();
-    void detachDevice();
     
     /*!
      * \brief Sets and configures the TMC 260 driver.

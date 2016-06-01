@@ -123,21 +123,13 @@
 
 #define STEPPER_TABLE_NAME                  "tableStepper"
 
-//#define STEPPER_TABLE_CHIPSELECT_PIN          6
-//#define STEPPER_TABLE_DIR_PIN                 5
-//#define STEPPER_TABLE_STEP_PIN                4
-//#define STEPPER_TABLE_ENABLE_PIN              3
-//#define STEPPER_TABLE_CURRENT                 600
-//#define STEPPER_TABLE_STEPS_PER_ROTATION      200
-//#define STEPPER_TABLE_PPS_MAX                 1000
-//#define STEPPER_TABLE_ACC_MAX                 4000
 #define STEPPER_TABLE_DIR_PIN               34
 #define STEPPER_TABLE_STEP_PIN              36
 #define STEPPER_TABLE_ENABLE_PIN            38
 #define STEPPER_TABLE_MICROSTEPPINS         "40, 42, 44"
 #define STEPPER_TABLE_HIGHEST_STEPPINGMODE  5
 #define STEPPER_TABLE_STEPMODECODES         "0x00, 0x01, 0x02, 0x03, 0x04, 0x05"
-#define STEPPER_TABLE_STEPS_PER_ROTATION    200
+#define STEPPER_TABLE_STEPS_PER_ROTATION    48
 #define STEPPER_TABLE_PPS_MAX               800
 #define STEPPER_TABLE_ACC_MAX               2000
 
@@ -156,25 +148,39 @@
 
 
 
-#define SERVO_LIFT_NAME                     "liftServo"
+#define SERVO_LIFT_NAME                     "liftDoubleServo"
 
-#define SERVO_LIFT_PIN                      14
-#define SERVO_LIFT_MIN_POSITION             150
-#define SERVO_LIFT_MAX_POSITION             600
+#define SERVO_LIFT_LEFT_PIN                      14
+#define SERVO_LIFT_LEFT_MIN_POSITION            800
+#define SERVO_LIFT_LEFT_MID_POSITION            1500
+#define SERVO_LIFT_LEFT_MAX_POSITION            2200
+
+#define SERVO_LIFT_RIGHT_PIN                      15
+#define SERVO_LIFT_RIGHT_MIN_POSITION             150
+#define SERVO_LIFT_RIGHT_MID_POSITION            1500
+#define SERVO_LIFT_RIGHT_MAX_POSITION             600
 
 
 
 #define SERVO_TURN_NAME                     "turnServo"
 
-#define SERVO_TURN_PIN                      15
+#define SERVO_TURN_PIN                      16
 #define SERVO_TURN_MIN_POSITION             150
 #define SERVO_TURN_MAX_POSITION             600
+
+
+#define SERVO_PUMP_NAME                     "pumpServo"
+
+#define SERVO_PUMP_PIN                      17
+#define SERVO_PUMP_MIN_POSITION             150
+#define SERVO_PUMP_MAX_POSITION             600
+
 
 
 
 #define SERVO_HEAD_LEFT_NAME                "headLeftServo"
 
-#define SERVO_HEAD_LEFT_PIN                 16
+#define SERVO_HEAD_LEFT_PIN                 18
 #define SERVO_HEAD_LEFT_MIN_POSITION        900
 #define SERVO_HEAD_LEFT_MAX_POSITION        2100
 
@@ -182,7 +188,7 @@
 
 #define SERVO_HEAD_RIGHT_NAME               "headRightServo"
 
-#define SERVO_HEAD_RIGHT_PIN                17
+#define SERVO_HEAD_RIGHT_PIN                19
 #define SERVO_HEAD_RIGHT_MIN_POSITION       900
 #define SERVO_HEAD_RIGHT_MAX_POSITION       2100
 
@@ -269,11 +275,12 @@
 #define LIFT_ACCEL_SLOW                 400
 #define LIFT_ACCEL_VERY_SLOW            200
 
-#define LIFT_UP_POSITION                900
-#define LIFT_UP_TRIGGER_TURN           1100
-#define LIFT_TABLE_POSITION            2000
-#define LIFT_STOCK_POSITION            2000
-#define LIFT_PARK_POSITION              1496
+#define LIFT_UP_POSITION               2200
+#define LIFT_UP_TRIGGER_TURN           1800
+#define LIFT_TABLE_POSITION            1000
+#define LIFT_STOCK_POSITION            1000
+#define LIFT_CONVEYER_POSITION         1000
+#define LIFT_PARK_POSITION             1000
 
 
 #define TURN_SPEED_FAST                 320
@@ -281,12 +288,12 @@
 #define TURN_ACCEL_FAST                 280
 #define TURN_ACCEL_SLOW                 150
 
-#define TURN_TABLE_POSITION             1780
-#define TURN_TO_PARK_TRIGGER_LIFT       1400
-#define TURN_TO_TABLE_TRIGGER_LIFT      1660
-#define TURN_PARK_POSITION              1400
-#define TURN_TO_STOCK_TRIGGER_LIFT      1080
-#define TURN_STOCK_POSITION             980
+#define TURN_TABLE_POSITION             2022
+#define TURN_CONVEYOR_POSITION          1520
+#define TURN_STOCK_POSITION             1010
+#define TURN_TO_CONVEYER_TRIGGER_LIFT   TURN_CONVEYOR_POSITION + 60
+#define TURN_TO_TABLE_TRIGGER_LIFT      TURN_TABLE_POSITION - 60
+#define TURN_TO_STOCK_TRIGGER_LIFT      TURN_STOCK_POSITION + 60
 
 
 #define HEAD_LEFT_PARK_POSITION         2100
@@ -307,6 +314,9 @@
 #define HEAD_RIGHT_MID_POSITION         1520
 #define HEAD_RIGHT_TOP_POSITION         900
 
+#define PUMP_PARK_POSITION              2000
+#define PUMP_DOWN_POSITION              800
+
 
 #define STOCK_SUPPLY_RECORD_SPEED       1000
 #define STOCK_SUPPLY_RECORD_ACCEL       320
@@ -324,7 +334,7 @@
 #define CAT_ACCEL_VERY_HIGH             4800
 
 #define CAT_PARK_POSITION               0
-#define CAT_CUTTING_START_POSITION      88600
+#define CAT_CUTTING_START_POSITION      131600
 
 #define VACUUMSOLENOID_FREQUENCY           20
 #define VACUUMSOLENOID_DUTYCYCLE           0.4

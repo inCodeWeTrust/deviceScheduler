@@ -23,6 +23,7 @@
 CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCode, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation) : CCStepperDevice() {
     
     this->deviceName = deviceName;
+    
     this->dir_pin = dir_pin;
     this->step_pin = step_pin;
     this->enable_pin = enable_pin;
@@ -42,6 +43,17 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
         this->stepModeCode[codeIndex] = stepModeCode[codeIndex];
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
     }
+    
+    pinMode(dir_pin, OUTPUT);
+    pinMode(step_pin, OUTPUT);
+    pinMode(enable_pin, OUTPUT);
+    digitalWrite(enable_pin, HIGH);
+    
+    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+        pinMode(microStepPin[pinIndex], OUTPUT);
+        digitalWrite(microStepPin[pinIndex], LOW);
+    }
+    
     
     this->stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
     this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
@@ -92,42 +104,15 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
         Serial.print(F(", at $"));
         Serial.println((long) this, HEX);
     }
-    
-    attachDevice();
 }
 
 
 CCStepperDevice_A4988::~CCStepperDevice_A4988() {
-    detachDevice();
-    free(stepModeCode);
-    free(microStepPin);
-}
-
-
-
-void CCStepperDevice_A4988::attachDevice() {
-    pinMode(dir_pin, OUTPUT);
-    pinMode(step_pin, OUTPUT);
-    pinMode(enable_pin, OUTPUT);
-    digitalWrite(enable_pin, HIGH);
-    
-    for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
-        pinMode(microStepPin[pinIndex], OUTPUT);
-        digitalWrite(microStepPin[pinIndex], LOW);
-    }
-    
-    if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice_A4988]: "));
-        Serial.print(deviceName);
-        Serial.println(F(" attached"));
-    }
-}
-void CCStepperDevice_A4988::detachDevice() {
     digitalWrite(enable_pin, HIGH);
     
     pinMode(dir_pin, INPUT);
     pinMode(step_pin, INPUT);
-    pinMode(enable_pin, INPUT);
+    pinMode(enable_pin, INPUT_PULLUP);
     
     for (unsigned char pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
         pinMode(microStepPin[pinIndex], INPUT);
@@ -136,10 +121,11 @@ void CCStepperDevice_A4988::detachDevice() {
     if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_A4988]: device "));
         Serial.print(deviceName);
-        Serial.println(F(" detached"));
+        Serial.println(F(" destructed"));
     }
+    free(stepModeCode);
+    free(microStepPin);
 }
-
 
 
 void CCStepperDevice_A4988::setupMicroSteppingMode() {

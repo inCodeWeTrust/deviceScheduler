@@ -57,8 +57,6 @@ public:
     
     ~CCStepperDevice_A4988();
     
-    void attachDevice();
-    void detachDevice();
 
     void getReadOut(byte theReadOut);
 
