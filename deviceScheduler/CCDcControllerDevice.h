@@ -10,8 +10,6 @@
 #define __deviceScheduler__CCDcControllerDevice__
 
 
-#include <Arduino.h>
-#include "deviceScheduler.h"
 #include "CCDevice.h"
 
 
@@ -24,14 +22,12 @@
 #define CCDcControllerDevice_VERBOSE             0
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCDcControllerDevice
 ///
 /// @brief Device class for devices controlled by PWM-signals or spimply switched on and off
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 class CCDcControllerDevice : public CCDevice {
@@ -46,7 +42,6 @@ private:
     signed long          switchOnTime, switchOffTime;
     boolean              isActiv;
     float                currentRatio;
-    
     
     
 public:
@@ -69,10 +64,8 @@ public:
     void finishTask();
     
     void getReadOut(byte theReadOut);
-
-
     
 };
 
 
-#endif /* defined(__deviceScheduler__CCDcControllerDevice__) */
+#endif // defined(__deviceScheduler__CCDcControllerDevice__)

@@ -10,9 +10,9 @@
 #define __deviceScheduler__CCStepperDevice__
 
 
-#include <Arduino.h>
-#include "deviceScheduler.h"
 #include "CCDevice.h"
+
+#include "deviceScheduler.h"
 
 
 //  verbosity:
@@ -54,7 +54,6 @@ public:
     void finishTask();
 
     virtual void getReadOut(byte theReadOut) = 0;
-
     
     
 protected:
@@ -82,7 +81,6 @@ protected:
     virtual void         setupMicroSteppingMode(unsigned char data) = 0;
     
     
-    
     unsigned char        dir_pin, step_pin, enable_pin;
     unsigned char        highestSteppingMode;
     unsigned int         stepsPerRotation;
@@ -91,4 +89,4 @@ protected:
 };
 
 
-#endif /* defined(__deviceScheduler__CCStepperDevice__) */
+#endif // defined(__deviceScheduler__CCStepperDevice__)

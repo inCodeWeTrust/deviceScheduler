@@ -1,0 +1,5 @@
+<map id="CCStepperDevice_TMC260" name="CCStepperDevice_TMC260">
+<area shape="rect" id="node2" href="$class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="34,173,163,200"/>
+<area shape="rect" id="node3" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="57,96,140,123"/>
+<area shape="rect" id="node4" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="63,5,133,32"/>
+</map>

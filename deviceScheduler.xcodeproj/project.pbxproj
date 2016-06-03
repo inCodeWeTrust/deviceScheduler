@@ -8,16 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		40253D961CAF2136008A99E5 /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40253D941CAF2136008A99E5 /* CCControlButton.cpp */; };
-		40861E071CD77B050092D2D4 /* freeRam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40861E061CD77B050092D2D4 /* freeRam.cpp */; };
 		40ABDFB91CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40ABDFB81CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp */; };
 		40B3F88F1CC045F600443547 /* CCStepperDevice_A4988.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40B3F88E1CC045F600443547 /* CCStepperDevice_A4988.cpp */; };
 		40C3C0AF1CFE298A001B4B4E /* CCServoDevice_cross.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40C3C0AE1CFE298A001B4B4E /* CCServoDevice_cross.cpp */; };
-		A42F72541B1C70E400B5B7E0 /* deviceScheduler.ino in Sources */ = {isa = PBXBuildFile; fileRef = A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */; };
+		A42F72541B1C70E400B5B7E0 /* voiceOGraph.ino in Sources */ = {isa = PBXBuildFile; fileRef = A45F72541B1C70E400B5B7E0 /* voiceOGraph.ino */; };
 		A42F727C1B1C71EB00B5B7E0 /* CCDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */; };
 		A42F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */; };
 		A42F72801B1C71EB00B5B7E0 /* CCServoDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */; };
 		A42F72841B1C71EB00B5B7E0 /* CCStepperDevice.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */; };
-		A42F72851B1C71EB00B5B7E0 /* deviceScheduler.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */; };
+		A42F72851B1C71EB00B5B7E0 /* voiceOGraph.h in Sources */ = {isa = PBXBuildFile; fileRef = A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */; };
 		A442495D1C9AD1E600C3E457 /* CCDcControllerDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A442495B1C9AD1E600C3E457 /* CCDcControllerDevice.cpp */; };
 		A45F721D1B1C70E400B5B7E0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F721C1B1C70E400B5B7E0 /* main.cpp */; };
 		A45F72861B1C71EB00B5B7E0 /* CCDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727B1B1C71EB00B5B7E0 /* CCDevice.cpp */; };
@@ -664,9 +663,8 @@
 /* Begin PBXFileReference section */
 		40253D941CAF2136008A99E5 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
 		40253D951CAF2136008A99E5 /* CCControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButton.h; sourceTree = "<group>"; };
-		40861E061CD77B050092D2D4 /* freeRam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = freeRam.cpp; sourceTree = "<group>"; };
-		40861E081CD77B1A0092D2D4 /* freeRam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = freeRam.h; sourceTree = "<group>"; };
 		40A4E81F1CB7D954000DE9DD /* classCCDevice.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCDevice.graphml; sourceTree = "<group>"; };
+		40A4E81F1D00C93D00409B20 /* deviceScheduler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
 		40A4E8201CB7D954000DE9DD /* classCCDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classCCDevice.png; sourceTree = "<group>"; };
 		40A4E8211CB7D954000DE9DD /* classCCTask.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCTask.graphml; sourceTree = "<group>"; };
 		40A4E8221CB7D954000DE9DD /* classCCTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classCCTask.png; sourceTree = "<group>"; };
@@ -732,7 +730,7 @@
 		A45F72511B1C70E400B5B7E0 /* cc3200.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; name = cc3200.cfg; path = Utilities/cc3200.cfg; sourceTree = "<group>"; };
 		A45F72521B1C70E400B5B7E0 /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = TemplateIcon.icns; path = Utilities/TemplateIcon.icns; sourceTree = "<group>"; };
 		A45F72531B1C70E400B5B7E0 /* clupload_osx.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = clupload_osx.sh; path = Utilities/clupload_osx.sh; sourceTree = "<group>"; };
-		A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; path = deviceScheduler.ino; sourceTree = "<group>"; };
+		A45F72541B1C70E400B5B7E0 /* voiceOGraph.ino */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; path = voiceOGraph.ino; sourceTree = "<group>"; };
 		A45F727B1B1C71EB00B5B7E0 /* CCDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
 		A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
 		A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCDeviceScheduler.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -741,7 +739,7 @@
 		A45F72801B1C71EB00B5B7E0 /* CCServoDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCServoDevice.h; sourceTree = "<group>"; };
 		A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCStepperDevice.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice.h; sourceTree = "<group>"; };
-		A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
+		A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceOGraph.h; sourceTree = "<group>"; };
 		A475640F1CAAF90100902319 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		A47564101CAAF90100902319 /* Funktionsweise.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = Funktionsweise.md; sourceTree = "<group>"; };
 		A47564121CAAF90100902319 /* howItWorks_old.dox */ = {isa = PBXFileReference; lastKnownFileType = text; path = howItWorks_old.dox; sourceTree = "<group>"; };
@@ -1551,10 +1549,9 @@
 				A45F721C1B1C70E400B5B7E0 /* main.cpp */,
 				A45F721E1B1C70E400B5B7E0 /* Makefile */,
 				A45F72421B1C70E400B5B7E0 /* ReadMe.txt */,
-				A45F72851B1C71EB00B5B7E0 /* deviceScheduler.h */,
-				A45F72541B1C70E400B5B7E0 /* deviceScheduler.ino */,
-				40861E061CD77B050092D2D4 /* freeRam.cpp */,
-				40861E081CD77B1A0092D2D4 /* freeRam.h */,
+				A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */,
+				A45F72541B1C70E400B5B7E0 /* voiceOGraph.ino */,
+				40A4E81F1D00C93D00409B20 /* deviceScheduler.h */,
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
 				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
 				A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */,
@@ -4016,12 +4013,12 @@
 				A45F72881B1C71EB00B5B7E0 /* CCServoDevice.cpp in Sources */,
 				A45F72871B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp in Sources */,
 				A45F728A1B1C71EB00B5B7E0 /* CCStepperDevice.cpp in Sources */,
-				A42F72541B1C70E400B5B7E0 /* deviceScheduler.ino in Sources */,
+				A42F72541B1C70E400B5B7E0 /* voiceOGraph.ino in Sources */,
 				A42F727C1B1C71EB00B5B7E0 /* CCDevice.h in Sources */,
 				A42F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h in Sources */,
 				A42F72801B1C71EB00B5B7E0 /* CCServoDevice.h in Sources */,
 				A42F72841B1C71EB00B5B7E0 /* CCStepperDevice.h in Sources */,
-				A42F72851B1C71EB00B5B7E0 /* deviceScheduler.h in Sources */,
+				A42F72851B1C71EB00B5B7E0 /* voiceOGraph.h in Sources */,
 				AA2A150601125914AA000006 /* abi.cpp in Sources */,
 				AA2A150601125914AA000007 /* Arduino.h in Sources */,
 				AA2A150601125914AA000008 /* binary.h in Sources */,
@@ -4189,7 +4186,6 @@
 				AA2A150601125914AA0000D2 /* EthernetUdp.cpp in Sources */,
 				AA2A150601125914AA0000D3 /* EthernetUdp.h in Sources */,
 				AA2A150601125914AA0000D5 /* socket.cpp in Sources */,
-				40861E071CD77B050092D2D4 /* freeRam.cpp in Sources */,
 				AA2A150601125914AA0000D6 /* socket.h in Sources */,
 				AA2A150601125914AA0000D7 /* util.h in Sources */,
 				AA2A150601125914AA0000D8 /* w5100.cpp in Sources */,

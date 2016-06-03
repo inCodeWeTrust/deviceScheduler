@@ -1,32 +1,16 @@
-///
-/// @file		CCStepperDevice_A4988.h
-/// @brief		Header
-/// @details	<#details#>
-/// @n
-/// @n @b		Project deviceScheduler
-/// @n @a		Developed with [embedXcode+](http://embedXcode.weebly.com)
-///
-/// @author		Little Abakus
-/// @author		Little Abakus
-///
-/// @date		14.04.16 22:43
-/// @version	<#version#>
-///
-/// @copyright	(c) Little Abakus, 2016
-/// @copyright	<#license#>
-///
-/// @see		ReadMe.txt for references
-///
+//
+//  CCServoDevice_cross.h
+//  deviceScheduler
+//
+//  Created by Little Abakus on 30.05.14.
+//  Copyright (c) 2014 Little Abakus. All rights reserved.
+//
+
+#ifndef __deviceScheduler__CCServoDevice_cross__
+#define __deviceScheduler__CCServoDevice_cross__
 
 
-#include <Arduino.h>
-#include <avr/pgmspace.h>
-
-#include "deviceScheduler.h"
 #include "CCServoDevice.h"
-
-#ifndef CCServoDevice_cross_h
-#define CCServoDevice_cross_h
 
 
 //  verbosity:
@@ -46,10 +30,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
 class CCServoDevice_cross : public CCServoDevice {
     
 public:
@@ -61,9 +41,6 @@ public:
     void detachDevice();
     
     void operateTask();
-
-    
-    
 
     
 private:
@@ -78,4 +55,4 @@ private:
 
 };
 
-#endif
+#endif // defined(__deviceScheduler__CCServoDevice_cross__)

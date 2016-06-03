@@ -6,9 +6,6 @@
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
 //
 
-#include <Servo.h>
-#include <avr/pgmspace.h>
-
 #include "CCServoDevice.h"
 
 
@@ -305,9 +302,6 @@ void CCServoDevice::finishTask() {
 }
 
 
-
-
-
 void CCServoDevice::operateTask() {
     lastCycleTime = elapsedTime;
     elapsedTime = millis() - t0;
@@ -384,24 +378,20 @@ void CCServoDevice::operateTask() {
         
         performanceFactor = c_perform * (sensorValue - targetValue);
         
-//        int dif = targetValue - sensorValue;
-//        
-//        if (dif < 0) {
-//            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
-//        }
-//        if (dif > 0) {
-//            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
-//        }
-        
-        
-        // = (sensorValue - targetValue) / (initiatePerformanceValue - targetValue)
-        
-//        if (performanceFactor > 0) {
-//            performanceFactor = pow(performanceFactor, stopPerformance);
-//        } else {
-//            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
-//        }
-//
+        //        int dif = targetValue - sensorValue;
+        //        
+        //        if (dif < 0) {
+        //            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
+        //        }
+        //        if (dif > 0) {
+        //            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
+        //        }
+        //
+        //        if (performanceFactor > 0) {
+        //            performanceFactor = pow(performanceFactor, stopPerformance);
+        //        } else {
+        //            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
+        //        }
 
         currentPosition += deltaDeltaNorm * performanceFactor;
         currentPosition = min(currentPosition, maxPosition);
@@ -438,10 +428,6 @@ void CCServoDevice::operateTask() {
             }
         }
         
-        Serial.print("### end dynamical stop: sens: ");
-        Serial.print(sensorValue);
-        Serial.print(", position: ");
-        Serial.println(currentPosition);
 
         if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
             Serial.print(F("[CCServoDevice]: "));

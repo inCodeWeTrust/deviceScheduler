@@ -6,8 +6,6 @@
 //  Copyright (c) 2016 little Ikarus. All rights reserved.
 //
 
-#include <Arduino.h>
-#include <avr/pgmspace.h>
 
 #include "CCDcControllerDevice.h"
 
@@ -29,9 +27,9 @@ CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char swit
     this->taskPointer = 0;
     this->countOfTasks = 0;
     
-    //    defaultVelocity = 0;
-    //    defaultAcceleration = 0;
-    //    defaultDeceleration = 0;
+    this->defaultVelocity = 0;
+    this->defaultAcceleration = 0;
+    this->defaultDeceleration = 0;
     
     
     if (CCDcControllerDevice_VERBOSE & CCDcControllerDevice_BASICOUTPUT) {
@@ -62,7 +60,6 @@ void CCDcControllerDevice::prepareNextTask() {
     
     
     if (state == MOVING) {
-        // *** current ratio ***
         currentRatio = currentPosition;
         t0 += switchOnTime;
         switchOffTime -= switchOnTime;
@@ -96,7 +93,7 @@ void CCDcControllerDevice::prepareNextTask() {
     
     // target: dutycycle
     // velocity: pwm frequency
-    //      periodendauer = 1 / frequency
+    // periodendauer = 1 / frequency
     // acceleration: time for ramping up
     // deceleration: time for ramping down
     
@@ -134,7 +131,7 @@ void CCDcControllerDevice::prepareNextTask() {
 
 
 void CCDcControllerDevice::startTask() {
-    if (target > 1) {     // values valid?
+    if (target > 1) {                                               // values valid?
         stopTask();
     }
     else {

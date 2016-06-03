@@ -7,10 +7,6 @@
 //
 
 #include "CCTask.h"
-#include "deviceScheduler.h"
-
-
-
 
 
 CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset) {

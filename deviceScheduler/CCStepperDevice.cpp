@@ -7,11 +7,7 @@
 //
 
 
-#include <avr/pgmspace.h>
 #include "CCStepperDevice.h"
-
-
-
 
 
 CCStepperDevice::~CCStepperDevice() {
@@ -113,12 +109,7 @@ void CCStepperDevice::prepareNextTask() {
         currentVelocity = 0;
     }
 
-//    this takes ca 30us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== currentVelocity: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
+    //    this takes ca 30us
 
     
     startPosition = currentPosition;
@@ -130,19 +121,6 @@ void CCStepperDevice::prepareNextTask() {
     
     moveRelativ = task[taskPointer]->getMoveRelativ();
     withPositionReset = task[taskPointer]->getWithPositionReset();
-    
-//    Serial.print(F("### currentPosition: "));
-//    Serial.println(currentPosition);
-//
-//    Serial.print(F("### target: "));
-//    Serial.print(this->target);
-//    Serial.print(F(", velocity: "));
-//    Serial.print(this->velocity);
-//    Serial.print(F(", acceleration: "));
-//    Serial.print(this->acceleration);
-//    Serial.print(F(", deceleration: "));
-//    Serial.println(this->deceleration);
-
     
     startEvent = task[taskPointer]->getStartEvent();
     stopEvent = task[taskPointer]->getStopEvent();
@@ -161,12 +139,8 @@ void CCStepperDevice::prepareNextTask() {
     stopping = task[taskPointer]->getStopping();
     
     //    this takes ca 24us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== copy parameters: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
 
+    
     if (withPositionReset) {
         currentPosition = 0;
     }
@@ -178,11 +152,7 @@ void CCStepperDevice::prepareNextTask() {
     }
     
     //    this takes ca 4us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== stepsToGo: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
+
     
     if (stepsToGo < 0) {
         stepsToGo = -stepsToGo;
@@ -193,11 +163,6 @@ void CCStepperDevice::prepareNextTask() {
     }
     
     //    this takes ca 4us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== stepsToGo < 0: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
     
     
     veloBySquare = velocity * velocity;
@@ -211,12 +176,6 @@ void CCStepperDevice::prepareNextTask() {
     stepsForDeceleration = max(stepsForDeceleration, 1);
     
     //    this takes ca 40us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== stepsForDeceleration: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
-    
     
 
     accelerateDown = (currentVelocity > velocity);
@@ -232,26 +191,7 @@ void CCStepperDevice::prepareNextTask() {
     }
     stepsForAcceleration = max(stepsForAcceleration, 1);
     
-    
     //    this takes ca 60us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== stepsForAcceleration: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
-    
-    /*
-    Serial.print(F("### stepsToGo: "));
-    Serial.print(this->stepsToGo);
-    Serial.print(F(" directionDown: "));
-    Serial.print(this->directionDown);
-    Serial.print(F(" stepsForDeceleration: "));
-    Serial.print(this->stepsForDeceleration);
-    Serial.print(F(", accelerateDown: "));
-    Serial.print(this->accelerateDown);
-    Serial.print(F(", stepsForAcceleration: "));
-    Serial.println(this->stepsForAcceleration);
-    */
     
     
     // *** does acceleration and deceleration fit into the move? ***
@@ -277,11 +217,6 @@ void CCStepperDevice::prepareNextTask() {
     }
     
     //    this takes ca 4us (no recalculation)
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== recalculate steps: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
     
     
     // *** recalculate a: ***
@@ -358,12 +293,6 @@ void CCStepperDevice::prepareNextTask() {
     c1 = 1000000.0 / (velocity * (1 << highestSteppingMode));
         
     //    this takes ca 132us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== constants: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
-    
     
 
     microStepsToGo = stepsToGo << highestSteppingMode;
@@ -371,12 +300,6 @@ void CCStepperDevice::prepareNextTask() {
     microStepsForAccAndConstSpeed = microStepsToGo - (stepsForDeceleration << highestSteppingMode);
     
     //    this takes ca 12us
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== steps to microSteps: ");
-//    Serial.println(t_stop);
-//    t_sum += t_stop;
-//    t_prepTask = micros();
-    
     
     
     if (state == MOVING) {
@@ -385,25 +308,9 @@ void CCStepperDevice::prepareNextTask() {
         stepExpiration = 1000000.0 * (sqrt(currVeloBySquare + currentMicroStep * c0_acc) - currentVelocity) * acceleration_inv;
         
         //    this takes ca 88us
-//        t_stop = micros() - t_prepTask;
-//        Serial.print("== stepExpiration: ");
-//        Serial.println(t_stop);
-//        t_sum += t_stop;
-//        t_prepTask = micros();
         
 
    }
-    
-    //    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_MEMORYDEBUG) {
-    //        Serial.print(F("[CCStepperDevice]: "));
-    //        Serial.print(deviceName);
-    //        Serial.print(F(": stepsToGo at $"));
-    //        Serial.print((long)&stepsToGo, HEX);
-    //        Serial.print(F(", velocity at $"));
-    //        Serial.print((long)&velocity, HEX);
-    //        Serial.print(F(", acceleration at $"));
-    //        Serial.println((long)&acceleration, HEX);
-    //    }
     
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_CALCULATIONDEBUG) {
         Serial.print(F("[CCStepperDevice]: "));
@@ -427,10 +334,6 @@ void CCStepperDevice::prepareNextTask() {
         Serial.print(F(", deceleration: "));
         Serial.println(this->deceleration);
     }
-
-//    t_stop = micros() - t_prepTask;
-//    Serial.print("== whole preperation: ");
-//    Serial.println(t_stop);
 
 }
 
@@ -458,7 +361,7 @@ void CCStepperDevice::startTask() {                                 // start thi
         stepExpiration = 0;                                         // set time for next step to 0 (= now)
         t0 = micros() & 0x7fffffff;                                 // remember starting time (but be aware of overflows)
         
-        operateTask();                                                    // do step, if time expired and calculate time for next step
+        operateTask();                                              // do first step and calculate time for next step
     }
 }
 
@@ -510,14 +413,15 @@ void CCStepperDevice::operateTask() {
     if (timeDif <= 0) {
         digitalWrite(step_pin, LOW);
         digitalWrite(step_pin, HIGH);
-        if (timeDif < -100) {
-            if (currentMicroStep < microStepsToGo) {
-                digitalWrite(I_AM_LATE_LED, HIGH);
-            }
-        }
-        else {
-            digitalWrite(I_AM_LATE_LED, LOW);
-        }
+        
+        //        if (timeDif < -100) {
+        //            if (currentMicroStep < microStepsToGo) {
+        //                digitalWrite(I_AM_LATE_LED, HIGH);
+        //            }
+        //        }
+        //        else {
+        //            digitalWrite(I_AM_LATE_LED, LOW);
+        //        }
         
         currentMicroStep += steppingUnit[microSteppingMode];
         

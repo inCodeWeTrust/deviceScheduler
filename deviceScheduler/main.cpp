@@ -295,7 +295,7 @@ int main(void)
 #endif                                                                          // end IDE
 
 // Sketch
-#include "deviceScheduler.ino"
+#include "voiceOGraph.ino"
 
 
 #endif                                                                          // end embedXcode

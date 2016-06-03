@@ -37,7 +37,7 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
     
     this->highestSteppingMode = highestSteppingMode;
     this->stepModeCode = new unsigned char[highestSteppingMode + 1];                        // create array for microStep pin configuration
-    this->steppingUnit = new unsigned int[highestSteppingMode + 1];                        // create array for increment of microSteps according to microSteppingMode
+    this->steppingUnit = new unsigned int[highestSteppingMode + 1];                         // create array for increment of microSteps according to microSteppingMode
 
     for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
         this->stepModeCode[codeIndex] = stepModeCode[codeIndex];
@@ -55,8 +55,8 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
     }
     
     
-    this->stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
-    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
+    this->stepsPerDegree = stepsPerRotation / 360.0;                                        // save time executing prepareNextTask()
+    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);      // save time when calculatin currentPosition in operateTask()
     
     this->acceleration_max = 4000;
     

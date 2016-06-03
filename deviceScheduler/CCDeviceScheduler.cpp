@@ -49,7 +49,6 @@ CCDeviceScheduler::~CCDeviceScheduler() {
 }
 
 
-
 schedulerDevice CCDeviceScheduler::addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) {
     device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_activ);
     
@@ -123,11 +122,6 @@ schedulerDevice CCDeviceScheduler::addServoWithCounterServo(String deviceName, u
     
     return countOfDevices - 1;
 }
-
-
-
-
-
 
 
 schedulerDevice CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation) {
@@ -239,10 +233,7 @@ schedulerDevice CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned
     
     return countOfDevices - 1;
 
-    
 }
-
-
 
 
 void CCDeviceScheduler::getAllDevices() {
@@ -379,6 +370,7 @@ void CCDeviceScheduler::reviewTasks() {
     }
 }
 
+
 unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
     controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv, pullup);
     
@@ -401,6 +393,7 @@ unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned ch
     return countOfControlButtons - 1;
 
 }
+
 void CCDeviceScheduler::getAllControlButtons() {
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
@@ -459,10 +452,6 @@ void CCDeviceScheduler::run() {
     unsigned long loopCounter = 0;
     unsigned char ongoingOperations;
     
-//    int i = 100;
-//    int c32, hend, hstrt, tof = 0;
-//    boolean ottdp, roft;
-//    int sinof, fdt, ot;
 
     // prepare the loop
     
@@ -507,12 +496,11 @@ void CCDeviceScheduler::run() {
     }
     
     //  start the workflow
-//    long loopTime_min = 10000;
-//    long loopTime_max = 0;
+
     unsigned long taskTime, loopTime;
     unsigned long taskStartTime = millis();
     
-    unsigned long lastPrintTime = taskStartTime;
+    //    unsigned long lastPrintTime = taskStartTime;
     
     schedulerControlButton theButton = 0;
     
@@ -524,11 +512,11 @@ void CCDeviceScheduler::run() {
         
        
         for (schedulerDevice s = 0; s < countOfDevices; s++) {
-            if (device[s]->getState() > SLEEPING) {                                                         // (== MOVING || MOVE_DONE || PENDING_MOVES)
-                if (device[s]->getState() == MOVING) {                                                // if device is moving...
-                    device[s]->operateTask();                                                  // so: move on!
+            if (device[s]->getState() > SLEEPING) {                                                             // (== MOVING || MOVE_DONE || PENDING_MOVES)
+                if (device[s]->getState() == MOVING) {                                                          // if device is moving...
+                    device[s]->operateTask();                                                                   // so: move on!
                     
-                    switch (device[s]->getStopEvent()) {                                                      // is there a stopEvent defined?
+                    switch (device[s]->getStopEvent()) {                                                        // is there a stopEvent defined?
                         case DATE:                                                                              // yes, device shall stop by date
                             if (taskTime > device[s]->getStartTime() + device[s]->getStartDelay() + device[s]->getTimeout()) { // it's time to stop!
                                 handleStopEvent(taskTime, s, device[s]->getStopEvent());
@@ -536,12 +524,12 @@ void CCDeviceScheduler::run() {
                             break;
                             
                         case BUTTON:                                                                            // device shall stop by button
-                            if (controlButton[device[s]->getStopButton()]->isActiv()) {             // it's time to stop!
+                            if (controlButton[device[s]->getStopButton()]->isActiv()) {                         // it's time to stop!
                                 handleStopEvent(taskTime, s, device[s]->getStopEvent());
                             }
                             break;
                             
-                        case FOLLOW:                                                                          // device shall stop when a device reached a certain position
+                        case FOLLOW:                                                                            // device shall stop when a device reached a certain position
                             if (device[device[s]->getStopTriggerDevice()]->getTaskPointer() > device[s]->getStopTriggerTask()) {          //  trigger device on trigger move?
                                 handleStopEvent(taskTime, s, device[s]->getStopEvent());
                             }
@@ -549,7 +537,7 @@ void CCDeviceScheduler::run() {
                             
                         case POSITION:                                                                          // device shall stop when a device reached a certain position
                             if (device[s]->getStopTriggerTask() == device[device[s]->getStopTriggerDevice()]->getTaskPointer()) {          //  trigger device on trigger move?
-                                if ((device[device[s]->getStopTriggerDevice()]->getDirectionDown() && device[device[s]->getStopTriggerDevice()]->getCurrentPosition() <= device[s]->getStopTriggerPosition()) || (!device[device[s]->getStopTriggerDevice()]->getDirectionDown() && device[device[s]->getStopTriggerDevice()]->getCurrentPosition() >= device[s]->getStopTriggerPosition())) { // trigger position reached?
+                                if ((device[device[s]->getStopTriggerDevice()]->getDirectionDown() && device[device[s]->getStopTriggerDevice()]->getCurrentPosition() <= device[s]->getStopTriggerPosition()) || (!device[device[s]->getStopTriggerDevice()]->getDirectionDown() && device[device[s]->getStopTriggerDevice()]->getCurrentPosition() >= device[s]->getStopTriggerPosition())) {                                                // trigger position reached?
                                     handleStopEvent(taskTime, s, device[s]->getStopEvent());
                                 }
                             }
@@ -560,7 +548,7 @@ void CCDeviceScheduler::run() {
                 }                                                                                               // (device[s]->getState() == MOVING)
                 else {                                                                                          // if device is stopped
                     
-                    if (device[s]->getState() == MOVE_DONE) {                                                         // finished right now?
+                    if (device[s]->getState() == MOVE_DONE) {                                                   // finished right now?
                         device[s]->finishTask();
                         device[s]->disableDevice();
                         
@@ -573,9 +561,9 @@ void CCDeviceScheduler::run() {
                             Serial.println(F(" done"));
                         }
                         
-                        device[s]->increaseTaskPointer();                                                               // go for next job!
+                        device[s]->increaseTaskPointer();                                                       // go for next job!
                         
-                        if (device[s]->getTaskPointer() < device[s]->getCountOfTasks()) {                                 //  all tasks done? no!
+                        if (device[s]->getTaskPointer() < device[s]->getCountOfTasks()) {                       //  all tasks done? no!
                             device[s]->setState(PENDING_MOVES);
                             device[s]->prepareNextTask();
                             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
@@ -601,8 +589,8 @@ void CCDeviceScheduler::run() {
                             }
                         }
                     }
-                    else {    //  (device[s]->getState() == MOVE_DONE)                                                //  device is idle
-                        switch (device[s]->getStartEvent()) {                                                        //  what kind of startEvent is given?
+                    else {    //  (device[s]->getState() == MOVE_DONE)                                          //  device is idle
+                        switch (device[s]->getStartEvent()) {                                                   //  what kind of startEvent is given?
                             case DATE:                                                                          //  start the next move by date
                                 if (taskTime > device[s]->getStartTime()) {
                                     handleStartEvent(taskTime, s, device[s]->getStartEvent());
@@ -615,7 +603,7 @@ void CCDeviceScheduler::run() {
                                 }
                                 break;
                                 
-                            case FOLLOW:                                                                      //  start the next move when a device reached a certain
+                            case FOLLOW:                                                                        //  start the next move when a device reached a certain
                                 if (device[device[s]->getStartTriggerDevice()]->getTaskPointer() > device[s]->getStartTriggerTask()) {        //  is the trigger servo doing the trigger move?
                                     handleStartEvent(taskTime, s, device[s]->getStartEvent());
                                 }
@@ -636,64 +624,15 @@ void CCDeviceScheduler::run() {
                     }
                 }
             }
-            ongoingOperations += device[s]->getState();                                                              // ongoing operations on any device?
+            ongoingOperations += device[s]->getState();                                                           // ongoing operations on any device?
             
         }
 
-/*
-        if (taskTime & 0x0000) {
-            roft = analogRead(A4) >> 9;
-        }
-        if (taskTime & 0x0010) {
-            ottdp = analogRead(A5) >> 9;
-        }
+        //        if (taskTime - lastPrintTime > 1000) {
+        //            device[6]->getReadOut(0);
+        //            lastPrintTime = taskTime;
+        //        }
         
-        if (taskTime & 0x1000) {
-            i = analogRead(A0) >> 5;
-            i = (c32 * 3 + i) >> 2;
-            if (i != c32) {
-                c32 = i;
-                device[2]->setCurrentScale(c32);
-                Serial.print(" *** c32: "), Serial.println(c32);
-            }
-        }
-        
-
-        if (taskTime & 0x1010) {
-            i = (analogRead(A1) >> 6) - 3;
-            i = (sinof * 3 + i) >> 2;
-            if (i != sinof) {
-                sinof = i;
-                device[2]->setChopperControlRegister_fastDecay(2, roft, ottdp, sinof, fdt, ot);
-                Serial.print("*** sinof: "), Serial.print(sinof);
-            }
-        }
-        if (taskTime & 0x1100) {
-            i = (analogRead(A2) >> 6);
-            i = (fdt * 3 + i) >> 2;
-            if (i != fdt) {
-                fdt = i;
-                device[2]->setChopperControlRegister_fastDecay(2, roft, ottdp, sinof, fdt, ot);
-                Serial.print("*** fdt: "), Serial.print(hstrt);
-            }
-        }
-        if (taskTime & 0x1110) {
-            i = analogRead(A3) >> 6;
-            i = (ot * 3 + i) >> 2;
-            if (i != ot) {
-                ot = i;
-                device[2]->setChopperControlRegister_fastDecay(2, roft, ottdp, sinof, fdt, ot);
-                Serial.print("*** ot: "), Serial.println(tof);
-            }
-        }
- */
-
- /*
-        if (taskTime - lastPrintTime > 1000) {
-            device[6]->getReadOut(0);
-            lastPrintTime = taskTime;
-        }
-   */     
         if (theButton < countOfControlButtons) {
             if (controlButton[theButton]->readButtonState()) {
                 for (unsigned char theAction = 0; theAction < controlButton[theButton]->getCountOfActions(); theAction++) {
@@ -727,15 +666,9 @@ void CCDeviceScheduler::run() {
         }
         
         
-        
         loopCounter++;
         
-        
-//        loopTime -= millis();
-//        loopTime_min = MIN(loopTime, loopTime_min);
-//        loopTime_max = max(loopTime, loopTime_max);
-
-        
+       
     } while (ongoingOperations > 0);
     
     for (unsigned char s = 0; s < countOfDevices; s++) {
@@ -754,10 +687,6 @@ void CCDeviceScheduler::run() {
     Serial.print((int)((millis() - taskStartTime) / 1000));
     Serial.print(F(", loops/second: "));
     Serial.print(1000.0 * loopCounter / (millis() - taskStartTime));
-//    Serial.print(F(", minimal loop time: "));
-//    Serial.print(loopTime_min);
-//    Serial.print(F(", maximal loop time: "));
-//    Serial.println(loopTime_max);
     Serial.println();
     Serial.println();
     
@@ -776,11 +705,11 @@ void CCDeviceScheduler::handleStartEvent(unsigned long taskTime, schedulerDevice
         Serial.println(getNameOfTaskEvent(startEvent));
     }
     
-    if (device[s]->getStartDelay() > 0) {                                        // startDelay given?
+    if (device[s]->getStartDelay() > 0) {                                               // startDelay given?
         if (startEvent == DATE) {
             device[s]->setStartTime(device[s]->getStartTime() + device[s]->getStartDelay());
         } else {
-            device[s]->setStartTime(taskTime + device[s]->getStartDelay());            // so start the move by date
+            device[s]->setStartTime(taskTime + device[s]->getStartDelay());             // so start the move by date
             device[s]->setStartEvent(DATE);
         }
         device[s]->setStartDelay(0);
@@ -806,14 +735,14 @@ void CCDeviceScheduler::handleStopEvent(unsigned long taskTime, schedulerDevice 
         Serial.println(getNameOfStoppingMode(device[s]->getStopping()));
 }
     
-    if (device[s]->getSwitchTaskPromptly()) {                                              // switch immediately to next move?
-        device[s]->increaseTaskPointer();                                                   // go for next job! (if existing)
-        if (device[s]->getTaskPointer() < device[s]->getCountOfTasks()) {                     //  all tasks done? no!
+    if (device[s]->getSwitchTaskPromptly()) {                                           // switch immediately to next move?
+        device[s]->increaseTaskPointer();                                               // go for next job! (if existing)
+        if (device[s]->getTaskPointer() < device[s]->getCountOfTasks()) {               //  all tasks done? no!
             device[s]->prepareNextTask();
         } else {
             device[s]->stopTask();
         }
-    } else {                                                                          // just stop. but how?
+    } else {                                                                            // just stop. but how?
         if (device[s]->getStopping() == STOP_IMMEDIATELY) {
             device[s]->stopTask();
         } else {
@@ -860,22 +789,6 @@ String CCDeviceScheduler::getNameOfDeviceAction(deviceAction d) {
     return "unknown";
 }
 
-
-String CCDeviceScheduler::formatNumber(long theData, unsigned char len) {
-    char theString[len + 1];
-    theString[len] = 0;
-    theString[len - 1] = (theData % 10) + 48;
-    for (signed char i = len - 2; i >= 0; i--) {
-        theData /= 10;
-        if (theData > 0) {
-            theString[i] = (theData % 10) + 48;
-        }
-        else {
-            theString[i] = 32;
-        }
-    }
-    return (String)theString;
-}
 
 
 

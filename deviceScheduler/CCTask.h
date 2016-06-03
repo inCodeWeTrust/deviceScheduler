@@ -9,8 +9,10 @@
 #ifndef __deviceScheduler__CCTask__
 #define __deviceScheduler__CCTask__
 
+
 #include <Arduino.h>
 #include "deviceScheduler.h"
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCTask
@@ -142,10 +144,6 @@ public:
     /// Getter method for getting the approximation value of the device
     /// \sa approximation;
     approximationMode getApproximation();
-
-    
-    
-    
     
     
     CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset);
@@ -200,7 +198,6 @@ private:
     stoppingMode            stopping;
     approximationMode       approximation;
     
-
 };
 
 
@@ -209,4 +206,4 @@ private:
 
 
 
-#endif /* defined(__deviceScheduler__CCTask__) */
+#endif // defined(__deviceScheduler__CCTask__)

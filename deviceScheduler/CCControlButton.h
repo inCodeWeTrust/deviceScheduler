@@ -9,6 +9,7 @@
 #ifndef __deviceScheduler__CCControlButton__
 #define __deviceScheduler__CCControlButton__
 
+
 #include <Arduino.h>
 #include "deviceScheduler.h"
 
@@ -60,12 +61,10 @@ public:
     void deleteActions();
     
     
-    
 private:
     
     boolean             state;
     boolean             activ;
-    
 
 
     String              buttonName;
@@ -74,10 +73,9 @@ private:
     boolean             pullup;
     boolean             buttonActiv;
     unsigned char       countOfActions;
-    
 
     
 };
 
-#endif /* defined(__deviceScheduler__CCControlButton__) */
+#endif // defined(__deviceScheduler__CCControlButton__)
 

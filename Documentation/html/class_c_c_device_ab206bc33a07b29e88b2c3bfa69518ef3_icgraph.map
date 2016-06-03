@@ -1,6 +1,0 @@
-<map id="CCDevice::deleteTasks" name="CCDevice::deleteTasks">
-<area shape="rect" id="node2" href="$class_c_c_dc_controller_device.html#a8e787a1a8c824726f91b22abf9289ccd" title="CCDcControllerDevice\l::~CCDcControllerDevice" alt="" coords="244,5,415,46"/>
-<area shape="rect" id="node3" href="$class_c_c_device_scheduler.html#a0b5a165314803618046b07cf637aa14b" title="Function deletes all tasks of all registered devices. " alt="" coords="255,70,404,111"/>
-<area shape="rect" id="node4" href="$class_c_c_servo_device.html#a977ceca6178def75d9cb2e8eec80f62a" title="CCServoDevice::~CCServoDevice" alt="" coords="216,136,443,163"/>
-<area shape="rect" id="node5" href="$class_c_c_stepper_device.html#a4a16937cd79aa54ffd242eb459d91205" title="CCStepperDevice::~CCStepper\lDevice" alt="" coords="225,187,434,229"/>
-</map>

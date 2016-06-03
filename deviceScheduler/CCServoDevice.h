@@ -10,11 +10,12 @@
 #define __deviceScheduler__CCServoDevice__
 
 
-#include <Arduino.h>
 #include <Servo.h>
+
 #include "CCDevice.h"
 
 
+//  verbosity:
 #define CCSERVODEVICE_BASICOUTPUT           0x01
 #define CCSERVODEVICE_MEMORYDEBUG           0x02
 #define CCSERVODEVICE_CALCULATIONDEBUG      0x04
@@ -23,15 +24,12 @@
 #define CCSERVODEVICE_VERBOSE               0x00
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCServoDevice
 ///
 /// @brief Device class for servo motor devices
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 class CCServoDevice : public CCDevice {
@@ -79,8 +77,7 @@ public:
     void getReadOut(byte theReadOut);
 
 
-
 };
 
-#endif /* defined(__deviceScheduler__CCServoDevice__) */
+#endif // defined(__deviceScheduler__CCServoDevice__)
 

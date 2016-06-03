@@ -7,14 +7,7 @@
 //
 
 
-#include <Arduino.h>
-#include <avr/pgmspace.h>
-
 #include "CCControlButton.h"
-#include "deviceScheduler.h"
-
-
-
 
 
 CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
@@ -90,23 +83,9 @@ void CCControlButton::deleteActions() {
 
 
 boolean CCControlButton::readButtonState() {
-//    boolean newState = digitalRead(button_pin);
-//    if (state != newState) {
-//        Serial.print("§");
-//    } else {
-//        Serial.print("*");
-//    }
-//    state = newState;
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
-//
-//    Serial.print(button_pin);
-//    Serial.print(state);
-//    if (activ) {
-//        Serial.print("+");
-//    } else {
-//        Serial.print("-");
-//    }
+
     return activ;
 }
 

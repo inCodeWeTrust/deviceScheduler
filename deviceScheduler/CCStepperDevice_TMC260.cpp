@@ -18,8 +18,6 @@
 
 
 
-#include <Arduino.h>
-#include <SPI.h>
 
 #include "CCStepperDevice_TMC260.h"
 

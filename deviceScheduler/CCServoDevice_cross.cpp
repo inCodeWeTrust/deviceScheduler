@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Little Abakus. All rights reserved.
 //
 
-#include <Servo.h>
-#include <avr/pgmspace.h>
 
 #include "CCServoDevice_cross.h"
 
@@ -38,10 +36,6 @@ CCServoDevice_cross::CCServoDevice_cross(String deviceName, unsigned char servo_
         Serial.print((long)this, HEX);
         Serial.print(F(", Servo 01 at $"));
         Serial.println((long)&secondServo, HEX);
-//        Serial.print(F(", park: "));
-//        Serial.print(parkPosition);
-//        Serial.print(F(", current: "));
-//        Serial.print(currentPosition);
     }
     
 }
@@ -74,7 +68,7 @@ void CCServoDevice_cross::attachDevice() {
     if (CCSERVODEVICE_CROSS_VERBOSE & CCSERVODEVICE_CROSS_MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice_cross]: "));
         Serial.print(deviceName);
-        Serial.print(F(", parkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk: "));
+        Serial.print(F(", park: "));
         Serial.print(parkPosition);
         Serial.print(F(" attached: Servo 00 on channel "));
         Serial.print(channel);
@@ -132,13 +126,6 @@ void CCServoDevice_cross::operateTask() {
                 lastCycleTime = 0;
                 c_perform = 1.0 / (initiatePerformanceValue - targetValue);
                 dynamicalStop = true;
-                
-                Serial.print("### init dynamical stop: sens: ");
-                Serial.print(sensorValue);
-                Serial.print(", init: ");
-                Serial.print(initiatePerformanceValue);
-                Serial.print(", fall: ");
-                Serial.println(sensorValuesFalling);
             }
         }
     }
@@ -197,25 +184,6 @@ void CCServoDevice_cross::operateTask() {
         
         performanceFactor = c_perform * (sensorValue - targetValue);
         
-        //        int dif = targetValue - sensorValue;
-        //
-        //        if (dif < 0) {
-        //            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
-        //        }
-        //        if (dif > 0) {
-        //            currentPosition += deltaDeltaNorm * (1 - 1 / dif);
-        //        }
-        
-        
-        // = (sensorValue - targetValue) / (initiatePerformanceValue - targetValue)
-        
-        //        if (performanceFactor > 0) {
-        //            performanceFactor = pow(performanceFactor, stopPerformance);
-        //        } else {
-        //            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
-        //        }
-        //
-        
         currentPosition += deltaDeltaNorm * performanceFactor;
         currentPosition = min(currentPosition, maxPosition);
         currentPosition = max(currentPosition, minPosition);
@@ -252,10 +220,6 @@ void CCServoDevice_cross::operateTask() {
             }
         }
         
-        Serial.print("### end dynamical stop: sens: ");
-        Serial.print(sensorValue);
-        Serial.print(", position: ");
-        Serial.println(currentPosition);
         
         if (CCSERVODEVICE_CROSS_VERBOSE & CCSERVODEVICE_CROSS_BASICOUTPUT) {
             Serial.print(F("[CCServoDevice_cross]: "));

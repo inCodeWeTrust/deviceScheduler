@@ -1,3 +1,4 @@
 <map id="CCServoDevice" name="CCServoDevice">
-<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices " alt="" coords="23,5,105,32"/>
+<area shape="rect" id="node3" href="$class_c_c_servo_device__cross.html" title="Device class for two servo motor devices, working in counterrotation. " alt="" coords="5,155,160,181"/>
+<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="41,5,124,32"/>
 </map>

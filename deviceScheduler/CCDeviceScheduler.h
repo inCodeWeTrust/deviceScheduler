@@ -22,12 +22,10 @@
 #include "CCStepperDevice_A4988.h"
 #include "CCStepperDevice_TMC260.h"
 #include "CCDcControllerDevice.h"
-
 #include "CCControlButton.h"
 
 
-
-//  log visuals:
+//  verbosity and log visuals:
 #define DEVICESCHEDULER_BASICOUTPUT                     0x01
 #define DEVICESCHEDULER_MEMORYDEBUG                     0x02
 
@@ -35,9 +33,6 @@
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
 
 #define DEVICESCHEDULER_VERBOSE                         0x13
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +43,7 @@
 /// The scheduler holds all devices and controls them by calling their startTask(), operateTask(), stopTask() etc. routines.
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 class CCDeviceScheduler {
     
@@ -106,7 +102,6 @@ public:
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
     schedulerDevice addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
-   
     
     /// Function adds a stepper device to the device array, that is driven by da driver like the TMC260, and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -115,7 +110,7 @@ public:
     /// @param step_pin the pin number of the stepper driver's step pin.
     /// @param enable_pin the pin number of the stepper driver's enable pin.
     /// @param chipSelect_pin the number of the drivers chip select pin (CS) for the SPI communication.
-    /// @param currentMax the current, that is applied to the motor coils in mA RMS.
+    /// @param currentMax the maximum current, that is applied to the motor coils in mA RMS.
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
     schedulerDevice addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
@@ -162,7 +157,8 @@ public:
     /// A control button is a input device, that can provide either a HIGH or a LOW level at a input pin or simply connect the pin and GND using the internal inputPullup-function. Specific parameters are passed.
     /// @param buttonName the human-readable name of the device (used for verbose output).
     /// @param button_pin the pin number of the button's pin.
-    /// @param buttonActiv the state of the pin, where the button should trigger actions. If "LOW" is passed, the input pullup is activated.
+    /// @param buttonActiv the state of the pin, where the button should trigger actions.
+    /// @param pullup if a nonzero value is passed, the input pullup is activated.
     /// @return the button index.
     unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     
@@ -203,13 +199,13 @@ private:
     String getNameOfState(deviceState s);
     String getNameOfStoppingMode(stoppingMode s);
     String getNameOfDeviceAction(deviceAction d);
-    String formatNumber(long theData, unsigned char len);
 
     
 };
 
 
 
-#endif /* defined(__deviceScheduler__CCDeviceScheduler__) */
+
+#endif // defined(__deviceScheduler__CCDeviceScheduler__)
 
 

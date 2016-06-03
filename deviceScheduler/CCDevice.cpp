@@ -20,44 +20,55 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
     this->defaultAcceleration = defaultAcceleration;
     this->defaultDeceleration = defaultDeceleration;
 }
+void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration) {
+    this->defaultVelocity = defaultVelocity;
+    this->defaultAcceleration = defaultAcceleration;
+    this->defaultDeceleration = -defaultAcceleration;
+}
 
-/*
- unsigned char CCDevice::addTask(float target) {
- return addTaskWithStartDelay(target, 0UL, defaultVelocity, defaultAcceleration, defaultDeceleration);
- }
- unsigned char CCDevice::addTask(float target, float velocity) {
- return addTaskWithStartDelay(target, 0UL, velocity, defaultAcceleration, defaultDeceleration);
- }
- unsigned char CCDevice::addTask(float target, float velocity, float acceleration) {
- return addTaskWithStartDelay(target, 0UL, velocity, acceleration, defaultDeceleration);
- }
- */
+
 scheduledTask CCDevice::addTask(float target, float velocity, float acceleration, float deceleration) {
     return registerTask(target, velocity, acceleration, deceleration, false, false);
 }
+scheduledTask CCDevice::addTask(float target, float velocity, float acceleration) {
+    return registerTask(target, velocity, acceleration, -acceleration, false, false);
+}
+scheduledTask CCDevice::addTask(float target, float velocity) {
+    return registerTask(target, velocity, defaultAcceleration, defaultDeceleration, false, false);
+ }
+scheduledTask CCDevice::addTask(float target) {
+    return registerTask(target, defaultVelocity, defaultAcceleration, defaultDeceleration, false, false);
+}
 
-/*
- unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay) {
- return addTaskWithStartDelay(target, startDelay, defaultVelocity, defaultAcceleration, defaultDeceleration);
- }
- unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay, float velocity) {
- return addTaskWithStartDelay(target, startDelay, velocity, defaultAcceleration, defaultDeceleration);
- }
- unsigned char CCDevice::addTaskWithStartDelay(float target, unsigned long startDelay, float velocity, float acceleration) {
- return addTaskWithStartDelay(target, startDelay, velocity, acceleration, defaultDeceleration);
- }
- */
 
 scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity, float acceleration, float deceleration) {
-    return registerTask(target, velocity, acceleration, deceleration, true, false);
+    return registerTask(relativTarget, velocity, acceleration, deceleration, true, false);
 }
+scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity, float acceleration) {
+    return registerTask(relativTarget, velocity, acceleration, -acceleration, true, false);
+}
+scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity) {
+    return registerTask(relativTarget, velocity, defaultAcceleration, defaultDeceleration, true, false);
+}
+scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget) {
+    return registerTask(relativTarget, defaultVelocity, defaultAcceleration, defaultDeceleration, true, false);
+}
+
 
 scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity, float acceleration, float deceleration) {
     return registerTask(target, velocity, acceleration, deceleration, false, true);
 }
+scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity, float acceleration) {
+    return registerTask(target, velocity, acceleration, -acceleration, false, true);
+}
+scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity) {
+    return registerTask(target, velocity, defaultAcceleration, defaultDeceleration, false, true);
+}
+scheduledTask CCDevice::addTaskWithPositionReset(float target) {
+    return registerTask(target, defaultVelocity, defaultAcceleration, defaultDeceleration, false, true);
+}
 
 scheduledTask CCDevice::registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset) {
-//    task[countOfTasks] = new onEventTask(target, velocity, acceleration, deceleration, startDelay);
     task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, moveRelativ, withPositionReset);
     
     if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
@@ -105,15 +116,13 @@ void CCDevice::deleteTasks() {
     taskPointer = 0;
     countOfTasks = 0;
     
-//    currentPosition = 0;
-//    directionDown = 0;
-    
 }
 
 
 String CCDevice::getDeviceName(){return deviceName;}
 deviceType CCDevice::getType(){return type;}
 unsigned char CCDevice::getCountOfTasks(){return countOfTasks;}
+void CCDevice::setCountOfTasks(unsigned char count){countOfTasks = count;}
 unsigned char CCDevice::getTaskPointer(){return taskPointer;}
 void CCDevice::setTaskPointer(unsigned char pointer){taskPointer = pointer;}
 void CCDevice::increaseTaskPointer(){taskPointer++;}
