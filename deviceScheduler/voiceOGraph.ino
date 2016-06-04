@@ -564,6 +564,11 @@ void loop() {
             cuttingProcess->run();
             
             ejectingRecord->run();
+
+            
+            //            cuttingProcess->device[catStepper]->setCurrentPosition(0.0);
+            //            cuttingProcess->device[tableStepper]->setCurrentPosition(0.0);
+            //
             
         }
         

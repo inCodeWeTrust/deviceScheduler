@@ -19,7 +19,7 @@
 #define CCSTEPPERDEVICE_A4988_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_A4988_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_A4988_VERBOSE             0x01
+#define CCSTEPPERDEVICE_A4988_VERBOSE             0x00
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
