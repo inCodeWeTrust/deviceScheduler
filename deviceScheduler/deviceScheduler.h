@@ -10,10 +10,8 @@
 #define __deviceScheduler__deviceScheduler__
 
 
-#define STEPPINGPERIOD_TO_KICK_UP           150        //150
-#define STEPPINGPERIOD_TO_KICK_DOWN         300        //300
-
-
+#include <Arduino.h>
+#include <avr/pgmspace.h>
 
 
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
@@ -75,6 +73,15 @@ enum approximationMode {
     SKIP_APPROXIMATION_NEVER = 0xFF
 };
 
+
+
+
+#define STEPPINGPERIOD_TO_KICK_UP           150        //150
+#define STEPPINGPERIOD_TO_KICK_DOWN         300        //300
+
+
+
+
 #endif // defined(__deviceScheduler__deviceScheduler__)
 
 
@@ -83,7 +90,7 @@ enum approximationMode {
 /// \section createScheduler Creating a new scheduler
 /// Zentrales Objekt ist der Scheduler, eine Instanz der Klasse mit dem Namen CCDeviceScheduler. Er steuert und koordiniert einen Arbeitsablauf, d.h. verschiedene Geräte führen einen Block von Aufgaben aus. Es können beliebig viele dieser Arbeitsabläufe definiert und in beliebiger Reihenfolge abgerufen werden. Zum Beispiel beim Plattenschneideautomat \c fetchNewRecord, \c cuttingProcess, \c ejectRecord etc.
 /// \code {.cpp}
-/// CCDeviceScheduler cuttingProcess = new CCDeviceScheduler("cutting");
+/// CCDeviceScheduler *cuttingProcess = new CCDeviceScheduler("cutting");
 /// \endcode
 /// Ein neues Scheduler-Objekt mit dem Namen \c cuttingProcess wird erzeugt. Im logging erscheint ess mit dem Namen \c cutting. Es soll z.B. die komplette Steuerung des Schneideprozesses übernehmen.
 /// <br><br><br>

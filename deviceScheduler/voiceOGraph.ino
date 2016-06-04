@@ -148,7 +148,7 @@ void loop() {
         fetchingRecord->device[stockStepper]->task[moveStockStepperDown]->stopByButton(stockBottomButton, STOP_NORMAL);
         
         //  supply a new record, terminated by recordAvailableButton
-        scheduledTask supplyRecord = fetchingRecord->device[stockStepper]->addTaskMoveRelativ(14000);
+        scheduledTask supplyRecord = fetchingRecord->device[stockStepper]->addTaskMoveRelativ(16000);
         fetchingRecord->device[stockStepper]->task[supplyRecord]->startAfterCompletionOf(stockStepper, moveStockStepperDown);
         fetchingRecord->device[stockStepper]->task[supplyRecord]->stopByButton(recordAvailableButton, STOP_NORMAL);
         
@@ -550,9 +550,10 @@ void loop() {
     Serial.println(F("ready to run!"));
     
     boolean initNeeded = false;
+    int i = 0;
     while (!initNeeded) {
-        
         if (digitalRead(FETCH_RECORD_BUTTON) == LOW) {
+            Serial.println("go for a brand new record");
             
             fetchingRecord->run();
             
@@ -560,7 +561,8 @@ void loop() {
         
         
         if (digitalRead(START_CUTTING_BUTTON) == LOW) {
-            
+            Serial.println("go for cut and scratch");
+
             cuttingProcess->run();
             
             ejectingRecord->run();
@@ -572,7 +574,62 @@ void loop() {
             
         }
         
+        if (digitalRead(LOADING_BUTTON) == LOW) {
+            Serial.println("go for loading");
+            {
+                CCDeviceScheduler *loading = new CCDeviceScheduler("loading");
+                
+                schedulerDevice stockStepper = loading->addStepper_A4988(STEPPER_STOCK_NAME,
+                                                                         STEPPER_STOCK_STEP_PIN,
+                                                                         STEPPER_STOCK_DIR_PIN,
+                                                                         STEPPER_STOCK_ENABLE_PIN,
+                                                                         STEPPER_STOCK_HIGHEST_STEPPINGMODE,
+                                                                         STEPPER_STOCK_STEPMODECODES,
+                                                                         STEPPER_STOCK_MICROSTEPPINS,
+                                                                         STEPPER_STOCK_STEPS_PER_ROTATION);
+                loading->device[stockStepper]->defineDefaults(STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
+                
+                
+                schedulerControlButton stockBottomButton = loading->addControlButton(STOCKBOTTOM_BUTTON_NAME,
+                                                                                     STOCKBOTTOM_BUTTON_PIN,
+                                                                                     STOCKBOTTOM_BUTTON_ACTIV,
+                                                                                     STOCKBOTTOM_BUTTON_PULLUP);
+                
+                
+                schedulerControlButton recordAvailableButton = loading->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
+                                                                                                RECORDAVAILABLE_BUTTON_PIN,
+                                                                                                RECORDAVAILABLE_BUTTON_ACTIV,
+                                                                                                RECORDAVAILABLE_BUTTON_PULLUP);
+                
+                schedulerControlButton stockTopButton = loading->addControlButton(STOCKTOP_BUTTON_NAME,
+                                                                                         STOCKTOP_BUTTON_PIN,
+                                                                                         STOCKTOP_BUTTON_ACTIV,
+                                                                                         STOCKTOP_BUTTON_PULLUP);
+                
+                schedulerControlButton loadingButton = loading->addControlButton("loadingButton", LOADING_BUTTON, HIGH, true);
+                
+                
+                scheduledTask driveDown = loading->device[stockStepper]->addTask(-80000);
+                loading->device[stockStepper]->task[driveDown]->startByDate(100);
+                loading->device[stockStepper]->task[driveDown]->stopByButton(stockBottomButton);
+                
+                scheduledTask comeUpAgain = loading->device[stockStepper]->addTask(80000);
+                loading->device[stockStepper]->task[comeUpAgain]->startAfterCompletionOf(stockStepper, driveDown);
+                loading->device[stockStepper]->task[comeUpAgain]->stopByButton(stockTopButton);
+                
+                loading->controlButton[loadingButton]->evokeTaskJump(stockStepper, driveDown, STOP);
+                loading->controlButton[recordAvailableButton]->evokeTaskJump(stockStepper, comeUpAgain, STOP);
+                
+                loading->reviewTasks();
+                loading->run();
+                
+                delete loading;
+                loading = NULL;
+            }
+        }
+        
         if (digitalRead(MOVE_MANUALLY_SWITCH) == LOW) {
+            Serial.println("go for mamual moving");
             {
                 CCDeviceScheduler *manualDrive = new CCDeviceScheduler("manualDrive");
                 
@@ -630,6 +687,7 @@ void loop() {
         }
         
         if (digitalRead(MATCH_HEADIMPACT_SWITCH) == LOW) {
+            Serial.println("go for matching head impact");
             
             cuttingProcess->device[0]->setCountOfTasks(0);
             cuttingProcess->device[1]->setCountOfTasks(0);
@@ -644,6 +702,14 @@ void loop() {
             }
             initNeeded = true;
         }
+        
+        if (i > 10000) {
+            i = 0;
+            Serial.print(".");
+        } else {
+            i++;
+        }
+
     }
     
     
@@ -784,6 +850,7 @@ void setup() {
     
     pinMode(FETCH_RECORD_BUTTON, INPUT_PULLUP);
     pinMode(START_CUTTING_BUTTON, INPUT_PULLUP);
+    pinMode(LOADING_BUTTON, INPUT_PULLUP);
     pinMode(MATCH_HEADIMPACT_SWITCH, INPUT_PULLUP);
     pinMode(MOVE_MANUALLY_SWITCH, INPUT_PULLUP);
     pinMode(MOVE_CAT_FWD_BUTTON, INPUT_PULLUP);

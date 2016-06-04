@@ -6,6 +6,83 @@
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @page pinmap pin mapping on the Arduino Due
+///
+/// | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|
+/// |   A0  |               |                               |
+/// |   A1  |               |                               |
+/// |   A2  |               |                               |
+/// |   A3  |               |  move cat manually switch     |
+/// |   A4  |               |  move cat forward button      |
+/// |   A5  |               |  move cat back button         |
+/// |   A6  |               |  match head impact switch     |
+/// |   A7  |               |  loading button               |
+/// |   A8  |  <header 01>  |  head inclination sensor      |
+/// |   A9  |  <header 01>  |                               |
+/// |  A10  |  <header 02>  |                               |
+/// |  A11  |  <header 02>  |                               |
+/// |  A12  |  <header 02>  |                               |
+/// |  A13  |  <header 02>  |                               |
+/// |  A14  |               |                               |
+/// |  A15  |               |                               |
+///
+/// | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|
+/// |    0  |               |                               |
+/// |    1  |               |                               |
+/// |    2  |               |                               |
+/// |    3  |               |                               |
+/// |    4  |               |                               |
+/// |    5  |               |                               |
+/// |    6  |               |                               |
+/// |    7  |               |  TMC260 enable                |
+///
+/// | pin   | header        | function on shields           | function on board             |
+/// |-------|---------------|-------------------------------|-------------------------------|
+/// |    8  |               |  TMC260 step                  |                               |
+/// |    9  |               |  TMC260 dir                   |                               |
+/// |   10  |               |  TMC260 chipSelect            |                               |
+/// |   11  |  SPI          |  TMC260                       |                               |
+/// |   12  |  SPI          |  TMC260                       |  i_am_late pin                |
+/// |   13  |  SPI          |  TMC260                       |                               |
+///
+/// | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|
+/// |   14  |  <header 03>  |  liftServoLeft                |
+/// |   15  |  <header 03>  |  liftServoRight               |
+/// |   16  |  <header 03>  |  turnServo                    |
+/// |   17  |  <header 03>  |  pumpServo                    |
+/// |   18  |  <header 03>  |  headLeftServo                |
+/// |   19  |  <header 03>  |  headRightServo               |
+/// |   20  |  <header 03>  |                               |
+/// |   21  |  <header 03>  |                               |
+///
+/// | pin   | header        | function                      | | pin   | header        | function                      |
+/// |-------|---------------|-------------------------------|-|-------|---------------|-------------------------------|
+/// |   22  |   A4988 01    |  stockStepper dir             | |   23  |   A4988 02    |  conveyorStepper enable       |
+/// |   24  |   A4988 01    |  stockStepper step            | |   25  |   A4988 02    |  conveyorStepper microstep 00 |
+/// |   26  |   A4988 01    |  stockStepper enable          | |   27  |   A4988 02    |  conveyorStepper microstep 01 |
+/// |   28  |   A4988 01    |  stockStepper microstep 00    | |   29  |   A4988 02    |  conveyorStepper microstep 02 |
+/// |   30  |   A4988 01    |  stockStepper microstep 01    | |   31  |   A4988 02    |  conveyorStepper step         |
+/// |   32  |   A4988 01    |  stockStepper microstep 02    | |   33  |   A4988 02    |  conveyorStepper dir          |
+/// |   34  |   DRV8825     |  tableStepper dir             | |   35  |               |                               |
+/// |   36  |   DRV8825     |  tableStepper step            | |   37  |               |                               |
+/// |   38  |   DRV8825     |  tableStepper enable          | |   39  |               |                               |
+/// |   40  |   DRV8825     |  tableStepper microstep 00    | |   41  |               |                               |
+/// |   42  |   DRV8825     |  tableStepper microstep 01    | |   43  |  <header 10>  |                               |
+/// |   44  |   DRV8825     |  tableStepper microstep 02    | |   45  |  <header 10>  |  stockBottomButton            |
+/// |   46  |               |  songCancelButton             | |   47  |  <header 10>  |  stockTopButton               |
+/// |   48  |               |  songEndButton                | |   49  |  <header 10>  |  recordAvaliableButton        |
+/// |   50  |               |  startCuttingButton           | |   51  |  <header 10>  |  bridgeEndButton              |
+/// |   52  |               |  fetchRecordButton            | |   53  |  <header 10>  |  bridgeParkButton             |
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 //  ################## Hardware Cutting Parameters #########################################################
 
@@ -177,6 +254,8 @@
 #define MOVE_CAT_FWD_BUTTON                 A4
 #define MOVE_CAT_RWD_BUTTON                 A5
 #define MATCH_HEADIMPACT_SWITCH             A6
+#define LOADING_BUTTON                      A7
+
 
 #define HEAD_INCLINATION_SENSOR             A8
 
@@ -1101,82 +1180,6 @@
 /// \endcode
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-/// @page pinmap pin mapping on the Arduino Due
-///
-/// | pin   | header        | function                      |
-/// |-------|---------------|-------------------------------|
-/// |   A0  |               |                               |
-/// |   A1  |               |                               |
-/// |   A2  |               |                               |
-/// |   A3  |               |  move cat manually switch     |
-/// |   A4  |               |  move cat forward button      |
-/// |   A5  |               |  move cat back button         |
-/// |   A6  |               |  match head impact switch     |
-/// |   A7  |               |                               |
-/// |   A8  |  <header 01>  |  head inclination sensor      |
-/// |   A9  |  <header 01>  |                               |
-/// |  A10  |  <header 02>  |                               |
-/// |  A11  |  <header 02>  |                               |
-/// |  A12  |  <header 02>  |                               |
-/// |  A13  |  <header 02>  |                               |
-/// |  A14  |               |                               |
-/// |  A15  |               |                               |
-///
-/// | pin   | header        | function                      |
-/// |-------|---------------|-------------------------------|
-/// |    0  |               |                               |
-/// |    1  |               |                               |
-/// |    2  |               |                               |
-/// |    3  |               |                               |
-/// |    4  |               |                               |
-/// |    5  |               |                               |
-/// |    6  |               |                               |
-/// |    7  |               |  TMC260 enable                |
-///
-/// | pin   | header        | function on shields           | function on board             |
-/// |-------|---------------|-------------------------------|-------------------------------|
-/// |    8  |               |  TMC260 step                  |                               |
-/// |    9  |               |  TMC260 dir                   |                               |
-/// |   10  |               |  TMC260 chipSelect            |                               |
-/// |   11  |  SPI          |  TMC260                       |                               |
-/// |   12  |  SPI          |  TMC260                       |  i_am_late pin                |
-/// |   13  |  SPI          |  TMC260                       |                               |
-///
-/// | pin   | header        | function                      |
-/// |-------|---------------|-------------------------------|
-/// |   14  |  <header 03>  |  liftServoLeft                |
-/// |   15  |  <header 03>  |  liftServoRight               |
-/// |   16  |  <header 03>  |  turnServo                    |
-/// |   17  |  <header 03>  |  pumpServo                    |
-/// |   18  |  <header 03>  |  headLeftServo                |
-/// |   19  |  <header 03>  |  headRightServo               |
-/// |   20  |  <header 03>  |                               |
-/// |   21  |  <header 03>  |                               |
-///
-/// | pin   | header        | function                      | | pin   | header        | function                      |
-/// |-------|---------------|-------------------------------|-|-------|---------------|-------------------------------|
-/// |   22  |   A4988 01    |  stockStepper dir             | |   23  |   A4988 02    |  conveyorStepper enable       |
-/// |   24  |   A4988 01    |  stockStepper step            | |   25  |   A4988 02    |  conveyorStepper microstep 00 |
-/// |   26  |   A4988 01    |  stockStepper enable          | |   27  |   A4988 02    |  conveyorStepper microstep 01 |
-/// |   28  |   A4988 01    |  stockStepper microstep 00    | |   29  |   A4988 02    |  conveyorStepper microstep 02 |
-/// |   30  |   A4988 01    |  stockStepper microstep 01    | |   31  |   A4988 02    |  conveyorStepper step         |
-/// |   32  |   A4988 01    |  stockStepper microstep 02    | |   33  |   A4988 02    |  conveyorStepper dir          |
-/// |   34  |   DRV8825     |  tableStepper dir             | |   35  |               |                               |
-/// |   36  |   DRV8825     |  tableStepper step            | |   37  |               |                               |
-/// |   38  |   DRV8825     |  tableStepper enable          | |   39  |               |                               |
-/// |   40  |   DRV8825     |  tableStepper microstep 00    | |   41  |               |                               |
-/// |   42  |   DRV8825     |  tableStepper microstep 01    | |   43  |  <header 10>  |                               |
-/// |   44  |   DRV8825     |  tableStepper microstep 02    | |   45  |  <header 10>  |  stockBottomButton            |
-/// |   46  |               |  songCancelButton             | |   47  |  <header 10>  |  stockTopButton               |
-/// |   48  |               |  songEndButton                | |   49  |  <header 10>  |  recordAvaliableButton        |
-/// |   50  |               |  startCuttingButton           | |   51  |  <header 10>  |  bridgeEndButton              |
-/// |   52  |               |  fetchRecordButton            | |   53  |  <header 10>  |  bridgeParkButton             |
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

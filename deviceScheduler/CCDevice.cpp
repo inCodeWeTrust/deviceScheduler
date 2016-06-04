@@ -23,7 +23,7 @@ void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, 
 void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration) {
     this->defaultVelocity = defaultVelocity;
     this->defaultAcceleration = defaultAcceleration;
-    this->defaultDeceleration = -defaultAcceleration;
+    this->defaultDeceleration = defaultAcceleration;
 }
 
 
@@ -31,7 +31,7 @@ scheduledTask CCDevice::addTask(float target, float velocity, float acceleration
     return registerTask(target, velocity, acceleration, deceleration, false, false);
 }
 scheduledTask CCDevice::addTask(float target, float velocity, float acceleration) {
-    return registerTask(target, velocity, acceleration, -acceleration, false, false);
+    return registerTask(target, velocity, acceleration, acceleration, false, false);
 }
 scheduledTask CCDevice::addTask(float target, float velocity) {
     return registerTask(target, velocity, defaultAcceleration, defaultDeceleration, false, false);
@@ -45,7 +45,7 @@ scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity, 
     return registerTask(relativTarget, velocity, acceleration, deceleration, true, false);
 }
 scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity, float acceleration) {
-    return registerTask(relativTarget, velocity, acceleration, -acceleration, true, false);
+    return registerTask(relativTarget, velocity, acceleration, acceleration, true, false);
 }
 scheduledTask CCDevice::addTaskMoveRelativ(float relativTarget, float velocity) {
     return registerTask(relativTarget, velocity, defaultAcceleration, defaultDeceleration, true, false);
@@ -59,7 +59,7 @@ scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity, f
     return registerTask(target, velocity, acceleration, deceleration, false, true);
 }
 scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity, float acceleration) {
-    return registerTask(target, velocity, acceleration, -acceleration, false, true);
+    return registerTask(target, velocity, acceleration, acceleration, false, true);
 }
 scheduledTask CCDevice::addTaskWithPositionReset(float target, float velocity) {
     return registerTask(target, velocity, defaultAcceleration, defaultDeceleration, false, true);

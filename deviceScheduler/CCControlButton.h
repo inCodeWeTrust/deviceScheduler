@@ -10,7 +10,6 @@
 #define __deviceScheduler__CCControlButton__
 
 
-#include <Arduino.h>
 #include "deviceScheduler.h"
 
 

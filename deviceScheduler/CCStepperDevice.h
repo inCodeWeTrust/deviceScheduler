@@ -12,8 +12,6 @@
 
 #include "CCDevice.h"
 
-#include "deviceScheduler.h"
-
 
 //  verbosity:
 #define CCSTEPPERDEVICE_BASICOUTPUT         0x01
@@ -21,7 +19,7 @@
 #define CCSTEPPERDEVICE_CALCULATIONDEBUG    0x04
 #define CCSTEPPERDEVICE_MOVEMENTDEBUG       0x08
 
-#define CCSTEPPERDEVICE_VERBOSE             0x00
+#define CCSTEPPERDEVICE_VERBOSE             0x07
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

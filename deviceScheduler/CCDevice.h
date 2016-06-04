@@ -10,9 +10,6 @@
 #define __deviceScheduler__CCDevice__
 
 
-#include <Arduino.h>
-#include <avr/pgmspace.h>
-
 #include "deviceScheduler.h"
 
 #include "CCTask.h"

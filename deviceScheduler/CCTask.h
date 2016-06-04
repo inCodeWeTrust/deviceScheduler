@@ -10,7 +10,6 @@
 #define __deviceScheduler__CCTask__
 
 
-#include <Arduino.h>
 #include "deviceScheduler.h"
 
 
@@ -162,7 +161,7 @@ public:
     void switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
-    void stopByButton(schedulerControlButton stopButton, stoppingMode stopping);
+    void stopByButton(schedulerControlButton stopButton, stoppingMode stopping = STOP_NORMAL);
     void stopAfterCompletionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, stoppingMode stopping);
     void stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     

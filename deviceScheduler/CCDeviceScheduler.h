@@ -10,8 +10,6 @@
 #define __deviceScheduler__CCDeviceScheduler__
 
 
-#include <Arduino.h>
-#include <avr/pgmspace.h>
 
 #include "deviceScheduler.h"
 
@@ -32,7 +30,7 @@
 #define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
 
-#define DEVICESCHEDULER_VERBOSE                         0x00
+#define DEVICESCHEDULER_VERBOSE                         0x11
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
