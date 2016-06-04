@@ -663,6 +663,7 @@
 /* Begin PBXFileReference section */
 		40253D941CAF2136008A99E5 /* CCControlButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlButton.cpp; sourceTree = "<group>"; };
 		40253D951CAF2136008A99E5 /* CCControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlButton.h; sourceTree = "<group>"; };
+		4028D7621D02EE5600585607 /* deviceScheduler.ino */ = {isa = PBXFileReference; lastKnownFileType = text; path = deviceScheduler.ino; sourceTree = SOURCE_ROOT; };
 		40A4E81F1CB7D954000DE9DD /* classCCDevice.graphml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = classCCDevice.graphml; sourceTree = "<group>"; };
 		40A4E81F1D00C93D00409B20 /* deviceScheduler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deviceScheduler.h; sourceTree = "<group>"; };
 		40A4E8201CB7D954000DE9DD /* classCCDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = classCCDevice.png; sourceTree = "<group>"; };
@@ -1552,6 +1553,7 @@
 				A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */,
 				A45F72541B1C70E400B5B7E0 /* voiceOGraph.ino */,
 				40A4E81F1D00C93D00409B20 /* deviceScheduler.h */,
+				4028D7621D02EE5600585607 /* deviceScheduler.ino */,
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
 				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
 				A45F727C1B1C71EB00B5B7E0 /* CCDevice.h */,
