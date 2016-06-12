@@ -524,7 +524,16 @@ void CCDeviceScheduler::run() {
                             break;
                             
                         case BUTTON:                                                                            // device shall stop by button
-                            if (controlButton[device[s]->getStopButton()]->isActiv()) {                         // it's time to stop!
+                            controlButton[device[s]->getStopButton()]->readButtonState();
+                            if ((controlButton[device[s]->getStopButton()]->isActiv())) {                         // it's time to stop!
+                                
+                                Serial.print("stop device ");
+                                Serial.print(s);
+                                Serial.print(", button: ");
+                                Serial.print(device[s]->getStopButton());
+                                Serial.print(", at state: ");
+                                Serial.println(controlButton[device[s]->getStopButton()]->readButtonState());
+                                
                                 handleStopEvent(taskTime, s, device[s]->getStopEvent());
                             }
                             break;
@@ -598,7 +607,7 @@ void CCDeviceScheduler::run() {
                                 break;
                                 
                             case BUTTON:                                                                        //  start the next move by button
-                                if (controlButton[device[s]->getStartButton()]->isActiv()) {
+                                if ((controlButton[device[s]->getStartButton()]->readButtonState()) == true) {
                                     handleStartEvent(taskTime, s, device[s]->getStartEvent());
                                 }
                                 break;
@@ -635,9 +644,25 @@ void CCDeviceScheduler::run() {
         
         if (theButton < countOfControlButtons) {
             if (controlButton[theButton]->readButtonState()) {
+//                Serial.print(controlButton[theButton]->isActiv());
                 for (unsigned char theAction = 0; theAction < controlButton[theButton]->getCountOfActions(); theAction++) {
                     if (!controlButton[theButton]->getAction(theAction).actionDone) {
                         if (controlButton[theButton]->getAction(theAction).validTask == device[controlButton[theButton]->getAction(theAction).targetDevice]->getTaskPointer()) {
+                            
+                            if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
+                                Serial.print(taskTime);
+                                Serial.print(F(": "));
+                                Serial.print(controlButton[theButton]->getButtonName());
+                                Serial.print(F(" rise Action "));
+                                Serial.print(theAction);
+                                Serial.print(F(", pin 45: "));
+                                Serial.print(digitalRead(45));
+                                Serial.print(F(", pin 47: "));
+                                Serial.print(digitalRead(47));
+                                Serial.print(F(", pin 49: "));
+                                Serial.println(digitalRead(49));
+                            }
+
                             device[controlButton[theButton]->getAction(theAction).targetDevice]->setTaskPointer(controlButton[theButton]->getAction(theAction).followingTask - 1);
                             switch (controlButton[theButton]->getAction(theAction).targetAction) {
                                 case START:
@@ -680,7 +705,7 @@ void CCDeviceScheduler::run() {
     
    
     
-    Serial.print(F("\n"));
+    Serial.println();
     Serial.print(F("loops: "));
     Serial.print((signed long)loopCounter);
     Serial.print(F(", elapsed time: "));

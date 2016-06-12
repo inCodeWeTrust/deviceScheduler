@@ -171,7 +171,7 @@ public:
     
     /// Function lists all actions of the specified button.
     /// A list with all actions and bare informations are presented.
-    /// \param theButton the index of the button in question.
+    /// @param theButton the index of the button in question.
     void getActionsForControlButton(unsigned char theButton);
     
     /// Function deletes all actions of all registered buttons.

@@ -259,6 +259,14 @@ void loop() {
                                                                   SERVO_HEAD_RIGHT_MAX_POSITION,
                                                                   HEAD_RIGHT_PARK_POSITION);
         
+        schedulerDevice vacuumCleaner = cuttingProcess->addDcController(VACCUUMCLEANER_NAME,
+                                                                        VACCUUMCLEANER_PIN,
+                                                                        VACCUUMCLEANER_ACTIV);
+        
+        schedulerDevice startingSoonLamp = cuttingProcess->addDcController(CONTROLLER_LAMP_RED_NAME,
+                                                                           CONTROLLER_LAMP_RED_PIN,
+                                                                           CONTROLLER_LAMP_RED_ACTIV);
+        
         
         
         
@@ -324,13 +332,25 @@ void loop() {
         // ============= tasks of cuttingProcess: =====================================================================================
         // ============================================================================================================================
         
+        //  (0) blink lamp for start cutting soon:
+        scheduledTask blinkForCuttingSoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 0.3, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingSoon]->startByDate(100);
+        
         //  move to start groove:
         scheduledTask driveToCuttingStartPosition = cuttingProcess->device[catStepper]->addTask(CAT_CUTTING_START_POSITION);
         cuttingProcess->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
         
+        // switch on vacuum device
+        scheduledTask hooverTheFlake = cuttingProcess->device[vacuumCleaner]->addTask(1.0, 1.0, 0.0);
+        cuttingProcess->device[vacuumCleaner]->task[hooverTheFlake]->startByDate(500);
+        
         //  turn the table:
-        scheduledTask turnTheTable = cuttingProcess->device[tableStepper]->addTaskWithPositionReset(turnTableStepperDegrees + 7200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
+        scheduledTask turnTheTable = cuttingProcess->device[tableStepper]->addTaskWithPositionReset(turnTableStepperDegrees + 17200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
         cuttingProcess->device[tableStepper]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
+        
+        //  (1) blink lamp for start cutting very soon:
+        scheduledTask blinkForCuttingVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 1.0, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingSoon]->switchToNextTaskAfterCompletionOf(catStepper, driveToCuttingStartPosition);
         
         //  lower head close to record surface (left servo): start when reached start position of start groove
         scheduledTask lowerHeadLeftForCutting = cuttingProcess->device[headLeftServo]->addTask(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
@@ -339,19 +359,45 @@ void loop() {
         //  approximate head to record surface (right servo): start when left servo reached cutting position
         scheduledTask approximateHeadRightForCutting = cuttingProcess->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
         cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
+//        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
+        
+        //  (2) blink lamp for start cutting very very soon:
+        scheduledTask blinkForCuttingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 3.0, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingVerySoon]->switchToNextTaskAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
         
         //  make start groove:
         scheduledTask makeStartGroove = cuttingProcess->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
         cuttingProcess->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
         cuttingProcess->device[catStepper]->task[makeStartGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
         
+        //  (3) keep blinking lamp on for whole cutting process:
+        scheduledTask keepLampOn = cuttingProcess->device[startingSoonLamp]->addTask(1.0, 1.0, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingVeryVerySoon]->switchToNextTaskAfterCompletionOf(catStepper, makeStartGroove);
+        
         //  make song groove:
         scheduledTask makeMainGroove = cuttingProcess->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_song, CAT_ACCEL_SLOW);
         cuttingProcess->device[catStepper]->task[makeMainGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition);
         
+        //  (4) blink lamp for finishing soon:
+        scheduledTask blinkForFinishingSoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 0.3, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[keepLampOn]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 10000);
+        
+        //  (5) blink lamp for finishing very soon:
+        scheduledTask blinkForFinishingVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 1.0, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingSoon]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 5000);
+        
+        //  (5) blink lamp for finishing very soon:
+        scheduledTask blinkForFinishingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 3.0, 0.0);
+        cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingVerySoon]->switchToNextTaskAfterCompletionOf(catStepper, makeMainGroove);
+        
         //  make end groove:
         scheduledTask makeEndGroove = cuttingProcess->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_endGroove, CAT_ACCEL_NORMAL);
+        
+        //  switch off blinking lamp:
+        cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingVeryVerySoon]->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
+        
+        //  switch off vacuum cleaner
+        cuttingProcess->device[vacuumCleaner]->task[hooverTheFlake]->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
         
         //  lift head after cutting above the record surface:
         scheduledTask liftHeadRightAfterCutting = cuttingProcess->device[headRightServo]->addTask(HEAD_RIGHT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW);
@@ -555,27 +601,33 @@ void loop() {
         if (digitalRead(FETCH_RECORD_BUTTON) == LOW) {
             Serial.println("go for a brand new record");
             
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+
             fetchingRecord->run();
-            
+
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
         }
         
         
         if (digitalRead(START_CUTTING_BUTTON) == LOW) {
             Serial.println("go for cut and scratch");
 
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+
             cuttingProcess->run();
             
             ejectingRecord->run();
 
-            
-            //            cuttingProcess->device[catStepper]->setCurrentPosition(0.0);
-            //            cuttingProcess->device[tableStepper]->setCurrentPosition(0.0);
-            //
-            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
         }
         
         if (digitalRead(LOADING_BUTTON) == LOW) {
             Serial.println("go for loading");
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+
             {
                 CCDeviceScheduler *loading = new CCDeviceScheduler("loading");
                 
@@ -626,10 +678,16 @@ void loop() {
                 delete loading;
                 loading = NULL;
             }
+
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
         }
         
         if (digitalRead(MOVE_MANUALLY_SWITCH) == LOW) {
             Serial.println("go for mamual moving");
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+
             {
                 CCDeviceScheduler *manualDrive = new CCDeviceScheduler("manualDrive");
                 
@@ -684,11 +742,16 @@ void loop() {
                 manualDrive = NULL;
                 
             }
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
         }
         
         if (digitalRead(MATCH_HEADIMPACT_SWITCH) == LOW) {
             Serial.println("go for matching head impact");
             
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+
             cuttingProcess->device[0]->setCountOfTasks(0);
             cuttingProcess->device[1]->setCountOfTasks(0);
             cuttingProcess->device[3]->task[1]->setStartDelay(3000);
@@ -700,15 +763,23 @@ void loop() {
                 delay(3000);
                 
             }
+            
             initNeeded = true;
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
         }
         
-        if (i > 10000) {
-            i = 0;
-            Serial.print(".");
-        } else {
-            i++;
+        if (i > 400000) {
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            if (i > 410000) {
+                digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+                i = 0;
+                Serial.print(".");
+            }
         }
+        i++;
+        
 
     }
     
@@ -857,6 +928,9 @@ void setup() {
     pinMode(MOVE_CAT_RWD_BUTTON, INPUT_PULLUP);
     
     pinMode(I_AM_LATE_LED, OUTPUT);
+    
+    pinMode(CONTROLLER_LAMP_YELLOW_PIN, OUTPUT);
+    
     
     Serial.begin(115200);
     Serial.println(), Serial.println(), Serial.println();

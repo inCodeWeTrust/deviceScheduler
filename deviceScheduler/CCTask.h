@@ -25,123 +25,123 @@ class CCTask {
 public:
 
     /// Getter method for getting the target of the device
-    /// \sa target;
+    /// @sa target;
     float getTarget();
     
     /// Setter method for setting the target of the device
-    /// \sa target;
+    /// @sa target;
     void setTarget(float target);
     
     /// Getter method for getting the velocity of the device
-    /// \sa velocity;
+    /// @sa velocity;
     float getVelocity();
     
     /// Setter method for setting the velocity of the device
-    /// \sa velocity;
+    /// @sa velocity;
     void setVelocity(float velocity);
     
     /// Getter method for getting the acceleration of the device
-    /// \sa acceleration;
+    /// @sa acceleration;
     float getAcceleration();
     
     /// Setter method for setting the acceleration of the device
-    /// \sa acceleration;
+    /// @sa acceleration;
     void setAcceleration(float acceleration);
     
     /// Getter method for getting the deceleration of the device
-    /// \sa deceleration;
+    /// @sa deceleration;
     float getDeceleration();
     
     /// Setter method for setting the deceleration of the device
-    /// \sa deceleration;
+    /// @sa deceleration;
     void setDeceleration(float deceleration);
     
     /// Getter method for getting the moveRelativ bit of the device
-    /// \sa moveRelativ;
+    /// @sa moveRelativ;
     boolean getMoveRelativ();
 
     /// Getter method for getting the withPositionReset bit of the device
-    /// \sa withPositionReset;
+    /// @sa withPositionReset;
     boolean getWithPositionReset();
     
     /// Getter method for getting the startDelay of the device
-    /// \sa startDelay;
+    /// @sa startDelay;
     unsigned long getStartDelay();
     
     /// Getter method for getting the startEvent of the device
-    /// \sa startEvent, event;
+    /// @sa startEvent, event;
     event getStartEvent();
     
     /// Getter method for getting the stopEvent of the device
-    /// \sa stopEvent, event;
+    /// @sa stopEvent, event;
     event getStopEvent();
     
     /// Getter method for getting the startTime of the device
-    /// \sa startTime;
+    /// @sa startTime;
     unsigned long getStartTime();
     
     /// Getter method for getting the timeOut of the device
-    /// \sa timeOut;
+    /// @sa timeOut;
     unsigned long getTimeout();
     
     /// Getter method for getting the startButton of the device
-    /// \sa startButton;
+    /// @sa startButton;
     schedulerControlButton getStartButton();
     
     /// Getter method for getting the stopButton of the device
-    /// \sa stopButton;
+    /// @sa stopButton;
     schedulerControlButton getStopButton();
   
     /// Getter method for getting the startTriggerDevice of the device
-    /// \sa startTriggerDevice;
+    /// @sa startTriggerDevice;
     schedulerDevice getStartTriggerDevice();
     
     /// Getter method for getting the stopTriggerDevice of the device
-    /// \sa stopTriggerDevice;
+    /// @sa stopTriggerDevice;
     schedulerDevice getStopTriggerDevice();
     
     /// Getter method for getting the startTriggerTask of the device
-    /// \sa startTriggerTask;
+    /// @sa startTriggerTask;
     scheduledTask getStartTriggerTask();
     
     /// Getter method for getting the stopTriggerTask of the device
-    /// \sa stopTriggerTask;
+    /// @sa stopTriggerTask;
     scheduledTask getStopTriggerTask();
     
     /// Getter method for getting the startTriggerPosition of the device
-    /// \sa startTriggerPosition;
+    /// @sa startTriggerPosition;
     signed long getStartTriggerPosition();
     
     /// Getter method for getting the stopTriggerPosition of the device
-    /// \sa stopTriggerPosition;
+    /// @sa stopTriggerPosition;
     signed long getStopTriggerPosition();
     
     /// Getter method for getting the stopping of the device
-    /// \sa stopping, stoppingMode;
+    /// @sa stopping, stoppingMode;
     stoppingMode getStopping();
     
     /// Getter method for getting the switchTaskPromptly bit of the device
-    /// \sa switchTaskPromptly;
+    /// @sa switchTaskPromptly;
     boolean getSwitchTaskPromptly();
     
     /// Getter method for getting the sensor pin of the device
-    /// \sa sensor;
+    /// @sa sensor;
     unsigned char getSensor();
 
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
-    /// \sa initiatePerformanceValue;
+    /// @sa initiatePerformanceValue;
     signed int getInitiatePerformanceValue();
     
     /// Getter method for getting the target sensor value of the device
-    /// \sa targetValue;
+    /// @sa targetValue;
     signed int getTargetValue();
     
     /// Getter method for getting the stopping performance of the device
-    /// \sa stopPerformance;
+    /// @sa stopPerformance;
     float getStopPerformance();
     
     /// Getter method for getting the approximation value of the device
-    /// \sa approximation;
+    /// @sa approximation;
     approximationMode getApproximation();
     
     

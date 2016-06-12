@@ -57,7 +57,7 @@
 /// |   18  |  <header 03>  |  headLeftServo                |
 /// |   19  |  <header 03>  |  headRightServo               |
 /// |   20  |  <header 03>  |                               |
-/// |   21  |  <header 03>  |                               |
+/// |   21  |  <header 03>  |  vacuumclaner                 |
 ///
 /// | pin   | header        | function                      | | pin   | header        | function                      |
 /// |-------|---------------|-------------------------------|-|-------|---------------|-------------------------------|
@@ -67,13 +67,13 @@
 /// |   28  |   A4988 01    |  stockStepper microstep 00    | |   29  |   A4988 02    |  conveyorStepper microstep 02 |
 /// |   30  |   A4988 01    |  stockStepper microstep 01    | |   31  |   A4988 02    |  conveyorStepper step         |
 /// |   32  |   A4988 01    |  stockStepper microstep 02    | |   33  |   A4988 02    |  conveyorStepper dir          |
-/// |   34  |   DRV8825     |  tableStepper dir             | |   35  |               |                               |
-/// |   36  |   DRV8825     |  tableStepper step            | |   37  |               |                               |
+/// |   34  |   DRV8825     |  tableStepper dir             | |   35  |               |  Controller Lamp yellow       |
+/// |   36  |   DRV8825     |  tableStepper step            | |   37  |               |  Controller Lamp red          |
 /// |   38  |   DRV8825     |  tableStepper enable          | |   39  |               |                               |
 /// |   40  |   DRV8825     |  tableStepper microstep 00    | |   41  |               |                               |
 /// |   42  |   DRV8825     |  tableStepper microstep 01    | |   43  |  <header 10>  |                               |
 /// |   44  |   DRV8825     |  tableStepper microstep 02    | |   45  |  <header 10>  |  stockBottomButton            |
-/// |   46  |               |  songCancelButton             | |   47  |  <header 10>  |  stockTopButton               |
+/// |   46  |               |                               | |   47  |  <header 10>  |  stockTopButton               |
 /// |   48  |               |  songEndButton                | |   49  |  <header 10>  |  recordAvaliableButton        |
 /// |   50  |               |  startCuttingButton           | |   51  |  <header 10>  |  bridgeEndButton              |
 /// |   52  |               |  fetchRecordButton            | |   53  |  <header 10>  |  bridgeParkButton             |
@@ -204,6 +204,28 @@
 
 
 
+#define VACCUUMCLEANER_NAME                     "vacuumCleaner"
+
+#define VACCUUMCLEANER_PIN                      21
+#define VACCUUMCLEANER_ACTIV                    HIGH
+
+
+
+#define CONTROLLER_LAMP_YELLOW_NAME             "yellowLamp"
+
+#define CONTROLLER_LAMP_YELLOW_PIN              35
+//#define CONTROLLER_LAMP_YELLOW_ACTIV            LOW
+#define CONTROLLER_LAMP_YELLOW_ON               HIGH
+#define CONTROLLER_LAMP_YELLOW_OFF              LOW
+
+
+
+#define CONTROLLER_LAMP_RED_NAME                "redLamp"
+
+#define CONTROLLER_LAMP_RED_PIN                 37
+//#define CONTROLLER_LAMP_RED_ACTIV               LOW
+#define CONTROLLER_LAMP_RED_ACTIV               HIGH
+
 
 
 //  ################## BUTTONS AND SENSORS #########################################################################
@@ -232,17 +254,20 @@
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
+//#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
+#define RECORDAVAILABLE_BUTTON_ACTIV        LOW
 #define RECORDAVAILABLE_BUTTON_PULLUP       true
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
 #define STOCKBOTTOM_BUTTON_PIN              47
-#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
+//#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
+#define STOCKBOTTOM_BUTTON_ACTIV            LOW
 #define STOCKBOTTOM_BUTTON_PULLUP           true
 
 #define STOCKTOP_BUTTON_NAME                "stockTopButton"
 #define STOCKTOP_BUTTON_PIN                 45
-#define STOCKTOP_BUTTON_ACTIV               HIGH
+//#define STOCKTOP_BUTTON_ACTIV               HIGH
+#define STOCKTOP_BUTTON_ACTIV               LOW
 #define STOCKTOP_BUTTON_PULLUP              true
 
 
@@ -260,7 +285,6 @@
 #define HEAD_INCLINATION_SENSOR             A8
 
 
-#define I_AM_LATE_LED                       12
 
 
 
@@ -292,21 +316,22 @@
 #define LIFT_PARK_POSITION              1000
 
 
-#define TURN_SPEED_FAST                 320
-#define TURN_SPEED_SLOW                 480
-#define TURN_ACCEL_FAST                 280
-#define TURN_ACCEL_SLOW                 150
 
-#define TURN_TABLE_POSITION             2022
-#define TURN_CONVEYOR_POSITION          1520
-#define TURN_STOCK_POSITION             1010
+#define TURN_SPEED_FAST                 320
+#define TURN_SPEED_SLOW                 680
+#define TURN_ACCEL_FAST                 280
+#define TURN_ACCEL_SLOW                 180
+
+#define TURN_TABLE_POSITION             1960
+#define TURN_CONVEYOR_POSITION          1480
+#define TURN_STOCK_POSITION             1054
 #define TURN_TO_CONVEYER_TRIGGER_LIFT   TURN_CONVEYOR_POSITION + 60
 #define TURN_TO_TABLE_TRIGGER_LIFT      TURN_TABLE_POSITION - 60
 #define TURN_TO_STOCK_TRIGGER_LIFT      TURN_STOCK_POSITION + 60
 
 
 #define HEAD_LEFT_PARK_POSITION         2100
-#define HEAD_LEFT_CUT_POSITION          1460
+#define HEAD_LEFT_CUT_POSITION          1260
 #define HEAD_LEFT_MID_POSITION          1520
 #define HEAD_LEFT_TOP_POSITION          2100
 
@@ -339,8 +364,8 @@
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      131600
 
-#define CONVEYOR_DISTANCE               2000
-#define CONVEYOR_SPEED                  800
+#define CONVEYOR_DISTANCE               9600
+#define CONVEYOR_SPEED                  600
 #define CONVEYOR_ACCEL                  400
 
 
@@ -356,9 +381,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @mainpage	deviceScheduler
 ///
-/// Diese Software wurde anlässlich des Baus eines Schallplattenschneide-Automaten entwickelt. Es ist ein Kunstprojekt. Dieser Apparat, der Voice-o-graph, ist eine Art Passbild-Automat, nur dass darin nicht das Bild, sondern der Ton analog aufgezeichnet wird. In einer kleinen Kabine hat man die Möglichkeit, 3 min Ton aufzunehmen, der simultan in einen 7inch-Schallplattenrohling geschnitten wird. Nachdem man also einen Gruß an einen Menschen in der Ferne, ein Liebesgedicht, seinen Lieblings-Popsong oder vielleicht ein großes Geheimnis ins Mikrofon gesprochen oder gesungen hat, erhält man es als Vinyl-Schallplatte. \n
-/// Das gesamte Gerät wird durch den 32-bit ARM core microcontroller SAM3X8E ARM Cortex-M3 CPU (Arduino Due) gesteuert. Erstellt habe ich es auf einem Apple-Computer mit der IDE XCode und dem embedXcode+ plugin. Der Upload wird mit der Arduino-Toolchain bewerkstelligt.\n
-/// Das Steuerungsprogramm ist ein Scheduler, der Geräte wie z.B. Stepper-Motoren, Modellbau-Servos, Gleichstrom-Motoren, Elektromagnete etc. starten, stoppen und führen kann. Diese Software ist in der Programmiersprache C++ geschrieben und nutzt einerseits deren Betriebssystemnähe und Schnelligkeit, andererseits deren Möglichkeit, objektorientiert zu programmieren: sie nutzt das Konzept der Klassen und der Polymorphie. Die Ansteuerung der Geräte wie z.B. die Erzeugung der Steuerimpulse für die Modellbau-Servos oder die Taktung der Schrittmotoren erfolgt ausschließlich in der Klasse der Geräte, während die Koordinierung des Arbeitsablaufes allein die Aufgabe der Schedulerklasse ist. Diese Trennung von Steuerung und Koordinierung bringt erhebliche Vorteile mit sich: der Code wird wesentlich reduzierter, übersichtlicher und strukturierter, wodurch Programmierfehler vermieden werden können bzw. schneller auffindbar werden. Der Code ist leicht lesbar und verständlich und an verschiedenste Anforderungen einfach anpassbar. Durch die Anwendung von aussagekräftigen Variablennamen wird die klare Struktur zusätzlich optimiert. Es können prinzipiell beliebig viele Geräte gleichzeitig gesteuert und überwacht und prinzipiell beliebig viele Aufgaben abgearbeitet und untereinander koordiniert werden. Programmiert ist sie wie eine Library, wodurch sie sehr leicht für andere Anlagen und Szenarios adaptiert werden kann. \n \n
+/// Diese Software wurde anlässlich des Baus eines Schallplattenschneide-Automaten entwickelt. Es ist ein Kunstprojekt. Dieser Apparat, der Voice-o-graph, ist eine Art Passbild-Automat, nur dass darin nicht das Bild, sondern der Ton analog aufgezeichnet wird. In einer kleinen Kabine hat man die Möglichkeit, 3 min Ton aufzunehmen, der simultan in einen 7inch-Schallplattenrohling geschnitten wird. Nachdem man also einen Gruß an einen Menschen in der Ferne, ein Liebesgedicht, seinen Lieblings-Popsong oder vielleicht ein großes Geheimnis ins Mikrofon gesprochen oder gesungen hat, erhält man es als Vinyl-Schallplatte. @n
+/// Das gesamte Gerät wird durch den 32-bit ARM core microcontroller SAM3X8E ARM Cortex-M3 CPU (Arduino Due) gesteuert. Erstellt habe ich es auf einem Apple-Computer mit der IDE XCode und dem embedXcode+ plugin. Der Upload wird mit der Arduino-Toolchain bewerkstelligt.@n
+/// Das Steuerungsprogramm ist ein Scheduler, der Geräte wie z.B. Stepper-Motoren, Modellbau-Servos, Gleichstrom-Motoren, Elektromagnete etc. starten, stoppen und führen kann. Diese Software ist in der Programmiersprache C++ geschrieben und nutzt einerseits deren Betriebssystemnähe und Schnelligkeit, andererseits deren Möglichkeit, objektorientiert zu programmieren: sie nutzt das Konzept der Klassen und der Polymorphie. Die Ansteuerung der Geräte wie z.B. die Erzeugung der Steuerimpulse für die Modellbau-Servos oder die Taktung der Schrittmotoren erfolgt ausschließlich in der Klasse der Geräte, während die Koordinierung des Arbeitsablaufes allein die Aufgabe der Schedulerklasse ist. Diese Trennung von Steuerung und Koordinierung bringt erhebliche Vorteile mit sich: der Code wird wesentlich reduzierter, übersichtlicher und strukturierter, wodurch Programmierfehler vermieden werden können bzw. schneller auffindbar werden. Der Code ist leicht lesbar und verständlich und an verschiedenste Anforderungen einfach anpassbar. Durch die Anwendung von aussagekräftigen Variablennamen wird die klare Struktur zusätzlich optimiert. Es können prinzipiell beliebig viele Geräte gleichzeitig gesteuert und überwacht und prinzipiell beliebig viele Aufgaben abgearbeitet und untereinander koordiniert werden. Programmiert ist sie wie eine Library, wodurch sie sehr leicht für andere Anlagen und Szenarios adaptiert werden kann. @n @n
 ///
 /// @author		Christoph Freidhöfer
 /// @author		(http://kunst-und-raederwerk.net)
@@ -371,7 +396,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @page sketchpage voiceOGraph.ino
 /// voiceOGraph.ino is the main sketch to control the cutting machine
-/// \code {.cpp}
+/// @code {.cpp}
 
 /// #include <Arduino.h>
 /// #include <Servo.h>
@@ -1177,7 +1202,7 @@
 ///
 ///
 ///
-/// \endcode
+/// @endcode
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 

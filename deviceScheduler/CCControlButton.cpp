@@ -34,6 +34,8 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
         Serial.print(button_pin);
         Serial.print(F(", buttonActiv: "));
         Serial.print(buttonActiv);
+        Serial.print(F(", pullup: "));
+        Serial.print(pullup);
         Serial.print(F(", at $"));
         Serial.println((long)this, HEX);
     }
@@ -85,6 +87,16 @@ void CCControlButton::deleteActions() {
 boolean CCControlButton::readButtonState() {
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
+    
+//    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+//        Serial.print(F("[CCControlButton]: "));
+//        Serial.print(buttonName);
+//        Serial.print(F(", state: "));
+//        Serial.print(state);
+//        Serial.print(F(", activ: "));
+//        Serial.println(activ);
+//    }
+    
 
     return activ;
 }

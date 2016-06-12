@@ -23,7 +23,7 @@
 #define CCSTEPPERDEVICE_TMC260_SPIDEBUG            0x10
 #define CCSTEPPERDEVICE_TMC260_SETUPDEBUG          0x20
 
-#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x37
+#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x00
 
 #define READOUT_MICROSTEP_POSITION    0
 #define READOUT_STALLGUARD_LEVEL      1
@@ -59,19 +59,19 @@ public:
     
     
     /// Sets and configures the TMC 260 driver.
-    /// \param stepInterpolation Enable step interpolation. 0: Disable STEP pulse interpolation, 1: Enable STEP pulse multiplication by 16.
-    /// \param doubleEdgeStepPulses Enable double edge step pulses. 0: Rising step pulse edge is active, falling edge is inactive, 1: Both rising and falling step pulse edges are active.
-    /// \param microSteppingMode Microstep resolution for STEP/DIR mode. Microsteps per 90°: %0000: 256, %0001: 128, %0010: 64, ... %0111: 2 (halfstep), %1000: 1 (fullstep)
+    /// @param stepInterpolation Enable step interpolation. 0: Disable STEP pulse interpolation, 1: Enable STEP pulse multiplication by 16.
+    /// @param doubleEdgeStepPulses Enable double edge step pulses. 0: Rising step pulse edge is active, falling edge is inactive, 1: Both rising and falling step pulse edges are active.
+    /// @param microSteppingMode Microstep resolution for STEP/DIR mode. Microsteps per 90°: %0000: 256, %0001: 128, %0010: 64, ... %0111: 2 (halfstep), %1000: 1 (fullstep)
     void setDriverControlRegister(boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode);
 
     
     /// Sets and configures with spread cycle chopper.
-    /// \param blankingTime Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0: (min setting) … 3: (max setting)
-    /// \param randomTOffTime Use random off time for noise reduction (0 for off, -1 for on).
-    /// \param hysteresis_start Hysteresis start setting. Please remark, that this value is an offset to the hysteresis end value. 1 … 8
-    /// \param hysteresis_end Hysteresis end setting. Sets the hysteresis end value after a number of decrements. Decrement interval time is controlled by hysteresis_decrement. The sum hysteresis_start + hysteresis_end must be <16. At a current setting CS of max. 30 (amplitude reduced to 240), the sum is not limited.
-    /// \param hysteresis_decrement Hysteresis decrement setting. This setting determines the slope of the hysteresis during on time and during fast decay time. 0 (fast decrement) … 3 (slow decrement).
-    /// \param offTime The off time setting controls the minimum chopper frequency. For most applications an off time within the range of 5μs to 20μs will fit. Setting this parameter to zero completely disables all driver transistors and the motor can free-wheel. 0: chopper off, 1:15: off time setting
+    /// @param blankingTime Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0: (min setting) … 3: (max setting)
+    /// @param randomTOffTime Use random off time for noise reduction (0 for off, -1 for on).
+    /// @param hysteresis_start Hysteresis start setting. Please remark, that this value is an offset to the hysteresis end value. 1 … 8
+    /// @param hysteresis_end Hysteresis end setting. Sets the hysteresis end value after a number of decrements. Decrement interval time is controlled by hysteresis_decrement. The sum hysteresis_start + hysteresis_end must be <16. At a current setting CS of max. 30 (amplitude reduced to 240), the sum is not limited.
+    /// @param hysteresis_decrement Hysteresis decrement setting. This setting determines the slope of the hysteresis during on time and during fast decay time. 0 (fast decrement) … 3 (slow decrement).
+    /// @param offTime The off time setting controls the minimum chopper frequency. For most applications an off time within the range of 5μs to 20μs will fit. Setting this parameter to zero completely disables all driver transistors and the motor can free-wheel. 0: chopper off, 1:15: off time setting
     ///
     /// The spreadCycle chopper scheme (pat.fil.) is a precise and simple to use chopper principle, which automatically determines
     /// the optimum fast decay portion for the motor. Anyhow, a number of settings can be made in order to optimally fit the driver
@@ -83,32 +83,32 @@ public:
     /// The duration of the on- and fast decay phase needs to cover at least the blank time, because the current comparator is
     /// disabled during this time.
     ///
-    /// \sa setChopperControlRegister_fastDecay()
+    /// @sa setChopperControlRegister_fastDecay()
     ///
     void setChopperControlRegister_spreadCycle(byte blankingTimeValue, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime);
     
     /// Sets and configure the classical Constant Off Timer Chopper
-    /// \param blankingTimeValue Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0 (min setting) … (3) amx setting
-    /// \param randomTOffTime Use random off time for noise reduction (0 for off, -1 for on).
-    /// \param onlyTimerTerminatesDecayPhase Selects usage of the current comparator for termination of the fast decay cycle. If current comparator is enabled, it terminates the fast decay cycle in case the current reaches a higher negative value than the actual positive value.
-    /// \param sinewaveOffset Controls the sine wave offset. A positive offset corrects for zero crossing error. -3…-1: negative offset, 0: no offset,1…12: positive offset
-    /// \param fastDecayTime Fast decay time setting. Controls the portion of fast decay for each chopper cycle. 0: slow decay only, 1…15: duration of fast decay phase
-    /// \param offTime The off time setting controls the minimum chopper frequency. For most applications an off time within the range of 5μs to 20μs will fit. Setting this parameter to zero completely disables all driver transistors and the motor can free-wheel. 0: chopper off, 1:15: off time setting
+    /// @param blankingTimeValue Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0 (min setting) … (3) amx setting
+    /// @param randomTOffTime Use random off time for noise reduction (0 for off, -1 for on).
+    /// @param onlyTimerTerminatesDecayPhase Selects usage of the current comparator for termination of the fast decay cycle. If current comparator is enabled, it terminates the fast decay cycle in case the current reaches a higher negative value than the actual positive value.
+    /// @param sinewaveOffset Controls the sine wave offset. A positive offset corrects for zero crossing error. -3…-1: negative offset, 0: no offset,1…12: positive offset
+    /// @param fastDecayTime Fast decay time setting. Controls the portion of fast decay for each chopper cycle. 0: slow decay only, 1…15: duration of fast decay phase
+    /// @param offTime The off time setting controls the minimum chopper frequency. For most applications an off time within the range of 5μs to 20μs will fit. Setting this parameter to zero completely disables all driver transistors and the motor can free-wheel. 0: chopper off, 1:15: off time setting
     ///
     /// The classic constant off time chopper uses a fixed portion of fast decay following each on phase.
     /// While the duration of the on time is determined by the chopper comparator, the fast decay time needs
     /// to be set by the user in a way, that the current decay is enough for the driver to be able to follow
     /// the falling slope of the sine wave, and on the other hand it should not be too long, in order to minimize
     /// motor current ripple and power dissipation.
-    /// \sa setChopperControlRegister_spreadCycle()
+    /// @sa setChopperControlRegister_spreadCycle()
     void setChopperControlRegister_fastDecay(byte blankingTimeValue, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime);
     
     /// This method configures the CoolStep smart energy operation. You must have a proper StallGuard configuration for the motor situation (current, voltage, speed) in rder to use this feature.
-    /// \param minCoolStepCurrentValue Sets the lower motor current limit for coolStepTM operation by scaling the CS value. It can be halfed or quartered.
-    /// \param currentDecrementSpeedValue Sets the current decrement steps. If the StallGuard value is above the threshold the current gets decremented by this step size. 0...32
-    /// \param upperCoolStepThreshold Sets the distance between the lower and the upper threshold for stallGuard2TM reading. Above the upper threshold (which is lower_SG_threshold+SG_hysteresis+1) the motor current becomes decreased. Allowed values are 0...480
-    /// \param currentIncrementStepsValue Sets the current increment step. The current becomes incremented for each measured stallGuard2TM value below the lower threshold. 0...8
-    /// \param lowerCoolStepThreshold Sets the lower threshold for stallGuard2TM reading. Below this value, the motor current becomes increased. Allowed values are 0...480
+    /// @param minCoolStepCurrentValue Sets the lower motor current limit for coolStepTM operation by scaling the CS value. It can be halfed or quartered.
+    /// @param currentDecrementSpeedValue Sets the current decrement steps. If the StallGuard value is above the threshold the current gets decremented by this step size. 0...32
+    /// @param upperCoolStepThreshold Sets the distance between the lower and the upper threshold for stallGuard2TM reading. Above the upper threshold (which is lower_SG_threshold+SG_hysteresis+1) the motor current becomes decreased. Allowed values are 0...480
+    /// @param currentIncrementStepsValue Sets the current increment step. The current becomes incremented for each measured stallGuard2TM value below the lower threshold. 0...8
+    /// @param lowerCoolStepThreshold Sets the lower threshold for stallGuard2TM reading. Below this value, the motor current becomes increased. Allowed values are 0...480
     /// The CoolStep smart energy operation automatically adjust the current sent into the motor according to the current load,
     /// read out by the StallGuard in order to provide the optimum torque with the minimal current consumption.
     /// You configure the CoolStep current regulator by defining upper and lower bounds of StallGuard readouts. If the readout is above the
@@ -120,8 +120,8 @@ public:
     void setCoolStepRegister(boolean minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold);
     
     /// set the StallGuard threshold in order to get sensible StallGuard readings.
-    /// \param stall_guard_threshold -64 … 63 the StallGuard threshold
-    /// \param stall_guard_filter_enabled 0 if the filter is disabled, -1 if it is enabled
+    /// @param stall_guard_threshold -64 … 63 the StallGuard threshold
+    /// @param stall_guard_filter_enabled 0 if the filter is disabled, -1 if it is enabled
     ///
     /// The StallGuard threshold is used to optimize the StallGuard reading to sensible values. It should be at 0 at
     /// the maximum allowable load on the otor (but not before). = is a good starting point (and the default)
@@ -141,8 +141,8 @@ public:
     /// set the maximum motor current in mA
     /// Keep in mind this is the maximum peak Current. The RMS current will be 1/sqrt(2) smaller. The actual current can also be smaller
     /// by employing CoolStep.
-    /// \param current the maximum motor current in mA
-    /// \sa getCurrent(), getCurrentCurrent()
+    /// @param current the maximum motor current in mA
+    /// @sa getCurrent(), getCurrentCurrent()
 	void setCurrent(unsigned int current);
     
     

@@ -343,6 +343,8 @@ void CCStepperDevice::startTask() {                                 // start thi
         stopTask();
     }
     else {
+        digitalWrite(I_AM_LATE_LED, LOW);
+        
         digitalWrite(dir_pin, directionDown);                       // setup DIR-pin of stepper driver
         
         // lets start in highest stepping mode
@@ -394,6 +396,8 @@ void CCStepperDevice::stopTask() {
 void CCStepperDevice::finishTask() {
     state = SLEEPING;
     
+    digitalWrite(I_AM_LATE_LED, LOW);
+
     if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
@@ -414,14 +418,14 @@ void CCStepperDevice::operateTask() {
         digitalWrite(step_pin, LOW);
         digitalWrite(step_pin, HIGH);
         
-        //        if (timeDif < -100) {
-        //            if (currentMicroStep < microStepsToGo) {
-        //                digitalWrite(I_AM_LATE_LED, HIGH);
-        //            }
-        //        }
-        //        else {
-        //            digitalWrite(I_AM_LATE_LED, LOW);
-        //        }
+        if (timeDif < -100) {
+            if (currentMicroStep < microStepsToGo) {
+                digitalWrite(I_AM_LATE_LED, HIGH);
+            }
+        }
+        else {
+            digitalWrite(I_AM_LATE_LED, LOW);
+        }
         
         currentMicroStep += steppingUnit[microSteppingMode];
         
