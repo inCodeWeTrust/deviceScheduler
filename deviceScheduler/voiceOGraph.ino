@@ -198,10 +198,8 @@ void loop() {
         
         
         
-        //  cancel loading if stockBottomButton is pressed
-        fetchingRecord->controlButton[stockTopButton]->evokeTaskJump(stockStepper, supplyRecord, STOP);
-        fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(liftServo, liftFromParkPosition, STOP_SHARP_AND_SWITCH, lowerForParkPosition + 1);
-        fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(turnServo, turnRecordToTable, STOP_SHARP_AND_SWITCH, turnToStockPosition + 1);
+        //  cancel loading if stockBottomButton is pressed while lowering
+        fetchingRecord->controlButton[stockTopButton]->evokeBreak(stockStepper, moveStockStepperDown, 66, "stock empty!");
         
         
         
@@ -418,12 +416,12 @@ void loop() {
         
         
         //  jump over to end groove if songEndButton is pressed
-        cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, makeEndGroove);
+        cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
         
         //  cancel cutting if songCancelButton is pressed
-        cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeStartGroove, STOP_AND_SWITCH, driveToParkPosition);
-        cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, driveToParkPosition);
-        cuttingProcess->controlButton[songCancelButton]->evokeTaskJump(catStepper, makeEndGroove, STOP);
+        cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeStartGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
+        cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
+        cuttingProcess->controlButton[songCancelButton]->evokeTaskJump(catStepper, makeEndGroove, STOP_TASK);
         
         
         
@@ -669,8 +667,8 @@ void loop() {
                 loading->device[stockStepper]->task[comeUpAgain]->startAfterCompletionOf(stockStepper, driveDown);
                 loading->device[stockStepper]->task[comeUpAgain]->stopByButton(stockTopButton);
                 
-                loading->controlButton[loadingButton]->evokeTaskJump(stockStepper, driveDown, STOP);
-                loading->controlButton[recordAvailableButton]->evokeTaskJump(stockStepper, comeUpAgain, STOP);
+                loading->controlButton[loadingButton]->evokeTaskJump(stockStepper, driveDown, STOP_TASK);
+                loading->controlButton[recordAvailableButton]->evokeTaskJump(stockStepper, comeUpAgain, STOP_TASK);
                 
                 loading->reviewTasks();
                 loading->run();

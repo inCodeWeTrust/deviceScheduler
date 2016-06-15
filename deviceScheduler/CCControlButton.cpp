@@ -10,6 +10,7 @@
 #include "CCControlButton.h"
 
 
+
 CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
     
     this->buttonIndex = buttonIndex;
@@ -23,6 +24,9 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
     } else {
         pinMode(button_pin, INPUT);
     }
+    
+//    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
+//    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
     
     countOfActions = 0;
     
@@ -49,14 +53,17 @@ CCControlButton::~CCControlButton() {
 }
 
 
-void CCControlButton::evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction) {
-    evokeTaskJumpToTask(targetDevice, validTask, targetAction, validTask + 1);
+void CCControlButton::evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, int notificationCode, String notificationText) {
+    evokeTaskJumpToTask(targetDevice, validTask, targetAction, validTask + 1, notificationCode, notificationText);
 }
-void CCControlButton::evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask) {
+void CCControlButton::evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask, int notificationCode, String notificationText) {
     action[countOfActions].targetDevice = targetDevice;
     action[countOfActions].validTask = validTask;
     action[countOfActions].targetAction = targetAction;
     action[countOfActions].followingTask = followingTask;
+    
+    action[countOfActions].notificationCode = notificationCode;
+    action[countOfActions].notificationText = notificationText;
 
     action[countOfActions].actionDone = false;
     
@@ -78,6 +85,36 @@ void CCControlButton::evokeTaskJumpToTask(schedulerDevice targetDevice, schedule
     countOfActions++;
     
 }
+
+
+void CCControlButton::evokeBreak(schedulerDevice targetDevice, scheduledTask validTask, int notificationCode, String notificationText) {
+    action[countOfActions].targetDevice = targetDevice;
+    action[countOfActions].validTask = validTask;
+    action[countOfActions].targetAction = BREAK_LOOP;
+    action[countOfActions].followingTask = 1;
+    
+    action[countOfActions].notificationCode = notificationCode;
+    action[countOfActions].notificationText = notificationText;
+    
+    action[countOfActions].actionDone = false;
+    
+    
+    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+        Serial.print(F("[CCControlButton]: add Break-Action for "));
+        Serial.print(buttonName);
+        Serial.print(F(", targetDevice: "));
+        Serial.print(action[countOfActions].targetDevice);
+        Serial.print(F(", validTask: "));
+        Serial.println(action[countOfActions].validTask);
+    }
+    
+    countOfActions++;
+    
+}
+void CCControlButton::evokeBreak(int notificationCode, String notificationText) {
+    evokeBreak(-1, -1, notificationCode, notificationText);
+}
+
 
 void CCControlButton::deleteActions() {
     countOfActions = 0; 

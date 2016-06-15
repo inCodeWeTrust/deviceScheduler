@@ -57,6 +57,9 @@ public:
     /// Array of all control-inputs.
     CCControlButton *controlButton[8];
     
+    int notificationCode;
+    String  notificationText;
+    
     CCDeviceScheduler(String name);
     ~CCDeviceScheduler();
     
@@ -158,7 +161,7 @@ public:
     /// @param buttonActiv the state of the pin, where the button should trigger actions.
     /// @param pullup if a nonzero value is passed, the input pullup is activated.
     /// @return the button index.
-    unsigned char addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
+    schedulerControlButton addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.
@@ -179,7 +182,7 @@ public:
     
     
     /// Function starts the scheduler, all registered tasks are driven as specified.
-    void run();
+    int run();
     
     
 private:

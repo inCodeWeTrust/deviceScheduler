@@ -370,8 +370,8 @@ void CCDeviceScheduler::reviewTasks() {
     }
 }
 
+schedulerControlButton CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
 
-unsigned char CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
     controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv, pullup);
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_BASICOUTPUT) {
@@ -447,12 +447,14 @@ void CCDeviceScheduler::deleteAllActions() {
 
 
 
-void CCDeviceScheduler::run() {
+int CCDeviceScheduler::run() {
     
     unsigned long loopCounter = 0;
-    unsigned char ongoingOperations;
+    unsigned char ongoingOperations = 0;
+    boolean breakLoop = false;
+    notificationCode = 0;
+    notificationText = "";
     
-
     // prepare the loop
     
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
@@ -644,39 +646,43 @@ void CCDeviceScheduler::run() {
         
         if (theButton < countOfControlButtons) {
             if (controlButton[theButton]->readButtonState()) {
-//                Serial.print(controlButton[theButton]->isActiv());
                 for (unsigned char theAction = 0; theAction < controlButton[theButton]->getCountOfActions(); theAction++) {
                     if (!controlButton[theButton]->getAction(theAction).actionDone) {
-                        if (controlButton[theButton]->getAction(theAction).validTask == device[controlButton[theButton]->getAction(theAction).targetDevice]->getTaskPointer()) {
+                        if ((controlButton[theButton]->getAction(theAction).validTask == -1) || (controlButton[theButton]->getAction(theAction).validTask == device[controlButton[theButton]->getAction(theAction).targetDevice]->getTaskPointer())) {
                             
+                            notificationCode = min(notificationCode, controlButton[theButton]->getAction(theAction).notificationCode);
+                            notificationText = notificationText + controlButton[theButton]->getAction(theAction).notificationText + "\n";
+
                             if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
                                 Serial.print(taskTime);
                                 Serial.print(F(": "));
                                 Serial.print(controlButton[theButton]->getButtonName());
                                 Serial.print(F(" rise Action "));
-                                Serial.print(theAction);
-                                Serial.print(F(", pin 45: "));
-                                Serial.print(digitalRead(45));
-                                Serial.print(F(", pin 47: "));
-                                Serial.print(digitalRead(47));
-                                Serial.print(F(", pin 49: "));
-                                Serial.println(digitalRead(49));
+                                Serial.println(theAction);
+                                Serial.print(F(" with notification: "));
+                                Serial.print(controlButton[theButton]->getAction(theAction).notificationCode);
+                                Serial.print(F(" --> "));
+                                Serial.println(controlButton[theButton]->getAction(theAction).notificationText);
                             }
 
+                            if (controlButton[theButton]->getAction(theAction).targetAction == BREAK_LOOP) {
+                                breakLoop = true;
+                                break;
+                            }
                             device[controlButton[theButton]->getAction(theAction).targetDevice]->setTaskPointer(controlButton[theButton]->getAction(theAction).followingTask - 1);
                             switch (controlButton[theButton]->getAction(theAction).targetAction) {
-                                case START:
+                                case START_NEXT_TASK:
                                     handleStartEvent(taskTime, controlButton[theButton]->getAction(theAction).targetDevice, CONTROLBUTTON);
                                     break;
-                                case STOP_AND_SWITCH:
+                                case STOP_TASK_AND_SWITCH:
                                     device[controlButton[theButton]->getAction(theAction).targetDevice]->setSwitchTaskPromptly(true);
-                                case STOP:
+                                case STOP_TASK:
                                     device[controlButton[theButton]->getAction(theAction).targetDevice]->setStopping(STOP_NORMAL);
                                     handleStopEvent(taskTime, controlButton[theButton]->getAction(theAction).targetDevice, CONTROLBUTTON);
                                     break;
-                                case STOP_SHARP_AND_SWITCH:
+                                case STOP_TASK_SHARP_AND_SWITCH:
                                     device[controlButton[theButton]->getAction(theAction).targetDevice]->setSwitchTaskPromptly(true);
-                                case STOP_SHARP:
+                                case STOP_TASK_SHARP:
                                     device[controlButton[theButton]->getAction(theAction).targetDevice]->setStopping(STOP_IMMEDIATELY);
                                     handleStopEvent(taskTime, controlButton[theButton]->getAction(theAction).targetDevice, CONTROLBUTTON);
                             }
@@ -691,6 +697,11 @@ void CCDeviceScheduler::run() {
         }
         
         
+        if (breakLoop) {
+            break;
+        }
+        
+
         loopCounter++;
         
        
@@ -703,8 +714,15 @@ void CCDeviceScheduler::run() {
         }
     }
     
-   
-    
+    if (breakLoop) {
+        Serial.print(F("scheduler canceled"));
+    } else {
+        Serial.print(F("scheduler ended normaly:"));
+    }
+    Serial.print(F("notificationCode:"));
+    Serial.println(notificationCode);
+    Serial.print(F("notificationText:"));
+    Serial.println(notificationText);
     Serial.println();
     Serial.print(F("loops: "));
     Serial.print((signed long)loopCounter);
@@ -715,7 +733,7 @@ void CCDeviceScheduler::run() {
     Serial.println();
     Serial.println();
     
-    
+    return notificationCode;
 }
 
 
@@ -806,11 +824,11 @@ String CCDeviceScheduler::getNameOfStoppingMode(stoppingMode s) {
     return "unknown";
 }
 String CCDeviceScheduler::getNameOfDeviceAction(deviceAction d) {
-    if (d == START) return "start";
-    if (d == STOP_AND_SWITCH) return "stop and switch";
-    if (d == STOP) return "stop";
-    if (d == STOP_SHARP_AND_SWITCH) return "stop immediately and switch";
-    if (d == STOP_SHARP) return "stop immediately";
+    if (d == START_NEXT_TASK) return "start";
+    if (d == STOP_TASK_AND_SWITCH) return "stop and switch";
+    if (d == STOP_TASK) return "stop";
+    if (d == STOP_TASK_SHARP_AND_SWITCH) return "stop immediately and switch";
+    if (d == STOP_TASK_SHARP) return "stop immediately";
     return "unknown";
 }
 

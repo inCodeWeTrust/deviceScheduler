@@ -16,7 +16,7 @@
 
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
 
-typedef unsigned char schedulerDevice, scheduledTask, schedulerControlButton;
+typedef signed char schedulerDevice, scheduledTask, schedulerControlButton;
 
 //  device type
 enum deviceType {
@@ -48,11 +48,12 @@ enum deviceState {
 
 //  device action:
 enum deviceAction {
-    START,
-    STOP_AND_SWITCH,
-    STOP,
-    STOP_SHARP_AND_SWITCH,
-    STOP_SHARP
+    BREAK_LOOP,
+    START_NEXT_TASK,
+    STOP_TASK_AND_SWITCH,
+    STOP_TASK,
+    STOP_TASK_SHARP_AND_SWITCH,
+    STOP_TASK_SHARP
 };
 
 //  stop mode:
@@ -62,6 +63,11 @@ enum stoppingMode {
     STOP_DYNAMIC
 };
 
+//  notification code:
+enum notificationCode {
+    BREAK_ON_ENDBUTTON_PRESSED = -0x22,
+    ENDBUTTON_PRESSED = 0x22
+};
 
 //  appriximation mode:
 enum approximationMode {
@@ -171,7 +177,7 @@ enum approximationMode {
 /// @endcode
 /// Jedes Element dieser Klasse enthält ein Array von @c actions, die das Stoppen, Überspringen oder Wiederholen von Aufgaben veranlassen. Die Eintragung dieser @c actions bewerkstelligt die Funktion @c evokeTaskJump(...) bzw. @c evokeTaskJumpToTask(...). Übergeben werden sämtliche Parameter dieser Aufgabe:
 /// @code{.cpp}
-/// cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, makeEndGroove);
+/// cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove);
 /// @endcode
 /// Die Aufgabe @c makeMainGroove des Schneideschlittenantriebs @c catStepper, also der Schneideprozess, soll abgebrochen werden, wenn der aufzunehmende Song bereits vor dem Ablauf der eingestellten Aufnahmedauer zu ende ist. Dies wird mit dem Schalter @c songEndButton signalisiert. Der Schneideschlittenantrieb soll dann die Aufgabe @c makeMainGroove beenden und direkt zur Aufgabe @c makeEndGroove wechseln, also übergangslos zu der Geschwindigkeit beschleunigen, die zum Schneiden der Endrille notwendig ist. <br>
 /// Die implementierten Methoden sind:

@@ -27,6 +27,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+#define CONTROLLBUTTON_PRESSED_NOTIFICATION     "endpoint reached"
+
 class CCControlButton {
     
     struct buttonAction {
@@ -35,6 +37,8 @@ class CCControlButton {
         scheduledTask       validTask;
         deviceAction        targetAction;
         scheduledTask       followingTask;
+        int                 notificationCode;
+        String              notificationText;
         boolean             actionDone;
     };
     buttonAction        *action;
@@ -44,6 +48,7 @@ public:
     boolean             readButtonState();
     boolean             getState();
     boolean             isActiv();
+    
     buttonAction        getAction(unsigned char a);
     void                setActionDone(unsigned char a);
     String              getButtonName();
@@ -54,9 +59,12 @@ public:
     CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     ~CCControlButton();
     
-    void evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask);
-    void evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction);
+    void evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask, int notificationCode = 0, String notificationText = "");
+    void evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, int notificationCode = 0, String notificationText = "");
     
+    void evokeBreak(schedulerDevice targetDevice, scheduledTask validTask, int notificationCode = 0, String notificationText = "");
+    void evokeBreak(int notificationCode = 0, String notificationText = "");
+
     void deleteActions();
     
     
@@ -64,7 +72,6 @@ private:
     
     boolean             state;
     boolean             activ;
-
 
     String              buttonName;
     unsigned int        buttonIndex;
