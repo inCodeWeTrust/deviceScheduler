@@ -22,9 +22,7 @@
 
 
 // ------------- globals -----------------------------------------------------------------------------------------------------
-CCDeviceScheduler   *cuttingProcess;
-CCDeviceScheduler   *fetchingRecord;
-CCDeviceScheduler   *ejectingRecord;
+CCDeviceScheduler   *scheduler;
 
 unsigned long       catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
 float               catMotorSpeed_startGroove, catMotorSpeed_song, catMotorSpeed_endGroove;
@@ -54,79 +52,161 @@ void loop() {
     freeRam();
     
     // ================================================================================================================================
-    // ============= create fetchingRecord scheduler object: ==========================================================================
+    // ============= create scheduler object: ==========================================================================
     // ================================================================================================================================
     
-    fetchingRecord = new CCDeviceScheduler("fetchingRecord");
+    scheduler = new CCDeviceScheduler("scheduler");
     
     
-    {
-        // ============================================================================================================================
-        // ============= devices of fetchingRecord: ===================================================================================
-        // ============================================================================================================================
-        
-        schedulerDevice liftServo = fetchingRecord->addServoWithCounterServo(SERVO_LIFT_NAME,
-                                                                             SERVO_LIFT_LEFT_PIN,
-                                                                             SERVO_LIFT_LEFT_MIN_POSITION,
-                                                                             SERVO_LIFT_LEFT_MID_POSITION,
-                                                                             SERVO_LIFT_LEFT_MAX_POSITION,
-                                                                             SERVO_LIFT_RIGHT_PIN,
-                                                                             SERVO_LIFT_RIGHT_MIN_POSITION,
-                                                                             SERVO_LIFT_RIGHT_MID_POSITION,
-                                                                             SERVO_LIFT_RIGHT_MAX_POSITION,
-                                                                             LIFT_PARK_POSITION);
-        fetchingRecord->device[liftServo]->defineDefaults(LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
-        
-        
-        schedulerDevice turnServo = fetchingRecord->addServo(SERVO_TURN_NAME,
-                                                             SERVO_TURN_PIN,
-                                                             SERVO_TURN_MIN_POSITION,
-                                                             SERVO_TURN_MAX_POSITION,
-                                                             TURN_STOCK_POSITION);
-        fetchingRecord->device[turnServo]->defineDefaults(TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
-        
-        
-        schedulerDevice pumpServo = fetchingRecord->addServo(SERVO_PUMP_NAME,
-                                                             SERVO_PUMP_PIN,
-                                                             SERVO_PUMP_MIN_POSITION,
-                                                             SERVO_PUMP_MAX_POSITION,
-                                                             PUMP_PARK_POSITION);
-        fetchingRecord->device[pumpServo]->defineDefaults(PUMP_SPEED, PUMP_ACCEL);
-        
-        
-        schedulerDevice stockStepper = fetchingRecord->addStepper_A4988(STEPPER_STOCK_NAME,
-                                                                        STEPPER_STOCK_STEP_PIN,
-                                                                        STEPPER_STOCK_DIR_PIN,
-                                                                        STEPPER_STOCK_ENABLE_PIN,
-                                                                        STEPPER_STOCK_HIGHEST_STEPPINGMODE,
-                                                                        STEPPER_STOCK_STEPMODECODES,
-                                                                        STEPPER_STOCK_MICROSTEPPINS,
-                                                                        STEPPER_STOCK_STEPS_PER_ROTATION);
-        fetchingRecord->device[stockStepper]->defineDefaults(STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
-        
-        
-        
-        
-        schedulerControlButton recordAvailableButton = fetchingRecord->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
-                                                                                        RECORDAVAILABLE_BUTTON_PIN,
-                                                                                        RECORDAVAILABLE_BUTTON_ACTIV,
-                                                                                        RECORDAVAILABLE_BUTTON_PULLUP);
-        
-        schedulerControlButton stockTopButton = fetchingRecord->addControlButton(STOCKTOP_BUTTON_NAME,
-                                                                                 STOCKTOP_BUTTON_PIN,
-                                                                                 STOCKTOP_BUTTON_ACTIV,
-                                                                                 STOCKTOP_BUTTON_PULLUP);
-        
-        schedulerControlButton stockBottomButton = fetchingRecord->addControlButton(STOCKBOTTOM_BUTTON_NAME,
-                                                                                    STOCKBOTTOM_BUTTON_PIN,
-                                                                                    STOCKBOTTOM_BUTTON_ACTIV,
-                                                                                    STOCKBOTTOM_BUTTON_PULLUP);
-        
-        fetchingRecord->getAllDevices();
-        fetchingRecord->getAllControlButtons();
-        
-        
-        
+    //============================================================================================================================
+    // ============= register devices: ================================================================================================
+    // ============================================================================================================================
+    
+    schedulerDevice liftServo = scheduler->addServoWithCounterServo(SERVO_LIFT_NAME,
+                                                                    SERVO_LIFT_LEFT_PIN,
+                                                                    SERVO_LIFT_LEFT_MIN_POSITION,
+                                                                    SERVO_LIFT_LEFT_MID_POSITION,
+                                                                    SERVO_LIFT_LEFT_MAX_POSITION,
+                                                                    SERVO_LIFT_RIGHT_PIN,
+                                                                    SERVO_LIFT_RIGHT_MIN_POSITION,
+                                                                    SERVO_LIFT_RIGHT_MID_POSITION,
+                                                                    SERVO_LIFT_RIGHT_MAX_POSITION,
+                                                                    LIFT_PARK_POSITION);
+    scheduler->device[liftServo]->defineDefaults(LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+    
+    
+    schedulerDevice turnServo = scheduler->addServo(SERVO_TURN_NAME,
+                                                    SERVO_TURN_PIN,
+                                                    SERVO_TURN_MIN_POSITION,
+                                                    SERVO_TURN_MAX_POSITION,
+                                                    TURN_STOCK_POSITION);
+    scheduler->device[turnServo]->defineDefaults(TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
+    
+    
+    schedulerDevice pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
+                                                    SERVO_PUMP_PIN,
+                                                    SERVO_PUMP_MIN_POSITION,
+                                                    SERVO_PUMP_MAX_POSITION,
+                                                    PUMP_PARK_POSITION);
+    scheduler->device[pumpServo]->defineDefaults(PUMP_SPEED, PUMP_ACCEL);
+    
+    
+    schedulerDevice headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
+                                                        SERVO_HEAD_LEFT_PIN,
+                                                        SERVO_HEAD_LEFT_MIN_POSITION,
+                                                        SERVO_HEAD_LEFT_MAX_POSITION,
+                                                        HEAD_LEFT_PARK_POSITION);
+    
+    
+    schedulerDevice headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME,
+                                                         SERVO_HEAD_RIGHT_PIN,
+                                                         SERVO_HEAD_RIGHT_MIN_POSITION,
+                                                         SERVO_HEAD_RIGHT_MAX_POSITION,
+                                                         HEAD_RIGHT_PARK_POSITION);
+    
+    
+    
+    
+    schedulerDevice stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
+                                                               STEPPER_STOCK_STEP_PIN,
+                                                               STEPPER_STOCK_DIR_PIN,
+                                                               STEPPER_STOCK_ENABLE_PIN,
+                                                               STEPPER_STOCK_HIGHEST_STEPPINGMODE,
+                                                               STEPPER_STOCK_STEPMODECODES,
+                                                               STEPPER_STOCK_MICROSTEPPINS,
+                                                               STEPPER_STOCK_STEPS_PER_ROTATION);
+    scheduler->device[stockStepper]->defineDefaults(STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
+    
+    
+    schedulerDevice catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
+                                                              STEPPER_CAT_STEP_PIN,
+                                                              STEPPER_CAT_DIR_PIN,
+                                                              STEPPER_CAT_ENABLE_PIN,
+                                                              STEPPER_CAT_CHIPSELECT_PIN,
+                                                              STEPPER_CAT_CURRENT,
+                                                              STEPPER_CAT_STEPS_PER_ROTATION);
+    scheduler->device[catStepper]->defineDefaults(CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
+    
+    
+    schedulerDevice tableStepper = scheduler->addStepper_A4988(STEPPER_TABLE_NAME,
+                                                               STEPPER_TABLE_STEP_PIN,
+                                                               STEPPER_TABLE_DIR_PIN,
+                                                               STEPPER_TABLE_ENABLE_PIN,
+                                                               STEPPER_TABLE_HIGHEST_STEPPINGMODE,
+                                                               STEPPER_TABLE_STEPMODECODES,
+                                                               STEPPER_TABLE_MICROSTEPPINS,
+                                                               STEPPER_TABLE_STEPS_PER_ROTATION);
+    
+    
+    schedulerDevice conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
+                                                                STEPPER_CONVEYOR_STEP_PIN,
+                                                                STEPPER_CONVEYOR_DIR_PIN,
+                                                                STEPPER_CONVEYOR_ENABLE_PIN,
+                                                                STEPPER_CONVEYOR_HIGHEST_STEPPINGMODE,
+                                                                STEPPER_CONVEYOR_STEPMODECODES,
+                                                                STEPPER_CONVEYOR_MICROSTEPPINS,
+                                                                STEPPER_CONVEYOR_STEPS_PER_ROTATION);
+    scheduler->device[conveyStepper]->defineDefaults(CONVEYOR_SPEED, CONVEYOR_ACCEL);
+    
+    
+    
+    
+    schedulerDevice vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
+                                                               VACCUUMCLEANER_PIN,
+                                                               VACCUUMCLEANER_ACTIV);
+    
+    
+    schedulerDevice startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
+                                                                  CONTROLLER_LAMP_RED_PIN,
+                                                                  CONTROLLER_LAMP_RED_ACTIV);
+    
+    
+    
+    
+    schedulerControlButton recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
+                                                                               RECORDAVAILABLE_BUTTON_PIN,
+                                                                               RECORDAVAILABLE_BUTTON_ACTIV,
+                                                                               RECORDAVAILABLE_BUTTON_PULLUP);
+    
+    schedulerControlButton stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
+                                                                        STOCKTOP_BUTTON_PIN,
+                                                                        STOCKTOP_BUTTON_ACTIV,
+                                                                        STOCKTOP_BUTTON_PULLUP);
+    
+    schedulerControlButton stockBottomButton = scheduler->addControlButton(STOCKBOTTOM_BUTTON_NAME,
+                                                                           STOCKBOTTOM_BUTTON_PIN,
+                                                                           STOCKBOTTOM_BUTTON_ACTIV,
+                                                                           STOCKBOTTOM_BUTTON_PULLUP);
+    
+    
+    
+    schedulerControlButton bridgeParkButton = scheduler->addControlButton(CAT_PARKBUTTON_NAME,
+                                                                          CAT_PARKBUTTON_PIN,
+                                                                          CAT_PARKBUTTON_ACTIV,
+                                                                          CAT_PARKBUTTON_PULLUP);
+    
+    schedulerControlButton bridgeEndButton = scheduler->addControlButton(CAT_ENDBUTTON_NAME,
+                                                                         CAT_ENDBUTTON_PIN,
+                                                                         CAT_ENDBUTTON_ACTIV,
+                                                                         CAT_ENDBUTTON_PULLUP);
+    
+    schedulerControlButton songEndButton = scheduler->addControlButton(SONG_ENDBUTTON_NAME,
+                                                                       SONG_ENDBUTTON_PIN,
+                                                                       SONG_ENDBUTTON_ACTIV,
+                                                                       SONG_ENDBUTTON_PULLUP);
+    
+    schedulerControlButton songCancelButton = scheduler->addControlButton(SONG_CANCELBUTTON_NAME,
+                                                                          SONG_CANCELBUTTON_PIN,
+                                                                          SONG_CANCELBUTTON_ACTIV,
+                                                                          SONG_CANCELBUTTON_PULLUP);
+    
+    
+    
+    scheduler->getAllDevices();
+    scheduler->getAllControlButtons();
+    
+    
+    
         // ============================================================================================================================
         // ============= initialisation of fetchingRecord: ============================================================================
         // ============================================================================================================================
@@ -137,9 +217,12 @@ void loop() {
         // ============================================================================================================================
         // ============= tasks of fetchingRecord: =====================================================================================
         // ============================================================================================================================
-        
-        //  lift grappler
-        scheduledTask liftFromParkPosition = fetchingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION + 500, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+    
+    
+    CCWorkflow *fetchingRecord = new CCWorkflow("fetchingRecord");
+    
+    //  lift grappler
+        scheduledTask liftFromParkPosition = fetchingRecord->addTask(liftServo, LIFT_PARK_POSITION + 500, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
         fetchingRecord->device[liftServo]->task[liftFromParkPosition]->startByDate(100);
         
         //  move stock down first
@@ -219,80 +302,15 @@ void loop() {
     // ============= create cuttingProcess scheduler object: ==========================================================================
     // ================================================================================================================================
     
-    cuttingProcess = new CCDeviceScheduler("cuttingProcess");
-    
+//    cuttingProcess = new CCDeviceScheduler("cuttingProcess");
+
     
     {
         // ============================================================================================================================
         // ============= devices of cuttingProcess: ===================================================================================
         // ============================================================================================================================
         
-        schedulerDevice catStepper = cuttingProcess->addStepper_TMC260(STEPPER_CAT_NAME,
-                                                                       STEPPER_CAT_STEP_PIN,
-                                                                       STEPPER_CAT_DIR_PIN,
-                                                                       STEPPER_CAT_ENABLE_PIN,
-                                                                       STEPPER_CAT_CHIPSELECT_PIN,
-                                                                       STEPPER_CAT_CURRENT,
-                                                                       STEPPER_CAT_STEPS_PER_ROTATION);
-        cuttingProcess->device[catStepper]->defineDefaults(CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
-        
-        schedulerDevice tableStepper = cuttingProcess->addStepper_A4988(STEPPER_TABLE_NAME,
-                                                                        STEPPER_TABLE_STEP_PIN,
-                                                                        STEPPER_TABLE_DIR_PIN,
-                                                                        STEPPER_TABLE_ENABLE_PIN,
-                                                                        STEPPER_TABLE_HIGHEST_STEPPINGMODE,
-                                                                        STEPPER_TABLE_STEPMODECODES,
-                                                                        STEPPER_TABLE_MICROSTEPPINS,
-                                                                        STEPPER_TABLE_STEPS_PER_ROTATION);
-        
-        schedulerDevice headLeftServo = cuttingProcess->addServo(SERVO_HEAD_LEFT_NAME,
-                                                                 SERVO_HEAD_LEFT_PIN,
-                                                                 SERVO_HEAD_LEFT_MIN_POSITION,
-                                                                 SERVO_HEAD_LEFT_MAX_POSITION,
-                                                                 HEAD_LEFT_PARK_POSITION);
-        
-        schedulerDevice headRightServo = cuttingProcess->addServo(SERVO_HEAD_RIGHT_NAME,
-                                                                  SERVO_HEAD_RIGHT_PIN,
-                                                                  SERVO_HEAD_RIGHT_MIN_POSITION,
-                                                                  SERVO_HEAD_RIGHT_MAX_POSITION,
-                                                                  HEAD_RIGHT_PARK_POSITION);
-        
-        schedulerDevice vacuumCleaner = cuttingProcess->addDcController(VACCUUMCLEANER_NAME,
-                                                                        VACCUUMCLEANER_PIN,
-                                                                        VACCUUMCLEANER_ACTIV);
-        
-        schedulerDevice startingSoonLamp = cuttingProcess->addDcController(CONTROLLER_LAMP_RED_NAME,
-                                                                           CONTROLLER_LAMP_RED_PIN,
-                                                                           CONTROLLER_LAMP_RED_ACTIV);
-        
-        
-        
-        
-        
-        schedulerControlButton bridgeParkButton = cuttingProcess->addControlButton(CAT_PARKBUTTON_NAME,
-                                                                                   CAT_PARKBUTTON_PIN,
-                                                                                   CAT_PARKBUTTON_ACTIV,
-                                                                                   CAT_PARKBUTTON_PULLUP);
-        
-        schedulerControlButton bridgeEndButton = cuttingProcess->addControlButton(CAT_ENDBUTTON_NAME,
-                                                                                  CAT_ENDBUTTON_PIN,
-                                                                                  CAT_ENDBUTTON_ACTIV,
-                                                                                  CAT_ENDBUTTON_PULLUP);
-        
-        schedulerControlButton songEndButton = cuttingProcess->addControlButton(SONG_ENDBUTTON_NAME,
-                                                                                SONG_ENDBUTTON_PIN,
-                                                                                SONG_ENDBUTTON_ACTIV,
-                                                                                SONG_ENDBUTTON_PULLUP);
-        
-        schedulerControlButton songCancelButton = cuttingProcess->addControlButton(SONG_CANCELBUTTON_NAME,
-                                                                                   SONG_CANCELBUTTON_PIN,
-                                                                                   SONG_CANCELBUTTON_ACTIV,
-                                                                                   SONG_CANCELBUTTON_PULLUP);
-        
-        
-        cuttingProcess->getAllDevices();
-        cuttingProcess->getAllControlButtons();
-        
+
         
         
         // ============================================================================================================================
@@ -440,8 +458,8 @@ void loop() {
     // ============= create ejectingRecord scheduler object: ==========================================================================
     // ================================================================================================================================
     
-    ejectingRecord = new CCDeviceScheduler("ejectingRecord");
-    
+//    ejectingRecord = new CCDeviceScheduler("ejectingRecord");
+
     
     {
         // ============================================================================================================================
@@ -475,17 +493,6 @@ void loop() {
                                                              SERVO_PUMP_MAX_POSITION,
                                                              PUMP_PARK_POSITION);
         ejectingRecord->device[pumpServo]->defineDefaults(PUMP_SPEED, PUMP_ACCEL);
-        
-        
-        schedulerDevice conveyStepper = ejectingRecord->addStepper_A4988(STEPPER_CONVEYOR_NAME,
-                                                                         STEPPER_CONVEYOR_STEP_PIN,
-                                                                         STEPPER_CONVEYOR_DIR_PIN,
-                                                                         STEPPER_CONVEYOR_ENABLE_PIN,
-                                                                         STEPPER_CONVEYOR_HIGHEST_STEPPINGMODE,
-                                                                         STEPPER_CONVEYOR_STEPMODECODES,
-                                                                         STEPPER_CONVEYOR_MICROSTEPPINS,
-                                                                         STEPPER_CONVEYOR_STEPS_PER_ROTATION);
-        ejectingRecord->device[conveyStepper]->defineDefaults(CONVEYOR_SPEED, CONVEYOR_ACCEL);
         
         
         

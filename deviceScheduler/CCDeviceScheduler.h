@@ -22,6 +22,7 @@
 #include "CCDcControllerDevice.h"
 #include "CCControlButton.h"
 
+#include "CCWorkflow.h"
 
 //  verbosity and log visuals:
 #define DEVICESCHEDULER_BASICOUTPUT                     0x01
@@ -56,6 +57,7 @@ public:
     CCDevice *device[8];
     /// Array of all control-inputs.
     CCControlButton *controlButton[8];
+    
     
     int notificationCode;
     String  notificationText;

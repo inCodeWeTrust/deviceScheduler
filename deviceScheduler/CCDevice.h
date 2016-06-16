@@ -41,26 +41,6 @@ public:
     /// @sa deviceType;
     deviceType getType();
     
-    /// Getter method for getting the number of tasks of the device
-    /// @sa countOfTasks;
-    unsigned char getCountOfTasks();
-
-    /// Setter method for setting the number of tasks of the device
-    /// @sa countOfTasks;
-    void setCountOfTasks(unsigned char count);
-
-    /// Getter method for getting the taskPointer of the device
-    /// @sa taskPointer;
-    unsigned char getTaskPointer();
-    
-    /// Setter method for setting the taskPointer of the device
-    /// @sa taskPointer;
-    void setTaskPointer(unsigned char pointer);
-    
-    /// Setter method for increasing the taskPointer of the device
-    /// @sa taskPointer;
-    void increaseTaskPointer();
-    
     /// Getter method for getting the current position of the device
     /// @sa currentPosition;
     float getCurrentPosition();
@@ -202,11 +182,6 @@ public:
     approximationMode getApproximation();
 
     
-    /// Array of tasks to be performed.
-    /// @see CCTask
-    CCTask               *task[10];
-    
-    
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventTask
     
     
@@ -226,106 +201,7 @@ public:
     /// @param defaultAcceleration the device's default acceleration and deceleration value.
     void defineDefaults(float defaultVelocity, float defaultAcceleration);
     
-    /// Function declares a task to be executed and returns its index.
-    /// It creates an instance of [CCTask](@ref task) and puts it into the task array of the device.
-    /// @param target this task's target.
-    /// @param velocity this task's velocity.
-    /// @param acceleration this task's acceleration value.
-    /// @param deceleration this task's deceleration value.
-    /// @return the task index.
-    scheduledTask addTask(float target, float velocity, float acceleration, float deceleration);
 
-    /// Function declares a task to be executed and returns its index.
-    /// It calls [addTask(...)](@ref addTask) with [deceleration](@ref deceleration) = -[acceleration](@ref acceleration).
-    /// @param target this task's target.
-    /// @param velocity this task's velocity.
-    /// @param acceleration this task's acceleration and deceleration value.
-    /// @return the task index.
-    scheduledTask addTask(float target, float velocity, float acceleration);
-
-    /// Function declares a task to be executed and returns its index.
-    /// It calls [addTask(...)](@ref addTask) with [defaultAcceleration](@ref defaultAcceleration) and [defaultDeceleration](@ref defaultDeceleration).
-    /// @param target this task's target.
-    /// @param velocity this task's velocity.
-    /// @return the task index.
-    scheduledTask addTask(float target, float velocity);
-
-    /// Function declares a task to be executed and returns its index.
-    /// It calls [addTask(...)](@ref addTask) with [defaultVelocity](@ref defaultVelocity), [defaultAcceleration](@ref defaultAcceleration) and [defaultDeceleration](@ref defaultDeceleration).
-    /// @param target this task's target.
-    /// @return the task index.
-    scheduledTask addTask(float target);
-    
-    
-    /// Function declares a task to be executed and returns its index.
-    /// It creates an instance of [CCTask](@ref task) and puts it into the task array of the device.
-    /// @param relativTarget this task's relativ target.
-    /// @param velocity this task's velocity.
-    /// @param acceleration this task's acceleration.
-    /// @param deceleration this task's deceleration.
-    /// @return the task index.
-    scheduledTask addTaskMoveRelativ(float relativTarget, float velocity, float acceleration, float deceleration);
-
-    /// Function declares a task to be executed and returns its index.
-    /// It calls [addTaskMoveRelativ(...)](@ref addTaskMoveRelativ) with [deceleration](@ref deceleration) = -[acceleration](@ref acceleration).
-    /// @param relativTarget this task's relativ target.
-    /// @param velocity this task's velocity.
-    /// @param acceleration this task's acceleration.
-    /// @return the task index.
-    scheduledTask addTaskMoveRelativ(float relativTarget, float velocity, float acceleration);
-
-    /// Function declares a task to be executed and returns its index.
-    /// It calls [addTaskMoveRelativ(...)](@ref addTaskMoveRelativ) with [defaultAcceleration](@ref defaultAcceleration) and [defaultDeceleration](@ref defaultDeceleration).
-    /// @param relativTarget this task's relativ target.
-    /// @param velocity this task's velocity.
-    /// @return the task index.
-    scheduledTask addTaskMoveRelativ(float relativTarget, float velocity);
-    
-    /// Function declares a task to be executed and returns its index.
-    /// It calls [addTaskMoveRelativ(...)](@ref addTaskMoveRelativ) with [defaultVelocity](@ref defaultVelocity), [defaultAcceleration](@ref defaultAcceleration) and [defaultDeceleration](@ref defaultDeceleration).
-    /// @param relativTarget this task's relativ target.
-    /// @return the task index.
-    scheduledTask addTaskMoveRelativ(float relativTarget);
-    
-    
-    /// Function declares a task to be executed and returns its index.
-    /// Before the task is executed, a position reset is performed.
-    /// It creates an instance of [CCTask](@ref task) and puts it into the task array of the device.
-    /// @param target this task's target.
-    /// @param velocity this task's velocity.
-    /// @param acceleration this task's acceleration.
-    /// @param deceleration this task's deceleration.
-    /// @return the task index.
-    scheduledTask addTaskWithPositionReset(float target, float velocity, float acceleration, float deceleration);
-    
-    /// Function declares a task to be executed and returns its index.
-    /// Before the task is executed, a position reset is performed.
-    /// It calls [addTaskWithPositionReset(...)](@ref addTaskWithPositionReset) with [deceleration](@ref deceleration) = -[acceleration](@ref acceleration).
-    /// @param target this task's target.
-    /// @param velocity this task's velocity.
-    /// @param acceleration this task's acceleration.
-    /// @return the task index.
-    scheduledTask addTaskWithPositionReset(float target, float velocity, float acceleration);
-    
-    /// Function declares a task to be executed and returns its index.
-    /// Before the task is executed, a position reset is performed.
-    /// It calls [addTaskWithPositionReset(...)](@ref addTaskWithPositionReset) with [defaultAcceleration](@ref defaultAcceleration) and [defaultDeceleration](@ref defaultDeceleration).
-    /// @param target this task's target.
-    /// @param velocity this task's velocity.
-    /// @return the task index.
-    scheduledTask addTaskWithPositionReset(float target, float velocity);
-    
-    /// Function declares a task to be executed and returns its index.
-    /// Before the task is executed, a position reset is performed.
-    /// It calls [addTaskWithPositionReset(...)](@ref addTaskWithPositionReset) with [defaultVelocity](@ref defaultVelocity), [defaultAcceleration](@ref defaultAcceleration) and [defaultDeceleration](@ref defaultDeceleration).
-    /// @param target this task's target.
-    /// @return the task index.
-    scheduledTask addTaskWithPositionReset(float target);
-    
-    
-    /// Function deletes all tasks of the device.
-    void deleteTasks();
-    
     
     virtual void attachDevice() = 0;
     virtual void detachDevice() = 0;
@@ -358,15 +234,6 @@ protected:
     /// STEPPERDEVICE       | stepper motor with stepper driver
     /// DCCONTROLLERDEVICE  | any device to be pwm driven
     deviceType           type;
-    
-    /// Parameters of the device as a peer of a run-loop.
-    /// Value, that holds the number of tasks to be executed within this run-loop.
-    unsigned char        countOfTasks;
-    
-    /// Parameters of the device as a peer of a run-loop.
-    /// Value, that holds the index of the current task.
-    unsigned char        taskPointer;
-    
     
     /// Device parameter:
     /// The device's current position.
