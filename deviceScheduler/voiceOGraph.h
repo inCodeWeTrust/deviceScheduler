@@ -215,16 +215,18 @@
 
 #define CONTROLLER_LAMP_YELLOW_PIN              35
 //#define CONTROLLER_LAMP_YELLOW_ACTIV            LOW
-#define CONTROLLER_LAMP_YELLOW_ON               HIGH
-#define CONTROLLER_LAMP_YELLOW_OFF              LOW
+//#define CONTROLLER_LAMP_YELLOW_ON               HIGH
+//#define CONTROLLER_LAMP_YELLOW_OFF              LOW
+#define CONTROLLER_LAMP_YELLOW_ON               LOW
+#define CONTROLLER_LAMP_YELLOW_OFF              HIGH
 
 
 
 #define CONTROLLER_LAMP_RED_NAME                "redLamp"
 
 #define CONTROLLER_LAMP_RED_PIN                 37
-//#define CONTROLLER_LAMP_RED_ACTIV               LOW
-#define CONTROLLER_LAMP_RED_ACTIV               HIGH
+#define CONTROLLER_LAMP_RED_ACTIV               LOW
+//#define CONTROLLER_LAMP_RED_ACTIV               HIGH
 
 
 
@@ -254,20 +256,20 @@
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-//#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
-#define RECORDAVAILABLE_BUTTON_ACTIV        LOW
+#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
 #define RECORDAVAILABLE_BUTTON_PULLUP       true
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
 #define STOCKBOTTOM_BUTTON_PIN              47
-//#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
-#define STOCKBOTTOM_BUTTON_ACTIV            LOW
+//#define STOCKBOTTOM_BUTTON_PIN              3
+#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
 #define STOCKBOTTOM_BUTTON_PULLUP           true
 
 #define STOCKTOP_BUTTON_NAME                "stockTopButton"
-#define STOCKTOP_BUTTON_PIN                 45
-//#define STOCKTOP_BUTTON_ACTIV               HIGH
-#define STOCKTOP_BUTTON_ACTIV               LOW
+//#define STOCKTOP_BUTTON_PIN                 45
+#define STOCKTOP_BUTTON_PIN                 4
+#define STOCKTOP_BUTTON_ACTIV               HIGH
+//#define STOCKTOP_BUTTON_ACTIV               LOW
 #define STOCKTOP_BUTTON_PULLUP              true
 
 
@@ -309,9 +311,9 @@
 #define LIFT_ACCEL_VERY_SLOW            200
 
 #define LIFT_UP_POSITION                2200
-#define LIFT_UP_TRIGGER_TURN            1800
-#define LIFT_TABLE_POSITION             1000
-#define LIFT_STOCK_POSITION             1000
+#define LIFT_UP_TRIGGER_TURN            1400
+#define LIFT_TABLE_POSITION             1080
+#define LIFT_STOCK_POSITION             1080
 #define LIFT_CONVEYER_POSITION          1000
 #define LIFT_PARK_POSITION              1000
 
@@ -364,7 +366,7 @@
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      131600
 
-#define CONVEYOR_DISTANCE               9600
+#define CONVEYOR_DISTANCE               8200
 #define CONVEYOR_SPEED                  600
 #define CONVEYOR_ACCEL                  400
 

@@ -51,6 +51,9 @@ void loop() {
     Serial.println(), Serial.println(), Serial.println();
     
     
+    
+    
+    
     freeRam();
     
     // ================================================================================================================================
@@ -166,11 +169,11 @@ void loop() {
         
         //  lift the new record
         scheduledTask liftNewRecord = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION);
-        fetchingRecord->device[liftServo]->task[liftNewRecord]->startAfterCompletionOf(pumpServo, pumpForGrip_up);
+        fetchingRecord->device[liftServo]->task[liftNewRecord]->startByTriggerpositionOf(pumpServo, pumpForGrip_up, PUMP_DOWN_POSITION + 400);
         
         //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         scheduledTask turnRecordToTable = fetchingRecord->device[turnServo]->addTask(TURN_TABLE_POSITION);
-        fetchingRecord->device[turnServo]->task[turnRecordToTable]->startAfterCompletionOf(liftServo, liftNewRecord);
+        fetchingRecord->device[turnServo]->task[turnRecordToTable]->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
         
         //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
         scheduledTask lowerRecordToTable = fetchingRecord->device[liftServo]->addTask(LIFT_TABLE_POSITION);
@@ -178,7 +181,7 @@ void loop() {
         
         //  release new record: release vacuum
         scheduledTask pumpForRelease_down = fetchingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION);
-        fetchingRecord->device[pumpServo]->task[pumpForRelease_down]->startAfterCompletionOf(liftServo, lowerRecordToTable);
+        fetchingRecord->device[pumpServo]->task[pumpForRelease_down]->startByTriggerpositionOf(liftServo, lowerRecordToTable, LIFT_TABLE_POSITION + 100);
         
         //  lift for going to park position: start when vacuum was released
         scheduledTask liftForParkPosition = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
@@ -357,7 +360,7 @@ void loop() {
         //  approximate head to record surface (right servo): start when left servo reached cutting position
         scheduledTask approximateHeadRightForCutting = cuttingProcess->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
         cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-//        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
+        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
         
         //  (2) blink lamp for start cutting very very soon:
         scheduledTask blinkForCuttingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 3.0, 0.0);
@@ -381,11 +384,11 @@ void loop() {
         cuttingProcess->device[startingSoonLamp]->task[keepLampOn]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 10000);
         
         //  (5) blink lamp for finishing very soon:
-        scheduledTask blinkForFinishingVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 1.0, 0.0);
+        scheduledTask blinkForFinishingVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 1.0, 0.0);
         cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingSoon]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 5000);
         
         //  (5) blink lamp for finishing very soon:
-        scheduledTask blinkForFinishingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 3.0, 0.0);
+        scheduledTask blinkForFinishingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.2, 3.0, 0.0);
         cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingVerySoon]->switchToNextTaskAfterCompletionOf(catStepper, makeMainGroove);
         
         //  make end groove:
@@ -417,6 +420,7 @@ void loop() {
         
         //  jump over to end groove if songEndButton is pressed
         cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
+        cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(startingSoonLamp, -1, STOP_TASK_AND_SWITCH, blinkForFinishingVeryVerySoon, 32, "recording was finished");
         
         //  cancel cutting if songCancelButton is pressed
         cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeStartGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
@@ -546,7 +550,7 @@ void loop() {
         
         //  lift for parking
         scheduledTask liftForParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-        ejectingRecord->device[liftServo]->task[liftForParkPosition]->startAfterCompletionOf(liftServo, lowerToConveyor);
+        ejectingRecord->device[liftServo]->task[liftForParkPosition]->startAfterCompletionOf(pumpServo, pumpForRelease_down);
         
         //  move it to the user
         scheduledTask driveIt = ejectingRecord->device[conveyStepper]->addTaskWithPositionReset(CONVEYOR_DISTANCE, CONVEYOR_SPEED, CONVEYOR_ACCEL);
@@ -592,6 +596,36 @@ void loop() {
     
     
     Serial.println(F("ready to run!"));
+    
+//    Serial.print("catPark pullup: "), Serial.print(digitalRead(CAT_PARKBUTTON_PULLUP));
+//    Serial.print(", catEnd pullup: "), Serial.print(digitalRead(CAT_ENDBUTTON_PULLUP));
+//    Serial.print(", recordAvailable pullup: "), Serial.print(digitalRead(RECORDAVAILABLE_BUTTON_PULLUP));
+//    Serial.print(", stockTop pullup: "), Serial.print(digitalRead(STOCKTOP_BUTTON_PULLUP));
+//    Serial.print(", stockBottom pullup: "), Serial.print(digitalRead(STOCKBOTTOM_BUTTON_PULLUP));
+//    Serial.println();
+//    
+//    for (; ; ) {
+//        Serial.print("catPark: "), Serial.print(digitalRead(CAT_PARKBUTTON_PIN));
+//        Serial.print(", catEnd: "), Serial.print(digitalRead(CAT_ENDBUTTON_PIN));
+//        Serial.print(", recordAvailable: "), Serial.print(digitalRead(RECORDAVAILABLE_BUTTON_PIN));
+//        Serial.print(", stockTop: "), Serial.print(digitalRead(STOCKTOP_BUTTON_PIN));
+//        Serial.print(", stockBottom: "), Serial.print(digitalRead(STOCKBOTTOM_BUTTON_PIN));
+//        Serial.print(", inclinationSensor: "), Serial.print(analogRead(HEAD_INCLINATION_SENSOR));
+//        Serial.println();
+//        
+//        delay(100);
+//    }
+//    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     boolean initNeeded = false;
     int i = 0;

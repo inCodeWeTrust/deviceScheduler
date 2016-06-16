@@ -486,14 +486,18 @@ int CCDeviceScheduler::run() {
             }
         }
     }
-
+    
     if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.println(F(": run ..."));
     }
 
+    
     for (schedulerControlButton b = 0; b < countOfControlButtons; b++) {
+        for (int i = 0; i < controlButton[b]->getCountOfActions(); i++) {
+            controlButton[b]->resetActionDone(i);
+        }
         controlButton[b]->readButtonState();
     }
     

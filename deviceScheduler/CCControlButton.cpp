@@ -125,14 +125,14 @@ boolean CCControlButton::readButtonState() {
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
     
-//    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
-//        Serial.print(F("[CCControlButton]: "));
-//        Serial.print(buttonName);
-//        Serial.print(F(", state: "));
-//        Serial.print(state);
-//        Serial.print(F(", activ: "));
-//        Serial.println(activ);
-//    }
+    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_MONITORING) {
+        Serial.print(F("[CCControlButton]: "));
+        Serial.print(buttonName);
+        Serial.print(F(", state: "));
+        Serial.print(state);
+        Serial.print(F(", activ: "));
+        Serial.println(activ);
+    }
     
 
     return activ;
@@ -143,6 +143,7 @@ boolean CCControlButton::getState(){return state;}
 
 CCControlButton::buttonAction CCControlButton::getAction(unsigned char a){return action[a];}
 void CCControlButton::setActionDone(unsigned char a){action[a].actionDone = true;}
+void CCControlButton::resetActionDone(unsigned char a){action[a].actionDone = false;}
 String CCControlButton::getButtonName(){return buttonName;}
 String CCControlButton::getButtonActiv(){if (buttonActiv) return "HIGH"; return "LOW";}
 unsigned char CCControlButton::getCountOfActions(){return countOfActions;}
