@@ -74,15 +74,16 @@ void CCDcControllerDevice::prepareNextTask() {
     deceleration = task[taskPointer]->getDeceleration();
     
     startEvent = task[taskPointer]->getStartEvent();
-    stopEvent = task[taskPointer]->getStopEvent();
     startDelay = task[taskPointer]->getStartDelay();
     startTime = task[taskPointer]->getStartTime();
-    timeout = task[taskPointer]->getTimeout();
     startButton = task[taskPointer]->getStartButton();
     stopButton = task[taskPointer]->getStopButton();
     startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
     startTriggerTask = task[taskPointer]->getStartTriggerTask();
     startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
+    
+    stopEvent = task[taskPointer]->getStopEvent();
+    timeout = task[taskPointer]->getTimeout();
     stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
     stopTriggerTask = task[taskPointer]->getStopTriggerTask();
     stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();
@@ -90,10 +91,27 @@ void CCDcControllerDevice::prepareNextTask() {
     switchTaskPromptly = task[taskPointer]->getSwitchTaskPromptly();
     stopping = task[taskPointer]->getStopping();
 
-    
+//    
+//    sensor = task[taskPointer]->getSensor();
+//    initiatePerformanceValue = task[taskPointer]->getInitiatePerformanceValue();
+//    targetValue = task[taskPointer]->getTargetValue();
+//    stopPerformance = task[taskPointer]->getStopPerformance();
+//    approximation = task[taskPointer]->getApproximation();
+//    
+//    float approximationCurve;
+//    float
+//    dynamicalStop = false;
+//    valueCounter = 0;
+//    sensorValuesFalling = (initiatePerformanceValue > targetValue);
+//    if (approximation == SKIP_APPROXIMATION_IMMEDIATELY) {
+//        sensorTreshold = 64;
+//    } else {
+//        sensorTreshold = 256.0 / approximation;
+//    }
+
     // target: dutycycle
     // velocity: pwm frequency
-    // periodendauer = 1 / frequency
+    // switchingInterval: periodendauer = 1 / frequency
     // acceleration: time for ramping up
     // deceleration: time for ramping down
     

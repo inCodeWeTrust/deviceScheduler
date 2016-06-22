@@ -18,7 +18,7 @@
 #define CCCONTROLBUTTON_MEMORYDEBUG           0x02
 #define CCCONTROLBUTTON_MONITORING            0x04
 
-#define CCCONTROLBUTTON_VERBOSE               1
+#define CCCONTROLBUTTON_VERBOSE               0x00
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

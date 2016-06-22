@@ -99,9 +99,9 @@ void CCServoDevice::prepareNextTask() {
     acceleration = task[taskPointer]->getAcceleration();
     deceleration = task[taskPointer]->getDeceleration();
     moveRelativ = task[taskPointer]->getMoveRelativ();
-    startDelay = task[taskPointer]->getStartDelay();
     
     startEvent = task[taskPointer]->getStartEvent();
+    startDelay = task[taskPointer]->getStartDelay();
     startTime = task[taskPointer]->getStartTime();
     startButton = task[taskPointer]->getStartButton();
     startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
