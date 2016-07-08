@@ -62,12 +62,6 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
     
     this->type = STEPPERDEVICE;
     this->state = SLEEPING;
-    this->taskPointer = 0;
-    this->countOfTasks = 0;
-    
-    this->defaultVelocity = 0;
-    this->defaultAcceleration = 0;
-    this->defaultDeceleration = 0;
     
     this->currentMicroStep = 0;
     this->currentPosition = 0;

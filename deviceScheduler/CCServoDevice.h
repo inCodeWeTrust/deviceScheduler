@@ -21,7 +21,7 @@
 #define CCSERVODEVICE_CALCULATIONDEBUG      0x04
 #define CCSERVODEVICE_MOVEMENTDEBUG         0x08
 
-#define CCSERVODEVICE_VERBOSE               0x00
+#define CCSERVODEVICE_VERBOSE               0x0F
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,6 +68,7 @@ public:
     
     void reviewValues();
     void prepareNextTask();
+    void prepareTask(CCTask* nextTask);
     void startTask();
     void operateTask();
     void initiateStop();

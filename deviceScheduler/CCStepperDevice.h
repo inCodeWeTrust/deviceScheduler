@@ -44,6 +44,7 @@ public:
     void disableDevice();
     
     void reviewValues();
+    void prepareTask(CCTask* nextTask);
     void prepareNextTask();
     void startTask();
     void operateTask();

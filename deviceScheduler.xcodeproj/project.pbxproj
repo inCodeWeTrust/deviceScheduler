@@ -24,8 +24,9 @@
 		A45F72881B1C71EB00B5B7E0 /* CCServoDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F727F1B1C71EB00B5B7E0 /* CCServoDevice.cpp */; };
 		A45F728A1B1C71EB00B5B7E0 /* CCStepperDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */; };
 		A48C24731C3E674600EB3EFA /* CCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A48C24711C3E674600EB3EFA /* CCTask.cpp */; };
+		A4ADAFD21D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */; };
 		A4EB61841D129369000762B0 /* CCWorkflow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EB61821D129369000762B0 /* CCWorkflow.cpp */; };
-		A4EB61871D12B6F6000762B0 /* CCDeviceOperations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EB61851D12B6F6000762B0 /* CCDeviceOperations.cpp */; };
+		A4EB61871D12B6F6000762B0 /* CCDeviceFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */; };
 		AA2A150601125914AA000006 /* abi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000006 /* abi.cpp */; };
 		AA2A150601125914AA000007 /* Arduino.h in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000007 /* Arduino.h */; };
 		AA2A150601125914AA000008 /* binary.h in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000008 /* binary.h */; };
@@ -884,10 +885,12 @@
 		A475649E1CAAF90200902319 /* workflowOneDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workflowOneDevice.png; sourceTree = "<group>"; };
 		A48C24711C3E674600EB3EFA /* CCTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTask.cpp; sourceTree = "<group>"; };
 		A48C24721C3E674600EB3EFA /* CCTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTask.h; sourceTree = "<group>"; };
+		A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDcControllerDevice_fullBridge.cpp; sourceTree = "<group>"; };
+		A4ADAFD11D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDcControllerDevice_fullBridge.h; sourceTree = "<group>"; };
 		A4EB61821D129369000762B0 /* CCWorkflow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCWorkflow.cpp; sourceTree = "<group>"; };
 		A4EB61831D129369000762B0 /* CCWorkflow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCWorkflow.h; sourceTree = "<group>"; };
-		A4EB61851D12B6F6000762B0 /* CCDeviceOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeviceOperations.cpp; sourceTree = "<group>"; };
-		A4EB61861D12B6F6000762B0 /* CCDeviceOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceOperations.h; sourceTree = "<group>"; };
+		A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeviceFlow.cpp; sourceTree = "<group>"; };
+		A4EB61861D12B6F6000762B0 /* CCDeviceFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceFlow.h; sourceTree = "<group>"; };
 		AAAA150601125914AA000006 /* abi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = abi.cpp; sourceTree = "<group>"; };
 		AAAA150601125914AA000007 /* Arduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arduino.h; sourceTree = "<group>"; };
 		AAAA150601125914AA000008 /* binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary.h; sourceTree = "<group>"; };
@@ -1561,12 +1564,12 @@
 				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
 				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
 				A4EB61881D12BAA0000762B0 /* devices */,
-				A48C24721C3E674600EB3EFA /* CCTask.h */,
-				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
 				A4EB61831D129369000762B0 /* CCWorkflow.h */,
 				A4EB61821D129369000762B0 /* CCWorkflow.cpp */,
-				A4EB61861D12B6F6000762B0 /* CCDeviceOperations.h */,
-				A4EB61851D12B6F6000762B0 /* CCDeviceOperations.cpp */,
+				A4EB61861D12B6F6000762B0 /* CCDeviceFlow.h */,
+				A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */,
+				A48C24721C3E674600EB3EFA /* CCTask.h */,
+				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
 				A475640E1CAAF90100902319 /* Documentation */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
 				AAAA150601125914AA000000 /* Resources */,
@@ -1847,6 +1850,8 @@
 				40ABDFB81CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp */,
 				A442495C1C9AD1E600C3E457 /* CCDcControllerDevice.h */,
 				A442495B1C9AD1E600C3E457 /* CCDcControllerDevice.cpp */,
+				A4ADAFD11D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.h */,
+				A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */,
 				40253D951CAF2136008A99E5 /* CCControlButton.h */,
 				40253D941CAF2136008A99E5 /* CCControlButton.cpp */,
 			);
@@ -4162,7 +4167,7 @@
 				AA2A150601125914AA000093 /* WMath.h in Sources */,
 				AA2A150601125914AA000094 /* WString.cpp in Sources */,
 				AA2A150601125914AA000095 /* WString.h in Sources */,
-				A4EB61871D12B6F6000762B0 /* CCDeviceOperations.cpp in Sources */,
+				A4EB61871D12B6F6000762B0 /* CCDeviceFlow.cpp in Sources */,
 				AA2A150601125914AA000098 /* SPI.cpp in Sources */,
 				AA2A150601125914AA000099 /* SPI.h in Sources */,
 				AA2A150601125914AA00009B /* Wire.cpp in Sources */,
@@ -4506,6 +4511,7 @@
 				AA2A150601125914AA000251 /* fw_download_extflash.c in Sources */,
 				40B3F88F1CC045F600443547 /* CCStepperDevice_A4988.cpp in Sources */,
 				AA2A150601125914AA000252 /* lwip_setup.c in Sources */,
+				A4ADAFD21D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp in Sources */,
 				AA2A150601125914AA000253 /* lwip_setup.h in Sources */,
 				AA2A150601125914AA000254 /* lwipopts.h in Sources */,
 				AA2A150601125914AA000255 /* main.c in Sources */,

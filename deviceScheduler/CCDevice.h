@@ -29,6 +29,7 @@
 ///
 ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+class CCDevice;
 class CCDevice {
     
 public:
@@ -113,37 +114,37 @@ public:
     /// @sa timeOut;
     unsigned long getTimeout();
     
-    /// Getter method for getting the startButton of the device
-    /// @sa startButton;
-    schedulerControlButton getStartButton();
-    
-    /// Getter method for getting the stopButton of the device
-    /// @sa stopButton;
-    schedulerControlButton getStopButton();
-    
-   /// Getter method for getting the startTriggerDevice of the device
-    /// @sa startTriggerDevice;
-    schedulerDevice getStartTriggerDevice();
-   
-    /// Getter method for getting the stopTriggerDevice of the device
-    /// @sa stopTriggerDevice;
-    schedulerDevice getStopTriggerDevice();
-    
-    /// Getter method for getting the startTriggerTask of the device
-    /// @sa startTriggerTask;
-    scheduledTask getStartTriggerTask();
-    
-    /// Getter method for getting the stopTriggerTask of the device
-    /// @sa stopTriggerTask;
-    scheduledTask getStopTriggerTask();
-    
-   /// Getter method for getting the startTriggerPosition of the device
-    /// @sa startTriggerPosition;
-    signed long getStartTriggerPosition();
-
-    /// Getter method for getting the stopTriggerPosition of the device
-    /// @sa stopTriggerPosition;
-    signed long getStopTriggerPosition();
+//    /// Getter method for getting the startButton of the device
+//    /// @sa startButton;
+//    schedulerControlButton getStartButton();
+//    
+//    /// Getter method for getting the stopButton of the device
+//    /// @sa stopButton;
+//    schedulerControlButton getStopButton();
+//    
+//    /// Getter method for getting the startTriggerDevice of the device
+//    /// @sa startTriggerDevice;
+//    CCDevice* getStartTriggerDevice();
+//    
+//    /// Getter method for getting the stopTriggerDevice of the device
+//    /// @sa stopTriggerDevice;
+//    CCDevice* getStopTriggerDevice();
+//    
+//    /// Getter method for getting the startTriggerTask of the device
+//    /// @sa startTriggerTask;
+//    scheduledTask getStartTriggerTaskID();
+//    
+//    /// Getter method for getting the stopTriggerTask of the device
+//    /// @sa stopTriggerTask;
+//    scheduledTask getStopTriggerTaskID();
+//    
+//   /// Getter method for getting the startTriggerPosition of the device
+//    /// @sa startTriggerPosition;
+//    signed long getStartTriggerPosition();
+//
+//    /// Getter method for getting the stopTriggerPosition of the device
+//    /// @sa stopTriggerPosition;
+//    signed long getStopTriggerPosition();
 
     /// Getter method for getting the stopping of the device
     /// @sa stopping, stoppingMode;
@@ -177,6 +178,18 @@ public:
     /// @sa stopPerformance;
     float getStopPerformance();
     
+    /// Getter method for getting the approximationCurve value of this task
+    /// @sa approximationCurve;
+    unsigned int getApproximationCurve();
+    
+    /// Getter method for getting the approximation value of this task
+    /// @sa gap;
+    unsigned int getGap();
+    
+    /// Getter method for getting the direction of the approximation value of this task
+    /// @sa approximationCurve;
+    boolean getReversedApproximation();
+    
     /// Getter method for getting the approximation value of the device
     /// @sa approximation;
     approximationMode getApproximation();
@@ -185,22 +198,12 @@ public:
     //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventTask
     
     
+    unsigned char currentTaskID;
+    
+
      virtual ~CCDevice() = 0;
 
 
-    /// Function sets up device-specific default values for velocity, acceleration and deceleration.
-    /// Call this function to be prepared for overloading [addTask(...)](@ref addTask) function.
-    /// @param defaultVelocity the device's default velocity.
-    /// @param defaultAcceleration the device's default acceleration.
-    /// @param defaultDeceleration the device's default deceleration.
-    void defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
-
-    /// Function sets up device-specific default values for velocity, acceleration and deceleration.
-    /// It calls [addTask(...)](@ref addTask) with [deceleration](@ref deceleration) = -[acceleration](@ref acceleration).
-    /// @param defaultVelocity the device's default velocity.
-    /// @param defaultAcceleration the device's default acceleration and deceleration value.
-    void defineDefaults(float defaultVelocity, float defaultAcceleration);
-    
 
     
     virtual void attachDevice() = 0;
@@ -210,6 +213,7 @@ public:
     
     virtual void reviewValues() = 0;
     virtual void prepareNextTask() = 0;
+    virtual void prepareTask(CCTask* nextTask) = 0;
     virtual void startTask() = 0;
     virtual void operateTask() = 0;
     virtual void initiateStop() = 0;
@@ -254,7 +258,7 @@ protected:
     /// PENDING_MOVES       | device is idle, tasks have to be executed
     deviceState          state;
     
-    
+        
     /// Parameter, related to the current task operation.
     /// The value means different things, depending on the device type.
     float               target;
@@ -315,37 +319,37 @@ protected:
     /// This parameter holds the timeout to stop this task (ms after the task was started).
     unsigned long        timeout;
     
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the pin number of a required hardware event to start this task.
-    schedulerControlButton        startButton;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the pin number of a required hardware event to stop this task.
-    schedulerControlButton        stopButton;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the index of a device, that shall trigger the start of this task.
-    schedulerDevice        startTriggerDevice;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the index of a device, that shall trigger the stop of this task.
-    schedulerDevice        stopTriggerDevice;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the index of a task of a device, on which the start of this task shall be triggered.
-    scheduledTask        startTriggerTask;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the index of a task of a device, on which the stop of this task shall be triggered.
-    scheduledTask        stopTriggerTask;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the position of a device on a task, on whitch the start of this task shall be triggered.
-    signed long	         startTriggerPosition;
-    
-    /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the position of a device on a task, on whitch the stop of this task shall be triggered.
-    signed long	         stopTriggerPosition;
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the pin number of a required hardware event to start this task.
+//    schedulerControlButton        startButton;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the pin number of a required hardware event to stop this task.
+//    schedulerControlButton        stopButton;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the index of a device, that shall trigger the start of this task.
+//    CCDevice*        startTriggerDevice;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the index of a device, that shall trigger the stop of this task.
+//    CCDevice*        stopTriggerDevice;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the index of a task of a device, on which the start of this task shall be triggered.
+//    scheduledTask        startTriggerTaskID;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the index of a task of a device, on which the stop of this task shall be triggered.
+//    scheduledTask        stopTriggerTaskID;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the position of a device on a task, on whitch the start of this task shall be triggered.
+//    signed long	         startTriggerPosition;
+//    
+//    /// Parameter, related to the task controll of the current task.
+//    /// This parameter holds the position of a device on a task, on whitch the stop of this task shall be triggered.
+//    signed long	         stopTriggerPosition;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the the way stopping this task, when a stopping event occures.
@@ -376,6 +380,18 @@ protected:
     /// This parameter holds the feedback amplification while approximating the target position.
     float                stopPerformance;
     
+    /// Parameter, related to the device controll of the current task.
+    /// This value is for calculating the velocity while dynamical approximation. It's Value is > 0. The smaller the value, the sharper the stop.
+    unsigned int         approximationCurve;
+    
+    /// Parameter, related to the device controll of the current task.
+    /// Value holds the width of the target area, where the target is seen to be reached. It is @c targetValue +/- @c gap.
+    unsigned int         gap;
+    
+    /// Parameter, related to the device controll of the current task.
+    /// This value indicates if a dynamical stop is performed on increasing or decreasing sensor values.
+    boolean              reversedApproximation;
+    
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the approximaton behavior, attaining the target position.
     /// approximationMode                         | behavior
@@ -389,18 +405,6 @@ protected:
     /// (skip when ´appriximationMode´ times the sensor value is within the tolerance of ´ +/- 256 / approximationMode´)
     approximationMode   approximation;
     
-    /// Default parameters for the device.
-    /// A value for the device's default velocity is provided here.
-    float                defaultVelocity;
-    
-    /// Default parameters for the device.
-    /// A value for the device's default acceleration is provided here.
-    float                defaultAcceleration;
-    
-    /// Default parameters for the device.
-    /// A value for the device's default deceleration is provided here.
-    float                defaultDeceleration;
-
     
 private:
     
@@ -409,8 +413,6 @@ private:
     unsigned int         deviceIndex;
     
     
-    /// Function to register the tasks
-    scheduledTask registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset);
 
     
 };

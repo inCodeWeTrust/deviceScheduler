@@ -19,6 +19,7 @@
 /// @brief Class for tasks to be executed
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+class CCDevice;
 
 class CCTask {
     
@@ -94,19 +95,19 @@ public:
   
     /// Getter method for getting the startTriggerDevice of the device
     /// @sa startTriggerDevice;
-    schedulerDevice getStartTriggerDevice();
+    CCDevice* getStartTriggerDevice();
     
     /// Getter method for getting the stopTriggerDevice of the device
     /// @sa stopTriggerDevice;
-    schedulerDevice getStopTriggerDevice();
+    CCDevice* getStopTriggerDevice();
     
     /// Getter method for getting the startTriggerTask of the device
     /// @sa startTriggerTask;
-    scheduledTask getStartTriggerTask();
+    scheduledTask getStartTriggerTaskID();
     
     /// Getter method for getting the stopTriggerTask of the device
     /// @sa stopTriggerTask;
-    scheduledTask getStopTriggerTask();
+    scheduledTask getStopTriggerTaskID();
     
     /// Getter method for getting the startTriggerPosition of the device
     /// @sa startTriggerPosition;
@@ -144,29 +145,48 @@ public:
     /// @sa approximation;
     approximationMode getApproximation();
     
+    /// Getter method for getting the approximationCurve value of this task
+    /// @sa approximationCurve;
+    unsigned int getApproximationCurve();
     
-    CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset);
+    /// Getter method for getting the approximation value of this task
+    /// @sa gap;
+    unsigned int getGap();
+    
+    /// Getter method for getting the direction of the approximation value of this task
+    /// @sa approximationCurve;
+    boolean getReversedApproximation();
+    
+//    class CCDeviceFlow;
+    
+    
+    unsigned char           taskID;
+
+    CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset, unsigned char taskID);
 
 
     void setStartDelay(unsigned long startDelay);
 
     void startByDate(unsigned long startTime);
     void startByButton(schedulerControlButton startButton);
-    void startAfterCompletionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask);
-    void startByTriggerpositionOf(schedulerDevice startTriggerDevice, scheduledTask startTriggerTask, signed long startTriggerPosition);
+    void startAfterCompletionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask);
+    void startByTriggerpositionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
     void switchToNextTaskByButton(schedulerControlButton switchingButton);
-    void switchToNextTaskAfterCompletionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask);
-    void switchToNextTaskByTriggerpositionOf(schedulerDevice switchingTriggerDevice, scheduledTask switchingTriggerTask, signed long switchingTriggerPosition);
+    void switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask);
+    void switchToNextTaskByTriggerpositionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
     void stopByButton(schedulerControlButton stopButton, stoppingMode stopping = STOP_NORMAL);
-    void stopAfterCompletionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, stoppingMode stopping);
-    void stopByTriggerpositionOf(schedulerDevice stopTriggerDevice, scheduledTask stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
+    void stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping);
+    void stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     
     void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
     
+    void stopDynamicallyBySensor_new(unsigned char sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation);
+    
+
     
 private:
     
@@ -184,17 +204,26 @@ private:
     unsigned long           timeout;
     schedulerControlButton  startButton;
     schedulerControlButton  stopButton;
-    schedulerDevice         startTriggerDevice;
-    scheduledTask           startTriggerTask;
+//    schedulerDevice         startTriggerDeviceID;
+    CCDevice*               startTriggerDevice;
+//    CCDeviceFlow*           startTriggerDeviceFlow;
+    scheduledTask           startTriggerTaskID;
+//    CCTask*                 startTriggerTask;
     signed long             startTriggerPosition;
-    schedulerDevice         stopTriggerDevice;
-    scheduledTask           stopTriggerTask;
+//    schedulerDevice         stopTriggerDeviceID;
+    CCDevice*               stopTriggerDevice;
+//    CCDeviceFlow*           stopTriggerDeviceFlow;
+    scheduledTask           stopTriggerTaskID;
+//    CCTask*                 stopTriggerTask;
     signed long             stopTriggerPosition;
     unsigned char           sensor;
     signed int              initiatePerformanceValue;
     signed int              targetValue;
     float                   stopPerformance;
     stoppingMode            stopping;
+    unsigned int            approximationCurve;
+    unsigned int            gap;
+    boolean                 reversedApproximation;
     approximationMode       approximation;
     
 };

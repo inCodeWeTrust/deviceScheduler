@@ -76,12 +76,6 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     
     this->type = STEPPERDEVICE;
     this->state = SLEEPING;
-    this->taskPointer = 0;
-    this->countOfTasks = 0;
-    
-    this->defaultVelocity = 0;
-    this->defaultAcceleration = 0;
-    this->defaultDeceleration = 0;
 
     this->currentMicroStep = 0;
     this->currentPosition = 0;

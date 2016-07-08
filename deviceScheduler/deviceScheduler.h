@@ -16,7 +16,7 @@
 
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
 
-typedef signed char schedulerDevice, scheduledTask, schedulerControlButton;
+typedef signed char schedulerDevice, schedulerControlButton, schedulerWorkflow, schedulerDeviceflow, scheduledTask;
 
 //  device type
 enum deviceType {

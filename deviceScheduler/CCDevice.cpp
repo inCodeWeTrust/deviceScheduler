@@ -11,31 +11,14 @@
 
 
 
-CCDevice::~CCDevice() {
-    deleteTasks();
-}
+CCDevice::~CCDevice() {}
 
-void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration) {
-    this->defaultVelocity = defaultVelocity;
-    this->defaultAcceleration = defaultAcceleration;
-    this->defaultDeceleration = defaultDeceleration;
-}
-void CCDevice::defineDefaults(float defaultVelocity, float defaultAcceleration) {
-    this->defaultVelocity = defaultVelocity;
-    this->defaultAcceleration = defaultAcceleration;
-    this->defaultDeceleration = defaultAcceleration;
-}
 
 
 
 
 String CCDevice::getDeviceName(){return deviceName;}
 deviceType CCDevice::getType(){return type;}
-unsigned char CCDevice::getCountOfTasks(){return countOfTasks;}
-void CCDevice::setCountOfTasks(unsigned char count){countOfTasks = count;}
-unsigned char CCDevice::getTaskPointer(){return taskPointer;}
-void CCDevice::setTaskPointer(unsigned char pointer){taskPointer = pointer;}
-void CCDevice::increaseTaskPointer(){taskPointer++;}
 float CCDevice::getCurrentPosition(){return currentPosition;}
 void CCDevice::setCurrentPosition(float position){currentPosition = position;}
 float CCDevice::getTarget(){return target;}
@@ -54,14 +37,16 @@ void CCDevice::setStopEvent(event stopEvent){this->stopEvent = stopEvent;}
 unsigned long CCDevice::getStartTime(){return startTime;}
 void CCDevice::setStartTime(unsigned long startTime){this->startTime = startTime;};
 unsigned long CCDevice::getTimeout(){return timeout;}
-schedulerControlButton CCDevice::getStartButton(){return startButton;}
-schedulerControlButton CCDevice::getStopButton(){return stopButton;}
-schedulerDevice CCDevice::getStartTriggerDevice(){return startTriggerDevice;}
-schedulerDevice CCDevice::getStopTriggerDevice(){return stopTriggerDevice;}
-scheduledTask CCDevice::getStartTriggerTask(){return startTriggerTask;}
-scheduledTask CCDevice::getStopTriggerTask(){return stopTriggerTask;}
-signed long CCDevice::getStartTriggerPosition(){return startTriggerPosition;}
-signed long CCDevice::getStopTriggerPosition(){return stopTriggerPosition;}
+//schedulerControlButton CCDevice::getStartButton(){return startButton;}
+//schedulerControlButton CCDevice::getStopButton(){return stopButton;}
+//schedulerDevice CCDevice::getStartTriggerDevice(){return startTriggerDeviceID;}
+//CCDevice* CCDevice::getStartTriggerDevice(){return startTriggerDevice;}
+//schedulerDevice CCDevice::getStopTriggerDevice(){return stopTriggerDeviceID;}
+//CCDevice* CCDevice::getStopTriggerDevice(){return stopTriggerDevice;}
+//scheduledTask CCDevice::getStartTriggerTaskID(){return startTriggerTaskID;}
+//scheduledTask CCDevice::getStopTriggerTaskID(){return stopTriggerTaskID;}
+//signed long CCDevice::getStartTriggerPosition(){return startTriggerPosition;}
+//signed long CCDevice::getStopTriggerPosition(){return stopTriggerPosition;}
 stoppingMode CCDevice::getStopping(){return stopping;}
 void CCDevice::setStopping(stoppingMode mode){stopping = mode;}
 boolean CCDevice::getSwitchTaskPromptly(){return switchTaskPromptly;}
@@ -70,6 +55,9 @@ unsigned char CCDevice::getSensor(){return sensor;}
 signed int CCDevice::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCDevice::getTargetValue(){return targetValue;}
 float CCDevice::getStopPerformance(){return stopPerformance;}
+unsigned int CCDevice::getApproximationCurve(){return approximationCurve;}
+unsigned int CCDevice::getGap(){return gap;}
+boolean CCDevice::getReversedApproximation(){return reversedApproximation;}
 approximationMode CCDevice::getApproximation(){return approximation;}
 
 

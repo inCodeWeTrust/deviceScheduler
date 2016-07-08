@@ -21,12 +21,6 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int min
     
     this->type = SERVODEVICE;
     this->state = SLEEPING;
-    this->taskPointer = 0;
-    this->countOfTasks = 0;
-    
-    this->defaultVelocity = 0;
-    this->defaultAcceleration = 0;
-    this->defaultDeceleration = 0;
     
     
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_MEMORYDEBUG) {
@@ -93,37 +87,43 @@ void CCServoDevice::detachDevice() {
 
 void CCServoDevice::reviewValues() {}
 
-void CCServoDevice::prepareNextTask() {
-    target = task[taskPointer]->getTarget();
-    velocity = task[taskPointer]->getVelocity();
-    acceleration = task[taskPointer]->getAcceleration();
-    deceleration = task[taskPointer]->getDeceleration();
-    moveRelativ = task[taskPointer]->getMoveRelativ();
-    startDelay = task[taskPointer]->getStartDelay();
+void CCServoDevice::prepareNextTask() {}
+
+void CCServoDevice::prepareTask(CCTask* nextTask) {
+
+    currentTaskID = nextTask->taskID;
     
-    startEvent = task[taskPointer]->getStartEvent();
-    startTime = task[taskPointer]->getStartTime();
-    startButton = task[taskPointer]->getStartButton();
-    startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
-    startTriggerTask = task[taskPointer]->getStartTriggerTask();
-    startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
+    target = nextTask->getTarget();
+    velocity = nextTask->getVelocity();
+    acceleration = nextTask->getAcceleration();
+    deceleration = nextTask->getDeceleration();
+    moveRelativ = nextTask->getMoveRelativ();
     
-    stopEvent = task[taskPointer]->getStopEvent();
-    timeout = task[taskPointer]->getTimeout();
-    stopButton = task[taskPointer]->getStopButton();
-    stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
-    stopTriggerTask = task[taskPointer]->getStopTriggerTask();
-    stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();
+    startDelay = nextTask->getStartDelay();
     
-    switchTaskPromptly = task[taskPointer]->getSwitchTaskPromptly();
-    stopping = task[taskPointer]->getStopping();
+    startEvent = nextTask->getStartEvent();
+    startTime = nextTask->getStartTime();
+//    startButton = nextTask->getStartButton();
+//    startTriggerDevice = nextTask->getStartTriggerDevice();
+//    startTriggerTaskID = nextTask->getStartTriggerTaskID();
+//    startTriggerPosition = nextTask->getStartTriggerPosition();
+    
+    stopEvent = nextTask->getStopEvent();
+    timeout = nextTask->getTimeout();
+//    stopButton = nextTask->getStopButton();
+//    stopTriggerDevice = nextTask->getStopTriggerDevice();
+//    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
+//    stopTriggerPosition = nextTask->getStopTriggerPosition();
+    
+    switchTaskPromptly = nextTask->getSwitchTaskPromptly();
+    stopping = nextTask->getStopping();
 
     
-    sensor = task[taskPointer]->getSensor();
-    initiatePerformanceValue = task[taskPointer]->getInitiatePerformanceValue();
-    targetValue = task[taskPointer]->getTargetValue();
-    stopPerformance = task[taskPointer]->getStopPerformance();
-    approximation = task[taskPointer]->getApproximation();
+    sensor = nextTask->getSensor();
+    initiatePerformanceValue = nextTask->getInitiatePerformanceValue();
+    targetValue = nextTask->getTargetValue();
+    stopPerformance = nextTask->getStopPerformance();
+    approximation = nextTask->getApproximation();
 
     dynamicalStop = false;
     valueCounter = 0;
@@ -213,9 +213,7 @@ void CCServoDevice::prepareNextTask() {
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_CALCULATIONDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": prepare move "));
-        Serial.print(taskPointer);
-        Serial.print(F(": "));
+        Serial.print(F(": prepareing... "));
         Serial.print(F("current: "));
         Serial.print(currentPosition);
         Serial.print(F(", start: "));
@@ -253,6 +251,34 @@ void CCServoDevice::prepareNextTask() {
         } else {
             Serial.println("no");
         }
+//        Serial.print(F("[CCServoDevice]: "));
+//        Serial.print(deviceName);
+//        Serial.print(F(": prepareing... "));
+//        Serial.print(F("startEvent: "));
+//        Serial.print(startEvent);
+//        Serial.print(F(", startTime: "));
+//        Serial.print(startTime);
+//        Serial.print(F(", startButton: "));
+//        Serial.print(startButton);
+//        Serial.print(F(", startTriggerDevice: "));
+//        Serial.print(startTriggerDevice->getDeviceName());
+//        Serial.print(F(", startTriggerTaskID: "));
+//        Serial.print(startTriggerTaskID);
+//        Serial.print(F(", startTriggerPosition: "));
+//        Serial.print(startTriggerPosition);
+//        Serial.print(F("stopEvent: "));
+//        Serial.print(stopEvent);
+//        Serial.print(F(", stopTime: "));
+//        Serial.print(timeout);
+//        Serial.print(F(", stopButton: "));
+//        Serial.print(stopButton);
+//        Serial.print(F(", stopTriggerDevice: "));
+//        Serial.print(stopTriggerDevice->getDeviceName());
+//        Serial.print(F(", stopTriggerTaskID: "));
+//        Serial.print(stopTriggerTaskID);
+//        Serial.print(F(", stopTriggerPosition: "));
+//        Serial.println(stopTriggerPosition);
+        
     }
 }
 
@@ -263,8 +289,7 @@ void CCServoDevice::startTask() {
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": start move "));
-        Serial.print((int)taskPointer);
+        Serial.print(F(": starting task"));
         Serial.print(F(", sensor: "));
         Serial.println(analogRead(A5));
     }
@@ -287,6 +312,14 @@ void CCServoDevice::initiateStop() {
 
 void CCServoDevice::stopTask() {
     state = MOVE_DONE;
+
+    if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
+        Serial.print(F("[CCServoDevice]: "));
+        Serial.print(deviceName);
+        Serial.print(F(": stopping task"));
+        Serial.print(F(", sensor: "));
+        Serial.println(analogRead(A5));
+    }
 }
 void CCServoDevice::finishTask() {
     state = SLEEPING;
@@ -294,8 +327,7 @@ void CCServoDevice::finishTask() {
     if (CCSERVODEVICE_VERBOSE & CCSERVODEVICE_BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": stop: move "));
-        Serial.print((int)taskPointer);
+        Serial.print(F(": task done"));
         Serial.print(F(", sensor: "));
         Serial.println(analogRead(A5));
     }

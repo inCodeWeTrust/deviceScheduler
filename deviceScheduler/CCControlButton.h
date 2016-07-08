@@ -45,7 +45,8 @@ class CCControlButton {
 
 public:
     
-    boolean             readButtonState();
+    void                readButtonState();
+    boolean             readIfActiv();
     boolean             getState();
     boolean             isActiv();
     
