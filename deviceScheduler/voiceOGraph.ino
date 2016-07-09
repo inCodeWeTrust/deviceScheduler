@@ -68,7 +68,7 @@ void loop() {
     // ============= register devices: ================================================================================================
     // ============================================================================================================================
     
-    CCDevice* turnServo = scheduler->addServoWithCounterServo(SERVO_LIFT_NAME,
+    CCDevice* liftServo = scheduler->addServoWithCounterServo(SERVO_LIFT_NAME,
                                                                     SERVO_LIFT_LEFT_PIN,
                                                                     SERVO_LIFT_LEFT_MIN_POSITION,
                                                                     SERVO_LIFT_LEFT_MID_POSITION,
@@ -78,15 +78,13 @@ void loop() {
                                                                     SERVO_LIFT_RIGHT_MID_POSITION,
                                                                     SERVO_LIFT_RIGHT_MAX_POSITION,
                                                                     LIFT_PARK_POSITION);
-    //    scheduler->device[liftServo]->defineDefaults(LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
     
     
-    CCDevice* liftServo = scheduler->addServo(SERVO_TURN_NAME,
+    CCDevice* turnServo = scheduler->addServo(SERVO_TURN_NAME,
                                                     SERVO_TURN_PIN,
                                                     SERVO_TURN_MIN_POSITION,
                                                     SERVO_TURN_MAX_POSITION,
                                                     TURN_STOCK_POSITION);
-    //    scheduler->device[turnServo]->defineDefaults(TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
     
     
     CCDevice* pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
@@ -94,7 +92,6 @@ void loop() {
                                                     SERVO_PUMP_MIN_POSITION,
                                                     SERVO_PUMP_MAX_POSITION,
                                                     PUMP_PARK_POSITION);
-    //    scheduler->device[pumpServo]->defineDefaults(PUMP_SPEED, PUMP_ACCEL);
     
     /*
      schedulerDevice headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
@@ -167,24 +164,24 @@ void loop() {
      CONTROLLER_LAMP_RED_ACTIV);
      
      
+     */
      
-     
-     schedulerControlButton recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
+     CCControlButton* recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
      RECORDAVAILABLE_BUTTON_PIN,
      RECORDAVAILABLE_BUTTON_ACTIV,
      RECORDAVAILABLE_BUTTON_PULLUP);
      
-     schedulerControlButton stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
+     CCControlButton* stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
      STOCKTOP_BUTTON_PIN,
      STOCKTOP_BUTTON_ACTIV,
      STOCKTOP_BUTTON_PULLUP);
      
-     schedulerControlButton stockBottomButton = scheduler->addControlButton(STOCKBOTTOM_BUTTON_NAME,
+     CCControlButton* stockBottomButton = scheduler->addControlButton(STOCKBOTTOM_BUTTON_NAME,
      STOCKBOTTOM_BUTTON_PIN,
      STOCKBOTTOM_BUTTON_ACTIV,
      STOCKBOTTOM_BUTTON_PULLUP);
      
-     
+     /*
      
      schedulerControlButton bridgeParkButton = scheduler->addControlButton(CAT_PARKBUTTON_NAME,
      CAT_PARKBUTTON_PIN,
@@ -279,11 +276,14 @@ void loop() {
          //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
          scheduledTask lowerRecordToTable = fetchingRecord->device[liftServo]->addTask(LIFT_TABLE_POSITION);
          fetchingRecord->device[liftServo]->task[lowerRecordToTable]->startByTriggerpositionOf(turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
-         
+         */
          //  release new record: release vacuum
-         scheduledTask pumpForRelease_down = fetchingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION);
-         fetchingRecord->device[pumpServo]->task[pumpForRelease_down]->startAfterCompletionOf(liftServo, lowerRecordToTable);
-         
+        CCTask* pumpForRelease_down;
+        pumpForRelease_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
+        pumpForRelease_down->startAfterCompletionOf(pumpServo, pumpForGrip_up);
+        pumpForRelease_down->setStartDelay(500);
+//        pumpForRelease_down->startAfterCompletionOf(liftServo, lowerRecordToTable);
+         /*
          //  lift for going to park position: start when vacuum was released
          scheduledTask liftForParkPosition = fetchingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
          fetchingRecord->device[liftServo]->task[liftForParkPosition]->startAfterCompletionOf(pumpServo, pumpForRelease_down);
@@ -307,6 +307,11 @@ void loop() {
          
          
          */
+        
+        fetchingRecord->addControllButton(stockBottomButton);
+        CCAction* stockBottomAction = stockBottomButton->addAction("stockBottomAction");
+        stockBottomAction->evokeBreak();
+        
         
 //         fetchingRecord->reviewTasks();
         scheduler->getAllTasksOfAllDeviceFlowsOfWorkflow(fetchingRecord);

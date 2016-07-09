@@ -11,7 +11,7 @@
 
 
 #include "deviceScheduler.h"
-
+#include "CCAction.h"
 
 
 #define CCCONTROLBUTTON_BASICOUTPUT           0x01
@@ -29,29 +29,20 @@
 
 #define CONTROLLBUTTON_PRESSED_NOTIFICATION     "endpoint reached"
 
-class CCControlButton {
-    
-    struct buttonAction {
-    public:
-        schedulerDevice     targetDevice;
-        scheduledTask       validTask;
-        deviceAction        targetAction;
-        scheduledTask       followingTask;
-        int                 notificationCode;
-        String              notificationText;
-        boolean             actionDone;
-    };
-    buttonAction        *action;
 
+class CCDeviceFlow;
+
+class CCControlButton {
 public:
+    
+    CCAction*           action[8];
+
     
     void                readButtonState();
     boolean             readIfActiv();
     boolean             getState();
     boolean             isActiv();
     
-    buttonAction        getAction(unsigned char a);
-    void                setActionDone(unsigned char a);
     String              getButtonName();
     unsigned char       getCountOfActions();
     String              getButtonActiv();
@@ -60,12 +51,8 @@ public:
     CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     ~CCControlButton();
     
-    void evokeTaskJumpToTask(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, scheduledTask followingTask, int notificationCode = 0, String notificationText = "");
-    void evokeTaskJump(schedulerDevice targetDevice, scheduledTask validTask, deviceAction targetAction, int notificationCode = 0, String notificationText = "");
-    
-    void evokeBreak(schedulerDevice targetDevice, scheduledTask validTask, int notificationCode = 0, String notificationText = "");
-    void evokeBreak(int notificationCode = 0, String notificationText = "");
-
+    CCAction*           addAction(String actionName);
+   
     void deleteActions();
     
     

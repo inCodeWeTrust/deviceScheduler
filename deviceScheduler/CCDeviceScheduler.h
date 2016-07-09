@@ -22,6 +22,7 @@
 #include "CCDcControllerDevice.h"
 #include "CCDcControllerDevice_fullBridge.h"
 #include "CCControlButton.h"
+#include "CCAction.h"
 
 #include "CCWorkflow.h"
 
@@ -64,12 +65,15 @@ class CCDeviceScheduler {
     CCDevice* triggerDevice_start;
     CCDevice* triggerDevice_stop;
     
+    CCControlButton* currentButton;
+    CCAction* currentAction;
+    
     int notificationCode;
     String  notificationText;
     
     
-    void handleStartEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow, CCDevice* currentDevice);
-    void handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow, CCDevice* currentDevice);
+    void handleStartEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
+    void handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
     
     String getNameOfDeviceType(deviceType t);
     String getNameOfTaskEvent(event e);
@@ -177,7 +181,7 @@ public:
     /// @param buttonActiv the state of the pin, where the button should trigger actions.
     /// @param pullup if a nonzero value is passed, the input pullup is activated.
     /// @return the button index.
-    schedulerControlButton addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
+    CCControlButton* addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.

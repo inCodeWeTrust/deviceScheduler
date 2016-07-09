@@ -19,7 +19,7 @@
 #define CCSERVODEVICE_CROSS_CALCULATIONDEBUG    0x04
 #define CCSERVODEVICE_CROSS_MOVEMENTDEBUG       0x08
 
-#define CCSERVODEVICE_CROSS_VERBOSE             0x00
+#define CCSERVODEVICE_CROSS_VERBOSE             0x0f
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

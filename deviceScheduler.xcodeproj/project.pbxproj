@@ -25,6 +25,7 @@
 		A45F728A1B1C71EB00B5B7E0 /* CCStepperDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */; };
 		A48C24731C3E674600EB3EFA /* CCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A48C24711C3E674600EB3EFA /* CCTask.cpp */; };
 		A4ADAFD21D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */; };
+		A4ADAFEA1D31BA1A006C8B3B /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4ADAFE81D31BA1A006C8B3B /* CCAction.cpp */; };
 		A4EB61841D129369000762B0 /* CCWorkflow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EB61821D129369000762B0 /* CCWorkflow.cpp */; };
 		A4EB61871D12B6F6000762B0 /* CCDeviceFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */; };
 		AA2A150601125914AA000006 /* abi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AAAA150601125914AA000006 /* abi.cpp */; };
@@ -887,6 +888,8 @@
 		A48C24721C3E674600EB3EFA /* CCTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTask.h; sourceTree = "<group>"; };
 		A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDcControllerDevice_fullBridge.cpp; sourceTree = "<group>"; };
 		A4ADAFD11D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDcControllerDevice_fullBridge.h; sourceTree = "<group>"; };
+		A4ADAFE81D31BA1A006C8B3B /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
+		A4ADAFE91D31BA1A006C8B3B /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		A4EB61821D129369000762B0 /* CCWorkflow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCWorkflow.cpp; sourceTree = "<group>"; };
 		A4EB61831D129369000762B0 /* CCWorkflow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCWorkflow.h; sourceTree = "<group>"; };
 		A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDeviceFlow.cpp; sourceTree = "<group>"; };
@@ -1854,6 +1857,8 @@
 				A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */,
 				40253D951CAF2136008A99E5 /* CCControlButton.h */,
 				40253D941CAF2136008A99E5 /* CCControlButton.cpp */,
+				A4ADAFE81D31BA1A006C8B3B /* CCAction.cpp */,
+				A4ADAFE91D31BA1A006C8B3B /* CCAction.h */,
 			);
 			name = devices;
 			sourceTree = "<group>";
@@ -4263,6 +4268,7 @@
 				AA2A150601125914AA00010E /* GSM3ShieldV1DirectModemProvider.h in Sources */,
 				AA2A150601125914AA00010F /* GSM3ShieldV1ModemCore.cpp in Sources */,
 				AA2A150601125914AA000110 /* GSM3ShieldV1ModemCore.h in Sources */,
+				A4ADAFEA1D31BA1A006C8B3B /* CCAction.cpp in Sources */,
 				AA2A150601125914AA000111 /* GSM3ShieldV1ModemVerification.cpp in Sources */,
 				AA2A150601125914AA000112 /* GSM3ShieldV1ModemVerification.h in Sources */,
 				AA2A150601125914AA000113 /* GSM3ShieldV1MultiClientProvider.cpp in Sources */,

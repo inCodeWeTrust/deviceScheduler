@@ -11,7 +11,7 @@
 
 #include "deviceScheduler.h"
 #include "CCDeviceFlow.h"
-
+#include "CCControlButton.h"
 
 
 class CCWorkflow {
@@ -25,6 +25,9 @@ public:
     
     CCDeviceFlow        *deviceFlow[10];
     
+    
+    unsigned char       countOfControlButtons;
+    CCControlButton     *controlButton[6];
     
     CCWorkflow(String name);
     
@@ -65,6 +68,9 @@ public:
     
     /// Function deletes all tasks of the device.
     void deleteAllDeviceFlows();
+    
+    
+    void addControllButton(CCControlButton* controlButton);
 
 //    void getDeviceFlow(unsigned char df);
 //    void getAllDeviceFlows();
