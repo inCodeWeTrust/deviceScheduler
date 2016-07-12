@@ -167,7 +167,7 @@ public:
 
     /// Function lists all registered devices.
     /// A list with all devices and bare informations are presented.
-    void getAllDevices();
+    void listDevices();
     
 
     
@@ -185,7 +185,7 @@ public:
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.
-    void getAllControlButtons();
+    void listControlButtons();
     
 
     void getAllTasksOfAllDeviceFlowsOfWorkflow(CCWorkflow* workflow);

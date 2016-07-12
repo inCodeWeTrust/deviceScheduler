@@ -36,8 +36,9 @@ CCDeviceFlow* CCWorkflow::addDeviceFlow(String deviceFlowName, CCDevice* device)
 }
 
 
-void CCWorkflow::addControllButton(CCControlButton* controlButton) {
+CCControlButton* CCWorkflow::addButtonControl(CCControlButton* controlButton) {
     this->controlButton[countOfControlButtons++] = controlButton;
+    return this->controlButton[countOfControlButtons - 1];
 }
 
 /*

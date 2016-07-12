@@ -260,7 +260,7 @@ CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned char 
 }
 
 
-void CCDeviceScheduler::getAllDevices() {
+void CCDeviceScheduler::listDevices() {
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
     Serial.println(F(": Devices: "));
@@ -300,7 +300,7 @@ CCControlButton* CCDeviceScheduler::addControlButton(String buttonName, unsigned
 
 }
 
-void CCDeviceScheduler::getAllControlButtons() {
+void CCDeviceScheduler::listControlButtons() {
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
     Serial.println(F(": ControlButtons: "));

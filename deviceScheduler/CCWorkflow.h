@@ -70,7 +70,7 @@ public:
     void deleteAllDeviceFlows();
     
     
-    void addControllButton(CCControlButton* controlButton);
+    CCControlButton* addButtonControl(CCControlButton* controlButton);
 
 //    void getDeviceFlow(unsigned char df);
 //    void getAllDeviceFlows();

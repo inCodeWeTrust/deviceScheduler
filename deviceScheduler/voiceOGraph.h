@@ -512,8 +512,8 @@
 ///                                                                                     STOCKBOTTOM_BUTTON_ACTIV,
 ///                                                                                     STOCKBOTTOM_BUTTON_PULLUP);
 ///
-///         fetchingRecord->getAllDevices();
-///         fetchingRecord->getAllControlButtons();
+///         fetchingRecord->listDevices();
+///         fetchingRecord->listControlButtons();
 ///
 ///
 ///
@@ -674,8 +674,8 @@
 ///                                                                                    SONG_CANCELBUTTON_PULLUP);
 ///
 ///
-///         cuttingProcess->getAllDevices();
-///         cuttingProcess->getAllControlButtons();
+///         cuttingProcess->listDevices();
+///         cuttingProcess->listControlButtons();
 ///
 ///
 ///
@@ -836,8 +836,8 @@
 ///
 ///
 ///
-///         ejectingRecord->getAllDevices();
-///         ejectingRecord->getAllControlButtons();
+///         ejectingRecord->listDevices();
+///         ejectingRecord->listControlButtons();
 ///
 ///
 ///
