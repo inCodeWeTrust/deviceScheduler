@@ -10,7 +10,7 @@
 #define __deviceScheduler__CCAction__
 
 #include "deviceScheduler.h"
-
+#include "CCTask.h"
 
 class CCDeviceFlow;
 
@@ -23,17 +23,21 @@ public:
     scheduledTask       followingTaskID;
     int                 notificationCode;
     String              notificationText;
+    infoCode            workflowInfoCode;
     boolean             actionDone;
     
-    CCAction(String actionName);
-    ~CCAction();
+    CCAction(String actionName, infoCode workflowInfoCode);
+//    ~CCAction();
     
-    void evokeTaskJumpToTask(CCDeviceFlow* targetDeviceFlow, scheduledTask validTaskID, deviceAction targetAction, scheduledTask followingTaskID, int notificationCode = 0, String notificationText = "");
-    void evokeTaskJump(CCDeviceFlow* targetDeviceFlow, scheduledTask validTaskID, deviceAction targetAction, int notificationCode = 0, String notificationText = "");
+    void evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction, CCTask* followingTask);
+//    , int notificationCode = 0, String notificationText = "");
+    void evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction);
+//    , int notificationCode = 0, String notificationText = "");
     
-    void evokeBreak(CCDeviceFlow* targetDeviceFlow, scheduledTask validTaskID, int notificationCode = 0, String notificationText = "");
-    void evokeBreak(int notificationCode = 0, String notificationText = "");
-
+    void evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask);
+//    , int notificationCode = 0, String notificationText = "");
+    void evokeBreak();
+//    int notificationCode = 0, String notificationText = "");
     
     void                setActionDone();
 

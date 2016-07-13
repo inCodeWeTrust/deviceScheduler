@@ -17,7 +17,7 @@
 #define CCCONTROLBUTTON_BASICOUTPUT           0x01
 #define CCCONTROLBUTTON_MEMORYDEBUG           0x02
 
-#define CCCONTROLBUTTON_VERBOSE               0
+#define CCCONTROLBUTTON_VERBOSE               0x03
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

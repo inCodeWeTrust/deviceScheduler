@@ -18,7 +18,7 @@
 #define CCDcControllerDevice_fullBridge_CALCULATIONDEBUG    0x04
 #define CCDcControllerDevice_fullBridge_MOVEMENTDEBUG       0x08
 
-#define CCDcControllerDevice_fullBridge_VERBOSE             0
+#define CCDcControllerDevice_fullBridge_VERBOSE             0x0f
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

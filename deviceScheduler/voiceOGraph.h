@@ -254,9 +254,11 @@
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-//#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
 #define RECORDAVAILABLE_BUTTON_ACTIV        LOW
 #define RECORDAVAILABLE_BUTTON_PULLUP       true
+
+#define RECORDNOTAVAILABLE_BUTTON_NAME      "recordNotAvailableButton"
+#define RECORDNOTAVAILABLE_BUTTON_ACTIV     HIGH
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
 #define STOCKBOTTOM_BUTTON_PIN              47
@@ -589,9 +591,9 @@
 ///
 ///
 ///         //  cancel loading if stockBottomButton is pressed
-///         fetchingRecord->controlButton[stockTopButton]->evokeTaskJump(stockStepper, supplyRecord, STOP);
-///         fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(liftServo, liftFromParkPosition, STOP_SHARP_AND_SWITCH, lowerForParkPosition + 1);
-///         fetchingRecord->controlButton[stockTopButton]->evokeTaskJumpToTask(turnServo, turnRecordToTable, STOP_SHARP_AND_SWITCH, turnToStockPosition + 1);
+///         fetchingRecord->controlButton[stockTopButton]->evokeJumpToNextTask(stockStepper, supplyRecord, STOP);
+///         fetchingRecord->controlButton[stockTopButton]->evokeJumpToTask(liftServo, liftFromParkPosition, STOP_SHARP_AND_SWITCH, lowerForParkPosition + 1);
+///         fetchingRecord->controlButton[stockTopButton]->evokeJumpToTask(turnServo, turnRecordToTable, STOP_SHARP_AND_SWITCH, turnToStockPosition + 1);
 ///
 ///
 ///
@@ -762,12 +764,12 @@
 ///
 ///
 ///         //  jump over to end groove if songEndButton is pressed
-///         cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, makeEndGroove);
+///         cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, makeEndGroove);
 ///
 ///         //  cancel cutting if songCancelButton is pressed
-///         cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeStartGroove, STOP_AND_SWITCH, driveToParkPosition);
-///         cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, driveToParkPosition);
-///         cuttingProcess->controlButton[songCancelButton]->evokeTaskJump(catStepper, makeEndGroove, STOP);
+///         cuttingProcess->controlButton[songCancelButton]->evokeJumpToTask(catStepper, makeStartGroove, STOP_AND_SWITCH, driveToParkPosition);
+///         cuttingProcess->controlButton[songCancelButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_AND_SWITCH, driveToParkPosition);
+///         cuttingProcess->controlButton[songCancelButton]->evokeJumpToNextTask(catStepper, makeEndGroove, STOP);
 ///
 ///
 ///

@@ -22,13 +22,17 @@
 
 
 // ------------- globals -----------------------------------------------------------------------------------------------------
-/// The Scheduler's device array.
-/// Array of all devices.
-CCDevice *device[12];
-/// Array of all control-inputs.
-CCControlButton *controlButton[8];
+
+/// The Scheduler and it's device array
 
 CCDeviceScheduler   *scheduler;
+
+CCDevice            *device[12];
+CCControlButton     *controlButton[10];
+
+
+
+/// parameters for cutting
 
 unsigned long       catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
 float               catMotorSpeed_startGroove, catMotorSpeed_song, catMotorSpeed_endGroove;
@@ -45,6 +49,7 @@ void freeRam ();
 
 extern char _end;
 extern "C" char *sbrk(int i);
+
 
 
 // ------------- main loop --------------------------------------------------------------------------------------------------
@@ -69,22 +74,22 @@ void loop() {
     // ============================================================================================================================
     
     CCDevice* liftServo = scheduler->addServoWithCounterServo(SERVO_LIFT_NAME,
-                                                                    SERVO_LIFT_LEFT_PIN,
-                                                                    SERVO_LIFT_LEFT_MIN_POSITION,
-                                                                    SERVO_LIFT_LEFT_MID_POSITION,
-                                                                    SERVO_LIFT_LEFT_MAX_POSITION,
-                                                                    SERVO_LIFT_RIGHT_PIN,
-                                                                    SERVO_LIFT_RIGHT_MIN_POSITION,
-                                                                    SERVO_LIFT_RIGHT_MID_POSITION,
-                                                                    SERVO_LIFT_RIGHT_MAX_POSITION,
-                                                                    LIFT_PARK_POSITION);
-    
+                                                              SERVO_LIFT_LEFT_PIN,
+                                                              SERVO_LIFT_LEFT_MIN_POSITION,
+                                                              SERVO_LIFT_LEFT_MID_POSITION,
+                                                              SERVO_LIFT_LEFT_MAX_POSITION,
+                                                              SERVO_LIFT_RIGHT_PIN,
+                                                              SERVO_LIFT_RIGHT_MIN_POSITION,
+                                                              SERVO_LIFT_RIGHT_MID_POSITION,
+                                                              SERVO_LIFT_RIGHT_MAX_POSITION,
+                                                              LIFT_PARK_POSITION);
+
     
     CCDevice* turnServo = scheduler->addServo(SERVO_TURN_NAME,
-                                                    SERVO_TURN_PIN,
-                                                    SERVO_TURN_MIN_POSITION,
-                                                    SERVO_TURN_MAX_POSITION,
-                                                    TURN_STOCK_POSITION);
+                                              SERVO_TURN_PIN,
+                                              SERVO_TURN_MIN_POSITION,
+                                              SERVO_TURN_MAX_POSITION,
+                                              TURN_STOCK_POSITION);
     
     
     CCDevice* pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
@@ -157,10 +162,20 @@ void loop() {
      
      
     
+    //============================================================================================================================
+    // ============= register sensors: ================================================================================================
+    // ============================================================================================================================
+    
+
     
     CCControlButton* recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
                                                                          RECORDAVAILABLE_BUTTON_PIN,
                                                                          RECORDAVAILABLE_BUTTON_ACTIV,
+                                                                         RECORDAVAILABLE_BUTTON_PULLUP);
+    
+    CCControlButton* recordNotAvailableButton = scheduler->addControlButton(RECORDNOTAVAILABLE_BUTTON_NAME,
+                                                                         RECORDAVAILABLE_BUTTON_PIN,
+                                                                         RECORDNOTAVAILABLE_BUTTON_ACTIV,
                                                                          RECORDAVAILABLE_BUTTON_PULLUP);
     
     CCControlButton* stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
@@ -197,7 +212,8 @@ void loop() {
     scheduler->listDevices();
     scheduler->listControlButtons();
     
-    
+    delay(1000);
+    Serial.println("now the work flowing");
         // ============================================================================================================================
         // ============= initialisation of fetchingRecord: ============================================================================
         // ============================================================================================================================
@@ -217,6 +233,10 @@ void loop() {
         CCDeviceFlow* pumpServoFlow = fetchingRecord->addDeviceFlow("pumpServoFlow", pumpServo, 300, 301, 302);
         CCDeviceFlow* stockStepperFlow = fetchingRecord->addDeviceFlow("stockStepperFlow", stockStepper, 400, 401, 402);
         
+        CCFlowControl* stockTopControl = fetchingRecord->addFlowControl("stockTopControl", stockTopButton);
+        CCFlowControl* stockBottomControl = fetchingRecord->addFlowControl("stockBottomControl", stockBottomButton);
+
+        
         //  lift grappler
         CCTask* liftFromParkPosition;
         liftFromParkPosition = liftServoFlow->addTask(LIFT_PARK_POSITION + 500, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
@@ -224,32 +244,30 @@ void loop() {
 
         //  move stock down first
         CCTask* moveStockStepperDown;
-        moveStockStepperDown = stockStepperFlow->addTaskMoveRelativ(-4000);
-        moveStockStepperDown->startByDate(100);
-        moveStockStepperDown->stopByButton(stockBottomButton, STOP_NORMAL);
+        moveStockStepperDown = stockStepperFlow->addTaskMoveRelativ(-40000);
+        moveStockStepperDown->startByDate(1000);
+        moveStockStepperDown->stopByButton(recordNotAvailableButton, STOP_NORMAL);
          
          //  supply a new record, terminated by recordAvailableButton
         CCTask* supplyRecord;
-        supplyRecord = stockStepperFlow->addTaskMoveRelativ(16000);
+        supplyRecord = stockStepperFlow->addTaskMoveRelativ(40000);
         supplyRecord->startAfterCompletionOf(stockStepper, moveStockStepperDown);
         supplyRecord->stopByButton(recordAvailableButton, STOP_NORMAL);
         
         //  lower grappler to stock: start when record is available
         CCTask* lowerToStock;
         lowerToStock = liftServoFlow->addTask(LIFT_STOCK_POSITION);
-//        lowerToStock->startByButton(recordAvailableButton);
-        lowerToStock->startAfterCompletionOf(liftServo, liftFromParkPosition);
+        lowerToStock->startByButton(recordAvailableButton);
         
          //  pump: prepare
         CCTask* pumpForGrip_down;
         pumpForGrip_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
         pumpForGrip_down->startByTriggerpositionOf(liftServo, lowerToStock, LIFT_STOCK_POSITION + 60);
-//        pumpForGrip_down->startAfterCompletionOf(liftServo, lowerToStock);
         
          //  pump: make vaccum
         CCTask* pumpForGrip_up;
         pumpForGrip_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
-        pumpForGrip_up->startAfterCompletionOf(pumpServo, pumpForGrip_down);
+        pumpForGrip_up->startAfterCompletionOf(liftServo, lowerToStock);
          
          //  lift the new record
         CCTask* liftNewRecord;
@@ -259,7 +277,7 @@ void loop() {
          //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnRecordToTable;
         turnRecordToTable = turnServoFlow->addTask(TURN_TABLE_POSITION);
-        turnRecordToTable->startAfterCompletionOf(liftServo, liftNewRecord);
+        turnRecordToTable->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
          
          //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
          CCTask* lowerRecordToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION);
@@ -269,9 +287,8 @@ void loop() {
         CCTask* pumpForRelease_down;
         pumpForRelease_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
         pumpForRelease_down->startAfterCompletionOf(pumpServo, pumpForGrip_up);
-        pumpForRelease_down->setStartDelay(500);
-//        pumpForRelease_down->startAfterCompletionOf(liftServo, lowerRecordToTable);
-
+        pumpForRelease_down->startByTriggerpositionOf(liftServo, lowerRecordToTable, LIFT_TABLE_POSITION + 60);
+        
         //  lift for going to park position: start when vacuum was released
         CCTask* liftForParkPosition;
         liftForParkPosition = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
@@ -279,7 +296,7 @@ void loop() {
         
          //  release pump when record is placed
         CCTask* pumpForRelease_up;
-        pumpForRelease_up = fetchingRecord->device[pumpServo]->addTask(PUMP_PARK_POSITION);
+        pumpForRelease_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
         pumpForRelease_up->startAfterCompletionOf(liftServo, liftForParkPosition);
          
          //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
@@ -295,23 +312,20 @@ void loop() {
 
          
          //  cancel loading if stockBottomButton is pressed while lowering
-        CCControlButton* stockTopControl;
-        stockTopControl = fetchingRecord->addButtonControl(stockTopButton);
 
-        CCAction* stopStockAtBottom = stockTopControl->addAction("stopWhenStockBottomReached");
-        stopStockAtBottom-> evokeBreak(stockStepperFlow, moveStockStepperDown);
-        CCAction* stockTopAction->evokeBreak(stockStepper, moveStockStepperDown, 66, "stock empty!");
-         
-         
-         */
+        CCAction* postWorkflowInfo = stockTopControl->addAction("lastRecordInfo",  WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED);
+//        postWorkflowInfo->notificationCode = CONTINUE_ON_ENDBUTTON_REACHED;
+//        postWorkflowInfo->notificationText = "running out of stock!\n";
         
-        fetchingRecord->addControllButton(stockBottomButton);
-        CCAction* stockBottomAction = stockBottomButton->addAction("stockBottomAction");
-        stockBottomAction->evokeBreak();
+        CCAction* stopStockAtBottom;
+        stopStockAtBottom = stockBottomControl->addAction("stopWhenStockBottomReached", WORKFLOW_CANCELED_ON_ENDBUTTON_REACHED);
+//        stopStockAtBottom->notificationCode = BREAK_ON_ENDBUTTON_REACHED;
+//        stopStockAtBottom->notificationText = "too many records in stock!\n";
+        
         
         
 //         fetchingRecord->reviewTasks();
-        scheduler->getAllTasksOfAllDeviceFlowsOfWorkflow(fetchingRecord);
+        scheduler->listAllTasksOfAllDeviceFlowsOfWorkflow(fetchingRecord);
 //         fetchingRecord->getAllActions();
         
         freeRam();
@@ -458,12 +472,12 @@ void loop() {
          
          
          //  jump over to end groove if songEndButton is pressed
-         cuttingProcess->controlButton[songEndButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
+         cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
          
          //  cancel cutting if songCancelButton is pressed
-         cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeStartGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
-         cuttingProcess->controlButton[songCancelButton]->evokeTaskJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
-         cuttingProcess->controlButton[songCancelButton]->evokeTaskJump(catStepper, makeEndGroove, STOP_TASK);
+         cuttingProcess->controlButton[songCancelButton]->evokeJumpToTask(catStepper, makeStartGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
+         cuttingProcess->controlButton[songCancelButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
+         cuttingProcess->controlButton[songCancelButton]->evokeJumpToNextTask(catStepper, makeEndGroove, STOP_TASK);
          
          
          
@@ -632,8 +646,8 @@ void loop() {
      loading->device[stockStepper]->task[comeUpAgain]->startAfterCompletionOf(stockStepper, driveDown);
      loading->device[stockStepper]->task[comeUpAgain]->stopByButton(stockTopButton);
      
-     loading->controlButton[loadingButton]->evokeTaskJump(stockStepper, driveDown, STOP_TASK);
-     loading->controlButton[recordAvailableButton]->evokeTaskJump(stockStepper, comeUpAgain, STOP_TASK);
+     loading->controlButton[loadingButton]->evokeJumpToNextTask(stockStepper, driveDown, STOP_TASK);
+     loading->controlButton[recordAvailableButton]->evokeJumpToNextTask(stockStepper, comeUpAgain, STOP_TASK);
      
      loading->reviewTasks();
      loading->run();

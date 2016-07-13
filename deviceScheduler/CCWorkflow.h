@@ -11,7 +11,7 @@
 
 #include "deviceScheduler.h"
 #include "CCDeviceFlow.h"
-#include "CCControlButton.h"
+#include "CCFlowControl.h"
 
 
 class CCWorkflow {
@@ -22,15 +22,18 @@ public:
     /// Parameters of the device as a peer of a run-loop.
     /// Value, that holds the number of tasks to be executed within this run-loop.
     unsigned char       countOfDeviceFlows;
+
+    infoCode            workflowInfo;
+    String              infoHistory;
     
     CCDeviceFlow        *deviceFlow[10];
     
     
-    unsigned char       countOfControlButtons;
-    CCControlButton     *controlButton[6];
+    unsigned char       countOfFlowControls;
+    CCFlowControl       *flowControl[6];
     
     CCWorkflow(String name);
-    
+    ~CCWorkflow();
     
     /// Function declares a task-flow for a device and returns its index.
     /// It creates an instance of [CCDeviceFlow](@ref deviceFlow) and puts it into the deviceFlow array of the workflow.
@@ -70,8 +73,11 @@ public:
     void deleteAllDeviceFlows();
     
     
-    CCControlButton* addButtonControl(CCControlButton* controlButton);
+    CCFlowControl* addFlowControl(String controlName, CCControlButton* controlButton);
 
+    
+    void postWorkflowInfo(infoCode info);
+    
 //    void getDeviceFlow(unsigned char df);
 //    void getAllDeviceFlows();
 //    void getTasksForDeviceFlow(unsigned char df);

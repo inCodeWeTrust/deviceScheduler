@@ -53,17 +53,6 @@ CCControlButton::~CCControlButton() {
 }
 
 
-CCAction* CCControlButton::addAction(String actionName) {
-    Serial.print(F("[CCControlButton]: add Action for "));
-    Serial.println(buttonName);
-
-    action[countOfActions++] = new CCAction(actionName);
-    return action[countOfActions - 1];
-}
-
-void CCControlButton::deleteActions() {
-    countOfActions = 0; 
-}
 
 
 void CCControlButton::readButtonState() {
@@ -103,7 +92,6 @@ boolean CCControlButton::getState(){return state;}
 
 String CCControlButton::getButtonName(){return buttonName;}
 String CCControlButton::getButtonActiv(){if (buttonActiv) return "HIGH"; return "LOW";}
-unsigned char CCControlButton::getCountOfActions(){return countOfActions;}
 
 
 

@@ -52,7 +52,7 @@ void CCTask::startByDate(unsigned long startTime) {
     this->startEvent = DATE;
     this->startTime = startTime;
 }
-void CCTask::startByButton(schedulerControlButton startButton) {
+void CCTask::startByButton(CCControlButton* startButton) {
     this->startEvent = BUTTON;
     this->startButton = startButton;
 }
@@ -73,7 +73,7 @@ void CCTask::switchToNextTaskByDate(unsigned long switchingTimeout) {
     this->timeout = switchingTimeout;
     this->switchTaskPromptly = true;
 }
-void CCTask::switchToNextTaskByButton(schedulerControlButton switchingButton) {
+void CCTask::switchToNextTaskByButton(CCControlButton* switchingButton) {
     this->stopEvent = BUTTON;
     this->stopButton = switchingButton;
     this->switchTaskPromptly = true;
@@ -97,7 +97,7 @@ void CCTask::stopByTimeout(unsigned long timeout, stoppingMode stopping) {
     this->timeout = timeout;
     this->stopping = stopping;
 }
-void CCTask::stopByButton(schedulerControlButton stopButton, stoppingMode stopping) {
+void CCTask::stopByButton(CCControlButton* stopButton, stoppingMode stopping) {
     this->stopEvent = BUTTON;
     this->stopButton = stopButton;
     this->stopping = stopping;
@@ -149,8 +149,8 @@ event CCTask::getStartEvent(){return startEvent;}
 event CCTask::getStopEvent(){return stopEvent;}
 unsigned long CCTask::getStartTime(){return startTime;}
 unsigned long CCTask::getTimeout(){return timeout;}
-schedulerControlButton CCTask::getStartButton(){return startButton;}
-schedulerControlButton CCTask::getStopButton(){return stopButton;}
+CCControlButton* CCTask::getStartButton(){return startButton;}
+CCControlButton* CCTask::getStopButton(){return stopButton;}
 
 CCDevice* CCTask::getStartTriggerDevice(){return startTriggerDevice;}
 CCDevice* CCTask::getStopTriggerDevice(){return stopTriggerDevice;}

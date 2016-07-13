@@ -33,7 +33,7 @@
 #define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
 #define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
 
-#define DEVICESCHEDULER_VERBOSE                         0x11
+#define DEVICESCHEDULER_VERBOSE                         0x12
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +67,7 @@ class CCDeviceScheduler {
     
     CCControlButton* currentButton;
     CCAction* currentAction;
+    CCFlowControl* currentFlowControl;
     
     int notificationCode;
     String  notificationText;
@@ -91,7 +92,7 @@ public:
 
     /// The Scheduler's device array.
     /// Array of all devices.
-    CCDevice *device[8];
+    CCDevice *device[14];
     
     /// Function adds a servo device to the device array and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -188,8 +189,8 @@ public:
     void listControlButtons();
     
 
-    void getAllTasksOfAllDeviceFlowsOfWorkflow(CCWorkflow* workflow);
-
+    void listAllTasksOfAllDeviceFlowsOfWorkflow(CCWorkflow* workflow);
+    void listAllActionsOfAllFlowControls(CCWorkflow* workflow);
     
     
     /// Function starts the scheduler, all registered tasks are driven as specified.

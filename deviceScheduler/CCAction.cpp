@@ -10,23 +10,51 @@
 
 
 
-CCAction::CCAction(String actionName) {
+CCAction::CCAction(String actionName, infoCode workflowInfoCode) {
     this->actionName = actionName;
+    this->targetDeviceFlow = NULL;
+    this->validTaskID = -1;
+    this->targetAction = DO_NOTHING;
+    this->followingTaskID = -1;
+    this->workflowInfoCode = workflowInfoCode;
+    this->actionDone = false;
 }
 
-void CCAction::evokeTaskJump(CCDeviceFlow* targetDeviceFlow, scheduledTask validTaskID, deviceAction targetAction, int notificationCode, String notificationText) {
-    evokeTaskJumpToTask(targetDeviceFlow, validTaskID, targetAction, validTaskID + 1, notificationCode, notificationText);
-}
-void CCAction::evokeTaskJumpToTask(CCDeviceFlow* targetDeviceFlow, scheduledTask validTaskID, deviceAction targetAction, scheduledTask followingTaskID, int notificationCode, String notificationText) {
+void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction) {
     this->targetDeviceFlow = targetDeviceFlow;
-    this->validTaskID = validTaskID;
+    this->validTaskID = validTask->taskID;
     this->targetAction = targetAction;
-    this->followingTaskID = followingTaskID;
+    this->followingTaskID = validTaskID + 1;
     
-    this->notificationCode = notificationCode;
-    this->notificationText = notificationText;
+//    this->notificationCode = notificationCode;
+//    this->notificationText = notificationText;
     
-    this->actionDone = false;
+    
+    //    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+    Serial.print(F(", targetDeviceFlow: "));
+    //        Serial.print(this->targetDeviceFlow);
+    Serial.print(F(", validTaskID: "));
+    Serial.print(this->validTaskID);
+    Serial.print(F(", targetAction: "));
+    Serial.print(this->targetAction);
+    Serial.print(F(", followingTaskID: "));
+    Serial.print((int)this->followingTaskID);
+    Serial.println();
+    //    }
+
+}
+void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction, CCTask* followingTask) {
+    this->targetDeviceFlow = targetDeviceFlow;
+    if (validTask == NULL) {
+        this->validTaskID = -1;
+    } else {
+        this->validTaskID = validTask->taskID;
+    }
+    this->targetAction = targetAction;
+    this->followingTaskID = followingTask->taskID;
+    
+//    this->notificationCode = notificationCode;
+//    this->notificationText = notificationText;
     
     
 //    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
@@ -44,16 +72,15 @@ void CCAction::evokeTaskJumpToTask(CCDeviceFlow* targetDeviceFlow, scheduledTask
 }
 
 
-void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, scheduledTask validTaskID, int notificationCode, String notificationText) {
+void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     this->targetDeviceFlow = targetDeviceFlow;
     this->validTaskID = validTaskID;
     this->targetAction = BREAK_LOOP;
     this->followingTaskID = 1;
     
-    this->notificationCode = notificationCode;
-    this->notificationText = notificationText;
+//    this->notificationCode = notificationCode;
+//    this->notificationText = notificationText;
     
-    this->actionDone = false;
     
     
 //    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
@@ -65,6 +92,7 @@ void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, scheduledTask validTas
     
     
 }
-void CCAction::evokeBreak(int notificationCode, String notificationText) {
-    evokeBreak(NULL, -1, notificationCode, notificationText);
+void CCAction::evokeBreak() {
+    evokeBreak(NULL, NULL);
 }
+

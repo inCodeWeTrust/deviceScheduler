@@ -20,6 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class CCDevice;
+class CCControlButton;
 
 class CCTask {
     
@@ -87,11 +88,11 @@ public:
     
     /// Getter method for getting the startButton of the device
     /// @sa startButton;
-    schedulerControlButton getStartButton();
+    CCControlButton* getStartButton();
     
     /// Getter method for getting the stopButton of the device
     /// @sa stopButton;
-    schedulerControlButton getStopButton();
+    CCControlButton* getStopButton();
   
     /// Getter method for getting the startTriggerDevice of the device
     /// @sa startTriggerDevice;
@@ -168,17 +169,17 @@ public:
     void setStartDelay(unsigned long startDelay);
 
     void startByDate(unsigned long startTime);
-    void startByButton(schedulerControlButton startButton);
+    void startByButton(CCControlButton* startButton);
     void startAfterCompletionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask);
     void startByTriggerpositionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
-    void switchToNextTaskByButton(schedulerControlButton switchingButton);
+    void switchToNextTaskByButton(CCControlButton* switchingButton);
     void switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask);
     void switchToNextTaskByTriggerpositionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
-    void stopByButton(schedulerControlButton stopButton, stoppingMode stopping = STOP_NORMAL);
+    void stopByButton(CCControlButton* stopButton, stoppingMode stopping = STOP_NORMAL);
     void stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping);
     void stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     
@@ -202,19 +203,13 @@ private:
     unsigned long           startDelay;
     unsigned long           startTime;
     unsigned long           timeout;
-    schedulerControlButton  startButton;
-    schedulerControlButton  stopButton;
-//    schedulerDevice         startTriggerDeviceID;
+    CCControlButton*        startButton;
+    CCControlButton*        stopButton;
     CCDevice*               startTriggerDevice;
-//    CCDeviceFlow*           startTriggerDeviceFlow;
     scheduledTask           startTriggerTaskID;
-//    CCTask*                 startTriggerTask;
     signed long             startTriggerPosition;
-//    schedulerDevice         stopTriggerDeviceID;
     CCDevice*               stopTriggerDevice;
-//    CCDeviceFlow*           stopTriggerDeviceFlow;
     scheduledTask           stopTriggerTaskID;
-//    CCTask*                 stopTriggerTask;
     signed long             stopTriggerPosition;
     unsigned char           sensor;
     signed int              initiatePerformanceValue;

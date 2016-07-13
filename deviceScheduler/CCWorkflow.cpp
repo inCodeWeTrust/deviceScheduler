@@ -14,9 +14,19 @@
 CCWorkflow::CCWorkflow(String workflowName) {
     this->workflowName = workflowName;
     this->countOfDeviceFlows = 0;
-    this->countOfControlButtons = 0;
-};
-
+    this->countOfFlowControls = 0;
+    this->workflowInfo = EVERYTHING_OK;
+}
+CCWorkflow::~CCWorkflow() {
+    for (int i = countOfDeviceFlows - 1; i >= 0; i--) {
+        delete deviceFlow[i];
+        deviceFlow[i] = NULL;
+    }
+    for (int i = countOfFlowControls - 1; i >= 0; i--) {
+        delete flowControl[i];
+        flowControl[i] = NULL;
+    }
+}
 
 CCDeviceFlow* CCWorkflow::addDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) {
     deviceFlow[countOfDeviceFlows++] = new CCDeviceFlow(deviceFlowName, device, defaultVelocity, defaultAcceleration, defaultDeceleration);
@@ -36,9 +46,9 @@ CCDeviceFlow* CCWorkflow::addDeviceFlow(String deviceFlowName, CCDevice* device)
 }
 
 
-CCControlButton* CCWorkflow::addButtonControl(CCControlButton* controlButton) {
-    this->controlButton[countOfControlButtons++] = controlButton;
-    return this->controlButton[countOfControlButtons - 1];
+CCFlowControl* CCWorkflow::addFlowControl(String controlName, CCControlButton* controlButton) {
+    this->flowControl[countOfFlowControls++] = new CCFlowControl(controlName, controlButton);
+    return this->flowControl[countOfFlowControls - 1];
 }
 
 /*
@@ -84,9 +94,16 @@ void CCWorkflow::deleteAllActions() {
     }
 }
 */
-
-
-
+/*
+void CCWorkflow::postWorkflowInfo(infoCode info) {
+    this->workflowInfo = info;
+    if (info < 0) {
+        this->infoHistory = this->infoHistory + (char)(info + 127);
+    } else {
+        this->infoHistory = this->infoHistory + (char)info;
+    }
+}
+*/
 
 String CCWorkflow::getNameOfDeviceType(deviceType t) {
     if (t == SERVODEVICE) return "Servo";
