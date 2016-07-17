@@ -21,19 +21,10 @@
 #include "CCStepperDevice_TMC260.h"
 #include "CCDcControllerDevice.h"
 #include "CCDcControllerDevice_fullBridge.h"
+
 #include "CCControlButton.h"
-#include "CCAction.h"
 
 #include "CCWorkflow.h"
-
-//  verbosity and log visuals:
-#define DEVICESCHEDULER_BASICOUTPUT                     0x01
-#define DEVICESCHEDULER_MEMORYDEBUG                     0x02
-
-#define DEVICESCHEDULER_SHOW_TASK_VIEW                  0x10
-#define DEVICESCHEDULER_SHOW_TAB_VIEW                   0x20
-
-#define DEVICESCHEDULER_VERBOSE                         0x12
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -189,8 +180,14 @@ public:
     void listControlButtons();
     
 
-    void listAllTasksOfAllDeviceFlowsOfWorkflow(CCWorkflow* workflow);
-    void listAllActionsOfAllFlowControls(CCWorkflow* workflow);
+    void listAllTasks(CCWorkflow* workflow);
+    void listAllActions(CCWorkflow* workflow);
+    
+    
+    /// Function calls the <reviewValues()> function of all devices.
+    /// This causes the devices to approve, if all tasks are possible and do some basic calculations.
+    /// This function needs to be called before the run loop is started.
+    void reviewTasks(CCWorkflow* currentWorkflow);
     
     
     /// Function starts the scheduler, all registered tasks are driven as specified.

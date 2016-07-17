@@ -84,8 +84,8 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
 
     
     
-    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice_TMC260]: setup "));
+    if (STEPPER_TMC260_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice_TMC260]: setup stepper "));
         Serial.print(deviceName);
         Serial.print(F(": currentPosition: "));
         Serial.print(currentPosition);
@@ -103,8 +103,11 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
         Serial.print(highestSteppingMode + 1);
         Serial.print(F("stepsPerDegree: "));
         Serial.print(stepsPerDegree);
-        Serial.print(F(", at $"));
-        Serial.println((long) this, HEX);
+        if (STEPPER_TMC260_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.print((long) this, HEX);
+        }
+        Serial.println();
     }
     
     setCurrent(currentMax);
@@ -320,7 +323,7 @@ CCStepperDevice_TMC260::~CCStepperDevice_TMC260() {
     pinMode(enable_pin, INPUT_PULLUP);
     pinMode(chipSelect_pin, INPUT_PULLUP);
     
-    if (CCSTEPPERDEVICE_VERBOSE & CCSTEPPERDEVICE_BASICOUTPUT) {
+    if (STEPPER_TMC260_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_TMC260]: device "));
         Serial.print(deviceName);
         Serial.println(F(" destructed"));
@@ -340,7 +343,7 @@ void CCStepperDevice_TMC260::setupMicroSteppingMode() {
     
     doTransaction(driverControl);
 
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(" set microStepping: "));
@@ -383,7 +386,7 @@ void CCStepperDevice_TMC260::calculateCurrentSetup(unsigned int current) {
 
     currentScaleOf32 = min(currentScaleOf32, 32);
 
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         if (senseResistorVoltage165mV) {
@@ -434,7 +437,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
     switch (dataToRead) {
         case READOUT_MICROSTEP_POSITION:
             microstepPosition = (this->resultDatagram >> 10) & 0x1FF;
-            if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+            if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
                 Serial.print(F("[CCStepperDevice_TMC260]: "));
                 Serial.print(deviceName);
                 Serial.print(": microstepPosition: ");
@@ -443,7 +446,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
             break;
         case READOUT_STALLGUARD_LEVEL:
             stallGuard2Value = (this->resultDatagram >> 10) & 0x3FF;
-            if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+            if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
                 Serial.print(F("[CCStepperDevice_TMC260]: "));
                 Serial.print(deviceName);
                 Serial.print(": stallGuard2: ");
@@ -454,7 +457,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
             coolStepScalingValue = (this->resultDatagram >> 10) & 0x1F;
             stallGuard2Value_upper = (this->resultDatagram >> 15) & 0x1F;
             
-            if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+            if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
                 Serial.print(F("[CCStepperDevice_TMC260]: "));
                 Serial.print(deviceName);
                 Serial.print(": coolStepScaling: ");
@@ -476,7 +479,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
     
     stallGuard2Status = this->resultDatagram & 0x1;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print("  standStil: ");
@@ -498,7 +501,7 @@ void CCStepperDevice_TMC260::getReadOut(byte dataToRead) {
 
 void CCStepperDevice_TMC260::doTransaction(unsigned long datagram) {
 
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SPIDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SPIDEBUG) {
         Serial.print("##### TMC260 SPI: Sending: ");
         Serial.println(datagram, HEX);
     }
@@ -517,7 +520,7 @@ void CCStepperDevice_TMC260::doTransaction(unsigned long datagram) {
     //deselect the TMC chip
     digitalWrite(chipSelect_pin, HIGH);
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SPIDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SPIDEBUG) {
         Serial.print("##### TMC260 SPI: Receiving: ");
         Serial.println(resultDatagram, HEX);
     }
@@ -532,7 +535,7 @@ void CCStepperDevice_TMC260::setDriverControlRegister(boolean stepInterpolation,
     bitWrite(driverControl, 8, doubleEdgeStepPulses);
     driverControl |= microSteppingMode & 0x0f;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(": setup Driver: stepInterpolation: ")) , Serial.print(stepInterpolation);
@@ -557,7 +560,7 @@ void CCStepperDevice_TMC260::setChopperControlRegister_spreadCycle(byte blanking
     chopperControl |= ((hysteresisStart - 1) & 0x7) << 4;
     chopperControl |= offTime & 0xF;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(": setup Chopper: Spread Cycle: blankingTimeValue: ")) , Serial.print(blankingTimeValue);
@@ -584,7 +587,7 @@ void CCStepperDevice_TMC260::setChopperControlRegister_fastDecay(byte blankingTi
     chopperControl |= (fastDecayTime & 0x7) << 4;
     chopperControl |= offTime & 0xF;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(": setup Chopper: Fast Decay: blankingTimeValue: ")) , Serial.print(blankingTimeValue);
@@ -610,7 +613,7 @@ void CCStepperDevice_TMC260::setCoolStepRegister(boolean minCoolStepCurrentValue
     coolStepControl |= (currentIncrementStepsValue & 0x3) << 5;
     coolStepControl |= lowerCoolStepThreshold & 0xF;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(": setup Cool Step: minCoolStepCurrent: "));
@@ -636,7 +639,7 @@ void CCStepperDevice_TMC260::setStallGuard2Register(boolean stallGuard2FilterEna
     stallGuard2Control |= (stallGuard2Threshold & 0x7F) << 8;
     stallGuard2Control |= (currentScaleOf32 - 1) & 0x1F;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(": setup Stall Guard 2: stallGuard2FilterEnable: ")) , Serial.print(stallGuard2FilterEnable);
@@ -658,7 +661,7 @@ void CCStepperDevice_TMC260::setDriverConfigurationRegister(byte slopeControlHig
     bitWrite(driverConfiguration, 6, senseResistorVoltage165mV);
     driverConfiguration |= (selectReadOut & 0x3) << 4;
     
-    if (CCSTEPPERDEVICE_TMC260_VERBOSE & CCSTEPPERDEVICE_TMC260_SETUPDEBUG) {
+    if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
         Serial.print(deviceName);
         Serial.print(F(": setup: Driver Configuration: slopeControlHighSide: ")) , Serial.print(slopeControlHighSide);

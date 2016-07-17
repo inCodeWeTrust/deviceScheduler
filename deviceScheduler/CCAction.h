@@ -12,6 +12,9 @@
 #include "deviceScheduler.h"
 #include "CCTask.h"
 
+
+
+
 class CCDeviceFlow;
 
 class CCAction {

@@ -12,13 +12,6 @@
 
 #include "CCDcControllerDevice.h"
 
-//  verbosity:
-#define CCDcControllerDevice_fullBridge_BASICOUTPUT         0x01
-#define CCDcControllerDevice_fullBridge_MEMORYDEBUG         0x02
-#define CCDcControllerDevice_fullBridge_CALCULATIONDEBUG    0x04
-#define CCDcControllerDevice_fullBridge_MOVEMENTDEBUG       0x08
-
-#define CCDcControllerDevice_fullBridge_VERBOSE             0x0f
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

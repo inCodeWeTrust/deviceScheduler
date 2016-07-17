@@ -25,13 +25,13 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
         pinMode(button_pin, INPUT);
     }
     
-//    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
-//    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
+    //    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
+    //    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
     
     countOfActions = 0;
     
     
-    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCControlButton]: setup "));
         Serial.print(buttonName);
         Serial.print(F(", button_pin: "));
@@ -40,16 +40,18 @@ CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, un
         Serial.print(buttonActiv);
         Serial.print(F(", pullup: "));
         Serial.print(pullup);
-        Serial.print(F(", at $"));
-        Serial.println((long)this, HEX);
-    }
-    
-//    action = new buttonAction[8];
-
+        if (CONTROLBUTTON_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.println((long)this, HEX);
+        }
+    }    
 }
 CCControlButton::~CCControlButton() {
-//    delete action[];
-    countOfActions = 0;
+    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCControlButton]: button "));
+        Serial.print(buttonName);
+        Serial.println(F(" destructed"));
+    }
 }
 
 
@@ -59,7 +61,7 @@ void CCControlButton::readButtonState() {
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
     
-//    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+//    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
 //        Serial.print(F("[CCControlButton]: "));
 //        Serial.print(buttonName);
 //        Serial.print(F(", state: "));
@@ -74,7 +76,7 @@ boolean CCControlButton::readIfActiv() {
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
     
-    //    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+    //    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
     //        Serial.print(F("[CCControlButton]: "));
     //        Serial.print(buttonName);
     //        Serial.print(F(", state: "));

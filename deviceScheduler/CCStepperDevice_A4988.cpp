@@ -68,8 +68,8 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
     
     this->prepareAndStartNextTaskWhenFinished = false;
     
-    if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice_A4988]: setup "));
+    if (STEPPER_A4988_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice_A4988]: setup stepper "));
         Serial.print(deviceName);
         Serial.print(F(": currentPosition: "));
         Serial.print(currentPosition);
@@ -95,8 +95,11 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned char st
         }
         Serial.print(F("stepsPerDegree: "));
         Serial.print(stepsPerDegree);
-        Serial.print(F(", at $"));
-        Serial.println((long) this, HEX);
+        if (STEPPER_A4988_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.print((long) this, HEX);
+        }
+        Serial.println();
     }
 }
 
@@ -112,13 +115,19 @@ CCStepperDevice_A4988::~CCStepperDevice_A4988() {
         pinMode(microStepPin[pinIndex], INPUT);
     }
     
-    if (CCSTEPPERDEVICE_A4988_VERBOSE & CCSTEPPERDEVICE_A4988_BASICOUTPUT) {
+//    free(stepModeCode);
+//    free(microStepPin);
+
+    delete [] stepModeCode;
+    stepModeCode = NULL;
+    
+    delete [] microStepPin;
+    microStepPin = NULL;
+    if (STEPPER_A4988_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_A4988]: device "));
         Serial.print(deviceName);
         Serial.println(F(" destructed"));
     }
-    free(stepModeCode);
-    free(microStepPin);
 }
 
 

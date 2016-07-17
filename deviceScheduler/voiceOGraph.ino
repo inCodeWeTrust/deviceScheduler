@@ -152,13 +152,13 @@ void loop() {
     
     
      CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
-     VACCUUMCLEANER_PIN,
-     VACCUUMCLEANER_ACTIV);
+                                                          VACCUUMCLEANER_PIN,
+                                                          VACCUUMCLEANER_ACTIV);
      
      
      CCDevice* startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
-     CONTROLLER_LAMP_RED_PIN,
-     CONTROLLER_LAMP_RED_ACTIV);
+                                                             CONTROLLER_LAMP_RED_PIN,
+                                                             CONTROLLER_LAMP_RED_ACTIV);
      
      
     
@@ -324,9 +324,10 @@ void loop() {
         
         
         
-//         fetchingRecord->reviewTasks();
-        scheduler->listAllTasksOfAllDeviceFlowsOfWorkflow(fetchingRecord);
-//         fetchingRecord->getAllActions();
+        scheduler->reviewTasks(fetchingRecord);
+        scheduler->listAllTasks(fetchingRecord);
+        scheduler->listAllActions(fetchingRecord);
+
         
         freeRam();
     }
@@ -599,6 +600,7 @@ void loop() {
     
     Serial.println(F("ready to run!"));
     scheduler->run(fetchingRecord);
+    Serial.println(F("done!"));
     /*
      boolean initNeeded = false;
      int i = 0;
@@ -757,6 +759,9 @@ void loop() {
      
      delete fetchingRecord;
      fetchingRecord = NULL;
+    
+    delete scheduler;
+    scheduler = NULL;
      
     /*
      delete cuttingProcess;

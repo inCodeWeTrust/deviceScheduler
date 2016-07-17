@@ -11,14 +11,9 @@
 
 
 #include "deviceScheduler.h"
-
 #include "CCTask.h"
 
 
-//  verbosity:
-#define CCDEVICE_BASICOUTPUT            0x01
-
-#define CCDEVICE_VERBOSE                0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,6 +14,46 @@
 #include <avr/pgmspace.h>
 
 
+
+//  ################## verbosity: #############################################################################
+
+//  -------------------------------------------------------------------------------------------------------------
+#define BASICOUTPUT                 0x01
+#define MEMORYDEBUG                 0x02
+#define CALCULATIONDEBUG            0x04
+#define MOVEMENTDEBUG               0x08
+
+//  deviceScheduler:
+#define SHOW_TASK_VIEW              0x10
+
+//  stepper tmc260:
+#define TMC260_SPIDEBUG             0x10
+#define TMC260_SETUPDEBUG           0x20
+//  -------------------------------------------------------------------------------------------------------------
+
+
+#define SCHEDULER_VERBOSE           0x13
+#define DEVICE_VERBOSE              0x03
+#define SERVO_VERBOSE               0x03
+#define SERVO_CROSS_VERBOSE         0x03
+#define STEPPER_VERBOSE             0x03
+#define STEPPER_A4988_VERBOSE       0x03
+#define STEPPER_TMC260_VERBOSE      0x03
+#define DCCONTROLLER_VERBOSE        0x03
+#define DCCONTROLLER_FULL_VERBOSE   0x03
+
+#define CONTROLBUTTON_VERBOSE       0x03
+
+#define WORKFLOW_VERBOSE            0x03
+#define DEVICEFLOW_VERBOSE          0x03
+#define TASK_VERBOSE                0x03
+
+#define FLOWCONTROL_VERBOSE         0x03
+#define ACTION_VERBOSE              0x03
+
+
+
+
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
 
 typedef signed char schedulerDevice, schedulerControlButton, schedulerWorkflow, schedulerDeviceflow, scheduledTask;

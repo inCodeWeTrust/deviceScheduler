@@ -9,9 +9,22 @@
 #ifndef __deviceScheduler__CCWorkflow__
 #define __deviceScheduler__CCWorkflow__
 
+
 #include "deviceScheduler.h"
 #include "CCDeviceFlow.h"
 #include "CCFlowControl.h"
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @class CCStepperDevice
+///
+/// @brief Device class for stepper motor devices
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 class CCWorkflow {
@@ -22,15 +35,16 @@ public:
     /// Parameters of the device as a peer of a run-loop.
     /// Value, that holds the number of tasks to be executed within this run-loop.
     unsigned char       countOfDeviceFlows;
-
-    infoCode            workflowInfo;
-    String              infoHistory;
-    
     CCDeviceFlow        *deviceFlow[10];
     
     
     unsigned char       countOfFlowControls;
     CCFlowControl       *flowControl[6];
+    
+    
+    infoCode            workflowInfo;
+    String              infoHistory;
+
     
     CCWorkflow(String name);
     ~CCWorkflow();
@@ -66,29 +80,19 @@ public:
     /// @return the deviceFlow index.
     CCDeviceFlow* addDeviceFlow(String deviceFlowName, CCDevice* device);
     
-
     
     
-    /// Function deletes all tasks of the device.
-    void deleteAllDeviceFlows();
     
     
     CCFlowControl* addFlowControl(String controlName, CCControlButton* controlButton);
 
     
-    void postWorkflowInfo(infoCode info);
-    
-//    void getDeviceFlow(unsigned char df);
-//    void getAllDeviceFlows();
-//    void getTasksForDeviceFlow(unsigned char df);
-//    void getAllTasksForAllDeviceFlows();
-
-    
-    String getNameOfDeviceType(deviceType t);
-    String getNameOfTaskEvent(event e);
-    String getNameOfState(deviceState s);
-    String getNameOfStoppingMode(stoppingMode s);
-    String getNameOfDeviceAction(deviceAction d);
+//    
+//    String getNameOfDeviceType(deviceType t);
+//    String getNameOfTaskEvent(event e);
+//    String getNameOfState(deviceState s);
+//    String getNameOfStoppingMode(stoppingMode s);
+//    String getNameOfDeviceAction(deviceAction d);
 
 };
 

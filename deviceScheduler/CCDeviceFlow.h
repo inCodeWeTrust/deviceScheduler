@@ -9,8 +9,12 @@
 #ifndef __deviceScheduler__CCDeviceFlow__
 #define __deviceScheduler__CCDeviceFlow__
 
+
 #include "deviceScheduler.h"
 #include "CCTask.h"
+
+
+
 
 class CCDevice;
 class CCDeviceFlow {
@@ -251,11 +255,6 @@ public:
     /// Function lists all tasks of all registered devices.
     /// A list with all tasks and bare informations are presented.
     void getAllTasks();
-    
-    /// Function calls the <reviewValues()> function of all devices.
-    /// This causes the devices to approve, if all tasks are possible and do some basic calculations.
-    /// This function needs to be called before the run loop is started.
-    void reviewTasks();
     
     /// Function deletes all tasks of all registered devices.
     void deleteAllTasks();

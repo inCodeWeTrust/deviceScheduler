@@ -42,6 +42,16 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->gap = 0;
     this->reversedApproximation = false;
 
+    if (TASK_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCTask]: setup task "));
+        Serial.print(taskID);
+        if (TASK_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.print((long)this, HEX);
+        }
+        Serial.println();
+    }
+
 }
 
 void CCTask::setStartDelay(unsigned long startDelay) {

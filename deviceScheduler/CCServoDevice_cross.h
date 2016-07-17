@@ -13,13 +13,6 @@
 #include "CCServoDevice.h"
 
 
-//  verbosity:
-#define CCSERVODEVICE_CROSS_BASICOUTPUT         0x01
-#define CCSERVODEVICE_CROSS_MEMORYDEBUG         0x02
-#define CCSERVODEVICE_CROSS_CALCULATIONDEBUG    0x04
-#define CCSERVODEVICE_CROSS_MOVEMENTDEBUG       0x08
-
-#define CCSERVODEVICE_CROSS_VERBOSE             0x0f
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

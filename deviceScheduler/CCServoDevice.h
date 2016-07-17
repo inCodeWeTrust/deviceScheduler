@@ -15,15 +15,6 @@
 #include "CCDevice.h"
 
 
-//  verbosity:
-#define CCSERVODEVICE_BASICOUTPUT           0x01
-#define CCSERVODEVICE_MEMORYDEBUG           0x02
-#define CCSERVODEVICE_CALCULATIONDEBUG      0x04
-#define CCSERVODEVICE_MOVEMENTDEBUG         0x08
-
-#define CCSERVODEVICE_VERBOSE               0x0f
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCServoDevice
 ///

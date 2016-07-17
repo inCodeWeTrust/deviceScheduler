@@ -18,6 +18,19 @@ CCAction::CCAction(String actionName, infoCode workflowInfoCode) {
     this->followingTaskID = -1;
     this->workflowInfoCode = workflowInfoCode;
     this->actionDone = false;
+    
+    if (ACTION_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCAction]: setup action "));
+        Serial.print(actionName);
+        Serial.print(F(" with workflowInfo: "));
+        Serial.print((int)workflowInfoCode);
+        if (ACTION_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.print((long)this, HEX);
+        }
+        Serial.println();
+    }
+
 }
 
 void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction) {
@@ -30,7 +43,7 @@ void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* valid
 //    this->notificationText = notificationText;
     
     
-    //    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+    //    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
     Serial.print(F(", targetDeviceFlow: "));
     //        Serial.print(this->targetDeviceFlow);
     Serial.print(F(", validTaskID: "));
@@ -57,7 +70,7 @@ void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask
 //    this->notificationText = notificationText;
     
     
-//    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+//    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
         Serial.print(F(", targetDeviceFlow: "));
         //        Serial.print(this->targetDeviceFlow);
         Serial.print(F(", validTaskID: "));
@@ -83,7 +96,7 @@ void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     
     
     
-//    if (CCCONTROLBUTTON_VERBOSE & CCCONTROLBUTTON_BASICOUTPUT) {
+//    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
         Serial.print(F(", targetDeviceFlow: "));
         //        Serial.print(this->targetDeviceFlow);
         Serial.print(F(", validTaskID: "));

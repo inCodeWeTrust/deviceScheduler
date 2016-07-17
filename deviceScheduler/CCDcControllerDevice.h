@@ -13,13 +13,6 @@
 #include "CCDevice.h"
 
 
-//  verbosity:
-#define CCDcControllerDevice_BASICOUTPUT         0x01
-#define CCDcControllerDevice_MEMORYDEBUG         0x02
-#define CCDcControllerDevice_CALCULATIONDEBUG    0x04
-#define CCDcControllerDevice_MOVEMENTDEBUG       0x08
-
-#define CCDcControllerDevice_VERBOSE             0x0f
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

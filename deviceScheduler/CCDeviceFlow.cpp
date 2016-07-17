@@ -16,14 +16,36 @@ CCDeviceFlow::CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaul
     this->defaultAcceleration = defaultAcceleration;
     this->defaultDeceleration = defaultDeceleration;
     this->countOfTasks = 0;
+    
+    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCDeviceFlow]: setup deviceFlow "));
+        Serial.print(this->deviceFlowName);
+        if (DEVICEFLOW_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.print((long)this, HEX);
+        }
+        Serial.println();
+    }
+
 }
 
 CCDeviceFlow::~CCDeviceFlow() {
-    for (int i = countOfTasks - 1; i >= 0; i--) {
-        delete task[i];
-        task[i] = NULL;
+    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCDeviceFlow]: "));
+        Serial.print(deviceFlowName);
+        Serial.print(F(": delete task "));
     }
-
+    for (int j = countOfTasks - 1; j >= 0; j--) {
+        if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+            Serial.print(F(" #"));
+            Serial.print(j);
+        }
+        delete task[j];
+        task[j] = NULL;
+    }
+    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+        Serial.println();
+    }
 }
 
 CCTask* CCDeviceFlow::addTask(float target, float velocity, float acceleration, float deceleration) {
@@ -70,7 +92,7 @@ CCTask* CCDeviceFlow::addTaskWithPositionReset(float target) {
 CCTask* CCDeviceFlow::registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset) {
     task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, moveRelativ, withPositionReset, countOfTasks);
 
-//    if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
+//    if (DEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
 //    Serial.print(F("[CCDeviceFlow]: "));
 //        Serial.print(deviceFlowName);
 //        Serial.print(F(" add task with target: "));
@@ -116,24 +138,7 @@ void CCDeviceFlow::getTask(unsigned char t) {
 }
 /*
 void CCDeviceFlow::deleteTasks() {
-    //    if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-    Serial.print(F("[CCDeviceFlow]: delete tasks of "));
-    Serial.print(deviceFlowName);
-    Serial.print(F(": task "));
-    //    }
-    for (int j = countOfTasks - 1; j >= 0; j--) {
-//        if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-            Serial.print(F(" #"));
-            Serial.print(j);
-//        }
-        delete task[j];
-        task[j] = NULL;
-    }
-//    if (CCDEVICE_VERBOSE & CCDEVICE_BASICOUTPUT) {
-        Serial.println();
-        Serial.println();
-//    }
-    
+
 //    device[device]->setState() = SLEEPING;
     taskPointer = 0;
     countOfTasks = 0;
