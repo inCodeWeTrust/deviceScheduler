@@ -13,13 +13,6 @@
 #include "CCDevice.h"
 
 
-//  verbosity:
-#define CCDcControllerDevice_BASICOUTPUT         0x01
-#define CCDcControllerDevice_MEMORYDEBUG         0x02
-#define CCDcControllerDevice_CALCULATIONDEBUG    0x04
-#define CCDcControllerDevice_MOVEMENTDEBUG       0x08
-
-#define CCDcControllerDevice_VERBOSE             0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +29,7 @@
 
 class CCDcControllerDevice : public CCDevice {
     
-private:
+protected:
     
     unsigned char        switching_pin, switchingPin_activ;
 
@@ -78,6 +71,15 @@ private:
     /// The initial rate of duty cycle, when the task is switched, like v0.
     float                currentRatio;
     
+    /// The number of times, the target was reached in series
+    unsigned int         targetReachedCounter;
+
+    /// The sensor's value
+    unsigned int         sensorValue;
+
+    /// The distance from the target position
+    signed int           relativePosition;
+    
     
 public:
     
@@ -90,8 +92,9 @@ public:
     void enableDevice();
     void disableDevice();
     
-    void reviewValues();
+    infoCode reviewValues(CCTask* nextTask);
     void prepareNextTask();
+    void prepareTask(CCTask* nextTask);
     void startTask();
     void operateTask();
     void initiateStop();

@@ -13,13 +13,6 @@
 #include "CCStepperDevice.h"
 
 
-//  verbosity:
-#define CCSTEPPERDEVICE_A4988_BASICOUTPUT         0x01
-#define CCSTEPPERDEVICE_A4988_MEMORYDEBUG         0x02
-#define CCSTEPPERDEVICE_A4988_CALCULATIONDEBUG    0x04
-#define CCSTEPPERDEVICE_A4988_MOVEMENTDEBUG       0x08
-
-#define CCSTEPPERDEVICE_A4988_VERBOSE             0x00
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +26,7 @@
 class CCStepperDevice_A4988 : public CCStepperDevice {
     
 public:
-    CCStepperDevice_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, unsigned char *stepModeCodes, unsigned char numberOfMicroStepPins, unsigned char *microStepPin, unsigned int stepsPerRotation);
+    CCStepperDevice_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char microStep_00_pin, unsigned char microStep_01_pin, unsigned char microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07);
     
     ~CCStepperDevice_A4988();
     

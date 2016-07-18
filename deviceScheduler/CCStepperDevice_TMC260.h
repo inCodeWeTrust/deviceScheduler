@@ -15,15 +15,6 @@
 #include "CCStepperDevice.h"
 
 
-//  verbosity:
-#define CCSTEPPERDEVICE_TMC260_BASICOUTPUT         0x01
-#define CCSTEPPERDEVICE_TMC260_MEMORYDEBUG         0x02
-#define CCSTEPPERDEVICE_TMC260_CALCULATIONDEBUG    0x04
-#define CCSTEPPERDEVICE_TMC260_MOVEMENTDEBUG       0x08
-#define CCSTEPPERDEVICE_TMC260_SPIDEBUG            0x10
-#define CCSTEPPERDEVICE_TMC260_SETUPDEBUG          0x20
-
-#define CCSTEPPERDEVICE_TMC260_VERBOSE             0x00
 
 #define READOUT_MICROSTEP_POSITION    0
 #define READOUT_STALLGUARD_LEVEL      1
@@ -53,7 +44,7 @@ public:
     boolean overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
     
 
-    CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
+    CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax);
     
     ~CCStepperDevice_TMC260();
     
