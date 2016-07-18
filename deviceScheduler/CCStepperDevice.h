@@ -27,7 +27,7 @@
 class CCStepperDevice : public CCDevice {
 
 public:
-
+    CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation);
     virtual ~CCStepperDevice();
     
     
@@ -36,7 +36,7 @@ public:
     void enableDevice();
     void disableDevice();
     
-    void reviewValues();
+    infoCode reviewValues(CCTask* nextTask);
     void prepareTask(CCTask* nextTask);
     void prepareNextTask();
     void startTask();

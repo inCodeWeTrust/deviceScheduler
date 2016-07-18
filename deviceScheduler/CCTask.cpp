@@ -9,7 +9,7 @@
 #include "CCTask.h"
 
 
-CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset, unsigned char taskID) {
+CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset, scheduledTask taskID) {
 
     this->taskID = taskID;
     
@@ -28,10 +28,10 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->startButton = 0;
     this->stopButton = 0;
     this->startTriggerDevice = NULL;
-    this->startTriggerTaskID = 0;
-    this->startTriggerPosition = 0;
     this->stopTriggerDevice = NULL;
+    this->startTriggerTaskID = 0;
     this->stopTriggerTaskID = 0;
+    this->startTriggerPosition = 0;
     this->stopTriggerPosition = 0;
     this->stopping = STOP_NORMAL;
     this->sensor = 0;
@@ -144,6 +144,7 @@ void CCTask::stopDynamicallyBySensor_new(unsigned char sensor, unsigned int targ
 }
 
 
+scheduledTask CCTask::getTaskID(){return taskID;}
 float CCTask::getTarget(){return target;}
 void CCTask::setTarget(float target){this->target = target;}
 float CCTask::getVelocity(){return velocity;}
@@ -161,12 +162,10 @@ unsigned long CCTask::getStartTime(){return startTime;}
 unsigned long CCTask::getTimeout(){return timeout;}
 CCControlButton* CCTask::getStartButton(){return startButton;}
 CCControlButton* CCTask::getStopButton(){return stopButton;}
-
 CCDevice* CCTask::getStartTriggerDevice(){return startTriggerDevice;}
 CCDevice* CCTask::getStopTriggerDevice(){return stopTriggerDevice;}
 scheduledTask CCTask::getStartTriggerTaskID(){return startTriggerTaskID;}
 scheduledTask CCTask::getStopTriggerTaskID(){return stopTriggerTaskID;}
-
 signed long CCTask::getStartTriggerPosition(){return startTriggerPosition;}
 signed long CCTask::getStopTriggerPosition(){return stopTriggerPosition;}
 stoppingMode CCTask::getStopping(){return stopping;}
@@ -175,10 +174,10 @@ unsigned char CCTask::getSensor(){return sensor;}
 signed int CCTask::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCTask::getTargetValue(){return targetValue;}
 float CCTask::getStopPerformance(){return stopPerformance;}
+approximationMode CCTask::getApproximation(){return approximation;}
 unsigned int CCTask::getApproximationCurve(){return approximationCurve;}
 unsigned int CCTask::getGap(){return gap;}
 boolean CCTask::getReversedApproximation(){return reversedApproximation;}
-approximationMode CCTask::getApproximation(){return approximation;}
 
 
 

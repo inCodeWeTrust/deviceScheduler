@@ -86,13 +86,27 @@ void CCServoDevice::detachDevice() {
     }
 }
 
-void CCServoDevice::reviewValues() {}
+infoCode CCServoDevice::reviewValues(CCTask* nextTask) {
+    if (SERVO_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCServoDevice]: "));
+        Serial.print(deviceName);
+        Serial.print(F(" review values... "));
+    }
+    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
+    
+    if (SERVO_VERBOSE & BASICOUTPUT) {
+        Serial.println(F("   done"));
+    }
+    return EVERYTHING_OK;
+}
 
 void CCServoDevice::prepareNextTask() {}
 
 void CCServoDevice::prepareTask(CCTask* nextTask) {
 
-    currentTaskID = nextTask->taskID;
+    currentTaskID = nextTask->getTaskID();
     
     target = nextTask->getTarget();
     velocity = nextTask->getVelocity();
@@ -262,7 +276,7 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
 //        Serial.print(F(", startButton: "));
 //        Serial.print(startButton);
 //        Serial.print(F(", startTriggerDevice: "));
-//        Serial.print(startTriggerDevice->getDeviceName());
+//        Serial.print(startTriggerDevice->getName());
 //        Serial.print(F(", startTriggerTaskID: "));
 //        Serial.print(startTriggerTaskID);
 //        Serial.print(F(", startTriggerPosition: "));
@@ -274,7 +288,7 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
 //        Serial.print(F(", stopButton: "));
 //        Serial.print(stopButton);
 //        Serial.print(F(", stopTriggerDevice: "));
-//        Serial.print(stopTriggerDevice->getDeviceName());
+//        Serial.print(stopTriggerDevice->getName());
 //        Serial.print(F(", stopTriggerTaskID: "));
 //        Serial.print(stopTriggerTaskID);
 //        Serial.print(F(", stopTriggerPosition: "));

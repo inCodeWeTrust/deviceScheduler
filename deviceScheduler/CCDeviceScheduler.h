@@ -72,6 +72,7 @@ class CCDeviceScheduler {
     String getNameOfState(deviceState s);
     String getNameOfStoppingMode(stoppingMode s);
     String getNameOfDeviceAction(deviceAction d);
+    String getLiteralOfWorkflowInfo(infoCode i);
     
 
 public:
@@ -123,7 +124,7 @@ public:
     /// i.e. "28, 30, 32": micro stepping pins are pin 28, pin 30 and pin 32
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
-    CCDevice* addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char highestSteppingMode, String stepModeCodesString, String microStepPinsString, unsigned int stepsPerRotation);
+    CCDevice* addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char microStep_00_pin, unsigned char microStep_01_pin, unsigned char microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03 = -1, signed char steppingCode_04 = -1, signed char steppingCode_05 = -1, signed char steppingCode_06 = -1, signed char steppingCode_07 = -1);
     
     /// Function adds a stepper device to the device array, that is driven by da driver like the TMC260, and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -135,7 +136,7 @@ public:
     /// @param currentMax the maximum current, that is applied to the motor coils in mA RMS.
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
-    CCDevice* addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
+    CCDevice* addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax);
     
     
     /// Function adds a switching device to the device array and returns the index of the device.
@@ -184,7 +185,7 @@ public:
     void listAllActions(CCWorkflow* workflow);
     
     
-    /// Function calls the <reviewValues()> function of all devices.
+    /// Function calls the <reviewValues(CCTask* nextTask)> function of all devices.
     /// This causes the devices to approve, if all tasks are possible and do some basic calculations.
     /// This function needs to be called before the run loop is started.
     void reviewTasks(CCWorkflow* currentWorkflow);

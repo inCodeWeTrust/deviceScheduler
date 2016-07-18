@@ -60,7 +60,22 @@ void CCDcControllerDevice::disableDevice() {}
 void CCDcControllerDevice::attachDevice() {}
 void CCDcControllerDevice::detachDevice() {}
 
-void CCDcControllerDevice::reviewValues() {}
+infoCode CCDcControllerDevice::reviewValues(CCTask* nextTask) {
+    
+    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCDcControllerDevice]: "));
+        Serial.print(deviceName);
+        Serial.print(F(" review values... "));
+    }
+    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
+    
+    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+        Serial.println(F("   done"));
+    }
+    return EVERYTHING_OK;
+}
 
 void CCDcControllerDevice::prepareNextTask() {}
 
@@ -75,7 +90,7 @@ void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
         currentRatio = 0;
     }
 
-    currentTaskID = nextTask->taskID;
+    currentTaskID = nextTask->getTaskID();
     
     target = nextTask->getTarget();
     velocity = nextTask->getVelocity();

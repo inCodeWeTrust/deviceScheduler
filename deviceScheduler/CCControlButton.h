@@ -39,7 +39,7 @@ public:
     boolean             getState();
     boolean             isActiv();
     
-    String              getButtonName();
+    String              getName();
     unsigned char       getCountOfActions();
     String              getButtonActiv();
     

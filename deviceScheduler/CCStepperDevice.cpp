@@ -12,6 +12,61 @@ void freeRam ();
 #include "CCStepperDevice.h"
 
 
+CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation) {
+    
+    this->deviceName = deviceName;
+    
+    this->dir_pin = dir_pin;
+    this->step_pin = step_pin;
+    this->enable_pin = enable_pin;
+    
+    this->highestSteppingMode = 0;
+
+    this->steppingUnit = new unsigned int[9];                         // create array for increment of microSteps according to microSteppingMode (be prepared up to 256-times microstepping)
+    
+    this->steppingUnit[0] = 1;
+    
+    
+    pinMode(dir_pin, OUTPUT);
+    pinMode(step_pin, OUTPUT);
+    pinMode(enable_pin, OUTPUT);
+    digitalWrite(enable_pin, HIGH);
+    
+
+    this->stepsPerDegree = stepsPerRotation / 360.0;                                        // save time executing prepareNextTask()
+    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);      // save time when calculatin currentPosition in operateTask()
+    
+    this->acceleration_max = 4000;
+    
+    this->type = STEPPERDEVICE;
+    this->state = SLEEPING;
+    
+    this->currentMicroStep = 0;
+    this->currentPosition = 0;
+    
+    this->prepareAndStartNextTaskWhenFinished = false;
+    
+    if (STEPPER_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCStepperDevice]: setup stepper "));
+        Serial.print(deviceName);
+        Serial.print(F(": currentPosition: "));
+        Serial.print(currentPosition);
+        Serial.print(F(", dir_pin: "));
+        Serial.print(dir_pin);
+        Serial.print(F(", step_pin: "));
+        Serial.print(step_pin);
+        Serial.print(F(", enable_pin: "));
+        Serial.print(enable_pin);
+        Serial.print(F(", stepsPerDegree: "));
+        Serial.print(stepsPerDegree);
+        if (STEPPER_VERBOSE & MEMORYDEBUG) {
+            Serial.print(F(", at $"));
+            Serial.print((long) this, HEX);
+        }
+        Serial.println();
+    }
+}
+
 CCStepperDevice::~CCStepperDevice() {
 //    free(steppingUnit);
     Serial.println("### start stepper constructor: ");
@@ -42,43 +97,28 @@ void CCStepperDevice::disableDevice() {
 
 
 
-void CCStepperDevice::reviewValues() {
-    /*
+infoCode CCStepperDevice::reviewValues(CCTask* nextTask) {
     if (STEPPER_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCStepperDevice]: device "));
+        Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(" review Values for move "));
+        Serial.print(F(" review values/calculate steps for given angle... "));
     }
-    for (unsigned char m = 0; m < countOfTasks; m++) {
-        if (STEPPER_VERBOSE & BASICOUTPUT) {
-            Serial.print(" #");
-            Serial.print(m);
-        }
-        if (task[m]->getVelocity() == 0) {
-            task[m]->setVelocity(defaultVelocity);
-        }
-        if (task[m]->getAcceleration() == 0) {
-            task[m]->setAcceleration(defaultAcceleration);
-        }
-        if (task[m]->getDeceleration() == 0) {
-            task[m]->setDeceleration(defaultDeceleration);
-        }
+    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
 
-        if (task[m]->getDeceleration() == 0) {
-            task[m]->setDeceleration(task[m]->getAcceleration());
-        }
-
-        // v[steps/sec] = v[angle/sec] * stepsPerAngle
-        task[m]->setVelocity(task[m]->getVelocity() * stepsPerDegree);
-
-        // a[steps/sec/sec] = a[angle/sec/sec] * stepsPerAngle
-        task[m]->setAcceleration(task[m]->getAcceleration() * stepsPerDegree);
-        task[m]->setDeceleration(task[m]->getDeceleration() * stepsPerDegree);
-    }
+    
+    // v[steps/sec] = v[angle/sec] * stepsPerAngle
+    nextTask->setVelocity(nextTask->getVelocity() * stepsPerDegree);
+    
+    // a[steps/sec/sec] = a[angle/sec/sec] * stepsPerAngle
+    nextTask->setAcceleration(nextTask->getAcceleration() * stepsPerDegree);
+    nextTask->setDeceleration(nextTask->getDeceleration() * stepsPerDegree);
+    
     if (STEPPER_VERBOSE & BASICOUTPUT) {
         Serial.println(F("   done"));
     }
-     */
+    return EVERYTHING_OK;
 }
 
 void CCStepperDevice::prepareNextTask() {}
@@ -131,7 +171,7 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
     
     startPosition = currentPosition;
     
-    currentTaskID = nextTask->taskID;
+    currentTaskID = nextTask->getTaskID();
     
     target = nextTask->getTarget();
     velocity = nextTask->getVelocity();

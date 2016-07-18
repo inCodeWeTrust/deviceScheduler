@@ -92,7 +92,7 @@ boolean CCControlButton::readIfActiv() {
 boolean CCControlButton::isActiv(){return activ;}
 boolean CCControlButton::getState(){return state;}
 
-String CCControlButton::getButtonName(){return buttonName;}
+String CCControlButton::getName(){return buttonName;}
 String CCControlButton::getButtonActiv(){if (buttonActiv) return "HIGH"; return "LOW";}
 
 

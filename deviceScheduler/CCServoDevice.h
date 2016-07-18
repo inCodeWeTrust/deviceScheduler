@@ -57,7 +57,7 @@ public:
     void enableDevice();
     void disableDevice();
     
-    void reviewValues();
+    infoCode reviewValues(CCTask* nextTask);
     void prepareNextTask();
     void prepareTask(CCTask* nextTask);
     void startTask();

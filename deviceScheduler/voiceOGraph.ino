@@ -116,39 +116,56 @@ void loop() {
                                                           STEPPER_STOCK_STEP_PIN,
                                                           STEPPER_STOCK_DIR_PIN,
                                                           STEPPER_STOCK_ENABLE_PIN,
-                                                          STEPPER_STOCK_HIGHEST_STEPPINGMODE,
-                                                          STEPPER_STOCK_STEPMODECODES,
-                                                          STEPPER_STOCK_MICROSTEPPINS,
-                                                          STEPPER_STOCK_STEPS_PER_ROTATION);
+                                                          STEPPER_STOCK_STEPS_PER_ROTATION,
+                                                          STEPPER_STOCK_MICROSTEPPIN_00,
+                                                          STEPPER_STOCK_MICROSTEPPIN_01,
+                                                          STEPPER_STOCK_MICROSTEPPIN_02,
+                                                          STEPPER_STOCK_STEPMODECODE_00,
+                                                          STEPPER_STOCK_STEPMODECODE_01,
+                                                          STEPPER_STOCK_STEPMODECODE_02,
+                                                          STEPPER_STOCK_STEPMODECODE_03,
+                                                          STEPPER_STOCK_STEPMODECODE_04);
     
      
      CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
                                                          STEPPER_CAT_STEP_PIN,
                                                          STEPPER_CAT_DIR_PIN,
                                                          STEPPER_CAT_ENABLE_PIN,
+                                                         STEPPER_CAT_STEPS_PER_ROTATION,
                                                          STEPPER_CAT_CHIPSELECT_PIN,
-                                                         STEPPER_CAT_CURRENT,
-                                                         STEPPER_CAT_STEPS_PER_ROTATION);
+                                                         STEPPER_CAT_CURRENT);
     
      
      CCDevice* tableStepper = scheduler->addStepper_A4988(STEPPER_TABLE_NAME,
                                                           STEPPER_TABLE_STEP_PIN,
                                                           STEPPER_TABLE_DIR_PIN,
                                                           STEPPER_TABLE_ENABLE_PIN,
-                                                          STEPPER_TABLE_HIGHEST_STEPPINGMODE,
-                                                          STEPPER_TABLE_STEPMODECODES,
-                                                          STEPPER_TABLE_MICROSTEPPINS,
-                                                          STEPPER_TABLE_STEPS_PER_ROTATION);
+                                                          STEPPER_TABLE_STEPS_PER_ROTATION,
+                                                          STEPPER_TABLE_MICROSTEPPIN_00,
+                                                          STEPPER_TABLE_MICROSTEPPIN_01,
+                                                          STEPPER_TABLE_MICROSTEPPIN_02,
+                                                          STEPPER_TABLE_STEPMODECODE_00,
+                                                          STEPPER_TABLE_STEPMODECODE_01,
+                                                          STEPPER_TABLE_STEPMODECODE_02,
+                                                          STEPPER_TABLE_STEPMODECODE_03,
+                                                          STEPPER_TABLE_STEPMODECODE_04,
+                                                          STEPPER_TABLE_STEPMODECODE_05);
+
     
-     
+    
      CCDevice* conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
                                                            STEPPER_CONVEYOR_STEP_PIN,
                                                            STEPPER_CONVEYOR_DIR_PIN,
                                                            STEPPER_CONVEYOR_ENABLE_PIN,
-                                                           STEPPER_CONVEYOR_HIGHEST_STEPPINGMODE,
-                                                           STEPPER_CONVEYOR_STEPMODECODES,
-                                                           STEPPER_CONVEYOR_MICROSTEPPINS,
-                                                           STEPPER_CONVEYOR_STEPS_PER_ROTATION);
+                                                           STEPPER_CONVEYOR_STEPS_PER_ROTATION,
+                                                           STEPPER_CONVEYOR_MICROSTEPPIN_00,
+                                                           STEPPER_CONVEYOR_MICROSTEPPIN_01,
+                                                           STEPPER_CONVEYOR_MICROSTEPPIN_02,
+                                                           STEPPER_CONVEYOR_STEPMODECODE_00,
+                                                           STEPPER_CONVEYOR_STEPMODECODE_01,
+                                                           STEPPER_CONVEYOR_STEPMODECODE_02,
+                                                           STEPPER_CONVEYOR_STEPMODECODE_03,
+                                                           STEPPER_CONVEYOR_STEPMODECODE_04);
     
     
      CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
@@ -228,10 +245,12 @@ void loop() {
         
         CCWorkflow* fetchingRecord = new CCWorkflow("fetchingRecord");
     {
-       CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo, 100, 101, 102);
-        CCDeviceFlow* turnServoFlow = fetchingRecord->addDeviceFlow("turnServoFlow", turnServo, 200, 201, 202);
+       CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo);
+        CCDeviceFlow* turnServoFlow = fetchingRecord->addDeviceFlow("turnServoFlow", turnServo, 200, 201);
         CCDeviceFlow* pumpServoFlow = fetchingRecord->addDeviceFlow("pumpServoFlow", pumpServo, 300, 301, 302);
         CCDeviceFlow* stockStepperFlow = fetchingRecord->addDeviceFlow("stockStepperFlow", stockStepper, 400, 401, 402);
+        
+        liftServoFlow->defineDefaults(111, 112);
         
         CCFlowControl* stockTopControl = fetchingRecord->addFlowControl("stockTopControl", stockTopButton);
         CCFlowControl* stockBottomControl = fetchingRecord->addFlowControl("stockBottomControl", stockBottomButton);

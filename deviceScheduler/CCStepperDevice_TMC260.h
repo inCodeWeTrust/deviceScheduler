@@ -44,7 +44,7 @@ public:
     boolean overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
     
 
-    CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation);
+    CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax);
     
     ~CCStepperDevice_TMC260();
     

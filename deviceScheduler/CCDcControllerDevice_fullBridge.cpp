@@ -65,7 +65,7 @@ void CCDcControllerDevice_fullBridge::prepareNextTask() {}
         currentRatio = 0;
     }
 
-    currentTaskID = nextTask->taskID;
+    currentTaskID = nextTask->getTaskID();
         
     target = nextTask->getTarget();
     velocity = nextTask->getVelocity();

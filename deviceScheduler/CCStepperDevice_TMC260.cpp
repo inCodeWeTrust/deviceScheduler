@@ -28,27 +28,12 @@
 
 
 
-CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned char chipSelect_pin, unsigned int currentMax, unsigned int stepsPerRotation) : CCStepperDevice() {
+CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
     
     
-    this->deviceName = deviceName;
-
-    this->dir_pin = dir_pin;
-    this->step_pin = step_pin;
-    this->enable_pin = enable_pin;
 	this->chipSelect_pin = chipSelect_pin;
-    
-    pinMode(dir_pin, OUTPUT);
-    digitalWrite(dir_pin, LOW);
-    
-    pinMode(step_pin, OUTPUT);
-    digitalWrite(step_pin, LOW);
-    
     pinMode(chipSelect_pin, OUTPUT);
     digitalWrite(chipSelect_pin, HIGH);
-    
-    pinMode(enable_pin, OUTPUT);
-    digitalWrite(enable_pin, HIGH);
     
     
     SPI.setBitOrder(MSBFIRST);
@@ -59,50 +44,22 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     
     
     this->currentMax = currentMax;
-    this->stepsPerRotation = stepsPerRotation;
     
     this->highestSteppingMode = 8;
-
-    this->steppingUnit = new unsigned int[highestSteppingMode + 1];
 
     for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
     }
     
-    this->stepsPerDegree = stepsPerRotation / 360.0;                                              // save time executing prepareNextTask()
-    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);            // save time when calculatin currentPosition in operateTask()
-    
-    this->acceleration_max = 4000;
-    
-    this->type = STEPPERDEVICE;
-    this->state = SLEEPING;
-
-    this->currentMicroStep = 0;
-    this->currentPosition = 0;
-    
-    this->prepareAndStartNextTaskWhenFinished = false;
-
-    
-    
     if (STEPPER_TMC260_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_TMC260]: setup stepper "));
         Serial.print(deviceName);
-        Serial.print(F(": currentPosition: "));
-        Serial.print(currentPosition);
-        Serial.print(F(", dir_pin: "));
-        Serial.print(dir_pin);
-        Serial.print(F(", step_pin: "));
-        Serial.print(step_pin);
-        Serial.print(F(", enable_pin: "));
-        Serial.print(enable_pin);
-        Serial.print(F(", chipSelect_pin: "));
+        Serial.print(F(": chipSelect_pin: "));
         Serial.print(chipSelect_pin);
         Serial.print(F(", currentMax: "));
         Serial.print(currentMax);
-        Serial.print(F("steppingModes: "));
+        Serial.print(F(", steppingModes: "));
         Serial.print(highestSteppingMode + 1);
-        Serial.print(F("stepsPerDegree: "));
-        Serial.print(stepsPerDegree);
         if (STEPPER_TMC260_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.print((long) this, HEX);

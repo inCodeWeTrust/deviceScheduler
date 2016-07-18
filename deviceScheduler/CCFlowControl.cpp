@@ -50,12 +50,11 @@ CCFlowControl::~CCFlowControl() {
 
 CCAction* CCFlowControl::addAction(String actionName, infoCode workflowInfoCode) {
     Serial.print(F("[CCFlowControl]: add Action for "));
-    Serial.println(button->getButtonName());
+    Serial.println(button->getName());
     
     action[countOfActions++] = new CCAction(actionName, workflowInfoCode);
     return action[countOfActions - 1];
 }
 
-void CCControlButton::deleteActions() {
-    countOfActions = 0;
-}
+String CCFlowControl::getName(){return controlName;}
+unsigned char CCFlowControl::getCountOfActions(){return countOfActions;}

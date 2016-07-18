@@ -19,16 +19,20 @@
 class CCDeviceFlow;
 
 class CCFlowControl {
-public:
+    
+private:
     
     String              controlName;
 
-    CCControlButton*    button;
+    
     unsigned char       countOfActions;
+
+    
+public:
+
+    CCControlButton*    button;
     CCAction*           action[8];
     
-    
-    unsigned char       getCountOfActions();
     
     
     CCFlowControl(String controlName, CCControlButton* button);
@@ -36,11 +40,9 @@ public:
     
     CCAction*           addAction(String actionName, infoCode workflowInfoCode);
     
-    void deleteActions();
     
-    
-private:
-    
+    String              getName();
+    unsigned char       getCountOfActions();
     
     
 };

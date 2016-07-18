@@ -18,9 +18,8 @@
 class CCDeviceFlow;
 
 class CCAction {
-public:
+private:
     String              actionName;
-    CCDeviceFlow*       targetDeviceFlow;
     scheduledTask       validTaskID;
     deviceAction        targetAction;
     scheduledTask       followingTaskID;
@@ -28,7 +27,12 @@ public:
     String              notificationText;
     infoCode            workflowInfoCode;
     boolean             actionDone;
+
+
+public:
     
+    CCDeviceFlow*       targetDeviceFlow;
+
     CCAction(String actionName, infoCode workflowInfoCode);
 //    ~CCAction();
     
@@ -42,8 +46,19 @@ public:
     void evokeBreak();
 //    int notificationCode = 0, String notificationText = "");
     
-    void                setActionDone();
 
+    String              getName();
+    scheduledTask       getValidTaskID();
+    deviceAction        getTargetAction();
+    scheduledTask       getFollowingTaskID();
+    int                 getNotificationCode();
+    String              getNotificationText();
+    infoCode            getWorkflowInfoCode();
+    boolean             getActionDone();
+    void                setActionDone(boolean d);
+    
+
+    
 };
 
 #endif /* defined(__deviceScheduler__CCAction__) */

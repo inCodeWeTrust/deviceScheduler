@@ -28,72 +28,52 @@
 
 
 class CCWorkflow {
-    
-public:
+private:
     String workflowName;
     
-    /// Parameters of the device as a peer of a run-loop.
-    /// Value, that holds the number of tasks to be executed within this run-loop.
+    /// Parameter of the workflow.
+    /// Value holds the number of deviceFlows to be executed within this workflow.
     unsigned char       countOfDeviceFlows;
+    
+    /// Parameter of the workflow.
+    /// Value holds the number of flowControls to be considered within this workflow.
+    unsigned char       countOfFlowControls;
+    
+
+    infoCode            workflowInfo;
+
+public:
     CCDeviceFlow        *deviceFlow[10];
     
-    
-    unsigned char       countOfFlowControls;
     CCFlowControl       *flowControl[6];
-    
-    
-    infoCode            workflowInfo;
-    String              infoHistory;
 
     
     CCWorkflow(String name);
     ~CCWorkflow();
     
-    /// Function declares a task-flow for a device and returns its index.
+    /// Function registers a task-flow for a device to be executed within this workflow.
     /// It creates an instance of [CCDeviceFlow](@ref deviceFlow) and puts it into the deviceFlow array of the workflow.
-    /// @param device the index of the device.
+    /// @param deviceFlowName the name of this deviceFlow.
+    /// @param device a pointer to the related device.
     /// @param defaultVelocity the device's default velocity within this workflow.
     /// @param defaultAcceleration the device's default acceleration within this workflow.
     /// @param defaultDeceleration the device's default deceleration within this workflow.
-    /// @return the deviceFlow index.
-    CCDeviceFlow* addDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
+    /// @return the deviceFlow instance.
+    CCDeviceFlow* addDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity = 0.0, float defaultAcceleration = 0.0, float defaultDeceleration = 0.0);
     
-    /// Function declares a task-flow for a device and returns its index.
-    /// It creates an instance of [CCDeviceFlow](@ref deviceFlow) and puts it into the deviceFlow array of the workflow.
-    /// @param device the index of the device.
-    /// @param defaultVelocity the device's default velocity within this workflow.
-    /// @param defaultAcceleration the device's default acceleration within this workflow.
-    /// deceleration is set to same value as to acceleration.
-    /// @return the deviceFlow index.
-    CCDeviceFlow* addDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration);
-    
-    /// Function declares a task-flow for a device and returns its index.
-    /// It creates an instance of [CCDeviceFlow](@ref deviceFlow) and puts it into the deviceFlow array of the workflow.
-    /// @param device the index of the device.
-    /// @param defaultVelocity the device's default velocity within this workflow.
-    /// @return the deviceFlow index.
-    CCDeviceFlow* addDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity);
-    
-    /// Function declares a task-flow for a device and returns its index.
-    /// It creates an instance of [CCDeviceFlow](@ref deviceFlow) and puts it into the deviceFlow array of the workflow.
-    /// @param device the index of the device.
-    /// @return the deviceFlow index.
-    CCDeviceFlow* addDeviceFlow(String deviceFlowName, CCDevice* device);
-    
-    
-    
-    
-    
+    /// Function registers a flow-control to be considered within this workflow.
+    /// It creates an instance of [CCFlowControl](@ref flowControl) and puts it into the flowControl array of the workflow.
+    /// @param controlName the name of this flowControl.
+    /// @param controlButton a pointer to the related button.
+    /// @return the flowControl instance.
     CCFlowControl* addFlowControl(String controlName, CCControlButton* controlButton);
 
+    String getName();
+    unsigned char getCountOfDeviceFlows();
+    unsigned char getCountOfFlowControls();
+    infoCode getWorkflowInfo();
+    void setWorkflowInfo(infoCode c);
     
-//    
-//    String getNameOfDeviceType(deviceType t);
-//    String getNameOfTaskEvent(event e);
-//    String getNameOfState(deviceState s);
-//    String getNameOfStoppingMode(stoppingMode s);
-//    String getNameOfDeviceAction(deviceAction d);
-
 };
 
 

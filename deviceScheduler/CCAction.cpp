@@ -35,7 +35,7 @@ CCAction::CCAction(String actionName, infoCode workflowInfoCode) {
 
 void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction) {
     this->targetDeviceFlow = targetDeviceFlow;
-    this->validTaskID = validTask->taskID;
+    this->validTaskID = validTask->getTaskID();
     this->targetAction = targetAction;
     this->followingTaskID = validTaskID + 1;
     
@@ -61,10 +61,10 @@ void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask
     if (validTask == NULL) {
         this->validTaskID = -1;
     } else {
-        this->validTaskID = validTask->taskID;
+        this->validTaskID = validTask->getTaskID();
     }
     this->targetAction = targetAction;
-    this->followingTaskID = followingTask->taskID;
+    this->followingTaskID = followingTask->getTaskID();
     
 //    this->notificationCode = notificationCode;
 //    this->notificationText = notificationText;
@@ -108,4 +108,16 @@ void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
 void CCAction::evokeBreak() {
     evokeBreak(NULL, NULL);
 }
+
+
+
+String CCAction::getName(){return actionName;}
+scheduledTask CCAction::getValidTaskID(){return validTaskID;}
+deviceAction CCAction::getTargetAction(){return targetAction;}
+scheduledTask CCAction::getFollowingTaskID(){return followingTaskID;}
+int CCAction::getNotificationCode(){return notificationCode;}
+String CCAction::getNotificationText(){return notificationText;}
+infoCode CCAction::getWorkflowInfoCode(){return workflowInfoCode;}
+boolean CCAction::getActionDone(){return actionDone;}
+void CCAction::setActionDone(boolean d){actionDone = d;}
 
