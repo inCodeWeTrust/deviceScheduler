@@ -67,6 +67,8 @@ infoCode CCDcControllerDevice::reviewValues(CCTask* nextTask) {
         Serial.print(deviceName);
         Serial.print(F(" review values... "));
     }
+    if (nextTask->getTarget() > 1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getTarget() < 0.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());

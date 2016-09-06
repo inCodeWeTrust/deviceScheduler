@@ -18,8 +18,6 @@
 #include <malloc.h>
 
 
-// any chamges may happen here!
-
 
 // ------------- globals -----------------------------------------------------------------------------------------------------
 
@@ -44,7 +42,7 @@ float               turnTableStepperDegrees, turnTableStepperSpeed;
 // ------------- prototypes --------------------------------------------------------------------------------------------------
 void setup();
 void calculateCuttingParameters();
-
+void evaluateButtons();
 void freeRam ();
 
 extern char _end;
@@ -83,7 +81,7 @@ void loop() {
                                                               SERVO_LIFT_RIGHT_MID_POSITION,
                                                               SERVO_LIFT_RIGHT_MAX_POSITION,
                                                               LIFT_PARK_POSITION);
-
+    
     
     CCDevice* turnServo = scheduler->addServo(SERVO_TURN_NAME,
                                               SERVO_TURN_PIN,
@@ -99,91 +97,91 @@ void loop() {
                                               PUMP_PARK_POSITION);
     
     
-     CCDevice* headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
-                                                   SERVO_HEAD_LEFT_PIN,
-                                                   SERVO_HEAD_LEFT_MIN_POSITION,
-                                                   SERVO_HEAD_LEFT_MAX_POSITION,
-                                                   HEAD_LEFT_PARK_POSITION);
+    CCDevice* headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
+                                                  SERVO_HEAD_LEFT_PIN,
+                                                  SERVO_HEAD_LEFT_MIN_POSITION,
+                                                  SERVO_HEAD_LEFT_MAX_POSITION,
+                                                  HEAD_LEFT_PARK_POSITION);
     
-     CCDevice* headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME,
-                                                    SERVO_HEAD_RIGHT_PIN,
-                                                    SERVO_HEAD_RIGHT_MIN_POSITION,
-                                                    SERVO_HEAD_RIGHT_MAX_POSITION,
-                                                    HEAD_RIGHT_PARK_POSITION);
-    
-     
-     CCDevice* stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
-                                                          STEPPER_STOCK_STEP_PIN,
-                                                          STEPPER_STOCK_DIR_PIN,
-                                                          STEPPER_STOCK_ENABLE_PIN,
-                                                          STEPPER_STOCK_STEPS_PER_ROTATION,
-                                                          STEPPER_STOCK_MICROSTEPPIN_00,
-                                                          STEPPER_STOCK_MICROSTEPPIN_01,
-                                                          STEPPER_STOCK_MICROSTEPPIN_02,
-                                                          STEPPER_STOCK_STEPMODECODE_00,
-                                                          STEPPER_STOCK_STEPMODECODE_01,
-                                                          STEPPER_STOCK_STEPMODECODE_02,
-                                                          STEPPER_STOCK_STEPMODECODE_03,
-                                                          STEPPER_STOCK_STEPMODECODE_04);
-    
-     
-     CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
-                                                         STEPPER_CAT_STEP_PIN,
-                                                         STEPPER_CAT_DIR_PIN,
-                                                         STEPPER_CAT_ENABLE_PIN,
-                                                         STEPPER_CAT_STEPS_PER_ROTATION,
-                                                         STEPPER_CAT_CHIPSELECT_PIN,
-                                                         STEPPER_CAT_CURRENT);
-    
-     
-     CCDevice* tableStepper = scheduler->addStepper_A4988(STEPPER_TABLE_NAME,
-                                                          STEPPER_TABLE_STEP_PIN,
-                                                          STEPPER_TABLE_DIR_PIN,
-                                                          STEPPER_TABLE_ENABLE_PIN,
-                                                          STEPPER_TABLE_STEPS_PER_ROTATION,
-                                                          STEPPER_TABLE_MICROSTEPPIN_00,
-                                                          STEPPER_TABLE_MICROSTEPPIN_01,
-                                                          STEPPER_TABLE_MICROSTEPPIN_02,
-                                                          STEPPER_TABLE_STEPMODECODE_00,
-                                                          STEPPER_TABLE_STEPMODECODE_01,
-                                                          STEPPER_TABLE_STEPMODECODE_02,
-                                                          STEPPER_TABLE_STEPMODECODE_03,
-                                                          STEPPER_TABLE_STEPMODECODE_04,
-                                                          STEPPER_TABLE_STEPMODECODE_05);
-
+    CCDevice* headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME,
+                                                   SERVO_HEAD_RIGHT_PIN,
+                                                   SERVO_HEAD_RIGHT_MIN_POSITION,
+                                                   SERVO_HEAD_RIGHT_MAX_POSITION,
+                                                   HEAD_RIGHT_PARK_POSITION);
     
     
-     CCDevice* conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
-                                                           STEPPER_CONVEYOR_STEP_PIN,
-                                                           STEPPER_CONVEYOR_DIR_PIN,
-                                                           STEPPER_CONVEYOR_ENABLE_PIN,
-                                                           STEPPER_CONVEYOR_STEPS_PER_ROTATION,
-                                                           STEPPER_CONVEYOR_MICROSTEPPIN_00,
-                                                           STEPPER_CONVEYOR_MICROSTEPPIN_01,
-                                                           STEPPER_CONVEYOR_MICROSTEPPIN_02,
-                                                           STEPPER_CONVEYOR_STEPMODECODE_00,
-                                                           STEPPER_CONVEYOR_STEPMODECODE_01,
-                                                           STEPPER_CONVEYOR_STEPMODECODE_02,
-                                                           STEPPER_CONVEYOR_STEPMODECODE_03,
-                                                           STEPPER_CONVEYOR_STEPMODECODE_04);
+    CCDevice* stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
+                                                         STEPPER_STOCK_STEP_PIN,
+                                                         STEPPER_STOCK_DIR_PIN,
+                                                         STEPPER_STOCK_ENABLE_PIN,
+                                                         STEPPER_STOCK_STEPS_PER_ROTATION,
+                                                         STEPPER_STOCK_MICROSTEPPIN_00,
+                                                         STEPPER_STOCK_MICROSTEPPIN_01,
+                                                         STEPPER_STOCK_MICROSTEPPIN_02,
+                                                         STEPPER_STOCK_STEPMODECODE_00,
+                                                         STEPPER_STOCK_STEPMODECODE_01,
+                                                         STEPPER_STOCK_STEPMODECODE_02,
+                                                         STEPPER_STOCK_STEPMODECODE_03,
+                                                         STEPPER_STOCK_STEPMODECODE_04);
     
     
-     CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
-                                                          VACCUUMCLEANER_PIN,
-                                                          VACCUUMCLEANER_ACTIV);
-     
-     
-     CCDevice* startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
-                                                             CONTROLLER_LAMP_RED_PIN,
-                                                             CONTROLLER_LAMP_RED_ACTIV);
-     
-     
+    CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
+                                                        STEPPER_CAT_STEP_PIN,
+                                                        STEPPER_CAT_DIR_PIN,
+                                                        STEPPER_CAT_ENABLE_PIN,
+                                                        STEPPER_CAT_STEPS_PER_ROTATION,
+                                                        STEPPER_CAT_CHIPSELECT_PIN,
+                                                        STEPPER_CAT_CURRENT);
+    
+    
+    CCDevice* tableStepper = scheduler->addStepper_A4988(STEPPER_TABLE_NAME,
+                                                         STEPPER_TABLE_STEP_PIN,
+                                                         STEPPER_TABLE_DIR_PIN,
+                                                         STEPPER_TABLE_ENABLE_PIN,
+                                                         STEPPER_TABLE_STEPS_PER_ROTATION,
+                                                         STEPPER_TABLE_MICROSTEPPIN_00,
+                                                         STEPPER_TABLE_MICROSTEPPIN_01,
+                                                         STEPPER_TABLE_MICROSTEPPIN_02,
+                                                         STEPPER_TABLE_STEPMODECODE_00,
+                                                         STEPPER_TABLE_STEPMODECODE_01,
+                                                         STEPPER_TABLE_STEPMODECODE_02,
+                                                         STEPPER_TABLE_STEPMODECODE_03,
+                                                         STEPPER_TABLE_STEPMODECODE_04,
+                                                         STEPPER_TABLE_STEPMODECODE_05);
+    
+    
+    
+    CCDevice* conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
+                                                          STEPPER_CONVEYOR_STEP_PIN,
+                                                          STEPPER_CONVEYOR_DIR_PIN,
+                                                          STEPPER_CONVEYOR_ENABLE_PIN,
+                                                          STEPPER_CONVEYOR_STEPS_PER_ROTATION,
+                                                          STEPPER_CONVEYOR_MICROSTEPPIN_00,
+                                                          STEPPER_CONVEYOR_MICROSTEPPIN_01,
+                                                          STEPPER_CONVEYOR_MICROSTEPPIN_02,
+                                                          STEPPER_CONVEYOR_STEPMODECODE_00,
+                                                          STEPPER_CONVEYOR_STEPMODECODE_01,
+                                                          STEPPER_CONVEYOR_STEPMODECODE_02,
+                                                          STEPPER_CONVEYOR_STEPMODECODE_03,
+                                                          STEPPER_CONVEYOR_STEPMODECODE_04);
+    
+    
+    CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
+                                                         VACCUUMCLEANER_PIN,
+                                                         VACCUUMCLEANER_ACTIV);
+    
+    
+    CCDevice* startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
+                                                            CONTROLLER_LAMP_RED_PIN,
+                                                            CONTROLLER_LAMP_RED_ACTIV);
+    
+    
     
     //============================================================================================================================
     // ============= register sensors: ================================================================================================
     // ============================================================================================================================
     
-
+    
     
     CCControlButton* recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
                                                                          RECORDAVAILABLE_BUTTON_PIN,
@@ -191,9 +189,9 @@ void loop() {
                                                                          RECORDAVAILABLE_BUTTON_PULLUP);
     
     CCControlButton* recordNotAvailableButton = scheduler->addControlButton(RECORDNOTAVAILABLE_BUTTON_NAME,
-                                                                         RECORDAVAILABLE_BUTTON_PIN,
-                                                                         RECORDNOTAVAILABLE_BUTTON_ACTIV,
-                                                                         RECORDAVAILABLE_BUTTON_PULLUP);
+                                                                            RECORDAVAILABLE_BUTTON_PIN,
+                                                                            RECORDNOTAVAILABLE_BUTTON_ACTIV,
+                                                                            RECORDAVAILABLE_BUTTON_PULLUP);
     
     CCControlButton* stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
                                                                   STOCKTOP_BUTTON_PIN,
@@ -211,65 +209,71 @@ void loop() {
                                                                     CAT_PARKBUTTON_PULLUP);
     
     CCControlButton* bridgeEndButton = scheduler->addControlButton(CAT_ENDBUTTON_NAME,
-                                                                         CAT_ENDBUTTON_PIN,
-                                                                         CAT_ENDBUTTON_ACTIV,
-                                                                         CAT_ENDBUTTON_PULLUP);
+                                                                   CAT_ENDBUTTON_PIN,
+                                                                   CAT_ENDBUTTON_ACTIV,
+                                                                   CAT_ENDBUTTON_PULLUP);
     
     CCControlButton* songEndButton = scheduler->addControlButton(SONG_ENDBUTTON_NAME,
-                                                                       SONG_ENDBUTTON_PIN,
-                                                                       SONG_ENDBUTTON_ACTIV,
-                                                                       SONG_ENDBUTTON_PULLUP);
+                                                                 SONG_ENDBUTTON_PIN,
+                                                                 SONG_ENDBUTTON_ACTIV,
+                                                                 SONG_ENDBUTTON_PULLUP);
     
     CCControlButton* songCancelButton = scheduler->addControlButton(SONG_CANCELBUTTON_NAME,
-                                                                          SONG_CANCELBUTTON_PIN,
-                                                                          SONG_CANCELBUTTON_ACTIV,
-                                                                          SONG_CANCELBUTTON_PULLUP);
+                                                                    SONG_CANCELBUTTON_PIN,
+                                                                    SONG_CANCELBUTTON_ACTIV,
+                                                                    SONG_CANCELBUTTON_PULLUP);
     
-     
+    
     scheduler->listDevices();
     scheduler->listControlButtons();
     
     delay(1000);
     Serial.println("now the work flowing");
-        // ============================================================================================================================
-        // ============= initialisation of fetchingRecord: ============================================================================
-        // ============================================================================================================================
-        
-        //  not needed
-        
-        
-        // ============================================================================================================================
-        // ============= tasks of fetchingRecord: =====================================================================================
-        // ============================================================================================================================
-        
-        
-        CCWorkflow* fetchingRecord = new CCWorkflow("fetchingRecord");
+
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= fetchingRecord workflow ===========================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    
+    CCWorkflow* fetchingRecord = new CCWorkflow("fetchingRecord");
+
+    // ============================================================================================================================
+    // ============= initialisation of fetchingRecord: ============================================================================
+    // ============================================================================================================================
+    
+    //  not needed
+    
+    
+    // ============================================================================================================================
+    // ============= tasks of fetchingRecord: =====================================================================================
+    // ============================================================================================================================
+    
+    
     {
-       CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo);
-        CCDeviceFlow* turnServoFlow = fetchingRecord->addDeviceFlow("turnServoFlow", turnServo, 200, 201);
-        CCDeviceFlow* pumpServoFlow = fetchingRecord->addDeviceFlow("pumpServoFlow", pumpServo, 300, 301, 302);
-        CCDeviceFlow* stockStepperFlow = fetchingRecord->addDeviceFlow("stockStepperFlow", stockStepper, 400, 401, 402);
-        
-        liftServoFlow->defineDefaults(111, 112);
+        CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        CCDeviceFlow* turnServoFlow = fetchingRecord->addDeviceFlow("turnServoFlow", turnServo, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
+        CCDeviceFlow* pumpServoFlow = fetchingRecord->addDeviceFlow("pumpServoFlow", pumpServo, PUMP_SPEED, PUMP_ACCEL);
+        CCDeviceFlow* stockStepperFlow = fetchingRecord->addDeviceFlow("stockStepperFlow", stockStepper, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
         
         CCFlowControl* stockTopControl = fetchingRecord->addFlowControl("stockTopControl", stockTopButton);
         CCFlowControl* stockBottomControl = fetchingRecord->addFlowControl("stockBottomControl", stockBottomButton);
-
+        
         
         //  lift grappler
         CCTask* liftFromParkPosition;
         liftFromParkPosition = liftServoFlow->addTask(LIFT_PARK_POSITION + 500, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
         liftFromParkPosition->startByDate(100);
-
+        
         //  move stock down first
         CCTask* moveStockStepperDown;
         moveStockStepperDown = stockStepperFlow->addTaskMoveRelativ(-40000);
-        moveStockStepperDown->startByDate(1000);
+        moveStockStepperDown->startByDate(200);
         moveStockStepperDown->stopByButton(recordNotAvailableButton, STOP_NORMAL);
-         
-         //  supply a new record, terminated by recordAvailableButton
+        
+        //  supply a new record, terminated by recordAvailableButton
         CCTask* supplyRecord;
-        supplyRecord = stockStepperFlow->addTaskMoveRelativ(40000);
+        supplyRecord = stockStepperFlow->addTaskMoveRelativ(4000);
         supplyRecord->startAfterCompletionOf(stockStepper, moveStockStepperDown);
         supplyRecord->stopByButton(recordAvailableButton, STOP_NORMAL);
         
@@ -278,30 +282,30 @@ void loop() {
         lowerToStock = liftServoFlow->addTask(LIFT_STOCK_POSITION);
         lowerToStock->startByButton(recordAvailableButton);
         
-         //  pump: prepare
+        //  pump: prepare
         CCTask* pumpForGrip_down;
         pumpForGrip_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
         pumpForGrip_down->startByTriggerpositionOf(liftServo, lowerToStock, LIFT_STOCK_POSITION + 60);
         
-         //  pump: make vaccum
+        //  pump: make vaccum
         CCTask* pumpForGrip_up;
         pumpForGrip_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
         pumpForGrip_up->startAfterCompletionOf(liftServo, lowerToStock);
-         
-         //  lift the new record
+        
+        //  lift the new record
         CCTask* liftNewRecord;
         liftNewRecord = liftServoFlow->addTask(LIFT_UP_POSITION);
         liftNewRecord->startAfterCompletionOf(pumpServo, pumpForGrip_up);
         
-         //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnRecordToTable;
         turnRecordToTable = turnServoFlow->addTask(TURN_TABLE_POSITION);
         turnRecordToTable->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
-         
-         //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
-         CCTask* lowerRecordToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION);
-         lowerRecordToTable->startByTriggerpositionOf(turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
-
+        
+        //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
+        CCTask* lowerRecordToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION);
+        lowerRecordToTable->startByTriggerpositionOf(turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+        
         //  release new record: release vacuum
         CCTask* pumpForRelease_down;
         pumpForRelease_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
@@ -313,40 +317,39 @@ void loop() {
         liftForParkPosition = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
         liftForParkPosition->startAfterCompletionOf(pumpServo, pumpForRelease_down);
         
-         //  release pump when record is placed
+        //  release pump when record is placed
         CCTask* pumpForRelease_up;
         pumpForRelease_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
         pumpForRelease_up->startAfterCompletionOf(liftServo, liftForParkPosition);
-         
-         //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
+        
+        //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnToStockPosition;
         turnToStockPosition = turnServoFlow->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
         turnToStockPosition->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
-         
-         //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
+        
+        //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
         CCTask* lowerForParkPosition;
         lowerForParkPosition = liftServoFlow->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
         lowerForParkPosition->startByTriggerpositionOf(turnServo, turnToStockPosition, TURN_TO_STOCK_TRIGGER_LIFT);
-         
-
-         
-         //  cancel loading if stockBottomButton is pressed while lowering
-
-        CCAction* postWorkflowInfo = stockTopControl->addAction("lastRecordInfo",  WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED);
-//        postWorkflowInfo->notificationCode = CONTINUE_ON_ENDBUTTON_REACHED;
-//        postWorkflowInfo->notificationText = "running out of stock!\n";
         
-        CCAction* stopStockAtBottom;
-        stopStockAtBottom = stockBottomControl->addAction("stopWhenStockBottomReached", WORKFLOW_CANCELED_ON_ENDBUTTON_REACHED);
-//        stopStockAtBottom->notificationCode = BREAK_ON_ENDBUTTON_REACHED;
-//        stopStockAtBottom->notificationText = "too many records in stock!\n";
+        
+        
+        //  cancel loading if stockBottomButton is pressed while lowering
+        
+        CCAction* postWorkflowInfo = stockTopControl->addAction("lastRecordInfo",  WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED);
+        //        postWorkflowInfo->notificationCode = CONTINUE_ON_ENDBUTTON_REACHED;
+        //        postWorkflowInfo->notificationText = "running out of stock!\n";
+        
+        CCAction* stopStockAtBottom = stockBottomControl->addAction("stopWhenStockBottomReached", WORKFLOW_CANCELED_ON_ENDBUTTON_REACHED);
+        //        stopStockAtBottom->notificationCode = BREAK_ON_ENDBUTTON_REACHED;
+        //        stopStockAtBottom->notificationText = "too many records in stock!\n";
         
         
         
         scheduler->reviewTasks(fetchingRecord);
         scheduler->listAllTasks(fetchingRecord);
         scheduler->listAllActions(fetchingRecord);
-
+        
         
         freeRam();
     }
@@ -356,7 +359,7 @@ void loop() {
     
     
     // ================================================================================================================================
-    // ============= create cuttingProcess scheduler object: ==========================================================================
+    // ============= create cuttingProcess workflow object: ==========================================================================
     // ================================================================================================================================
     
     //    cuttingProcess = new CCDeviceScheduler("cuttingProcess");
@@ -618,170 +621,175 @@ void loop() {
     
     
     Serial.println(F("ready to run!"));
-    scheduler->run(fetchingRecord);
+    
+    boolean initNeeded = false;
+    int i = 0;
+    while (!initNeeded) {
+        if (digitalRead(FETCH_RECORD_BUTTON) == LOW) {
+            Serial.println("go for a brand new record");
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            
+            scheduler->run(fetchingRecord);
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+            
+        }
+        
+        
+        if (digitalRead(START_CUTTING_BUTTON) == LOW) {
+            Serial.println("go for cut and scratch");
+            /*
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            
+            cuttingProcess->run();
+            
+            ejectingRecord->run();
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+            */
+        }
+        
+        if (digitalRead(LOADING_BUTTON) == LOW) {
+            Serial.println("go for loading");
+            /*
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            
+            {
+                CCDeviceScheduler *loading = new CCDeviceScheduler("loading");
+                
+                
+                
+                scheduledTask driveDown = loading->device[stockStepper]->addTask(-80000);
+                loading->device[stockStepper]->task[driveDown]->startByDate(100);
+                loading->device[stockStepper]->task[driveDown]->stopByButton(stockBottomButton);
+                
+                scheduledTask comeUpAgain = loading->device[stockStepper]->addTask(80000);
+                loading->device[stockStepper]->task[comeUpAgain]->startAfterCompletionOf(stockStepper, driveDown);
+                loading->device[stockStepper]->task[comeUpAgain]->stopByButton(stockTopButton);
+                
+                loading->controlButton[loadingButton]->evokeJumpToNextTask(stockStepper, driveDown, STOP_TASK);
+                loading->controlButton[recordAvailableButton]->evokeJumpToNextTask(stockStepper, comeUpAgain, STOP_TASK);
+                
+                loading->reviewTasks();
+                loading->run();
+                
+                delete loading;
+                loading = NULL;
+            }
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+            */
+        }
+        
+        if (digitalRead(MOVE_MANUALLY_SWITCH) == LOW) {
+            Serial.println("go for mamual moving");
+            /*
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            
+            {
+                CCDeviceScheduler *manualDrive = new CCDeviceScheduler("manualDrive");
+                
+                
+                CCControlButton* catForwardButton = manualDrive->addControlButton("catForward", MOVE_CAT_FWD_BUTTON, HIGH, true);
+                CCControlButton* catRewindButton = manualDrive->addControlButton("catRewind", MOVE_CAT_RWD_BUTTON, HIGH, true);
+                
+                
+                //  move to start groove:
+                scheduledTask driveToCuttingStartPositionMan = manualDrive->device[catStepper]->addTask(CAT_CUTTING_START_POSITION);
+                manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(100);
+                
+                manualDrive->reviewTasks();
+                manualDrive->run();
+                manualDrive->deleteAllTasks();
+                
+                while (digitalRead(START_CUTTING_BUTTON) == HIGH) {
+                    if (digitalRead(MOVE_CAT_FWD_BUTTON) == LOW) {
+                        driveToCuttingStartPositionMan = manualDrive->device[catStepper]->addTask(catCuttingEndPosition);
+                        manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
+                        manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(catForwardButton, STOP_NORMAL);
+                        
+                        manualDrive->reviewTasks();
+                        manualDrive->run();
+                        manualDrive->deleteAllTasks();
+                    }
+                    if (digitalRead(MOVE_CAT_RWD_BUTTON) == LOW) {
+                        driveToCuttingStartPositionMan = manualDrive->device[catStepper]->addTask(CAT_PARK_POSITION);
+                        manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
+                        manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(catRewindButton, STOP_NORMAL);
+                        
+                        manualDrive->reviewTasks();
+                        manualDrive->run();
+                        manualDrive->deleteAllTasks();
+                    }
+                }
+                
+                
+                cuttingProcess->device[0]->setCurrentPosition(manualDrive->device[0]->getCurrentPosition());
+                cuttingProcess->device[0]->increaseTaskPointer();
+                cuttingProcess->run();
+                
+                delete manualDrive;
+                manualDrive = NULL;
+                
+            }
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+            */
+        }
+        
+        if (digitalRead(MATCH_HEADIMPACT_SWITCH) == LOW) {
+            Serial.println("go for matching head impact");
+            /*
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            
+            cuttingProcess->device[0]->setCountOfTasks(0);
+            cuttingProcess->device[1]->setCountOfTasks(0);
+            cuttingProcess->device[3]->task[1]->setStartDelay(3000);
+            
+            while (digitalRead(MATCH_HEADIMPACT_SWITCH == LOW)) {
+                
+                cuttingProcess->run();
+                
+                delay(3000);
+                
+            }
+            
+            initNeeded = true;
+            
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+            */
+        }
+
+        if (digitalRead(EVALUATE_BUTTONS_SWITCH) == LOW) {
+            Serial.println("go for evaluatin the buttons");
+            scheduler->evaluateButtons();
+        }
+
+        if (i > 400000) {
+            digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+            if (i > 410000) {
+                digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+                i = 0;
+                Serial.print(".");
+            }
+        }
+        i++;
+        
+    }
+    
+    
     Serial.println(F("done!"));
-    /*
-     boolean initNeeded = false;
-     int i = 0;
-     while (!initNeeded) {
-     if (digitalRead(FETCH_RECORD_BUTTON) == LOW) {
-     Serial.println("go for a brand new record");
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
-     
-     fetchingRecord->run();
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-     
-     }
-     
-     
-     if (digitalRead(START_CUTTING_BUTTON) == LOW) {
-     Serial.println("go for cut and scratch");
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
-     
-     cuttingProcess->run();
-     
-     ejectingRecord->run();
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-     
-     }
-     
-     if (digitalRead(LOADING_BUTTON) == LOW) {
-     Serial.println("go for loading");
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
-     
-     {
-     CCDeviceScheduler *loading = new CCDeviceScheduler("loading");
-     
+
+    delay(2000);
     
-     
-     scheduledTask driveDown = loading->device[stockStepper]->addTask(-80000);
-     loading->device[stockStepper]->task[driveDown]->startByDate(100);
-     loading->device[stockStepper]->task[driveDown]->stopByButton(stockBottomButton);
-     
-     scheduledTask comeUpAgain = loading->device[stockStepper]->addTask(80000);
-     loading->device[stockStepper]->task[comeUpAgain]->startAfterCompletionOf(stockStepper, driveDown);
-     loading->device[stockStepper]->task[comeUpAgain]->stopByButton(stockTopButton);
-     
-     loading->controlButton[loadingButton]->evokeJumpToNextTask(stockStepper, driveDown, STOP_TASK);
-     loading->controlButton[recordAvailableButton]->evokeJumpToNextTask(stockStepper, comeUpAgain, STOP_TASK);
-     
-     loading->reviewTasks();
-     loading->run();
-     
-     delete loading;
-     loading = NULL;
-     }
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-     
-     }
-     
-     if (digitalRead(MOVE_MANUALLY_SWITCH) == LOW) {
-     Serial.println("go for mamual moving");
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
-     
-     {
-     CCDeviceScheduler *manualDrive = new CCDeviceScheduler("manualDrive");
-     
-   
-     CCControlButton* catForwardButton = manualDrive->addControlButton("catForward", MOVE_CAT_FWD_BUTTON, HIGH, true);
-     CCControlButton* catRewindButton = manualDrive->addControlButton("catRewind", MOVE_CAT_RWD_BUTTON, HIGH, true);
-     
-     
-     //  move to start groove:
-     scheduledTask driveToCuttingStartPositionMan = manualDrive->device[catStepper]->addTask(CAT_CUTTING_START_POSITION);
-     manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(100);
-     
-     manualDrive->reviewTasks();
-     manualDrive->run();
-     manualDrive->deleteAllTasks();
-     
-     while (digitalRead(START_CUTTING_BUTTON) == HIGH) {
-     if (digitalRead(MOVE_CAT_FWD_BUTTON) == LOW) {
-     driveToCuttingStartPositionMan = manualDrive->device[catStepper]->addTask(catCuttingEndPosition);
-     manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
-     manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(catForwardButton, STOP_NORMAL);
-     
-     manualDrive->reviewTasks();
-     manualDrive->run();
-     manualDrive->deleteAllTasks();
-     }
-     if (digitalRead(MOVE_CAT_RWD_BUTTON) == LOW) {
-     driveToCuttingStartPositionMan = manualDrive->device[catStepper]->addTask(CAT_PARK_POSITION);
-     manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->startByDate(10);
-     manualDrive->device[catStepper]->task[driveToCuttingStartPositionMan]->stopByButton(catRewindButton, STOP_NORMAL);
-     
-     manualDrive->reviewTasks();
-     manualDrive->run();
-     manualDrive->deleteAllTasks();
-     }
-     }
-     
-     
-     cuttingProcess->device[0]->setCurrentPosition(manualDrive->device[0]->getCurrentPosition());
-     cuttingProcess->device[0]->increaseTaskPointer();
-     cuttingProcess->run();
-     
-     delete manualDrive;
-     manualDrive = NULL;
-     
-     }
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-     
-     }
-     
-     if (digitalRead(MATCH_HEADIMPACT_SWITCH) == LOW) {
-     Serial.println("go for matching head impact");
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
-     
-     cuttingProcess->device[0]->setCountOfTasks(0);
-     cuttingProcess->device[1]->setCountOfTasks(0);
-     cuttingProcess->device[3]->task[1]->setStartDelay(3000);
-     
-     while (digitalRead(MATCH_HEADIMPACT_SWITCH == LOW)) {
-     
-     cuttingProcess->run();
-     
-     delay(3000);
-     
-     }
-     
-     initNeeded = true;
-     
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-     
-     }
-     
-     if (i > 400000) {
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
-     if (i > 410000) {
-     digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-     i = 0;
-     Serial.print(".");
-     }
-     }
-     i++;
-     
-     }
-     */
     
-     delay(2000);
-     
-     
-     delete fetchingRecord;
-     fetchingRecord = NULL;
+    delete fetchingRecord;
+    fetchingRecord = NULL;
     
     delete scheduler;
     scheduler = NULL;
-     
+    
     /*
      delete cuttingProcess;
      cuttingProcess = NULL;
@@ -919,6 +927,7 @@ void setup() {
     pinMode(MOVE_MANUALLY_SWITCH, INPUT_PULLUP);
     pinMode(MOVE_CAT_FWD_BUTTON, INPUT_PULLUP);
     pinMode(MOVE_CAT_RWD_BUTTON, INPUT_PULLUP);
+    pinMode(EVALUATE_BUTTONS_SWITCH, INPUT_PULLUP);
     
     pinMode(I_AM_LATE_LED, OUTPUT);
     

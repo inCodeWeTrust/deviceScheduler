@@ -13,7 +13,7 @@
 /// |-------|---------------|-------------------------------|
 /// |   A0  |               |                               |
 /// |   A1  |               |                               |
-/// |   A2  |               |                               |
+/// |   A2  |               |  evaluateButtons switch                             |
 /// |   A3  |               |  move cat manually switch     |
 /// |   A4  |               |  move cat forward button      |
 /// |   A5  |               |  move cat back button         |
@@ -286,6 +286,7 @@
 #define START_CUTTING_BUTTON                50
 #define FETCH_RECORD_BUTTON                 52
 
+#define EVALUATE_BUTTONS_SWITCH             A2
 #define MOVE_MANUALLY_SWITCH                A3
 #define MOVE_CAT_FWD_BUTTON                 A4
 #define MOVE_CAT_RWD_BUTTON                 A5

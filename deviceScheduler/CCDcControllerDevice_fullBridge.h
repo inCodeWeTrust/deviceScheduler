@@ -35,7 +35,7 @@ private:
     
     /// Variable is @c true when switched on, @c false when switched off.
     boolean              isActiv_B;
-    
+
     
     
 public:
@@ -44,6 +44,7 @@ public:
     ~CCDcControllerDevice_fullBridge();
     
     
+    infoCode reviewValues(CCTask* nextTask);
     void prepareNextTask();
     void prepareTask(CCTask* nextTask);
     void startTask();

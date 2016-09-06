@@ -50,10 +50,29 @@ CCDcControllerDevice_fullBridge::~CCDcControllerDevice_fullBridge() {
     }
 }
 
+infoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
+    
+    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
+        Serial.print(deviceName);
+        Serial.print(F(" review values... "));
+    }
+    if (nextTask->getTarget() > 1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getTarget() < -1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
+    
+    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+        Serial.println(F("   done"));
+    }
+    return EVERYTHING_OK;
+}
 
 
 void CCDcControllerDevice_fullBridge::prepareNextTask() {}
-    void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
+
+void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     
     
     if (state == MOVING) {
@@ -64,14 +83,13 @@ void CCDcControllerDevice_fullBridge::prepareNextTask() {}
     } else {
         currentRatio = 0;
     }
-
+    
     currentTaskID = nextTask->getTaskID();
-        
+    
     target = nextTask->getTarget();
     velocity = nextTask->getVelocity();
     acceleration = nextTask->getAcceleration();
     deceleration = nextTask->getDeceleration();
-    
     
     switchTaskPromptly = nextTask->getSwitchTaskPromptly();
     stopping = nextTask->getStopping();
@@ -83,16 +101,20 @@ void CCDcControllerDevice_fullBridge::prepareNextTask() {}
     approximation = nextTask->getApproximation();
     
     
-
-    // target: dutycycle
+    
+    // target: dutycycle (-1.0 ... 1.0)
     // velocity: pwm frequency
     // switchingInterval: periodendauer = 1 / frequency
     // acceleration: time for ramping up
     // deceleration: time for ramping down
     
+    if (stopping == STOP_DYNAMIC) {
+        target = fabs(target);
+    }
+    
     switchingInterval = 1000uL / velocity;
     
-    targetOnDuration = target * switchingInterval;
+    targetOnDuration = fabs(target) * switchingInterval;
     
     timeForAcceleration = acceleration;
     timeForDeceleration = deceleration;
@@ -149,6 +171,8 @@ void CCDcControllerDevice_fullBridge::initiateStop() {
 void CCDcControllerDevice_fullBridge::stopTask() {
     digitalWrite(switching_pin, !switchingPin_activ);
     isActiv = false;
+    digitalWrite(switching_B_pin, !switchingPin_B_activ);
+    isActiv_B = false;
     state = MOVE_DONE;
     
     
@@ -202,6 +226,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
             if (elapsedTime < timeForDeceleration) {
                 currentPosition = target * (1 - elapsedTime / (float)timeForDeceleration);
             } else {
+                currentPosition = 0;
                 stopTask();
                 return;
             }
@@ -209,17 +234,15 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         
         if (stopping == STOP_DYNAMIC) {
             sensorValue = analogRead(sensor);
-            if (reversedApproximation) {
-                relativePosition = targetValue - sensorValue;
-            } else {
-                relativePosition = sensorValue - targetValue;
-            }
+            
+            relativePosition = targetValue - sensorValue;
+
             
             if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
                 Serial.print(F(", stopping dynamically"));
             }
             
-            if (relativePosition <= gap) {
+            if (fabs(relativePosition) <= gap) {
                 
                 currentPosition = 0;
                 targetReachedCounter++;
@@ -247,8 +270,11 @@ void CCDcControllerDevice_fullBridge::operateTask() {
                 // in 1:
                 // y = -b / (x - cp + b) + 1 = b / (cp - x - b) + 1
                 
-                // currentPosition *= approximationCurve / (gap * gap - relativePosition * relativePosition - approximationCurve) + 1;
-                currentPosition *= approximationCurve / (gap - relativePosition - approximationCurve) + 1;
+                if (relativePosition > 0) {
+                    currentPosition *= (float)approximationCurve / ((long)gap - relativePosition - approximationCurve) + 1;
+                } else {
+                    currentPosition *= -(float)approximationCurve / ((long)gap + relativePosition - approximationCurve) - 1;
+                }
                 
                 targetReachedCounter = 0;
                 
@@ -258,12 +284,12 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         if (currentPosition > 0) {
             digitalWrite(switching_pin, switchingPin_activ);
             isActiv = true;
-        } else {
+        } else if (currentPosition < 0) {
             digitalWrite(switching_B_pin, switchingPin_B_activ);
             isActiv_B = true;
         }
         
-        switchOffTime = switchOnTime + switchingInterval * currentPosition;
+        switchOffTime = switchOnTime + switchingInterval * fabs(currentPosition);
         switchOnTime += switchingInterval;
         if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
             Serial.print(F(", scheduled off at "));
@@ -276,7 +302,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         
         
     } else if (elapsedTime > switchOffTime) {
-        if (isActiv == true) {
+        if (isActiv == true || isActiv_B == true) {
             digitalWrite(switching_pin, !switchingPin_activ);
             digitalWrite(switching_B_pin, !switchingPin_B_activ);
             isActiv = false;

@@ -818,11 +818,57 @@ void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
     }
 }
 
+void CCDeviceScheduler::evaluateButtons() {
+    boolean lastButtonState[20];
+    Serial.print(F("************************************* evaluate buttons *************************************"));
+    Serial.print(F("[CCDeviceScheduler]: "));
+    Serial.print(schedulerName);
+    Serial.println(F(": ControlButtons: "));
+    for (int i = 0; i < countOfControlButtons; i++) {
+        Serial.print(controlButton[i]->getName());
+        Serial.print(F(", activ at: "));
+        Serial.print(controlButton[i]->getButtonActiv());
+        Serial.print(F(", current: "));
+        controlButton[i]->readButtonState();
+        Serial.print(getNameOfButtonState(controlButton[i]->getState()));
+        Serial.print(F(", now activ: "));
+        if (controlButton[i]->readIfActiv()) {
+            Serial.println(F("yes"));
+        } else {
+            Serial.println(F("no"));
+        }
+        Serial.println();
+        
+        lastButtonState[i] = controlButton[i]->getState();
+    }
+    
+    while (digitalRead(EVALUATE_BUTTONS_SWITCH) == LOW) {
+        for (int i = 0; i < countOfControlButtons; i++) {
+            controlButton[i]->readButtonState();
+            boolean buttonState = controlButton[i]->getState();
+            if (buttonState != lastButtonState[i]) {
+                Serial.print(controlButton[i]->getName());
+                Serial.print(F(", activ at: "));
+                Serial.print(controlButton[i]->getButtonActiv());
+                Serial.print(F(", current: "));
+                controlButton[i]->readButtonState();
+                Serial.print(getNameOfButtonState(controlButton[i]->getState()));
+                Serial.print(F(", now activ: "));
+                if (controlButton[i]->readIfActiv()) {
+                    Serial.println(F("yes"));
+                } else {
+                    Serial.println(F("no"));
+                }
+                lastButtonState[i] = buttonState;
+            }
+        }
+    }
+}
 
 
 /*
-void CCWorkflow::getAllTasksForAllDeviceFlows() {
-    for (unsigned char df = 0; df < getCountOfDeviceFlows(); df++) {
+ void CCWorkflow::getAllTasksForAllDeviceFlows() {
+ for (unsigned char df = 0; df < getCountOfDeviceFlows(); df++) {
         getTasksForDeviceFlow(df);
     }
 }
@@ -864,6 +910,10 @@ String CCDeviceScheduler::getNameOfStoppingMode(stoppingMode s) {
     if (s == STOP_NORMAL) return "stop normal";
     if (s == STOP_DYNAMIC) return "stop dynamic";
     return "unknown";
+}
+String CCDeviceScheduler::getNameOfButtonState(boolean s) {
+    if (s) return "HIGH";
+    return "LOW";
 }
 String CCDeviceScheduler::getNameOfDeviceAction(deviceAction d) {
     if (d == BREAK_LOOP) return "break loop";

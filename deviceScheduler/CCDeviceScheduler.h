@@ -12,6 +12,7 @@
 
 
 #include "deviceScheduler.h"
+#include "voiceOGraph.h"
 
 #include "CCWorkflow.h"
 
@@ -72,6 +73,7 @@ class CCDeviceScheduler {
     String getNameOfDeviceType(deviceType t);
     String getNameOfTaskEvent(event e);
     String getNameOfState(deviceState s);
+    String getNameOfButtonState(boolean s);
     String getNameOfStoppingMode(stoppingMode s);
     String getNameOfDeviceAction(deviceAction d);
     String getLiteralOfWorkflowInfo(infoCode i);
@@ -182,6 +184,8 @@ public:
     /// A list with all buttons and bare informations are presented.
     void listControlButtons();
     
+    void evaluateButtons();
+
 
     void listAllTasks(CCWorkflow* workflow);
     void listAllActions(CCWorkflow* workflow);
