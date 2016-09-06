@@ -15,12 +15,6 @@
 
 
 
-#define CCCONTROLBUTTON_BASICOUTPUT           0x01
-#define CCCONTROLBUTTON_MEMORYDEBUG           0x02
-#define CCCONTROLBUTTON_MONITORING            0x04
-
-#define CCCONTROLBUTTON_VERBOSE               0x00
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCControlButton
@@ -45,10 +39,7 @@ public:
     boolean             getState();
     boolean             isActiv();
     
-    buttonAction        getAction(unsigned char a);
-    void                setActionDone(unsigned char a);
-    void                resetActionDone(unsigned char a);
-    String              getButtonName();
+    String              getName();
     unsigned char       getCountOfActions();
     String              getButtonActiv();
     

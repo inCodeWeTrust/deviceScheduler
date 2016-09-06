@@ -86,13 +86,13 @@
 
 //  ################## Hardware Cutting Parameters #########################################################
 
-#define SONGGROOVE_PITCH                    0.148
+#define SONGGROOVE_PITCH                    0.2
 #define STARTGROOVE_PITCH                   1
 #define STARTGROOVE_RANGE                   4
 #define ENDGROOVE_PITCH                     4.8
 #define ENDGROOVE_RANGE_MIN                 10
 #define CUTTING_RANGE                       38
-#define PLAYTIME_MINUTES                    15
+#define PLAYTIME_MINUTES                    3
 
 #define ADJUSTGROOVEPITCH_TO_PLAYTIME       false
 
@@ -224,18 +224,16 @@
 
 #define CONTROLLER_LAMP_YELLOW_PIN              35
 //#define CONTROLLER_LAMP_YELLOW_ACTIV            LOW
-//#define CONTROLLER_LAMP_YELLOW_ON               HIGH
-//#define CONTROLLER_LAMP_YELLOW_OFF              LOW
-#define CONTROLLER_LAMP_YELLOW_ON               LOW
-#define CONTROLLER_LAMP_YELLOW_OFF              HIGH
+#define CONTROLLER_LAMP_YELLOW_ON               HIGH
+#define CONTROLLER_LAMP_YELLOW_OFF              LOW
 
 
 
 #define CONTROLLER_LAMP_RED_NAME                "redLamp"
 
 #define CONTROLLER_LAMP_RED_PIN                 37
-#define CONTROLLER_LAMP_RED_ACTIV               LOW
-//#define CONTROLLER_LAMP_RED_ACTIV               HIGH
+//#define CONTROLLER_LAMP_RED_ACTIV               LOW
+#define CONTROLLER_LAMP_RED_ACTIV               HIGH
 
 
 
@@ -265,7 +263,7 @@
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-#define RECORDAVAILABLE_BUTTON_ACTIV        HIGH
+#define RECORDAVAILABLE_BUTTON_ACTIV        LOW
 #define RECORDAVAILABLE_BUTTON_PULLUP       true
 
 #define RECORDNOTAVAILABLE_BUTTON_NAME      "recordNotAvailableButton"
@@ -273,12 +271,14 @@
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
 #define STOCKBOTTOM_BUTTON_PIN              47
-#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
+//#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
+#define STOCKBOTTOM_BUTTON_ACTIV            LOW
 #define STOCKBOTTOM_BUTTON_PULLUP           true
 
 #define STOCKTOP_BUTTON_NAME                "stockTopButton"
 #define STOCKTOP_BUTTON_PIN                 45
-#define STOCKTOP_BUTTON_ACTIV               HIGH
+//#define STOCKTOP_BUTTON_ACTIV               HIGH
+#define STOCKTOP_BUTTON_ACTIV               LOW
 #define STOCKTOP_BUTTON_PULLUP              true
 
 
@@ -306,7 +306,7 @@
 #define CAT_DRIVE_RATIO                     36.0 / 60.0 * 22.0 / 60.0
 #define RECORD_TURNS_PER_MINUTE             45
 
-#define TABLE_DRIVE_RATIO                   123.0 / 27.0
+#define TABLE_DRIVE_RATIO                   123.0 / 28.0
 
 
 //  ################## MOVE DATA #############################################################################
@@ -320,26 +320,25 @@
 #define LIFT_ACCEL_VERY_SLOW            200
 
 #define LIFT_UP_POSITION                2200
-#define LIFT_UP_TRIGGER_TURN            1340
-#define LIFT_TABLE_POSITION             1080
-#define LIFT_STOCK_POSITION             1080
+#define LIFT_UP_TRIGGER_TURN            1800
+#define LIFT_TABLE_POSITION             1000
+#define LIFT_STOCK_POSITION             1000
 #define LIFT_CONVEYER_POSITION          1000
 #define LIFT_PARK_POSITION              1000
 
 
 
-#define TURN_SPEED_FAST                 860
+#define TURN_SPEED_FAST                 320
 #define TURN_SPEED_SLOW                 680
-#define TURN_ACCEL_VERY_FAST            16400
-#define TURN_ACCEL_FAST                 480
-#define TURN_ACCEL_SLOW                 320
+#define TURN_ACCEL_FAST                 280
+#define TURN_ACCEL_SLOW                 180
 
-#define TURN_TABLE_POSITION             1992
-#define TURN_CONVEYOR_POSITION          1498
-#define TURN_STOCK_POSITION             1036
-#define TURN_TO_CONVEYER_TRIGGER_LIFT   TURN_CONVEYOR_POSITION + 160
-#define TURN_TO_TABLE_TRIGGER_LIFT      TURN_TABLE_POSITION - 160
-#define TURN_TO_STOCK_TRIGGER_LIFT      TURN_STOCK_POSITION + 160
+#define TURN_TABLE_POSITION             1960
+#define TURN_CONVEYOR_POSITION          1480
+#define TURN_STOCK_POSITION             1054
+#define TURN_TO_CONVEYER_TRIGGER_LIFT   TURN_CONVEYOR_POSITION + 60
+#define TURN_TO_TABLE_TRIGGER_LIFT      TURN_TABLE_POSITION - 60
+#define TURN_TO_STOCK_TRIGGER_LIFT      TURN_STOCK_POSITION + 60
 
 
 #define HEAD_LEFT_PARK_POSITION         2100
@@ -376,7 +375,7 @@
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      131600
 
-#define CONVEYOR_DISTANCE               8200
+#define CONVEYOR_DISTANCE               9600
 #define CONVEYOR_SPEED                  600
 #define CONVEYOR_ACCEL                  400
 

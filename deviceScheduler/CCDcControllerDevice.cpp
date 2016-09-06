@@ -92,20 +92,10 @@ void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
 
     currentTaskID = nextTask->getTaskID();
     
-    startEvent = task[taskPointer]->getStartEvent();
-    startDelay = task[taskPointer]->getStartDelay();
-    startTime = task[taskPointer]->getStartTime();
-    startButton = task[taskPointer]->getStartButton();
-    stopButton = task[taskPointer]->getStopButton();
-    startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
-    startTriggerTask = task[taskPointer]->getStartTriggerTask();
-    startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
-    
-    stopEvent = task[taskPointer]->getStopEvent();
-    timeout = task[taskPointer]->getTimeout();
-    stopTriggerDevice = task[taskPointer]->getStopTriggerDevice();
-    stopTriggerTask = task[taskPointer]->getStopTriggerTask();
-    stopTriggerPosition = task[taskPointer]->getStopTriggerPosition();
+    target = nextTask->getTarget();
+    velocity = nextTask->getVelocity();
+    acceleration = nextTask->getAcceleration();
+    deceleration = nextTask->getDeceleration();
     
     startEvent = nextTask->getStartEvent();
     stopEvent = nextTask->getStopEvent();
@@ -129,29 +119,11 @@ void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
     gap = nextTask->getGap();
     approximation = nextTask->getApproximation();
 
-//    
-//    sensor = task[taskPointer]->getSensor();
-//    initiatePerformanceValue = task[taskPointer]->getInitiatePerformanceValue();
-//    targetValue = task[taskPointer]->getTargetValue();
-//    stopPerformance = task[taskPointer]->getStopPerformance();
-//    approximation = task[taskPointer]->getApproximation();
-//    
-//    float approximationCurve;
-//    float
-//    dynamicalStop = false;
-//    valueCounter = 0;
-//    sensorValuesFalling = (initiatePerformanceValue > targetValue);
-//    if (approximation == SKIP_APPROXIMATION_IMMEDIATELY) {
-//        sensorTreshold = 64;
-//    } else {
-//        sensorTreshold = 256.0 / approximation;
-//    }
-
-    // target: dutycycle
-    // velocity: pwm frequency
-    // switchingInterval: periodendauer = 1 / frequency
-    // acceleration: time for ramping up
-    // deceleration: time for ramping down
+    
+    // target: dutycycle [0 ... 1.0]
+    // velocity: pwm frequency [Hz]
+    // acceleration: time for ramping up [ms]
+    // deceleration: time for ramping down [ms]
     
     switchingInterval = 1000uL / velocity;
     

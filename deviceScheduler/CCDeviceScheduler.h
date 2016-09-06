@@ -13,6 +13,8 @@
 
 #include "deviceScheduler.h"
 
+#include "CCWorkflow.h"
+
 #include "CCDevice.h"
 #include "CCServoDevice.h"
 #include "CCServoDevice_cross.h"

@@ -104,20 +104,24 @@ infoCode CCServoDevice::reviewValues(CCTask* nextTask) {
 
 void CCServoDevice::prepareNextTask() {}
 
-void CCServoDevice::prepareNextTask() {
-    target = task[taskPointer]->getTarget();
-    velocity = task[taskPointer]->getVelocity();
-    acceleration = task[taskPointer]->getAcceleration();
-    deceleration = task[taskPointer]->getDeceleration();
-    moveRelativ = task[taskPointer]->getMoveRelativ();
+void CCServoDevice::prepareTask(CCTask* nextTask) {
+
+    currentTaskID = nextTask->getTaskID();
     
-    startEvent = task[taskPointer]->getStartEvent();
-    startDelay = task[taskPointer]->getStartDelay();
-    startTime = task[taskPointer]->getStartTime();
-    startButton = task[taskPointer]->getStartButton();
-    startTriggerDevice = task[taskPointer]->getStartTriggerDevice();
-    startTriggerTask = task[taskPointer]->getStartTriggerTask();
-    startTriggerPosition = task[taskPointer]->getStartTriggerPosition();
+    target = nextTask->getTarget();
+    velocity = nextTask->getVelocity();
+    acceleration = nextTask->getAcceleration();
+    deceleration = nextTask->getDeceleration();
+    moveRelativ = nextTask->getMoveRelativ();
+    
+    startDelay = nextTask->getStartDelay();
+    
+    startEvent = nextTask->getStartEvent();
+    startTime = nextTask->getStartTime();
+//    startButton = nextTask->getStartButton();
+//    startTriggerDevice = nextTask->getStartTriggerDevice();
+//    startTriggerTaskID = nextTask->getStartTriggerTaskID();
+//    startTriggerPosition = nextTask->getStartTriggerPosition();
     
     stopEvent = nextTask->getStopEvent();
     timeout = nextTask->getTimeout();

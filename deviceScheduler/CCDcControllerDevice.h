@@ -32,12 +32,12 @@ class CCDcControllerDevice : public CCDevice {
 protected:
     
     unsigned char        switching_pin, switchingPin_activ;
-
-    // switchingInterval: periodendauer = 1 / frequency
-    // acceleration: time for ramping up
-    // deceleration: time for ramping down
     
-
+    // target: dutycycle [0 ... 1.0]
+    // velocity: pwm frequency [Hz]
+    // acceleration: time for ramping up [ms]
+    // deceleration: time for ramping down [ms]
+    
     /// The current task's starting time.
     unsigned long        t0;
     
@@ -46,7 +46,7 @@ protected:
     
     /// The time for ramping up @<= acceleration@>.
     signed long          timeForAcceleration;
-
+    
     /// The time for ramping down @<= deceleration@>.
     signed long          timeForDeceleration;
     
@@ -55,13 +55,13 @@ protected:
     
     /// The switching time interval @<1 / pwmFrequency = 1 / velocity@>.
     unsigned int         switchingInterval;
-
+    
     /// The duration of onTime @< = target * switchingInterval@>.
     unsigned int         targetOnDuration;
     
     /// The effectiv date for switching on.
     signed long          switchOnTime;
-
+    
     /// The effectiv date for switching off.
     signed long          switchOffTime;
     

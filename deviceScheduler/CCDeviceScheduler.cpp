@@ -326,19 +326,10 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         delay(200);
     }
     
-    if (DEVICESCHEDULER_VERBOSE & DEVICESCHEDULER_SHOW_TASK_VIEW) {
-        Serial.print(F("[CCDeviceScheduler]: "));
-        Serial.print(schedulerName);
-        Serial.println(F(": run ..."));
+    for (unsigned char fc = 0; fc < currentWorkflow->getCountOfFlowControls(); fc++) {
+        currentWorkflow->flowControl[fc]->button->readButtonState();
     }
 
-    
-    for (schedulerControlButton b = 0; b < countOfControlButtons; b++) {
-        for (int i = 0; i < controlButton[b]->getCountOfActions(); i++) {
-            controlButton[b]->resetActionDone(i);
-        }
-        controlButton[b]->readButtonState();
-    }
     
     //  start the workflow
     if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
@@ -388,14 +379,14 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                             break;
                             
                         case FOLLOW:                                                                            // device shall stop when a device reached a certain position
-                            if (currentTask->getStopTriggerDevice()-getCurrentTaskID() > currentTask->getStopTriggerTaskID()) {          //  trigger device on trigger move?
+                            if (currentTask->getStopTriggerDevice()->getCurrentTaskID() > currentTask->getStopTriggerTaskID()) {          //  trigger device on trigger move?
                                 handleStopEvent(taskTime, currentDeviceFlow);
                             }
                             break;
                             
                         case POSITION:                                                                          // device shall stop when a device reached a certain position
                             triggerDevice_stop = currentTask->getStopTriggerDevice();
-                            if (triggerDevice_stop-getCurrentTaskID() >= currentTask->getStopTriggerTaskID()) {          //  trigger device on trigger move?
+                            if (triggerDevice_stop->getCurrentTaskID() >= currentTask->getStopTriggerTaskID()) {          //  trigger device on trigger move?
                                 if ((triggerDevice_stop->getDirectionDown() && triggerDevice_stop->getCurrentPosition() <= currentTask->getStopTriggerPosition()) || (!triggerDevice_stop->getDirectionDown() && triggerDevice_stop->getCurrentPosition() >= currentTask->getStopTriggerPosition())) {                                                // trigger position reached?
                                     handleStopEvent(taskTime, currentDeviceFlow);
                                 }
@@ -463,7 +454,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                 break;
                                 
                             case FOLLOW:                                                                        //  start the next move when a device reached a certain
-                                if (currentTask->getStartTriggerDevice()-getCurrentTaskID() > currentTask->getStartTriggerTaskID()) {          //  is the trigger servo doing the trigger move?
+                                if (currentTask->getStartTriggerDevice()->getCurrentTaskID() > currentTask->getStartTriggerTaskID()) {          //  is the trigger servo doing the trigger move?
                                 
                                     handleStartEvent(taskTime, currentDeviceFlow);
                                 }
@@ -471,7 +462,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                 
                             case POSITION:                                                                      //  start the next move when a device reached a certain
                                 triggerDevice_start = currentTask->getStartTriggerDevice();
-                                if (triggerDevice_start-getCurrentTaskID() >= currentTask->getStartTriggerTaskID()) {        //  is the trigger servo doing the trigger move?
+                                if (triggerDevice_start->getCurrentTaskID() >= currentTask->getStartTriggerTaskID()) {        //  is the trigger servo doing the trigger move?
                                     
                                     if ((triggerDevice_start->getDirectionDown() && triggerDevice_start->getCurrentPosition() <= currentTask->getStartTriggerPosition()) || (!triggerDevice_start->getDirectionDown() && triggerDevice_start->getCurrentPosition() >= currentTask->getStartTriggerPosition())) {
                                         //  did the trigger servo pass the trigger position?
