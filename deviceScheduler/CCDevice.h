@@ -86,7 +86,7 @@ protected:
     
     /// Parameter, related to the current task operation.
     /// The value determines, if current position is set to zero before job start.
-    boolean             withPositionReset;
+    positionResetMode   positionReset;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds a delay to wait after occurance of the startEvent to start this task.

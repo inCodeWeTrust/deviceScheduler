@@ -179,7 +179,7 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
     deceleration = nextTask->getDeceleration();
     
     moveRelativ = nextTask->getMoveRelativ();
-    withPositionReset = nextTask->getWithPositionReset();
+    positionReset = nextTask->getPositionReset();
     
     startEvent = nextTask->getStartEvent();
     stopEvent = nextTask->getStopEvent();
@@ -200,8 +200,8 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
     //    this takes ca 24us
 
     
-    if (withPositionReset) {
-        currentPosition = 0;
+    if (positionReset == RESET_ON_START) {
+        currentPosition = 0.0;
     }
     
     if (moveRelativ) {
@@ -383,6 +383,16 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
         Serial.print(this->stepsToGo);
         Serial.print(F(" ("));
         Serial.print(this->microStepsToGo);
+        Serial.print(F("), stepsForAcceleration: "));
+        Serial.print(this->stepsForAcceleration);
+        Serial.print(F(" ("));
+        Serial.print(this->microStepsForAcceleration);
+        Serial.print(F("), stepsForAccAndConstSpeed: "));
+        Serial.print(this->stepsToGo - this->stepsForDeceleration);
+        Serial.print(F(" ("));
+        Serial.print(this->microStepsForAccAndConstSpeed);
+        Serial.print(F("), stepsForDeceleration: "));
+        Serial.print(this->stepsForDeceleration);
         Serial.print(F("), currentVelocity: "));
         Serial.print(this->currentVelocity);
         Serial.print(F(", velocity: "));
@@ -459,6 +469,10 @@ void CCStepperDevice::stopTask() {
 void CCStepperDevice::finishTask() {
     state = SLEEPING;
     
+    if (positionReset == RESET_ON_COMPLETION) {
+        currentPosition = 0.0;
+    }
+
     digitalWrite(I_AM_LATE_LED, LOW);
 
     if (STEPPER_VERBOSE & BASICOUTPUT) {

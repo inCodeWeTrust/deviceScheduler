@@ -52,20 +52,20 @@ CCDcControllerDevice_fullBridge::~CCDcControllerDevice_fullBridge() {
 
 infoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
     
-    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
-        Serial.print(deviceName);
-        Serial.print(F(" review values... "));
-    }
+//    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+//        Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
+//        Serial.print(deviceName);
+//        Serial.print(F(" review values... "));
+//    }
     if (nextTask->getTarget() > 1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getTarget() < -1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
     
-    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
-        Serial.println(F("   done"));
-    }
+//    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+//        Serial.println(F("   done"));
+//    }
     return EVERYTHING_OK;
 }
 
@@ -73,7 +73,6 @@ infoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
 void CCDcControllerDevice_fullBridge::prepareNextTask() {}
 
 void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
-    
     
     if (state == MOVING) {
         currentRatio = currentPosition;
@@ -91,6 +90,19 @@ void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     acceleration = nextTask->getAcceleration();
     deceleration = nextTask->getDeceleration();
     
+    startEvent = nextTask->getStartEvent();
+    stopEvent = nextTask->getStopEvent();
+    startDelay = nextTask->getStartDelay();
+    startTime = nextTask->getStartTime();
+    timeout = nextTask->getTimeout();
+    //    startButton = nextTask->getStartButton();
+    //    stopButton = nextTask->getStopButton();
+    //    startTriggerDevice = nextTask->getStartTriggerDevice();
+    //    startTriggerTaskID = nextTask->getStartTriggerTaskID();
+    //    startTriggerPosition = nextTask->getStartTriggerPosition();
+    //    stopTriggerDevice = nextTask->getStopTriggerDevice();
+    //    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
+    //    stopTriggerPosition = nextTask->getStopTriggerPosition();
     switchTaskPromptly = nextTask->getSwitchTaskPromptly();
     stopping = nextTask->getStopping();
     
@@ -99,7 +111,6 @@ void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     approximationCurve = nextTask->getApproximationCurve();
     gap = nextTask->getGap();
     approximation = nextTask->getApproximation();
-    
     
     
     // target: dutycycle (-1.0 ... 1.0)
@@ -165,7 +176,9 @@ void CCDcControllerDevice_fullBridge::startTask() {
 }
 
 void CCDcControllerDevice_fullBridge::initiateStop() {
+    timeForAcceleration = millis() - t0;
     timeForAccAndConstSpeed = millis() - t0;
+    target = currentPosition;
 }
 
 void CCDcControllerDevice_fullBridge::stopTask() {
@@ -282,9 +295,11 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         }
         
         if (currentPosition > 0) {
+            digitalWrite(switching_B_pin, !switchingPin_B_activ);
             digitalWrite(switching_pin, switchingPin_activ);
             isActiv = true;
         } else if (currentPosition < 0) {
+            digitalWrite(switching_pin, !switchingPin_activ);
             digitalWrite(switching_B_pin, switchingPin_B_activ);
             isActiv_B = true;
         }

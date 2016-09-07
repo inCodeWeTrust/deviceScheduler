@@ -36,7 +36,7 @@ private:
     float                   acceleration;
     float                   deceleration;
     boolean                 moveRelativ;
-    boolean                 withPositionReset;
+    positionResetMode       positionReset;
     unsigned long           startDelay;
     unsigned long           startTime;
     unsigned long           timeout;
@@ -88,7 +88,7 @@ public:
     
     
 
-    CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset, scheduledTask taskID);
+    CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset, scheduledTask taskID);
     
     
     
@@ -136,9 +136,9 @@ public:
     /// @sa moveRelativ;
     boolean getMoveRelativ();
 
-    /// Getter method for getting the withPositionReset bit of the device
-    /// @sa withPositionReset;
-    boolean getWithPositionReset();
+    /// Getter method for getting the positionReset mode of the device
+    /// @sa positionReset;
+    positionResetMode getPositionReset();
     
     /// Getter method for getting the startDelay of the device
     /// @sa startDelay;

@@ -62,20 +62,20 @@ void CCDcControllerDevice::detachDevice() {}
 
 infoCode CCDcControllerDevice::reviewValues(CCTask* nextTask) {
     
-    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCDcControllerDevice]: "));
-        Serial.print(deviceName);
-        Serial.print(F(" review values... "));
-    }
+//    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+//        Serial.print(F("[CCDcControllerDevice]: "));
+//        Serial.print(deviceName);
+//        Serial.print(F(" review values... "));
+//    }
     if (nextTask->getTarget() > 1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getTarget() < 0.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
     
-    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
-        Serial.println(F("   done"));
-    }
+//    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+//        Serial.println(F("   done"));
+//    }
     return EVERYTHING_OK;
 }
 
@@ -189,7 +189,9 @@ void CCDcControllerDevice::startTask() {
 }
 
 void CCDcControllerDevice::initiateStop() {
+    timeForAcceleration = millis() - t0;
     timeForAccAndConstSpeed = millis() - t0;
+    target = currentPosition;
 }
 
 void CCDcControllerDevice::stopTask() {

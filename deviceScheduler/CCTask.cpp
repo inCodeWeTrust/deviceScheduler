@@ -9,7 +9,7 @@
 #include "CCTask.h"
 
 
-CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset, scheduledTask taskID) {
+CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset, scheduledTask taskID) {
 
     this->taskID = taskID;
     
@@ -18,7 +18,7 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->acceleration = acceleration;
     this->deceleration = deceleration;
     this->moveRelativ = moveRelativ;
-    this->withPositionReset = withPositionReset;
+    this->positionReset = positionReset;
     this->startDelay = 0;
     this->startEvent = NONE;
     this->stopEvent = NONE;
@@ -154,7 +154,7 @@ void CCTask::setAcceleration(float acceleration){this->acceleration = accelerati
 float CCTask::getDeceleration(){return deceleration;}
 void CCTask::setDeceleration(float deceleration){this->deceleration = deceleration;}
 boolean CCTask::getMoveRelativ() {return moveRelativ;}
-boolean CCTask::getWithPositionReset(){return withPositionReset;}
+positionResetMode CCTask::getPositionReset(){return positionReset;}
 unsigned long CCTask::getStartDelay(){return startDelay;}
 event CCTask::getStartEvent(){return startEvent;}
 event CCTask::getStopEvent(){return stopEvent;}

@@ -89,6 +89,8 @@ void loop() {
                                               SERVO_TURN_MAX_POSITION,
                                               TURN_STOCK_POSITION);
     
+    CCDevice* turnMotor = scheduler->addDcController_fullBridge("turnMotor", 39, HIGH, 41, HIGH);
+    
     
     CCDevice* pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
                                               SERVO_PUMP_PIN,
@@ -229,7 +231,41 @@ void loop() {
     
     delay(1000);
     Serial.println("now the work flowing");
-
+    
+    
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= initialisation workflow ===========================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    
+    CCWorkflow* initTheMachine = new CCWorkflow("initMachine");
+    
+    
+    {
+        // ============= devices of initMachine =======================================================================================
+        
+        CCDeviceFlow* catStepperFlow = initTheMachine->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
+        
+        
+        // ============= tasks of initMachine =========================================================================================
+        
+        CCTask* driveBackToParkPosition;
+        driveBackToParkPosition = catStepperFlow->addTaskWithPositionResetOnCompletion(-400000);
+        driveBackToParkPosition->startByDate(100);
+        driveBackToParkPosition->stopByButton(bridgeParkButton, STOP_NORMAL);
+        
+        scheduler->reviewTasks(initTheMachine);
+        scheduler->listAllTasks(initTheMachine);
+        
+        scheduler->run(initTheMachine);
+        catStepper->setCurrentPosition(0.0);
+    }
+    
+    
+    
+    
+    
     // =================================================================================================================================================
     // =================================================================================================================================================
     // ============= fetchingRecord workflow ===========================================================================================================
@@ -237,20 +273,11 @@ void loop() {
     // =================================================================================================================================================
     
     CCWorkflow* fetchingRecord = new CCWorkflow("fetchingRecord");
-
-    // ============================================================================================================================
-    // ============= initialisation of fetchingRecord: ============================================================================
-    // ============================================================================================================================
-    
-    //  not needed
-    
-    
-    // ============================================================================================================================
-    // ============= tasks of fetchingRecord: =====================================================================================
-    // ============================================================================================================================
     
     
     {
+        // ============= devices of fetchingRecord: =====================================================================================
+        
         CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
         CCDeviceFlow* turnServoFlow = fetchingRecord->addDeviceFlow("turnServoFlow", turnServo, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
         CCDeviceFlow* pumpServoFlow = fetchingRecord->addDeviceFlow("pumpServoFlow", pumpServo, PUMP_SPEED, PUMP_ACCEL);
@@ -259,6 +286,8 @@ void loop() {
         CCFlowControl* stockTopControl = fetchingRecord->addFlowControl("stockTopControl", stockTopButton);
         CCFlowControl* stockBottomControl = fetchingRecord->addFlowControl("stockBottomControl", stockBottomButton);
         
+        
+        // ============= tasks of fetchingRecord: =====================================================================================
         
         //  lift grappler
         CCTask* liftFromParkPosition;
@@ -358,250 +387,256 @@ void loop() {
     
     
     
-    // ================================================================================================================================
-    // ============= create cuttingProcess workflow object: ==========================================================================
-    // ================================================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= cuttingProcess workflow ===========================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
     
-    //    cuttingProcess = new CCDeviceScheduler("cuttingProcess");
+    CCWorkflow* cuttingProcess = new CCWorkflow("cuttingProcess");
     
     
     {
-        // ============================================================================================================================
-        // ============= devices of cuttingProcess: ===================================================================================
-        // ============================================================================================================================
+        // ============= devices of fetchingRecord: =====================================================================================
+        
+        CCDeviceFlow* startingSoonLampFlow = cuttingProcess->addDeviceFlow("startingSoonLampFlow", startingSoonLamp);
+        CCDeviceFlow* catStepperFlow = cuttingProcess->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
+        CCDeviceFlow* vacuumCleanerFlow = cuttingProcess->addDeviceFlow("vacuumCleanerFlow", vacuumCleaner, 1.0, 0.0);
+//        CCDeviceFlow* tableStepperFlow = cuttingProcess->addDeviceFlow("tableStepperFlow", tableStepper);
+        CCDeviceFlow* headLeftServoFlow = cuttingProcess->addDeviceFlow("headLeftServoFlow", headLeftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        CCDeviceFlow* headRightServoFlow = cuttingProcess->addDeviceFlow("headRightServoFlow", headRightServo, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+        
+//        CCFlowControl* songEndControl = cuttingProcess->addFlowControl("songEndControl", songEndButton);
+//        CCFlowControl* songCancelControl = cuttingProcess->addFlowControl("songCancelControl", songCancelButton);
         
         
-        
-        
-        // ============================================================================================================================
-        // ============= initialisation of cuttingProcess: =====================================================================================
-        // ============================================================================================================================
-        
-        
-        /*
-         Serial.println("................................. initialisation of catStepper ...................................");
-         
-         
-         scheduledTask initCatStepper = cuttingProcess->device[catStepper]->addTaskWithPositionReset(-400000);
-         cuttingProcess->device[catStepper]->task[initCatStepper]->startByDate(100);
-         cuttingProcess->device[catStepper]->task[initCatStepper]->stopByButton(bridgeParkButton, STOP_NORMAL);
-         
-         cuttingProcess->reviewTasks();
-         cuttingProcess->getAllTasks();
-         
-         
-         cuttingProcess->run();
-         
-         cuttingProcess->device[catStepper]->setCurrentPosition(0.0);
-         
-         cuttingProcess->deleteAllTasks();
-         cuttingProcess->deleteAllActions();
-         
-         
-         Serial.println("...................................... done ......................................................");
-         
-         
-         */
-        
-        
-        // ============================================================================================================================
         // ============= tasks of cuttingProcess: =====================================================================================
-        // ============================================================================================================================
+        
+        //  (0) blink lamp for start cutting soon:
+        CCTask* blinkForCuttingSoon;
+        blinkForCuttingSoon = startingSoonLampFlow->addTask(0.5, 0.3, 0.0);
+        blinkForCuttingSoon->startByDate(100);
+        
+        //  move to start groove:
+        CCTask* driveToCuttingStartPosition;
+        driveToCuttingStartPosition = catStepperFlow->addTask(CAT_CUTTING_START_POSITION);
+        driveToCuttingStartPosition->startByDate(100);
+        
+        // switch on vacuum device
+        CCTask* hooverTheFlake;
+        hooverTheFlake = vacuumCleanerFlow->addTask(1.0);
+        hooverTheFlake->startByDate(500);
+        
+        //  turn the table:
+//        CCTask* turnTheTable;
+//        turnTheTable = tableStepperFlow->addTaskWithPositionReset(turnTableStepperDegrees + 17200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
+//        turnTheTable->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
+        
+        //  (1) blink lamp for start cutting very soon:
+        CCTask* blinkForCuttingVerySoon;
+        blinkForCuttingVerySoon = startingSoonLampFlow->addTask(0.5, 1.0, 0.0);
+        blinkForCuttingSoon->switchToNextTaskAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+        
+        //  lower head close to record surface (left servo): start when reached start position of start groove
+        CCTask* lowerHeadLeftForCutting;
+        lowerHeadLeftForCutting = headLeftServoFlow->addTask(HEAD_LEFT_CUT_POSITION);
+        lowerHeadLeftForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+        
+        //  approximate head to record surface (right servo): start when left servo reached cutting position
+        CCTask* approximateHeadRightForCutting;
+        approximateHeadRightForCutting = headRightServoFlow->addTask(HEAD_RIGHT_CUT_POSITION);
+        approximateHeadRightForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+        //        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
+        
+        //  (2) blink lamp for start cutting very very soon:
+        CCTask* blinkForCuttingVeryVerySoon;
+        blinkForCuttingVeryVerySoon = startingSoonLampFlow->addTask(0.5, 3.0, 0.0);
+        blinkForCuttingVerySoon->switchToNextTaskAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
+        
+        //  make start groove:
+        CCTask* makeStartGroove;
+        makeStartGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
+        makeStartGroove->startAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
+        makeStartGroove->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
+        
+        //  (3) keep blinking lamp on for whole cutting process:
+        CCTask* keepLampOn;
+        keepLampOn = startingSoonLampFlow->addTask(1.0, 1.0, 0.0);
+        blinkForCuttingVeryVerySoon->switchToNextTaskAfterCompletionOf(catStepper, makeStartGroove);
+        
+        //  make song groove:
+        CCTask* makeMainGroove;
+        makeMainGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_song, CAT_ACCEL_SLOW);
+        makeMainGroove->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition);
+        
+        //  (4) blink lamp for finishing soon:
+        CCTask* blinkForFinishingSoon;
+        blinkForFinishingSoon = startingSoonLampFlow->addTask(0.9, 0.3, 0.0);
+        keepLampOn->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 10000);
+        
+        //  (5) blink lamp for finishing very soon:
+        CCTask* blinkForFinishingVerySoon;
+        blinkForFinishingVerySoon = startingSoonLampFlow->addTask(0.9, 1.0, 0.0);
+        blinkForFinishingSoon->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 5000);
+        
+        //  (5) blink lamp for finishing very soon:
+        CCTask* blinkForFinishingVeryVerySoon;
+        blinkForFinishingVeryVerySoon = startingSoonLampFlow->addTask(0.9, 3.0, 0.0);
+        blinkForFinishingVerySoon->switchToNextTaskAfterCompletionOf(catStepper, makeMainGroove);
+        
+        //  make end groove:
+        CCTask* makeEndGroove;
+        makeEndGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_endGroove, CAT_ACCEL_NORMAL);
+        
+        //  switch off blinking lamp:
+        blinkForFinishingVeryVerySoon->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
+        
+        //  switch off vacuum cleaner
+        hooverTheFlake->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
+        
+        //  lift head after cutting above the record surface:
+        CCTask* liftHeadRightAfterCutting;
+        liftHeadRightAfterCutting = headRightServoFlow->addTask(HEAD_RIGHT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW);
+        liftHeadRightAfterCutting->startAfterCompletionOf(catStepper, makeEndGroove);
+        
+        //  lift head into park position:
+        CCTask* liftHeadLeftAfterCutting;
+        liftHeadLeftAfterCutting = headLeftServoFlow->addTask(HEAD_LEFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW);
+        liftHeadLeftAfterCutting->startAfterCompletionOf(headRightServo, liftHeadRightAfterCutting);
+        
+        //  switch off turn table
+//        turnTheTable->stopAfterCompletionOf(headRightServo, liftHeadRightAfterCutting, STOP_NORMAL);
+        
+        //  drive cat back home
+        CCTask* driveToParkPosition;
+        driveToParkPosition = catStepperFlow->addTask(CAT_PARK_POSITION);
+        driveToParkPosition->startAfterCompletionOf(headRightServo, liftHeadRightAfterCutting);
+        driveToParkPosition->stopByButton(bridgeParkButton, STOP_NORMAL);
+        
         
         /*
-         //  (0) blink lamp for start cutting soon:
-         scheduledTask blinkForCuttingSoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 0.3, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingSoon]->startByDate(100);
-         
-         //  move to start groove:
-         scheduledTask driveToCuttingStartPosition = cuttingProcess->device[catStepper]->addTask(CAT_CUTTING_START_POSITION);
-         cuttingProcess->device[catStepper]->task[driveToCuttingStartPosition]->startByDate(100);
-         
-         // switch on vacuum device
-         scheduledTask hooverTheFlake = cuttingProcess->device[vacuumCleaner]->addTask(1.0, 1.0, 0.0);
-         cuttingProcess->device[vacuumCleaner]->task[hooverTheFlake]->startByDate(500);
-         
-         //  turn the table:
-         scheduledTask turnTheTable = cuttingProcess->device[tableStepper]->addTaskWithPositionReset(turnTableStepperDegrees + 17200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
-         cuttingProcess->device[tableStepper]->task[turnTheTable]->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, CAT_CUTTING_START_POSITION - 10000);
-         
-         //  (1) blink lamp for start cutting very soon:
-         scheduledTask blinkForCuttingVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 1.0, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingSoon]->switchToNextTaskAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-         
-         //  lower head close to record surface (left servo): start when reached start position of start groove
-         scheduledTask lowerHeadLeftForCutting = cuttingProcess->device[headLeftServo]->addTask(HEAD_LEFT_CUT_POSITION, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
-         cuttingProcess->device[headLeftServo]->task[lowerHeadLeftForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-         
-         //  approximate head to record surface (right servo): start when left servo reached cutting position
-         scheduledTask approximateHeadRightForCutting = cuttingProcess->device[headRightServo]->addTask(HEAD_RIGHT_CUT_POSITION, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-         cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-         //        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
-         
-         //  (2) blink lamp for start cutting very very soon:
-         scheduledTask blinkForCuttingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.5, 3.0, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingVerySoon]->switchToNextTaskAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
-         
-         //  make start groove:
-         scheduledTask makeStartGroove = cuttingProcess->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
-         cuttingProcess->device[catStepper]->task[makeStartGroove]->startAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
-         cuttingProcess->device[catStepper]->task[makeStartGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
-         
-         //  (3) keep blinking lamp on for whole cutting process:
-         scheduledTask keepLampOn = cuttingProcess->device[startingSoonLamp]->addTask(1.0, 1.0, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[blinkForCuttingVeryVerySoon]->switchToNextTaskAfterCompletionOf(catStepper, makeStartGroove);
-         
-         //  make song groove:
-         scheduledTask makeMainGroove = cuttingProcess->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_song, CAT_ACCEL_SLOW);
-         cuttingProcess->device[catStepper]->task[makeMainGroove]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition);
-         
-         //  (4) blink lamp for finishing soon:
-         scheduledTask blinkForFinishingSoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 0.3, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[keepLampOn]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 10000);
-         
-         //  (5) blink lamp for finishing very soon:
-         scheduledTask blinkForFinishingVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 1.0, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingSoon]->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 5000);
-         
-         //  (5) blink lamp for finishing very soon:
-         scheduledTask blinkForFinishingVeryVerySoon = cuttingProcess->device[startingSoonLamp]->addTask(0.9, 3.0, 0.0);
-         cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingVerySoon]->switchToNextTaskAfterCompletionOf(catStepper, makeMainGroove);
-         
-         //  make end groove:
-         scheduledTask makeEndGroove = cuttingProcess->device[catStepper]->addTask(catCuttingEndPosition, catMotorSpeed_endGroove, CAT_ACCEL_NORMAL);
-         
-         //  switch off blinking lamp:
-         cuttingProcess->device[startingSoonLamp]->task[blinkForFinishingVeryVerySoon]->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
-         
-         //  switch off vacuum cleaner
-         cuttingProcess->device[vacuumCleaner]->task[hooverTheFlake]->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
-         
-         //  lift head after cutting above the record surface:
-         scheduledTask liftHeadRightAfterCutting = cuttingProcess->device[headRightServo]->addTask(HEAD_RIGHT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW);
-         cuttingProcess->device[headRightServo]->task[liftHeadRightAfterCutting]->startAfterCompletionOf(catStepper, makeEndGroove);
-         
-         //  lift head into park position:
-         scheduledTask liftHeadLeftAfterCutting = cuttingProcess->device[headLeftServo]->addTask(HEAD_LEFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW);
-         cuttingProcess->device[headLeftServo]->task[liftHeadLeftAfterCutting]->startAfterCompletionOf(headRightServo, liftHeadRightAfterCutting);
-         
-         //  switch off turn table
-         cuttingProcess->device[tableStepper]->task[turnTheTable]->stopAfterCompletionOf(headRightServo, liftHeadRightAfterCutting, STOP_NORMAL);
-         
-         //  drive cat back home
-         scheduledTask driveToParkPosition = cuttingProcess->device[catStepper]->addTask(CAT_PARK_POSITION);
-         cuttingProcess->device[catStepper]->task[driveToParkPosition]->startAfterCompletionOf(headRightServo, liftHeadRightAfterCutting);
-         cuttingProcess->device[catStepper]->task[driveToParkPosition]->stopByButton(bridgeParkButton, STOP_NORMAL);
-         
-         
-         
-         //  jump over to end groove if songEndButton is pressed
-         cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
-         
-         //  cancel cutting if songCancelButton is pressed
-         cuttingProcess->controlButton[songCancelButton]->evokeJumpToTask(catStepper, makeStartGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
-         cuttingProcess->controlButton[songCancelButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
-         cuttingProcess->controlButton[songCancelButton]->evokeJumpToNextTask(catStepper, makeEndGroove, STOP_TASK);
-         
-         
-         
-         cuttingProcess->reviewTasks();
-         cuttingProcess->getAllTasks();
-         cuttingProcess->getAllActions();
-         
-         */
+        //  jump over to end groove if songEndButton is pressed
+        CCAction* songEndAction = songEndControl->addAction("songEndAction", SONGENDBUTTON_PRESSED);
+        songEndAction->evokeJumpToTask(catStepperFlow, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove);
+        
+        //         cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
+        
+        //  cancel cutting if songCancelButton is pressed
+        CCAction* songCancelAction = songCancelControl->addAction("songCancelAction", SONGCANCELBUTTON_PRESSED);
+        songCancelAction->evokeJumpToTask(catStepperFlow, makeStartGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
+        songCancelAction->evokeJumpToTask(catStepperFlow, makeMainGroove, STOP_TASK_AND_SWITCH, driveToParkPosition);
+        songCancelAction->evokeJumpToNextTask(catStepperFlow, makeEndGroove, STOP_TASK);
+        */
+        
+        
+        scheduler->reviewTasks(cuttingProcess);
+        scheduler->listAllTasks(cuttingProcess);
+        scheduler->listAllActions(cuttingProcess);
+        
         freeRam();
         
     }
     
     
     
-    // ================================================================================================================================
-    // ============= create ejectingRecord scheduler object: ==========================================================================
-    // ================================================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= ejectingRecord workflow ===========================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
     
-    //    ejectingRecord = new CCDeviceScheduler("ejectingRecord");
+    CCWorkflow* ejectingRecord = new CCWorkflow("ejectingRecord");
     
     
     {
-        // ============================================================================================================================
-        // ============================================================================================================================
-        // ============= initialisation of ejectingRecord: ============================================================================
-        // ============================================================================================================================
+        // ============= devices of ejectingRecord ====================================================================================
         
-        //  not needed
+        CCDeviceFlow* liftServoFlow = ejectingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        CCDeviceFlow* turnServoFlow = ejectingRecord->addDeviceFlow("turnServoFlow", turnServo, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
+        CCDeviceFlow* pumpServoFlow = ejectingRecord->addDeviceFlow("pumpServoFlow", pumpServo, PUMP_SPEED, PUMP_ACCEL);
+        CCDeviceFlow* conveyStepperFlow = ejectingRecord->addDeviceFlow("conveyStepperFlow", conveyStepper, CONVEYOR_SPEED, CONVEYOR_ACCEL);
         
         
-        // ============================================================================================================================
-        // ============= tasks of ejectingRecord: =====================================================================================
-        // ============================================================================================================================
-        /*
+        // ============= tasks of ejectingRecord ======================================================================================
+      
          //  remove record from turntable: started after cuttingProcess is finished
          
          // lift grappler: start when cuttingProcess is finished
-         scheduledTask liftFromParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         ejectingRecord->device[liftServo]->task[liftFromParkPosition]->startByDate(100);
+        CCTask* liftFromParkPosition;
+        liftFromParkPosition = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
+         liftFromParkPosition->startByDate(100);
          
          //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-         scheduledTask turnToTable = ejectingRecord->device[turnServo]->addTask(TURN_TABLE_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
-         ejectingRecord->device[turnServo]->task[turnToTable]->startByTriggerpositionOf(liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
+        CCTask* turnToTable;
+        turnToTable = turnServoFlow->addTask(TURN_TABLE_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
+         turnToTable->startByTriggerpositionOf(liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
          
          //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
-         scheduledTask lowerToTable = ejectingRecord->device[liftServo]->addTask(LIFT_TABLE_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         ejectingRecord->device[liftServo]->task[lowerToTable]->startByTriggerpositionOf(turnServo, turnToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+        CCTask* lowerToTable;
+        lowerToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
+         lowerToTable->startByTriggerpositionOf(turnServo, turnToTable, TURN_TO_TABLE_TRIGGER_LIFT);
          
          // pump prepare
-         scheduledTask pumpForGrip_down = ejectingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION);
-         ejectingRecord->device[pumpServo]->task[pumpForGrip_down]->startAfterCompletionOf(liftServo, lowerToTable);
+        CCTask* pumpForGrip_down;
+        pumpForGrip_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
+         pumpForGrip_down->startAfterCompletionOf(liftServo, lowerToTable);
          
          // pump make vaccum
-         scheduledTask pumpForGrip_up = ejectingRecord->device[pumpServo]->addTask(PUMP_PARK_POSITION);
-         ejectingRecord->device[pumpServo]->task[pumpForGrip_up]->startAfterCompletionOf(pumpServo, pumpForGrip_down);
+        CCTask* pumpForGrip_up;
+        pumpForGrip_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
+         pumpForGrip_up->startAfterCompletionOf(pumpServo, pumpForGrip_down);
          
          //  lift the cutted record: start with startDelay after table was reached (LIFT_TABLE_POSITION)
-         scheduledTask liftCuttedRecord = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION);
-         ejectingRecord->device[liftServo]->task[liftCuttedRecord]->startAfterCompletionOf(pumpServo, pumpForGrip_up);
+        CCTask* liftCuttedRecord;
+        liftCuttedRecord = liftServoFlow->addTask(LIFT_UP_POSITION);
+         liftCuttedRecord->startAfterCompletionOf(pumpServo, pumpForGrip_up);
          
          //  turn grappler to conveyer position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
-         scheduledTask turnToConveyor = ejectingRecord->device[turnServo]->addTask(TURN_CONVEYOR_POSITION);
-         ejectingRecord->device[turnServo]->task[turnToConveyor]->startByTriggerpositionOf(liftServo, liftCuttedRecord, LIFT_UP_TRIGGER_TURN);
+        CCTask* turnToConveyor;
+        turnToConveyor = turnServoFlow->addTask(TURN_CONVEYOR_POSITION);
+         turnToConveyor->startByTriggerpositionOf(liftServo, liftCuttedRecord, LIFT_UP_TRIGGER_TURN);
          
          //  lower grappler to conveyer position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
-         scheduledTask lowerToConveyor = ejectingRecord->device[liftServo]->addTask(LIFT_CONVEYER_POSITION);
-         ejectingRecord->device[liftServo]->task[lowerToConveyor]->startByTriggerpositionOf(turnServo, turnToConveyor, TURN_TO_CONVEYER_TRIGGER_LIFT);
+        CCTask* lowerToConveyor;
+        lowerToConveyor = liftServoFlow->addTask(LIFT_CONVEYER_POSITION);
+         lowerToConveyor->startByTriggerpositionOf(turnServo, turnToConveyor, TURN_TO_CONVEYER_TRIGGER_LIFT);
          
          //  release new record, release vacuum
-         scheduledTask pumpForRelease_down = ejectingRecord->device[pumpServo]->addTask(PUMP_DOWN_POSITION);
-         ejectingRecord->device[pumpServo]->task[pumpForRelease_down]->startAfterCompletionOf(liftServo, lowerToConveyor);
+        CCTask* pumpForRelease_down;
+        pumpForRelease_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
+         pumpForRelease_down->startAfterCompletionOf(liftServo, lowerToConveyor);
          
          //  lift for parking
-         scheduledTask liftForParkPosition = ejectingRecord->device[liftServo]->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         ejectingRecord->device[liftServo]->task[liftForParkPosition]->startAfterCompletionOf(liftServo, lowerToConveyor);
+        CCTask* liftForParkPosition;
+        liftForParkPosition = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
+         liftForParkPosition->startAfterCompletionOf(liftServo, lowerToConveyor);
          
          //  move it to the user
-         scheduledTask driveIt = ejectingRecord->device[conveyStepper]->addTaskWithPositionReset(CONVEYOR_DISTANCE, CONVEYOR_SPEED, CONVEYOR_ACCEL);
-         ejectingRecord->device[conveyStepper]->task[driveIt]->startAfterCompletionOf(liftServo, liftForParkPosition);
+        CCTask* driveIt;
+        driveIt = conveyStepperFlow->addTaskWithPositionReset(CONVEYOR_DISTANCE);
+         driveIt->startAfterCompletionOf(liftServo, liftForParkPosition);
          
          //  release pump
-         scheduledTask pumpForRelease_up = ejectingRecord->device[pumpServo]->addTask(PUMP_PARK_POSITION);
-         ejectingRecord->device[pumpServo]->task[pumpForRelease_up]->startAfterCompletionOf(liftServo, liftForParkPosition);
+        CCTask* pumpForRelease_up;
+        pumpForRelease_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
+         pumpForRelease_up->startAfterCompletionOf(liftServo, liftForParkPosition);
          
          //  turn grappler for parking
-         scheduledTask turnToStock = ejectingRecord->device[turnServo]->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
-         ejectingRecord->device[turnServo]->task[turnToStock]->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
+        CCTask* turnToStock;
+        turnToStock = turnServoFlow->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
+         turnToStock->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
          
          //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
-         scheduledTask lowerToPark = ejectingRecord->device[liftServo]->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         ejectingRecord->device[liftServo]->task[lowerToPark]->startByTriggerpositionOf(turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
+        CCTask* lowerToPark;
+        lowerToPark = liftServoFlow->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
+         lowerToPark->startByTriggerpositionOf(turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
          
          
-         
-         ejectingRecord->reviewTasks();
-         ejectingRecord->getAllTasks();
-         ejectingRecord->getAllActions();
-         
-         */
-        freeRam();
+        scheduler->reviewTasks(ejectingRecord);
+        scheduler->listAllTasks(ejectingRecord);
         
+        
+        freeRam();
     }
     
     
@@ -639,15 +674,15 @@ void loop() {
         
         if (digitalRead(START_CUTTING_BUTTON) == LOW) {
             Serial.println("go for cut and scratch");
-            /*
+            
             digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
             
-            cuttingProcess->run();
+            scheduler->run(cuttingProcess);
             
-            ejectingRecord->run();
+            scheduler->run(ejectingRecord);
             
             digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
-            */
+            
         }
         
         if (digitalRead(LOADING_BUTTON) == LOW) {
@@ -787,22 +822,53 @@ void loop() {
     delete fetchingRecord;
     fetchingRecord = NULL;
     
+    delete cuttingProcess;
+    cuttingProcess = NULL;
+    
+    delete ejectingRecord;
+    ejectingRecord = NULL;
+    
+
     delete scheduler;
     scheduler = NULL;
     
-    /*
-     delete cuttingProcess;
-     cuttingProcess = NULL;
-     
-     delete ejectingRecord;
-     ejectingRecord = NULL;
-     
-     */
     freeRam();
     
     delay(2000);
     
 }
+
+
+
+
+/*
+CCDeviceFlow* turnMotorFlow = cuttingProcess->addDeviceFlow("turnMotorFlow", turnMotor, 20, 200);
+
+CCTask* turnRight;
+turnRight = turnMotorFlow->addTask(1.0, 20, 8000, 8000);
+turnRight->startByDate(100);
+turnRight->stopByTimeout(10000, STOP_NORMAL);
+
+CCTask* turnLeft;
+turnLeft = turnMotorFlow->addTask(-1.0, 20, 8000, 8000);
+turnLeft->startAfterCompletionOf(turnMotor, turnRight);
+turnLeft->stopByTimeout(10000, STOP_NORMAL);
+
+CCTask* turnRight1;
+turnRight1 = turnMotorFlow->addTask(1.0, 20, 8000, 8000);
+turnRight1->startAfterCompletionOf(turnMotor, turnLeft);
+turnRight1->stopByTimeout(6000, STOP_IMMEDIATELY);
+
+CCTask* turnLeft1;
+turnLeft1 = turnMotorFlow->addTask(-1.0, 20, 8000, 8000);
+turnLeft1->startAfterCompletionOf(turnMotor, turnRight1);
+turnLeft1->stopByTimeout(3000, STOP_NORMAL);
+
+CCTask* turnRecordToTable;
+turnRecordToTable = turnMotorFlow->addTask(0.5);
+turnRecordToTable->startAfterCompletionOf(turnMotor, turnLeft1);
+turnRecordToTable->stopDynamicallyBySensor_new(A0, 300, 20, 2, SKIP_APPROXIMATION_VERY_PRECISE);
+*/
 
 void calculateCuttingParameters() {
     

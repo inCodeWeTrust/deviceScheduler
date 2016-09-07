@@ -87,9 +87,18 @@ public:
     /// @return the task index.
     CCTask* addTaskWithPositionReset(float target, float velocity = 0.0, float acceleration = 0.0, float deceleration = 0.0);
     
-    
+    /// Function declares a task to be executed and returns its index.
+    /// After the task is executed, a position reset is performed.
+    /// It creates an instance of [CCTask](@ref task) and puts it into the task array of the device.
+    /// @param target this task's target.
+    /// @param velocity this task's velocity.
+    /// @param acceleration this task's acceleration.
+    /// @param deceleration this task's deceleration.
+    /// @return the task index.
+    CCTask* addTaskWithPositionResetOnCompletion(float target, float velocity = 0.0, float acceleration = 0.0, float deceleration = 0.0);
+
     /// Function to register the tasks
-    CCTask* registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, boolean withPositionReset);
+    CCTask* registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset);
 
     
     /// Function lists all tasks of all registered devices.

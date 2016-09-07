@@ -33,16 +33,16 @@
 
 
 #define SCHEDULER_VERBOSE           0x13
-#define DEVICE_VERBOSE              0x03
-#define SERVO_VERBOSE               0x03
-#define SERVO_CROSS_VERBOSE         0x03
-#define STEPPER_VERBOSE             0x03
-#define STEPPER_A4988_VERBOSE       0x03
-#define STEPPER_TMC260_VERBOSE      0x03
-#define DCCONTROLLER_VERBOSE        0x03
-#define DCCONTROLLER_FULL_VERBOSE   0x03
+#define DEVICE_VERBOSE              0x00
+#define SERVO_VERBOSE               0x00
+#define SERVO_CROSS_VERBOSE         0x00
+#define STEPPER_VERBOSE             0x07
+#define STEPPER_A4988_VERBOSE       0x00
+#define STEPPER_TMC260_VERBOSE      0x07
+#define DCCONTROLLER_VERBOSE        0x00
+#define DCCONTROLLER_FULL_VERBOSE   0x00
 
-#define CONTROLBUTTON_VERBOSE       0x03
+#define CONTROLBUTTON_VERBOSE       0x00
 
 #define WORKFLOW_VERBOSE            0x03
 #define DEVICEFLOW_VERBOSE          0x03
@@ -104,6 +104,13 @@ enum stoppingMode {
     STOP_DYNAMIC
 };
 
+//  position reset mode:
+enum positionResetMode {
+    NO_RESET,
+    RESET_ON_START,
+    RESET_ON_COMPLETION,
+};
+
 //  notification code:
 enum notificationCode {
     BREAK_ON_ENDBUTTON_REACHED = -0x22,
@@ -121,6 +128,8 @@ enum infoCode {
     WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED = -0x22,
     WORKFLOW_DISABLED_ON_BUTTON_NOT_REACHED = -0x21,
     EVERYTHING_OK = 0x00,
+    SONGCANCELBUTTON_PRESSED =0x10,
+    SONGENDBUTTON_PRESSED =0x12,
     BUTTON_NOT_REACHED = 0x21,
     ENDBUTTON_REACHED = 0x22,
 };
@@ -196,6 +205,7 @@ enum approximationMode {
 /// - @code addTask(...) @endcode
 /// - @code addTaskMoveRelativ(...) @endcode
 /// - @code addTaskWithPositionReset(...) @endcode
+/// - @code addTaskWithPositionResetOnCompletion(...) @endcode
 /// <br><br>
 /// @section LinkTask Linking Tasks Together
 /// Gestartet, gestoppt und manipuliert werden können die Geräte durch Zeitablauf, durch die Zustandsänderung angeschlossener Sensoren, durch das Erreichen eines Zustandes bzw. einer Position dieses Gerätes sowie durch das Erreichen eines Zustandes bzw. einer Position jedes anderen Gerätes.

@@ -277,7 +277,16 @@ void CCDeviceScheduler::listControlButtons() {
 void CCDeviceScheduler::reviewTasks(CCWorkflow* currentWorkflow) {
     for (unsigned char df = 0; df < currentWorkflow->getCountOfDeviceFlows(); df++) {
         for (unsigned char t = 0; t < currentWorkflow->deviceFlow[df]->getCountOfTasks(); t++) {
-            currentWorkflow->deviceFlow[df]->device->reviewValues(currentWorkflow->deviceFlow[df]->task[t]);
+            
+            infoCode i = currentWorkflow->deviceFlow[df]->device->reviewValues(currentWorkflow->deviceFlow[df]->task[t]);
+
+            Serial.print(currentWorkflow->getName());
+            Serial.print(F(" > "));
+            Serial.print(currentWorkflow->deviceFlow[df]->getName());
+            Serial.print(F(" task #"));
+            Serial.print(t);
+            Serial.print(F(": "));
+            Serial.println(getLiteralOfWorkflowInfo(i));
         }
     }
 }
@@ -349,7 +358,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
     do {
         loopTime = millis();
         taskTime = loopTime - taskStartTime;
-        
+
         ongoingOperations = 0;
         
        
@@ -440,6 +449,15 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                         }
                     }
                     else {    //  (currentDevice->getState() == MOVE_DONE)                                          //  device is idle
+                        
+//                        Serial.print(taskTime);
+//                        Serial.print(": ");
+//                        Serial.print(currentDevice->getStartEvent() == DATE);
+//                        Serial.print(": ");
+//                        Serial.println(currentDevice->getStartTime());
+//                        
+
+                        
                         switch (currentDevice->getStartEvent()) {                                                   //  what kind of startEvent is given?
                             case DATE:                                                                          //  start the next move by date
                                 if (taskTime > currentDevice->getStartTime()) {
@@ -693,8 +711,10 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
             if (workflow->deviceFlow[df]->task[i]->getMoveRelativ()) {
                 Serial.print(F(", move relativ"));
             }
-            if (workflow->deviceFlow[df]->task[i]->getWithPositionReset()) {
-                Serial.print(F(", with position reset"));
+            if (workflow->deviceFlow[df]->task[i]->getPositionReset() == RESET_ON_START) {
+                Serial.print(F(", with position reset on start"));
+            } else if (workflow->deviceFlow[df]->task[i]->getPositionReset() == RESET_ON_COMPLETION) {
+                Serial.print(F(", with position reset on completion"));
             }
             Serial.print(F(", startDelay: "));
             Serial.print(workflow->deviceFlow[df]->task[i]->getStartDelay());
@@ -809,9 +829,9 @@ void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
             }
             Serial.print(F(", do: "));
             Serial.print(getNameOfDeviceAction(workflow->flowControl[fc]->action[i]->getTargetAction()));
-            Serial.print(F(", infoCode: "));
-            Serial.print(workflow->flowControl[fc]->action[i]->getWorkflowInfoCode());
-            Serial.println();
+            Serial.print(F(", infoCode: ["));
+            Serial.print(getLiteralOfWorkflowInfo(workflow->flowControl[fc]->action[i]->getWorkflowInfoCode()));
+            Serial.println(F("]"));
             
         }
         Serial.println();
@@ -933,11 +953,12 @@ String CCDeviceScheduler::getLiteralOfWorkflowInfo(infoCode i) {
     if (i == WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED) return "workflow disabled on endpoint reached";
     if (i == WORKFLOW_DISABLED_ON_BUTTON_NOT_REACHED) return "workflow disabled on target not reached";
     if (i == EVERYTHING_OK) return "everything ok";
+    if (i == SONGCANCELBUTTON_PRESSED) return "songCancelButtonPressed";
+    if (i == SONGENDBUTTON_PRESSED) return "songEndButtonPressed";
     if (i == BUTTON_NOT_REACHED) return "target not reached";
     if (i == ENDBUTTON_REACHED) return "endpoint reached";
     return "unknown";
 }
-
 
 
 

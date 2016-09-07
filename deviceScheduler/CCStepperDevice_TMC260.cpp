@@ -43,9 +43,25 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     SPI.begin();
     
     
-    this->currentMax = currentMax;
     
     this->highestSteppingMode = 8;
+
+    this->stepsPerDegree = stepsPerRotation / 360.0;                                        // save time executing prepareNextTask()
+    this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);      // save time when calculatin currentPosition in operateTask()
+    
+    this->acceleration_max = 4000;
+    
+    this->type = STEPPERDEVICE;
+    this->state = SLEEPING;
+    
+    this->currentMicroStep = 0;
+    this->currentPosition = 0;
+    
+    this->prepareAndStartNextTaskWhenFinished = false;
+
+    
+    this->currentMax = currentMax;
+    
 
     for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
