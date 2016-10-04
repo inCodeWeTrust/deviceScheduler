@@ -129,23 +129,16 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
 
     if (state == MOVING) {
         if (switchTaskPromptly) {
-            if ((nextTask->getTarget() - currentPosition) < 0) {             // when switching to move in different direction
-                if (!directionDown) {
+            if ((nextTask->getTarget() > currentPosition) == directionDown) {             // XOR: when switching to move in different direction
+                    pendingTask = nextTask;
                     prepareAndStartNextTaskWhenFinished = true;
                     initiateStop();
                     return;
                 }
-            }
-            else {
-                if (directionDown) {
-                    prepareAndStartNextTaskWhenFinished = true;
-                    initiateStop();
-                    return;
-                }
-            }
         }
         
         if (currentMicroStep & 0x0f) {
+            pendingTask = nextTask;
             switchAtNextFullStep = true;
             return;
         }
@@ -603,7 +596,7 @@ void CCStepperDevice::operateTask() {
         if (prepareAndStartNextTaskWhenFinished) {
             prepareAndStartNextTaskWhenFinished = false;
             state = SLEEPING;
-            prepareNextTask();
+            prepareTask(pendingTask);
             startTask();
         }
         else {
@@ -612,8 +605,8 @@ void CCStepperDevice::operateTask() {
     }
     else {
         if (switchAtNextFullStep) {
-            if ((currentMicroStep & 0xF) == 0) {
-                prepareNextTask();
+            if ((currentMicroStep & ((1 << highestSteppingMode) - 1)) == 0) {
+                prepareTask(pendingTask);
                 switchAtNextFullStep = false;
             }
         }
@@ -622,7 +615,7 @@ void CCStepperDevice::operateTask() {
 
 void CCStepperDevice::kickUp() {
     if (microSteppingMode > 0) {
-        if ((currentMicroStep & 0x0F) == 0) {
+        if ((currentMicroStep & ((1 << highestSteppingMode) - 1)) == 0) {
             microSteppingMode--;
             
             setupMicroSteppingMode();
@@ -633,7 +626,7 @@ void CCStepperDevice::kickUp() {
 
 void CCStepperDevice::kickDown() {
     if (microSteppingMode < highestSteppingMode) {
-        if ((currentMicroStep & 0x0F) == 0) {
+        if ((currentMicroStep & ((1 << highestSteppingMode) - 1)) == 0) {
             microSteppingMode++;
             
             setupMicroSteppingMode();

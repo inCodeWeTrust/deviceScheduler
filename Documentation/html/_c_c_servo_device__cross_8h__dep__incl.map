@@ -1,5 +1,6 @@
 <map id="CCServoDevice_cross.h" name="CCServoDevice_cross.h">
-<area shape="rect" id="node2" href="$_c_c_device_scheduler_8h.html" title="CCDeviceScheduler.h" alt="" coords="11,80,164,107"/>
-<area shape="rect" id="node4" href="$_c_c_servo_device__cross_8cpp.html" title="CCServoDevice_cross.cpp" alt="" coords="189,80,371,107"/>
+<area shape="rect" id="node2" href="$_c_c_device_scheduler_8h.html" title="CCDeviceScheduler.h" alt="" coords="95,80,248,107"/>
+<area shape="rect" id="node5" href="$_c_c_servo_device__cross_8cpp.html" title="CCServoDevice_cross.cpp" alt="" coords="273,80,455,107"/>
 <area shape="rect" id="node3" href="$_c_c_device_scheduler_8cpp.html" title="CCDeviceScheduler.cpp" alt="" coords="5,155,171,181"/>
+<area shape="rect" id="node4" href="$voice_o_graph_8ino.html" title="voiceOGraph.ino" alt="" coords="196,155,319,181"/>
 </map>

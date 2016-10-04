@@ -11,7 +11,7 @@
 
 
 
-CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(String deviceName, unsigned char switching_A_pin, boolean switchingPin_A_activ, unsigned char switching_B_pin, boolean switchingPin_B_activ) : CCDcControllerDevice(deviceName, switching_A_pin, switchingPin_A_activ) {
+CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ) : CCDcControllerDevice(deviceName, switching_A_pin, switchingPin_A_activ) {
     
     this->switching_B_pin = switching_B_pin;
     this->switchingPin_B_activ = switchingPin_B_activ;
@@ -332,5 +332,5 @@ void CCDcControllerDevice_fullBridge::operateTask() {
     }
 }
 
-void CCDcControllerDevice_fullBridge::getReadOut(byte theReadOut) {}
+void CCDcControllerDevice_fullBridge::getReadOut(unsigned char theReadOut) {}
 

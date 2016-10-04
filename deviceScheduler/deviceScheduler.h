@@ -9,10 +9,10 @@
 #ifndef __deviceScheduler__deviceScheduler__
 #define __deviceScheduler__deviceScheduler__
 
-
+#ifndef ARDUINO_SIMULATION
 #include <Arduino.h>
 #include <avr/pgmspace.h>
-
+#endif
 
 
 //  ################## verbosity: #############################################################################

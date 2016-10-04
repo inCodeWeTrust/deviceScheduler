@@ -82,7 +82,7 @@ protected:
     
     /// Parameter, related to the current task operation.
     /// The value determines, if the provided target value is meant absolute or relativ.
-    boolean             moveRelativ;
+    bool             moveRelativ;
     
     /// Parameter, related to the current task operation.
     /// The value determines, if current position is set to zero before job start.
@@ -163,7 +163,7 @@ protected:
     
     /// Parameter, related to the device controll of the current task.
     /// This value indicates if a dynamical stop is performed on increasing or decreasing sensor values.
-    boolean              reversedApproximation;
+    bool              reversedApproximation;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the approximaton behavior, attaining the target position.
@@ -179,6 +179,7 @@ protected:
     approximationMode   approximation;
     
     
+    CCTask* pendingTask;
 
     
      //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventTask
@@ -207,7 +208,7 @@ public:
     virtual void finishTask() = 0;
     
 
-    virtual void getReadOut(byte theReadOut) = 0;
+    virtual void getReadOut(unsigned char theReadOut) = 0;
 
     
     
@@ -336,11 +337,11 @@ public:
     
     /// Getter method for getting the switchTaskPromptly bit of the device
     /// @sa switchTaskPromptly;
-    boolean getSwitchTaskPromptly();
+    bool getSwitchTaskPromptly();
     
     /// Setter method for setting the switchTaskPromptly bit of the device
     /// @sa switchTaskPromptly;
-    void setSwitchTaskPromptly(boolean switchPromptly);
+    void setSwitchTaskPromptly(bool switchPromptly);
     
     /// Getter method for getting the sensor of the device
     /// @sa sensor;
@@ -368,7 +369,7 @@ public:
     
     /// Getter method for getting the direction of the approximation value of this task
     /// @sa approximationCurve;
-    boolean getReversedApproximation();
+    bool getReversedApproximation();
     
     /// Getter method for getting the approximation value of the device
     /// @sa approximation;
@@ -380,3 +381,62 @@ public:
 };
 
 #endif // defined(__deviceScheduler__CCDevice__)
+
+
+
+/// \startuml
+/// class CCDevice {
+/// .. public members ..
+///     {abstact} ~CCDevice()
+///     {abstact} void attachDevice() = 0;
+///     {abstact} void detachDevice() = 0;
+///     {abstact} void enableDevice() = 0;
+///     {abstact} void disableDevice() = 0;
+///
+///     {abstact} infoCode reviewValues(CCTask* nextTask) = 0;
+///     {abstact} void prepareNextTask() = 0;
+///     {abstact} void prepareTask(CCTask* nextTask) = 0;
+///     {abstact} void startTask() = 0;
+///     {abstact} void operateTask() = 0;
+///     {abstact} void initiateStop() = 0;
+///     {abstact} void stopTask() = 0;
+///     {abstact} void finishTask() = 0;
+///
+///     {abstact} void getReadOut(unsigned char theReadOut) = 0;
+///     +String getName();
+///     +deviceType getType();
+///     +scheduledTask getCurrentTaskID();
+///     +float getCurrentPosition();
+///     +void setCurrentPosition(float position);
+///     +float getTarget();
+///     +float getVelocity();
+///     +float getAcceleration();
+///     +float getDeceleration();
+///     +bool getDirectionDown();
+///     +deviceState getState();
+///     +void setState(deviceState state);
+///     +unsigned long getStartDelay();
+///     +void setStartDelay(unsigned long delay);
+///     +event getStartEvent();
+///     +void setStartEvent(event startEvent);
+///     +event getStopEvent();
+///     +void setStopEvent(event stopEvent);
+///     +unsigned long getStartTime();
+///     +void setStartTime(unsigned long startTime);
+///     +unsigned long getTimeout();
+///     +stoppingMode getStopping();
+///     +void setStopping(stoppingMode mode);
+///     +bool getSwitchTaskPromptly();
+///     +void setSwitchTaskPromptly(bool switchPromptly);
+///     +unsigned char getSensor();
+///     +signed int getInitiatePerformanceValue();
+///     +signed int getTargetValue();
+///     +float getStopPerformance();
+///     +unsigned int getApproximationCurve();
+///     +unsigned int getGap();
+///     +bool getReversedApproximation();
+///     +approximationMode getApproximation();
+/// \enduml
+
+
+

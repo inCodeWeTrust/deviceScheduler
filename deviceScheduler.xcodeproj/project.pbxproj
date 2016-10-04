@@ -745,6 +745,8 @@
 		A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCStepperDevice.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice.h; sourceTree = "<group>"; };
 		A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceOGraph.h; sourceTree = "<group>"; };
+		A46035761D9B0B3F005CF1B4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A46035781D9B0B3F005CF1B4 /* SIMULATE.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SIMULATE.1; sourceTree = "<group>"; };
 		A475640F1CAAF90100902319 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		A47564101CAAF90100902319 /* Funktionsweise.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = Funktionsweise.md; sourceTree = "<group>"; };
 		A47564121CAAF90100902319 /* howItWorks_old.dox */ = {isa = PBXFileReference; lastKnownFileType = text; path = howItWorks_old.dox; sourceTree = "<group>"; };
@@ -1546,6 +1548,7 @@
 			isa = PBXGroup;
 			children = (
 				A45F721B1B1C70E400B5B7E0 /* deviceScheduler */,
+				A46035751D9B0B3F005CF1B4 /* SIMULATE */,
 				A45F721A1B1C70E400B5B7E0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1669,6 +1672,15 @@
 				A45F72531B1C70E400B5B7E0 /* clupload_osx.sh */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		A46035751D9B0B3F005CF1B4 /* SIMULATE */ = {
+			isa = PBXGroup;
+			children = (
+				A46035761D9B0B3F005CF1B4 /* main.cpp */,
+				A46035781D9B0B3F005CF1B4 /* SIMULATE.1 */,
+			);
+			path = SIMULATE;
 			sourceTree = "<group>";
 		};
 		A475640E1CAAF90100902319 /* Documentation */ = {

@@ -66,7 +66,7 @@ protected:
     signed long          switchOffTime;
     
     /// Variable is @c true when switched on, @c false when switched off.
-    boolean              isActiv;
+    bool              isActiv;
     
     /// The initial rate of duty cycle, when the task is switched, like v0.
     float                currentRatio;
@@ -83,7 +83,7 @@ protected:
     
 public:
     
-    CCDcControllerDevice(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
+    CCDcControllerDevice(String deviceName, unsigned char switching_pin, bool switchingPin_activ);
     ~CCDcControllerDevice();
     
     
@@ -101,7 +101,7 @@ public:
     void stopTask();
     void finishTask();
     
-    void getReadOut(byte theReadOut);
+    void getReadOut(unsigned char theReadOut);
     
 };
 

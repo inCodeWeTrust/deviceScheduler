@@ -34,13 +34,13 @@ private:
 
     
     /// Variable is @c true when switched on, @c false when switched off.
-    boolean              isActiv_B;
+    bool              isActiv_B;
 
     
     
 public:
     
-    CCDcControllerDevice_fullBridge(String deviceName, unsigned char switching_A_pin, boolean switchingPin_A_activ, unsigned char switching_B_pin, boolean switchingPin_B_activ);
+    CCDcControllerDevice_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ);
     ~CCDcControllerDevice_fullBridge();
     
     
@@ -53,7 +53,7 @@ public:
     void stopTask();
     void finishTask();
     
-    void getReadOut(byte theReadOut);
+    void getReadOut(unsigned char theReadOut);
     
 };
 

@@ -30,12 +30,12 @@ private:
     scheduledTask           taskID;
     event                   startEvent;
     event                   stopEvent;
-    boolean                 switchTaskPromptly;
+    bool                 switchTaskPromptly;
     float                   target;
     float                   velocity;
     float                   acceleration;
     float                   deceleration;
-    boolean                 moveRelativ;
+    bool                 moveRelativ;
     positionResetMode       positionReset;
     unsigned long           startDelay;
     unsigned long           startTime;
@@ -55,7 +55,7 @@ private:
     stoppingMode            stopping;
     unsigned int            approximationCurve;
     unsigned int            gap;
-    boolean                 reversedApproximation;
+    bool                 reversedApproximation;
     approximationMode       approximation;
     
     
@@ -88,7 +88,7 @@ public:
     
     
 
-    CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset, scheduledTask taskID);
+    CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, scheduledTask taskID);
     
     
     
@@ -134,7 +134,7 @@ public:
     
     /// Getter method for getting the moveRelativ bit of the device
     /// @sa moveRelativ;
-    boolean getMoveRelativ();
+    bool getMoveRelativ();
 
     /// Getter method for getting the positionReset mode of the device
     /// @sa positionReset;
@@ -198,7 +198,7 @@ public:
     
     /// Getter method for getting the switchTaskPromptly bit of the device
     /// @sa switchTaskPromptly;
-    boolean getSwitchTaskPromptly();
+    bool getSwitchTaskPromptly();
     
     /// Getter method for getting the sensor pin of the device
     /// @sa sensor;
@@ -230,7 +230,7 @@ public:
     
     /// Getter method for getting the direction of the approximation value of this task
     /// @sa approximationCurve;
-    boolean getReversedApproximation();
+    bool getReversedApproximation();
     
     
     

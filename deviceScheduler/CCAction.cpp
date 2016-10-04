@@ -118,6 +118,6 @@ scheduledTask CCAction::getFollowingTaskID(){return followingTaskID;}
 int CCAction::getNotificationCode(){return notificationCode;}
 String CCAction::getNotificationText(){return notificationText;}
 infoCode CCAction::getWorkflowInfoCode(){return workflowInfoCode;}
-boolean CCAction::getActionDone(){return actionDone;}
-void CCAction::setActionDone(boolean d){actionDone = d;}
+bool CCAction::getActionDone(){return actionDone;}
+void CCAction::setActionDone(bool d){actionDone = d;}
 

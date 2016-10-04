@@ -35,16 +35,16 @@ public:
 
     
     void                readButtonState();
-    boolean             readIfActiv();
-    boolean             getState();
-    boolean             isActiv();
+    bool             readIfActiv();
+    bool             getState();
+    bool             isActiv();
     
     String              getName();
     unsigned char       getCountOfActions();
     String              getButtonActiv();
     
     
-    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
+    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, bool buttonActiv, bool pullup);
     ~CCControlButton();
     
     CCAction*           addAction(String actionName);
@@ -54,14 +54,14 @@ public:
     
 private:
     
-    boolean             state;
-    boolean             activ;
+    bool             state;
+    bool             activ;
 
     String              buttonName;
     unsigned int        buttonIndex;
     unsigned char       button_pin;
-    boolean             pullup;
-    boolean             buttonActiv;
+    bool             pullup;
+    bool             buttonActiv;
     unsigned char       countOfActions;
 
     

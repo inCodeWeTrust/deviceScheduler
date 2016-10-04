@@ -10,7 +10,9 @@
 #define __deviceScheduler__CCServoDevice__
 
 
+#ifndef ARDUINO_SIMULATION
 #include <Servo.h>
+#endif
 
 #include "CCDevice.h"
 
@@ -32,7 +34,7 @@ protected:
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;
     unsigned long        timeForAcceleration, timeForConstantSpeed;
     signed long          deltaS;
-    boolean              dynamicalStop, sensorValuesFalling;
+    bool              dynamicalStop, sensorValuesFalling;
     float                deltaDeltaNorm, deltaDelta, performanceFactor, c_perform;
     signed int           valueCounter;
     long                 lastCycleTime;
@@ -66,7 +68,7 @@ public:
     void stopTask();
     void finishTask();
     
-    void getReadOut(byte theReadOut);
+    void getReadOut(unsigned char theReadOut);
 
 
 };

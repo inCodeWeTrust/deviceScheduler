@@ -63,7 +63,7 @@ CCDeviceScheduler::~CCDeviceScheduler() {
 }
 
 
-CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) {
+CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned char switching_pin, bool switchingPin_activ) {
     device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_activ);
     
     if (SCHEDULER_VERBOSE & BASICOUTPUT) {
@@ -86,7 +86,7 @@ CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned char sw
     
     return device[countOfDevices - 1];
 }
-CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsigned char switching_A_pin, boolean switchingPin_A_activ, unsigned char switching_B_pin, boolean switchingPin_B_activ) {
+CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ) {
     
     device[countOfDevices] = new CCDcControllerDevice_fullBridge(deviceName, switching_A_pin, switchingPin_A_activ, switching_B_pin, switchingPin_B_activ);
     
@@ -234,7 +234,7 @@ void CCDeviceScheduler::listDevices() {
 }
 
 
-CCControlButton* CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
+CCControlButton* CCDeviceScheduler::addControlButton(String buttonName, unsigned char button_pin, bool buttonActiv, bool pullup) {
 
     controlButton[countOfControlButtons] = new CCControlButton(countOfControlButtons, buttonName, button_pin, buttonActiv, pullup);
     
@@ -297,7 +297,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
     
     unsigned long loopCounter = 0;
     unsigned char ongoingOperations = 0;
-    boolean breakLoop = false;
+    bool breakLoop = false;
     notificationCode = 0;
     notificationText = "";
     
@@ -839,7 +839,7 @@ void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
 }
 
 void CCDeviceScheduler::evaluateButtons() {
-    boolean lastButtonState[20];
+    bool lastButtonState[20];
     Serial.print(F("************************************* evaluate buttons *************************************"));
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
@@ -865,7 +865,7 @@ void CCDeviceScheduler::evaluateButtons() {
     while (digitalRead(EVALUATE_BUTTONS_SWITCH) == LOW) {
         for (int i = 0; i < countOfControlButtons; i++) {
             controlButton[i]->readButtonState();
-            boolean buttonState = controlButton[i]->getState();
+            bool buttonState = controlButton[i]->getState();
             if (buttonState != lastButtonState[i]) {
                 Serial.print(controlButton[i]->getName());
                 Serial.print(F(", activ at: "));
@@ -931,7 +931,7 @@ String CCDeviceScheduler::getNameOfStoppingMode(stoppingMode s) {
     if (s == STOP_DYNAMIC) return "stop dynamic";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfButtonState(boolean s) {
+String CCDeviceScheduler::getNameOfButtonState(bool s) {
     if (s) return "HIGH";
     return "LOW";
 }

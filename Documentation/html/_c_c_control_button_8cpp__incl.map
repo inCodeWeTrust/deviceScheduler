@@ -1,4 +1,6 @@
 <map id="CCControlButton.cpp" name="CCControlButton.cpp">
-<area shape="rect" id="node2" href="$_c_c_control_button_8h.html" title="CCControlButton.h" alt="" coords="41,80,175,107"/>
-<area shape="rect" id="node4" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="107,155,239,181"/>
+<area shape="rect" id="node2" href="$_c_c_control_button_8h.html" title="CCControlButton.h" alt="" coords="29,80,163,107"/>
+<area shape="rect" id="node3" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="39,304,171,331"/>
+<area shape="rect" id="node6" href="$_c_c_action_8h.html" title="CCAction.h" alt="" coords="93,155,181,181"/>
+<area shape="rect" id="node7" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="143,229,224,256"/>
 </map>

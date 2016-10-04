@@ -41,15 +41,15 @@ void CCDevice::setStartTime(unsigned long startTime){this->startTime = startTime
 unsigned long CCDevice::getTimeout(){return timeout;}
 stoppingMode CCDevice::getStopping(){return stopping;}
 void CCDevice::setStopping(stoppingMode mode){stopping = mode;}
-boolean CCDevice::getSwitchTaskPromptly(){return switchTaskPromptly;}
-void CCDevice::setSwitchTaskPromptly(boolean switchPromptly){switchTaskPromptly = switchPromptly;}
+bool CCDevice::getSwitchTaskPromptly(){return switchTaskPromptly;}
+void CCDevice::setSwitchTaskPromptly(bool switchPromptly){switchTaskPromptly = switchPromptly;}
 unsigned char CCDevice::getSensor(){return sensor;}
 signed int CCDevice::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCDevice::getTargetValue(){return targetValue;}
 float CCDevice::getStopPerformance(){return stopPerformance;}
 unsigned int CCDevice::getApproximationCurve(){return approximationCurve;}
 unsigned int CCDevice::getGap(){return gap;}
-boolean CCDevice::getReversedApproximation(){return reversedApproximation;}
+bool CCDevice::getReversedApproximation(){return reversedApproximation;}
 approximationMode CCDevice::getApproximation(){return approximation;}
 
 

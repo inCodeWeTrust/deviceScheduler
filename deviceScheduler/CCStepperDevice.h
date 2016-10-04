@@ -45,7 +45,7 @@ public:
     void stopTask();
     void finishTask();
 
-    virtual void getReadOut(byte theReadOut) = 0;
+    virtual void getReadOut(unsigned char theReadOut) = 0;
     
     
 protected:

@@ -31,7 +31,7 @@ public:
     ~CCStepperDevice_A4988();
     
 
-    void getReadOut(byte theReadOut);
+    void getReadOut(unsigned char theReadOut);
 
     
 private:

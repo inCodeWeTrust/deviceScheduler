@@ -98,7 +98,7 @@ public:
     CCTask* addTaskWithPositionResetOnCompletion(float target, float velocity = 0.0, float acceleration = 0.0, float deceleration = 0.0);
 
     /// Function to register the tasks
-    CCTask* registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset);
+    CCTask* registerTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset);
 
     
     /// Function lists all tasks of all registered devices.

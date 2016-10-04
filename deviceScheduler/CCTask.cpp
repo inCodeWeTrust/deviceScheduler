@@ -9,7 +9,7 @@
 #include "CCTask.h"
 
 
-CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset, scheduledTask taskID) {
+CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, scheduledTask taskID) {
 
     this->taskID = taskID;
     
@@ -153,7 +153,7 @@ float CCTask::getAcceleration(){return acceleration;}
 void CCTask::setAcceleration(float acceleration){this->acceleration = acceleration;}
 float CCTask::getDeceleration(){return deceleration;}
 void CCTask::setDeceleration(float deceleration){this->deceleration = deceleration;}
-boolean CCTask::getMoveRelativ() {return moveRelativ;}
+bool CCTask::getMoveRelativ() {return moveRelativ;}
 positionResetMode CCTask::getPositionReset(){return positionReset;}
 unsigned long CCTask::getStartDelay(){return startDelay;}
 event CCTask::getStartEvent(){return startEvent;}
@@ -169,7 +169,7 @@ scheduledTask CCTask::getStopTriggerTaskID(){return stopTriggerTaskID;}
 signed long CCTask::getStartTriggerPosition(){return startTriggerPosition;}
 signed long CCTask::getStopTriggerPosition(){return stopTriggerPosition;}
 stoppingMode CCTask::getStopping(){return stopping;}
-boolean CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
+bool CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
 unsigned char CCTask::getSensor(){return sensor;}
 signed int CCTask::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCTask::getTargetValue(){return targetValue;}
@@ -177,7 +177,7 @@ float CCTask::getStopPerformance(){return stopPerformance;}
 approximationMode CCTask::getApproximation(){return approximation;}
 unsigned int CCTask::getApproximationCurve(){return approximationCurve;}
 unsigned int CCTask::getGap(){return gap;}
-boolean CCTask::getReversedApproximation(){return reversedApproximation;}
+bool CCTask::getReversedApproximation(){return reversedApproximation;}
 
 
 

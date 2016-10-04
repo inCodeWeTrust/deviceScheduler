@@ -1,5 +1,5 @@
 <map id="CCStepperDevice.h" name="CCStepperDevice.h">
-<area shape="rect" id="node2" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="159,80,252,107"/>
-<area shape="rect" id="node5" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="218,229,350,256"/>
-<area shape="rect" id="node6" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="165,155,246,181"/>
+<area shape="rect" id="node2" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="59,80,152,107"/>
+<area shape="rect" id="node3" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="39,229,171,256"/>
+<area shape="rect" id="node6" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="105,155,185,181"/>
 </map>

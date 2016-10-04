@@ -1,3 +1,4 @@
 <map id="CCDcControllerDevice" name="CCDcControllerDevice">
+<area shape="rect" id="node3" href="$class_c_c_dc_controller_device__full_bridge.html" title="Device class for full&#45;controlled full&#45;Bridge devices controlled by PWM&#45;signals or spimply switched on..." alt="" coords="5,155,160,197"/>
 <area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="41,5,124,32"/>
 </map>

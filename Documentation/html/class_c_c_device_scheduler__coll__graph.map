@@ -1,5 +1,7 @@
 <map id="CCDeviceScheduler" name="CCDeviceScheduler">
-<area shape="rect" id="node2" href="$class_c_c_control_button.html" title="Class for buttons to control the workflow. " alt="" coords="5,96,128,123"/>
-<area shape="rect" id="node3" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="152,96,235,123"/>
-<area shape="rect" id="node4" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="158,5,228,32"/>
+<area shape="rect" id="node2" href="$class_c_c_control_button.html" title="Class for buttons to control the workflow. " alt="" coords="15,368,137,395"/>
+<area shape="rect" id="node3" href="$class_c_c_action.html" title="CCAction" alt="" coords="18,277,96,304"/>
+<area shape="rect" id="node4" href="$class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="5,187,115,213"/>
+<area shape="rect" id="node5" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="59,5,129,32"/>
+<area shape="rect" id="node6" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="113,96,196,123"/>
 </map>

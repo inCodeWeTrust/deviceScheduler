@@ -1,6 +1,6 @@
 <map id="CCStepperDevice_A4988.h" name="CCStepperDevice_A4988.h">
-<area shape="rect" id="node2" href="$_c_c_stepper_device_8h.html" title="CCStepperDevice.h" alt="" coords="200,80,339,107"/>
-<area shape="rect" id="node3" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="159,155,252,181"/>
-<area shape="rect" id="node6" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="218,304,350,331"/>
-<area shape="rect" id="node7" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="165,229,246,256"/>
+<area shape="rect" id="node2" href="$_c_c_stepper_device_8h.html" title="CCStepperDevice.h" alt="" coords="35,80,175,107"/>
+<area shape="rect" id="node3" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="59,155,152,181"/>
+<area shape="rect" id="node4" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="39,304,171,331"/>
+<area shape="rect" id="node7" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="105,229,185,256"/>
 </map>

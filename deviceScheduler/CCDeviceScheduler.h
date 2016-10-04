@@ -36,7 +36,7 @@
 /// @brief Scheduler engine to manage all devices and their tasks.
 ///
 /// The scheduler holds all devices and controls them by calling their startTask(), operateTask(), stopTask() etc. routines.
-///
+/// 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -73,7 +73,7 @@ class CCDeviceScheduler {
     String getNameOfDeviceType(deviceType t);
     String getNameOfTaskEvent(event e);
     String getNameOfState(deviceState s);
-    String getNameOfButtonState(boolean s);
+    String getNameOfButtonState(bool s);
     String getNameOfStoppingMode(stoppingMode s);
     String getNameOfDeviceAction(deviceAction d);
     String getLiteralOfWorkflowInfo(infoCode i);
@@ -122,11 +122,9 @@ public:
     /// @param dir_pin the pin number of the stepper driver's direction pin.
     /// @param step_pin the pin number of the stepper driver's step pin.
     /// @param enable_pin the pin number of the stepper driver's enable pin.
-    /// @param highestSteppingMode the number of available stepping modes (full step, half step, quarter step ...).
-    /// @param stepModeCodesString a string containing the specific pin combinations for the different stepping modes.
-    /// @param microStepPinsString a string containing the pin numbers of the micro stepping pins.
-    /// i.e. "28, 30, 32": micro stepping pins are pin 28, pin 30 and pin 32
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
+    /// @param microStep_00_pin, microStep_01_pin, microStep_02_pin the pin numbers of the micro stepping pins.
+    /// @param steppingCode_00 ... steppingCode_07 the specific pin combinations for the different stepping modes.
     /// @return the device index.
     CCDevice* addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char microStep_00_pin, unsigned char microStep_01_pin, unsigned char microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03 = -1, signed char steppingCode_04 = -1, signed char steppingCode_05 = -1, signed char steppingCode_06 = -1, signed char steppingCode_07 = -1);
     
@@ -149,7 +147,7 @@ public:
     /// @param switching_pin the pin number of the device's controll pin.
     /// @param switchingPin_activ the state of the switching pin, where the device is activ.
     /// @return the device index.
-    CCDevice* addDcController(String deviceName, unsigned char switching_pin, boolean switchingPin_activ);
+    CCDevice* addDcController(String deviceName, unsigned char switching_pin, bool switchingPin_activ);
 
     /// Function adds a full-bridge switching device (two channel) to the device array and returns the index of the device.
     /// A full-bridge switching device has two switching pins and a direction. Switching_A_pin is used to go froward direction, switching_b_pin for going reverse.
@@ -159,7 +157,7 @@ public:
     /// @param switchingPin_A_activ the state of the switching pin, where the device is activ forward.
     /// @param switchingPin_B_activ the state of the switching pin, where the device is activ reverse.
     /// @return the device index.
-    CCDevice* addDcController_fullBridge(String deviceName, unsigned char switching_A_pin, boolean switchingPin_A_activ, unsigned char switching_B_pin, boolean switchingPin_B_activ);
+    CCDevice* addDcController_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ);
     
 
     /// Function lists all registered devices.
@@ -178,7 +176,7 @@ public:
     /// @param buttonActiv the state of the pin, where the button should trigger actions.
     /// @param pullup if a nonzero value is passed, the input pullup is activated.
     /// @return the button index.
-    CCControlButton* addControlButton(String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup);
+    CCControlButton* addControlButton(String buttonName, unsigned char button_pin, bool buttonActiv, bool pullup);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.
@@ -198,6 +196,7 @@ public:
     
     
     /// Function starts the scheduler, all registered tasks are driven as specified.
+    /// @image html scheduler__run.png
     int run(CCWorkflow* currentWorkflow);
     
     

@@ -116,7 +116,7 @@ CCTask* CCDeviceFlow::addTaskWithPositionResetOnCompletion(float target, float v
     return registerTask(target, velocity, acceleration, deceleration, false, RESET_ON_COMPLETION);
 }
 
-CCTask* CCDeviceFlow::registerTask(float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, positionResetMode positionReset) {
+CCTask* CCDeviceFlow::registerTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) {
     task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, moveRelativ, positionReset, countOfTasks);
 
     if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {

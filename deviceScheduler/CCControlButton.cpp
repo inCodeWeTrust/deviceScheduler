@@ -11,7 +11,7 @@
 
 
 
-CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, boolean buttonActiv, boolean pullup) {
+CCControlButton::CCControlButton(unsigned int buttonIndex, String buttonName, unsigned char button_pin, bool buttonActiv, bool pullup) {
     
     this->buttonIndex = buttonIndex;
     this->buttonName = buttonName;
@@ -72,7 +72,7 @@ void CCControlButton::readButtonState() {
 
 }
 
-boolean CCControlButton::readIfActiv() {
+bool CCControlButton::readIfActiv() {
     state = digitalRead(button_pin);
     activ = (state == buttonActiv);
     
@@ -89,8 +89,8 @@ boolean CCControlButton::readIfActiv() {
     return activ;
 }
 
-boolean CCControlButton::isActiv(){return activ;}
-boolean CCControlButton::getState(){return state;}
+bool CCControlButton::isActiv(){return activ;}
+bool CCControlButton::getState(){return state;}
 
 String CCControlButton::getName(){return buttonName;}
 String CCControlButton::getButtonActiv(){if (buttonActiv) return "HIGH"; return "LOW";}

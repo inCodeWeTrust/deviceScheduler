@@ -26,7 +26,7 @@ private:
     int                 notificationCode;
     String              notificationText;
     infoCode            workflowInfoCode;
-    boolean             actionDone;
+    bool             actionDone;
 
 
 public:
@@ -54,8 +54,8 @@ public:
     int                 getNotificationCode();
     String              getNotificationText();
     infoCode            getWorkflowInfoCode();
-    boolean             getActionDone();
-    void                setActionDone(boolean d);
+    bool             getActionDone();
+    void                setActionDone(bool d);
     
 
     

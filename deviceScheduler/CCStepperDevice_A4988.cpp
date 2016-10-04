@@ -148,6 +148,6 @@ void CCStepperDevice_A4988::setupMicroSteppingMode(unsigned char data) {
     }
 }
 
-void CCStepperDevice_A4988::getReadOut(byte theReadOut) {}
+void CCStepperDevice_A4988::getReadOut(unsigned char theReadOut) {}
 
 

@@ -520,5 +520,5 @@ void CCServoDevice::operateTask() {
     
 }
 
-void CCServoDevice::getReadOut(byte theReadOut) {}
+void CCServoDevice::getReadOut(unsigned char theReadOut) {}
 

@@ -1,5 +1,5 @@
 <map id="CCServoDevice.h" name="CCServoDevice.h">
-<area shape="rect" id="node3" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="111,80,204,107"/>
-<area shape="rect" id="node6" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="191,229,323,256"/>
-<area shape="rect" id="node7" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="178,155,259,181"/>
+<area shape="rect" id="node3" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="97,80,191,107"/>
+<area shape="rect" id="node4" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="77,229,208,256"/>
+<area shape="rect" id="node7" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="142,155,223,181"/>
 </map>

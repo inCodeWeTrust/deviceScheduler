@@ -58,24 +58,14 @@ $(document).ready(function(){initNavTree('_c_c_control_button_8h.html','');});
 <div class="title">CCControlButton.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>&quot;</code><br />
-</div><div class="textblock"><div class="dynheader">
+<div class="textblock"><div class="dynheader">
 Include dependency graph for CCControlButton.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_c_c_control_button_8h__incl.png" border="0" usemap="#_c_c_control_button_8h" alt=""/></div>
 <map name="_c_c_control_button_8h" id="_c_c_control_button_8h">
-<area shape="rect" id="node3" href="device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="107,80,239,107"/>
-</map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="_c_c_control_button_8h__dep__incl.png" border="0" usemap="#_c_c_control_button_8hdep" alt=""/></div>
-<map name="_c_c_control_button_8hdep" id="_c_c_control_button_8hdep">
-<area shape="rect" id="node2" href="_c_c_control_button_8cpp.html" title="CCControlButton.cpp" alt="" coords="5,80,152,107"/>
-<area shape="rect" id="node3" href="_c_c_device_scheduler_8h.html" title="CCDeviceScheduler.h" alt="" coords="177,80,329,107"/>
-<area shape="rect" id="node4" href="_c_c_device_scheduler_8cpp.html" title="CCDeviceScheduler.cpp" alt="" coords="170,155,336,181"/>
+<area shape="rect" id="node2" href="device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="39,229,171,256"/>
+<area shape="rect" id="node5" href="_c_c_action_8h.html" title="CCAction.h" alt="" coords="93,80,181,107"/>
+<area shape="rect" id="node6" href="_c_c_task_8h.html" title="CCTask.h" alt="" coords="143,155,224,181"/>
 </map>
 </div>
 </div>
@@ -89,53 +79,21 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a6301ea0e8ed20a05c14b69c5c9670fe4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_c_c_control_button_8h.html#a6301ea0e8ed20a05c14b69c5c9670fe4">CCCONTROLBUTTON_BASICOUTPUT</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:a6301ea0e8ed20a05c14b69c5c9670fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0dbc2e4ae5df102554dee9b982333f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_c_c_control_button_8h.html#aa0dbc2e4ae5df102554dee9b982333f3">CCCONTROLBUTTON_MEMORYDEBUG</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:aa0dbc2e4ae5df102554dee9b982333f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee802a4a04cacc8a70d9779b15e3a8c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_c_c_control_button_8h.html#aee802a4a04cacc8a70d9779b15e3a8c8">CCCONTROLBUTTON_VERBOSE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:aee802a4a04cacc8a70d9779b15e3a8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb9b6429a703ef5f41715365f9978fbd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_c_c_control_button_8h.html#acb9b6429a703ef5f41715365f9978fbd">CONTROLLBUTTON_PRESSED_NOTIFICATION</a>&#160;&#160;&#160;&quot;endpoint reached&quot;</td></tr>
+<tr class="separator:acb9b6429a703ef5f41715365f9978fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a6301ea0e8ed20a05c14b69c5c9670fe4"></a>
+<a class="anchor" id="acb9b6429a703ef5f41715365f9978fbd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CCCONTROLBUTTON_BASICOUTPUT&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define CONTROLLBUTTON_PRESSED_NOTIFICATION&#160;&#160;&#160;&quot;endpoint reached&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_control_button_8h_source.html#l00018">18</a> of file <a class="el" href="_c_c_control_button_8h_source.html">CCControlButton.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa0dbc2e4ae5df102554dee9b982333f3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CCCONTROLBUTTON_MEMORYDEBUG&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="_c_c_control_button_8h_source.html#l00019">19</a> of file <a class="el" href="_c_c_control_button_8h_source.html">CCControlButton.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aee802a4a04cacc8a70d9779b15e3a8c8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CCCONTROLBUTTON_VERBOSE&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="_c_c_control_button_8h_source.html#l00021">21</a> of file <a class="el" href="_c_c_control_button_8h_source.html">CCControlButton.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_control_button_8h_source.html#l00026">26</a> of file <a class="el" href="_c_c_control_button_8h_source.html">CCControlButton.h</a>.</p>
 
 </div>
 </div>

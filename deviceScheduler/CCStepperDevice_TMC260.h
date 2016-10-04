@@ -9,8 +9,9 @@
 #ifndef __deviceScheduler__CCStepperDevice_TMC260__
 #define __deviceScheduler__CCStepperDevice_TMC260__
 
-
+#ifndef ARDUINO_SIMULATION
 #include <SPI.h>
+#endif
 
 #include "CCStepperDevice.h"
 
@@ -38,10 +39,10 @@ class CCStepperDevice_TMC260 : public CCStepperDevice {
 public:
     //  TMC260 readback:
     unsigned int microstepPosition, stallGuard2Value;
-    byte coolStepScalingValue, stallGuard2Value_upper;
-    boolean standStil;
-    byte openLoad, shortToGnd;
-    boolean overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
+    unsigned char coolStepScalingValue, stallGuard2Value_upper;
+    bool standStil;
+    unsigned char openLoad, shortToGnd;
+    bool overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
     
 
     CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax);
@@ -53,15 +54,15 @@ public:
     /// @param stepInterpolation Enable step interpolation. 0: Disable STEP pulse interpolation, 1: Enable STEP pulse multiplication by 16.
     /// @param doubleEdgeStepPulses Enable double edge step pulses. 0: Rising step pulse edge is active, falling edge is inactive, 1: Both rising and falling step pulse edges are active.
     /// @param microSteppingMode Microstep resolution for STEP/DIR mode. Microsteps per 90°: %0000: 256, %0001: 128, %0010: 64, ... %0111: 2 (halfstep), %1000: 1 (fullstep)
-    void setDriverControlRegister(boolean stepInterpolation, boolean doubleEdgeStepPulses, byte microSteppingMode);
+    void setDriverControlRegister(bool stepInterpolation, bool doubleEdgeStepPulses, unsigned char microSteppingMode);
 
     
     /// Sets and configures with spread cycle chopper.
-    /// @param blankingTime Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0: (min setting) … 3: (max setting)
+    /// @param blankingTimeValue selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0: (min setting) … 3: (max setting)
     /// @param randomTOffTime Use random off time for noise reduction (0 for off, -1 for on).
-    /// @param hysteresis_start Hysteresis start setting. Please remark, that this value is an offset to the hysteresis end value. 1 … 8
-    /// @param hysteresis_end Hysteresis end setting. Sets the hysteresis end value after a number of decrements. Decrement interval time is controlled by hysteresis_decrement. The sum hysteresis_start + hysteresis_end must be <16. At a current setting CS of max. 30 (amplitude reduced to 240), the sum is not limited.
-    /// @param hysteresis_decrement Hysteresis decrement setting. This setting determines the slope of the hysteresis during on time and during fast decay time. 0 (fast decrement) … 3 (slow decrement).
+    /// @param hysteresisStart Hysteresis start setting. Please remark, that this value is an offset to the hysteresis end value. 1 … 8
+    /// @param hysteresisEnd Hysteresis end setting. Sets the hysteresis end value after a number of decrements. Decrement interval time is controlled by hysteresis_decrement. The sum hysteresis_start + hysteresis_end must be <16. At a current setting CS of max. 30 (amplitude reduced to 240), the sum is not limited.
+    /// @param hysteresisDecrementPeriodValue Hysteresis decrement setting. This setting determines the slope of the hysteresis during on time and during fast decay time. 0 (fast decrement) … 3 (slow decrement).
     /// @param offTime The off time setting controls the minimum chopper frequency. For most applications an off time within the range of 5μs to 20μs will fit. Setting this parameter to zero completely disables all driver transistors and the motor can free-wheel. 0: chopper off, 1:15: off time setting
     ///
     /// The spreadCycle chopper scheme (pat.fil.) is a precise and simple to use chopper principle, which automatically determines
@@ -76,13 +77,13 @@ public:
     ///
     /// @sa setChopperControlRegister_fastDecay()
     ///
-    void setChopperControlRegister_spreadCycle(byte blankingTimeValue, boolean randomTOffTime, byte hysteresisDecrementPeriodValue, int hysteresisEnd, byte hysteresisStart, byte offTime);
+    void setChopperControlRegister_spreadCycle(unsigned char blankingTimeValue, bool randomTOffTime, unsigned char hysteresisDecrementPeriodValue, int hysteresisEnd, unsigned char hysteresisStart, unsigned char offTime);
     
     /// Sets and configure the classical Constant Off Timer Chopper
     /// @param blankingTimeValue Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0 (min setting) … (3) amx setting
     /// @param randomTOffTime Use random off time for noise reduction (0 for off, -1 for on).
     /// @param onlyTimerTerminatesDecayPhase Selects usage of the current comparator for termination of the fast decay cycle. If current comparator is enabled, it terminates the fast decay cycle in case the current reaches a higher negative value than the actual positive value.
-    /// @param sinewaveOffset Controls the sine wave offset. A positive offset corrects for zero crossing error. -3…-1: negative offset, 0: no offset,1…12: positive offset
+    /// @param sinwaveOffset Controls the sine wave offset. A positive offset corrects for zero crossing error. -3…-1: negative offset, 0: no offset,1…12: positive offset
     /// @param fastDecayTime Fast decay time setting. Controls the portion of fast decay for each chopper cycle. 0: slow decay only, 1…15: duration of fast decay phase
     /// @param offTime The off time setting controls the minimum chopper frequency. For most applications an off time within the range of 5μs to 20μs will fit. Setting this parameter to zero completely disables all driver transistors and the motor can free-wheel. 0: chopper off, 1:15: off time setting
     ///
@@ -92,7 +93,7 @@ public:
     /// the falling slope of the sine wave, and on the other hand it should not be too long, in order to minimize
     /// motor current ripple and power dissipation.
     /// @sa setChopperControlRegister_spreadCycle()
-    void setChopperControlRegister_fastDecay(byte blankingTimeValue, boolean randomTOffTime, boolean onlyTimerTerminatesDecayPhase, int sinwaveOffset, byte fastDecayTime, byte offTime);
+    void setChopperControlRegister_fastDecay(unsigned char blankingTimeValue, bool randomTOffTime, bool onlyTimerTerminatesDecayPhase, int sinwaveOffset, unsigned char fastDecayTime, unsigned char offTime);
     
     /// This method configures the CoolStep smart energy operation. You must have a proper StallGuard configuration for the motor situation (current, voltage, speed) in rder to use this feature.
     /// @param minCoolStepCurrentValue Sets the lower motor current limit for coolStepTM operation by scaling the CS value. It can be halfed or quartered.
@@ -108,11 +109,11 @@ public:
     /// StallGuard readings neccessary above or below the limit to get a more stable current adjustement.
     /// The current adjustement itself is configured by the number of steps the current gests in- or decreased and the absolut minimum current
     /// (1/2 or 1/4th otf the configured current).
-    void setCoolStepRegister(boolean minCoolStepCurrentValue, byte currentDecrementSpeedValue, byte upperCoolStepThreshold, byte currentIncrementStepsValue, byte lowerCoolStepThreshold);
+    void setCoolStepRegister(bool minCoolStepCurrentValue, unsigned char currentDecrementSpeedValue, unsigned char upperCoolStepThreshold, unsigned char currentIncrementStepsValue, unsigned char lowerCoolStepThreshold);
     
     /// set the StallGuard threshold in order to get sensible StallGuard readings.
-    /// @param stall_guard_threshold -64 … 63 the StallGuard threshold
-    /// @param stall_guard_filter_enabled 0 if the filter is disabled, -1 if it is enabled
+    /// @param stallGuard2Threshold -64 … 63 the StallGuard threshold
+    /// @param stallGuard2FilterEnable 0 if the filter is disabled, -1 if it is enabled
     ///
     /// The StallGuard threshold is used to optimize the StallGuard reading to sensible values. It should be at 0 at
     /// the maximum allowable load on the otor (but not before). = is a good starting point (and the default)
@@ -121,12 +122,12 @@ public:
     ///
     /// If you switch on the filter the StallGuard reading is only updated each 4th full step to reduce the noise in the
     /// reading.
-	void setStallGuard2Register(boolean stallGuard2FilterEnable, int stallGuard2Threshold);
+	void setStallGuard2Register(bool stallGuard2FilterEnable, int stallGuard2Threshold);
 
-    void setDriverConfigurationRegister(byte slopeControlHighSide, byte slopeControlLowSide, boolean shortToGndProtectionDisable, byte shortToGndDetectionTimerValue, boolean stepDirInterfaceDisable, byte selectReadOut);
+    void setDriverConfigurationRegister(unsigned char slopeControlHighSide, unsigned char slopeControlLowSide, bool shortToGndProtectionDisable, unsigned char shortToGndDetectionTimerValue, bool stepDirInterfaceDisable, unsigned char selectReadOut);
 
     
-    void getReadOut(byte theReadOut);
+    void getReadOut(unsigned char theReadOut);
     void setCurrentScale(unsigned int currentScale);
     
     /// set the maximum motor current in mA
@@ -153,8 +154,8 @@ private:
     unsigned long stallGuard2Control;
     unsigned long driverConfiguration;
     
-    byte currentScaleOf32;
-    boolean senseResistorVoltage165mV;
+    unsigned char currentScaleOf32;
+    bool senseResistorVoltage165mV;
     unsigned long resultDatagram;
     
     void calculateCurrentSetup(unsigned int current);

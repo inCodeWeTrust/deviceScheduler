@@ -8,14 +8,16 @@
 
 
 
+#ifndef ARDUINO_SIMULATION
 #include <Arduino.h>
 #include <Servo.h>
+#include <malloc.h>
+#endif
 
 #include "voiceOGraph.h"
 #include "CCDeviceScheduler.h"
 
 
-#include <malloc.h>
 
 
 
@@ -45,9 +47,10 @@ void calculateCuttingParameters();
 void evaluateButtons();
 void freeRam ();
 
+#ifndef ARDUINO_SIMULATION
 extern char _end;
 extern "C" char *sbrk(int i);
-
+#endif
 
 
 // ------------- main loop --------------------------------------------------------------------------------------------------
@@ -511,7 +514,7 @@ void loop() {
         CCTask* driveToParkPosition;
         driveToParkPosition = catStepperFlow->addTask(CAT_PARK_POSITION);
         driveToParkPosition->startAfterCompletionOf(headRightServo, liftHeadRightAfterCutting);
-        driveToParkPosition->stopByButton(bridgeParkButton, STOP_NORMAL);
+//        driveToParkPosition->stopByButton(bridgeParkButton, STOP_NORMAL);
         
         
         /*
@@ -657,7 +660,7 @@ void loop() {
     
     Serial.println(F("ready to run!"));
     
-    boolean initNeeded = false;
+    bool initNeeded = false;
     int i = 0;
     while (!initNeeded) {
         if (digitalRead(FETCH_RECORD_BUTTON) == LOW) {
@@ -886,13 +889,13 @@ void calculateCuttingParameters() {
     Serial.println();
     
     Serial.print(F("groove pitch is set to "));
-    Serial.print(SONGGROOVE_PITCH);
+    Serial.print((float)SONGGROOVE_PITCH);
     Serial.print(F("mm, start groove pitch is set to "));
-    Serial.print(STARTGROOVE_PITCH);
+    Serial.print((float)STARTGROOVE_PITCH);
     Serial.print(F("mm, start groove width is set to "));
-    Serial.print(STARTGROOVE_RANGE);
+    Serial.print((float)STARTGROOVE_RANGE);
     Serial.print(F("mm, end groove pitch is set to "));
-    Serial.print(ENDGROOVE_PITCH);
+    Serial.print((float)ENDGROOVE_PITCH);
     Serial.print(F("mm, minimal end groove width is set to "));
     Serial.print(ENDGROOVE_RANGE_MIN);
     Serial.println(F("mm"));
@@ -1009,6 +1012,7 @@ void setup() {
 }
 
 void freeRam() {
+#ifndef ARDUINO_SIMULATION
     char *ramstart = (char *) 0x20070000;
     char *ramend = (char *) 0x20088000;
     char *heapend = sbrk(0);
@@ -1022,7 +1026,100 @@ void freeRam() {
     Serial.print(ramend - stack_ptr);
     Serial.print(", estimation free Ram: ");
     Serial.println(stack_ptr - heapend + mi.fordblks);
+#endif
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// @page mainProgramPage
+/// The whole program sceme look as follows:
+/// @image html scheduler__sceme.png
+/// The main program voiceOGraph.ino holds the complete workflow and task structure. It consists of one or several workflows (CCWorkFlow objects). This workflows holds one deviceflow (CCDeviceFlow object) for every involved device. The deviceflow contains then an array that includes all tasks, to be executed by this device.
+/// To run a workflow, the scheduler's run method is to be called, and a pointer to this workflow needs to be passed.
+/// First, the user interaction is to be setup
+///
+/// @image html setupUserInteraction.png
+///
+/// @internal
+/// @startuml{setupUserInteraction.png}
+/// start
+/// :setup user interaction;
+/// stop
+/// @enduml
+/// @endinternal
+///
+///
+/// Second, all parameters for the cutting process are to be calculated, like the number of grooves on the record, the playtime, the width of the end groove, the motor speed for cat stepper etc.
+///
+/// @image html calculateCuttingParameters.png
+///
+/// @internal
+/// @startuml{calculateCuttingParameters.png}
+/// start
+/// :calculate all cuttingParameters;
+/// stop
+/// @enduml
+/// @endinternal
+///
+///
+/// Then all devices and their tasks and movements are to be defined.
+///
+/// @image html prepareRunLoop.png
+///
+/// @internal
+/// @startuml{prepareRunLoop.png}
+/// title preperation of run loop
+/// start
+/// partition initialisation {
+/// 	:instantiate scheduler object;
+/// 	:instantiate and define array of devices;
+/// 	:instantiate and define array of controllButtons;
+/// }
+/// partition "define the work" {
+/// 	:instantiate workflow object;
+/// 	:instantiate deviceFlows of workflow;
+/// 	:instantiate and define tasks of deviceFlows of workflow;
+/// 	:instantiate actions of workflow;
+/// }
+/// partition "prepare running" {
+/// 	:reviewTasks
+/// all values are evaluated and converted;
+/// 	:listAllTasks;
+/// 	:listAllActions;
+/// }
+/// stop
+/// @enduml
+/// @endinternal
+///
+///
+/// Now we're ready to run!
+///
+/// @image html runTheMachine.png
+///
+/// @internal
+/// @startuml{runTheMachine.png}
+/// title run loop of the machine
+/// start
+/// repeat
+///     :user interaction;
+///     :do ordered job;
+///     if (everything ok?) then (yes)
+///     else (no)
+///         if (solution available?) then (yes)
+///             :solve problem;
+///         else (no)
+///         	stop
+/// 	    endif
+///     endif
+/// repeat while()
+/// @enduml
+/// @endinternal
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 
 

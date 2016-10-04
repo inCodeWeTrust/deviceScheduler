@@ -11,7 +11,7 @@
 
 
 
-CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char switching_pin, boolean switchingPin_activ) : CCDevice() {
+CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char switching_pin, bool switchingPin_activ) : CCDevice() {
     this->deviceName = deviceName;
     
     this->switching_pin = switching_pin;
@@ -337,5 +337,5 @@ void CCDcControllerDevice::operateTask() {
     }
 }
 
-void CCDcControllerDevice::getReadOut(byte theReadOut) {}
+void CCDcControllerDevice::getReadOut(unsigned char theReadOut) {}
 
