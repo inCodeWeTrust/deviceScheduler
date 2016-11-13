@@ -11,7 +11,7 @@
 
 
 
-CCServoDevice_cross::CCServoDevice_cross(String deviceName, unsigned char servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned char servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition) : CCServoDevice(deviceName, servo_00_pin, minPosition_00, maxPosition_00, parkPosition) {
+CCServoDevice_cross::CCServoDevice_cross(String deviceName, unsigned int servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned int servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition) : CCServoDevice(deviceName, servo_00_pin, minPosition_00, maxPosition_00, parkPosition) {
     
     this->midPosition_00 = midPosition_00;
     
@@ -54,10 +54,10 @@ unsigned int CCServoDevice_cross::counterPosition(unsigned int position) {
 void CCServoDevice_cross::attachDevice() {
     theServo.writeMicroseconds(parkPosition);
     currentPosition = parkPosition;
-    unsigned char channel = theServo.attach(servo_pin, minPosition, maxPosition);
+    unsigned int channel = theServo.attach(servo_pin, minPosition, maxPosition);
     
     secondServo.writeMicroseconds(counterPosition(parkPosition));
-    unsigned char channel_01 = secondServo.attach(servo_01_pin, minPosition_01, maxPosition_01);
+    unsigned int channel_01 = secondServo.attach(servo_01_pin, minPosition_01, maxPosition_01);
     
     
     
@@ -162,8 +162,8 @@ void CCServoDevice_cross::operateTask() {
         performanceFactor = c_perform * (sensorValue - targetValue);
         
         currentPosition += deltaDeltaNorm * performanceFactor;
-        currentPosition = min(currentPosition, maxPosition);
-        currentPosition = max(currentPosition, minPosition);
+        currentPosition = fmin(currentPosition, maxPosition);
+        currentPosition = fmax(currentPosition, minPosition);
         
         theServo.writeMicroseconds(currentPosition);
         secondServo.writeMicroseconds(counterPosition(currentPosition));
@@ -187,7 +187,7 @@ void CCServoDevice_cross::operateTask() {
         if (approximation == SKIP_APPROXIMATION_NEVER) {
             return;
         } else {
-            if (abs(sensorValue - targetValue) < sensorTreshold) {
+            if (fabs(sensorValue - targetValue) < sensorTreshold) {
                 if (valueCounter++ < approximation) {
                     return;
                 }

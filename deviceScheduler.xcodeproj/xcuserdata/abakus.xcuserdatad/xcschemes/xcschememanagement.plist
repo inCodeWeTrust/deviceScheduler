@@ -64,9 +64,19 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+		<key>dummyPhantasyName.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>40B211261DD90A5100BD41BC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A45F720C1B1C70E400B5B7E0</key>
 		<dict>
 			<key>primary</key>

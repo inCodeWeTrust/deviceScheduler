@@ -9,11 +9,15 @@
 #ifndef __deviceScheduler__CCStepperDevice_TMC260__
 #define __deviceScheduler__CCStepperDevice_TMC260__
 
-#ifndef ARDUINO_SIMULATION
+
+#include "CCStepperDevice.h"
+
+#ifdef ARDUINO_SIMULATION
+static SPICommunication SPI;
+#else
 #include <SPI.h>
 #endif
 
-#include "CCStepperDevice.h"
 
 
 
@@ -39,22 +43,22 @@ class CCStepperDevice_TMC260 : public CCStepperDevice {
 public:
     //  TMC260 readback:
     unsigned int microstepPosition, stallGuard2Value;
-    unsigned char coolStepScalingValue, stallGuard2Value_upper;
+    unsigned int coolStepScalingValue, stallGuard2Value_upper;
     bool standStil;
-    unsigned char openLoad, shortToGnd;
+    unsigned int openLoad, shortToGnd;
     bool overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
     
 
-    CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax);
+    CCStepperDevice_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax);
     
     ~CCStepperDevice_TMC260();
     
     
     /// Sets and configures the TMC 260 driver.
     /// @param stepInterpolation Enable step interpolation. 0: Disable STEP pulse interpolation, 1: Enable STEP pulse multiplication by 16.
-    /// @param doubleEdgeStepPulses Enable double edge step pulses. 0: Rising step pulse edge is active, falling edge is inactive, 1: Both rising and falling step pulse edges are active.
+    /// @param doubleEdgeStepPulses Enable double edge step pulses. 0: Rising step pulse edge is activee, falling edge is inactivee, 1: Both rising and falling step pulse edges are activee.
     /// @param microSteppingMode Microstep resolution for STEP/DIR mode. Microsteps per 90°: %0000: 256, %0001: 128, %0010: 64, ... %0111: 2 (halfstep), %1000: 1 (fullstep)
-    void setDriverControlRegister(bool stepInterpolation, bool doubleEdgeStepPulses, unsigned char microSteppingMode);
+    void setDriverControlRegister(bool stepInterpolation, bool doubleEdgeStepPulses, unsigned int microSteppingMode);
 
     
     /// Sets and configures with spread cycle chopper.
@@ -77,7 +81,7 @@ public:
     ///
     /// @sa setChopperControlRegister_fastDecay()
     ///
-    void setChopperControlRegister_spreadCycle(unsigned char blankingTimeValue, bool randomTOffTime, unsigned char hysteresisDecrementPeriodValue, int hysteresisEnd, unsigned char hysteresisStart, unsigned char offTime);
+    void setChopperControlRegister_spreadCycle(unsigned int blankingTimeValue, bool randomTOffTime, unsigned int hysteresisDecrementPeriodValue, int hysteresisEnd, unsigned int hysteresisStart, unsigned int offTime);
     
     /// Sets and configure the classical Constant Off Timer Chopper
     /// @param blankingTimeValue Selects the comparator blank time. This time needs to safely cover the switching event and the duration of the ringing on the sense resistor. For most low current drivers, a setting of 1 or 2 is good. For high current applications with large MOSFETs, a setting of 2 or 3 will be required. 0 (min setting) … (3) amx setting
@@ -93,7 +97,7 @@ public:
     /// the falling slope of the sine wave, and on the other hand it should not be too long, in order to minimize
     /// motor current ripple and power dissipation.
     /// @sa setChopperControlRegister_spreadCycle()
-    void setChopperControlRegister_fastDecay(unsigned char blankingTimeValue, bool randomTOffTime, bool onlyTimerTerminatesDecayPhase, int sinwaveOffset, unsigned char fastDecayTime, unsigned char offTime);
+    void setChopperControlRegister_fastDecay(unsigned int blankingTimeValue, bool randomTOffTime, bool onlyTimerTerminatesDecayPhase, int sinwaveOffset, unsigned int fastDecayTime, unsigned int offTime);
     
     /// This method configures the CoolStep smart energy operation. You must have a proper StallGuard configuration for the motor situation (current, voltage, speed) in rder to use this feature.
     /// @param minCoolStepCurrentValue Sets the lower motor current limit for coolStepTM operation by scaling the CS value. It can be halfed or quartered.
@@ -109,7 +113,7 @@ public:
     /// StallGuard readings neccessary above or below the limit to get a more stable current adjustement.
     /// The current adjustement itself is configured by the number of steps the current gests in- or decreased and the absolut minimum current
     /// (1/2 or 1/4th otf the configured current).
-    void setCoolStepRegister(bool minCoolStepCurrentValue, unsigned char currentDecrementSpeedValue, unsigned char upperCoolStepThreshold, unsigned char currentIncrementStepsValue, unsigned char lowerCoolStepThreshold);
+    void setCoolStepRegister(bool minCoolStepCurrentValue, unsigned int currentDecrementSpeedValue, unsigned int upperCoolStepThreshold, unsigned int currentIncrementStepsValue, unsigned int lowerCoolStepThreshold);
     
     /// set the StallGuard threshold in order to get sensible StallGuard readings.
     /// @param stallGuard2Threshold -64 … 63 the StallGuard threshold
@@ -124,10 +128,10 @@ public:
     /// reading.
 	void setStallGuard2Register(bool stallGuard2FilterEnable, int stallGuard2Threshold);
 
-    void setDriverConfigurationRegister(unsigned char slopeControlHighSide, unsigned char slopeControlLowSide, bool shortToGndProtectionDisable, unsigned char shortToGndDetectionTimerValue, bool stepDirInterfaceDisable, unsigned char selectReadOut);
+    void setDriverConfigurationRegister(unsigned int slopeControlHighSide, unsigned int slopeControlLowSide, bool shortToGndProtectionDisable, unsigned int shortToGndDetectionTimerValue, bool stepDirInterfaceDisable, unsigned int selectReadOut);
 
     
-    void getReadOut(unsigned char theReadOut);
+    void getReadOut(unsigned int theReadOut);
     void setCurrentScale(unsigned int currentScale);
     
     /// set the maximum motor current in mA
@@ -141,9 +145,9 @@ public:
 private:
     
     void setupMicroSteppingMode();
-    void setupMicroSteppingMode(unsigned char data);
+    void setupMicroSteppingMode(unsigned int data);
     
-    unsigned char chipSelect_pin;
+    unsigned int chipSelect_pin;
     
 
     unsigned int currentMax;        //  current in mA
@@ -154,7 +158,7 @@ private:
     unsigned long stallGuard2Control;
     unsigned long driverConfiguration;
     
-    unsigned char currentScaleOf32;
+    unsigned int currentScaleOf32;
     bool senseResistorVoltage165mV;
     unsigned long resultDatagram;
     

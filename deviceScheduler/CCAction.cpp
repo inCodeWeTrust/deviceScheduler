@@ -10,20 +10,20 @@
 
 
 
-CCAction::CCAction(String actionName, infoCode workflowInfoCode) {
+CCAction::CCAction(String actionName, workflowInfoCode workflowInfo) {
     this->actionName = actionName;
     this->targetDeviceFlow = NULL;
     this->validTaskID = -1;
     this->targetAction = DO_NOTHING;
     this->followingTaskID = -1;
-    this->workflowInfoCode = workflowInfoCode;
+    this->workflowInfo = workflowInfo;
     this->actionDone = false;
     
     if (ACTION_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCAction]: setup action "));
         Serial.print(actionName);
-        Serial.print(F(" with workflowInfo: "));
-        Serial.print((int)workflowInfoCode);
+        Serial.print(F(" with notification: "));
+        Serial.print(notificationText);
         if (ACTION_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.print((long)this, HEX);
@@ -33,62 +33,78 @@ CCAction::CCAction(String actionName, infoCode workflowInfoCode) {
 
 }
 
-void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction) {
+void CCAction::evokeTaskStop(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, stoppingMode stopping) {
     this->targetDeviceFlow = targetDeviceFlow;
     this->validTaskID = validTask->getTaskID();
-    this->targetAction = targetAction;
-    this->followingTaskID = validTaskID + 1;
-    
-//    this->notificationCode = notificationCode;
-//    this->notificationText = notificationText;
-    
-    
-    //    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
-    Serial.print(F(", targetDeviceFlow: "));
-    //        Serial.print(this->targetDeviceFlow);
-    Serial.print(F(", validTaskID: "));
-    Serial.print(this->validTaskID);
-    Serial.print(F(", targetAction: "));
-    Serial.print(this->targetAction);
-    Serial.print(F(", followingTaskID: "));
-    Serial.print((int)this->followingTaskID);
-    Serial.println();
-    //    }
+    this->stopping = stopping;
+    this->targetAction = TASK_STOP_ACTION;
 
+    if (ACTION_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCAction]: "));
+        Serial.print(actionName);
+        Serial.print(F(": evokeTaskStop on task "));
+        Serial.print(this->validTaskID);
+        Serial.println();
+    }
 }
-void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction, CCTask* followingTask) {
+
+void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, switchingMode switching) {
+    this->targetDeviceFlow = targetDeviceFlow;
+    this->validTaskID = validTask->getTaskID();
+    this->stopping = stopping;
+    this->followingTaskID = validTaskID + 1;
+    this->targetAction = TASK_SWITCH_ACTION;
+
+    //    this->notificationCode = notificationCode;
+    //    this->notificationText = notificationText;
+    
+    
+    if (ACTION_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCAction]: "));
+        Serial.print(actionName);
+        Serial.print(F(": evokeJumpToNextTask on task "));
+        Serial.print(this->validTaskID);
+        Serial.print(F(", targetAction: "));
+        Serial.print(this->targetAction);
+        Serial.print(F(", followingTaskID: "));
+        Serial.print(this->followingTaskID);
+        Serial.println();
+    }
+    
+}
+void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, switchingMode switching, CCTask* followingTask) {
     this->targetDeviceFlow = targetDeviceFlow;
     if (validTask == NULL) {
         this->validTaskID = -1;
     } else {
         this->validTaskID = validTask->getTaskID();
     }
-    this->targetAction = targetAction;
+    this->switching = switching;
     this->followingTaskID = followingTask->getTaskID();
+    this->targetAction = TASK_SWITCH_ACTION;
     
 //    this->notificationCode = notificationCode;
 //    this->notificationText = notificationText;
     
     
-//    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
-        Serial.print(F(", targetDeviceFlow: "));
-        //        Serial.print(this->targetDeviceFlow);
-        Serial.print(F(", validTaskID: "));
+    if (ACTION_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCAction]: "));
+        Serial.print(actionName);
+        Serial.print(F(": evokeJumpToTask on task "));
         Serial.print(this->validTaskID);
         Serial.print(F(", targetAction: "));
         Serial.print(this->targetAction);
         Serial.print(F(", followingTaskID: "));
-        Serial.print((int)this->followingTaskID);
-        Serial.println();
-//    }
+        Serial.println(this->followingTaskID);
+    }
     
 }
 
 
 void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     this->targetDeviceFlow = targetDeviceFlow;
-    this->validTaskID = validTaskID;
-    this->targetAction = BREAK_LOOP;
+    this->validTaskID = validTask->taskID;
+    this->targetAction = BREAK_LOOP_ACTION;
     this->followingTaskID = 1;
     
 //    this->notificationCode = notificationCode;
@@ -96,12 +112,12 @@ void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     
     
     
-//    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
-        Serial.print(F(", targetDeviceFlow: "));
-        //        Serial.print(this->targetDeviceFlow);
-        Serial.print(F(", validTaskID: "));
+    if (ACTION_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCAction]: "));
+        Serial.print(actionName);
+        Serial.print(F(": evokeBreak on task "));
         Serial.println(this->validTaskID);
-//    }
+    }
     
     
 }
@@ -110,14 +126,15 @@ void CCAction::evokeBreak() {
 }
 
 
-
+stoppingMode CCAction::getStopping() {return stopping;}
+switchingMode CCAction::getSwitching() {return switching;}
 String CCAction::getName(){return actionName;}
-scheduledTask CCAction::getValidTaskID(){return validTaskID;}
+int CCAction::getValidTaskID(){return validTaskID;}
 deviceAction CCAction::getTargetAction(){return targetAction;}
-scheduledTask CCAction::getFollowingTaskID(){return followingTaskID;}
+int CCAction::getFollowingTaskID(){return followingTaskID;}
 int CCAction::getNotificationCode(){return notificationCode;}
 String CCAction::getNotificationText(){return notificationText;}
-infoCode CCAction::getWorkflowInfoCode(){return workflowInfoCode;}
+workflowInfoCode CCAction::getWorkflowInfo(){return workflowInfo;}
 bool CCAction::getActionDone(){return actionDone;}
 void CCAction::setActionDone(bool d){actionDone = d;}
 

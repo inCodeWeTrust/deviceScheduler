@@ -9,7 +9,7 @@
 #include "CCTask.h"
 
 
-CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, scheduledTask taskID) {
+CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, unsigned int taskID) {
 
     this->taskID = taskID;
     
@@ -22,11 +22,11 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->startDelay = 0;
     this->startEvent = NONE;
     this->stopEvent = NONE;
-    this->switchTaskPromptly = false;
+    this->switchTaskPromptly = NO_SWITCHING;
     this->startTime = 0;
     this->timeout = 0;
-    this->startButton = 0;
-    this->stopButton = 0;
+    this->startControl = 0;
+    this->stopControl = 0;
     this->startTriggerDevice = NULL;
     this->stopTriggerDevice = NULL;
     this->startTriggerTaskID = 0;
@@ -44,7 +44,7 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
 
     if (TASK_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCTask]: setup task "));
-        Serial.print(taskID);
+        Serial.print((int)taskID);
         if (TASK_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.print((long)this, HEX);
@@ -62,9 +62,14 @@ void CCTask::startByDate(unsigned long startTime) {
     this->startEvent = DATE;
     this->startTime = startTime;
 }
-void CCTask::startByButton(CCControlButton* startButton) {
-    this->startEvent = BUTTON;
-    this->startButton = startButton;
+void CCTask::startByControl(CCControl* startControl, comparingMode comparing, int target) {
+    this->startEvent = CONTROL;
+    this->startControl = startControl;
+    this->startControlComparing = comparing;
+    this->startControlTarget = target;
+}
+void CCTask::startAfterCompletion() {
+    this->startEvent = FOLLOW_ME;
 }
 void CCTask::startAfterCompletionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask) {
     this->startEvent = FOLLOW;
@@ -81,25 +86,32 @@ void CCTask::startByTriggerpositionOf(CCDevice* startTriggerDevice, CCTask* star
 void CCTask::switchToNextTaskByDate(unsigned long switchingTimeout) {
     this->stopEvent = DATE;
     this->timeout = switchingTimeout;
-    this->switchTaskPromptly = true;
+    this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
-void CCTask::switchToNextTaskByButton(CCControlButton* switchingButton) {
-    this->stopEvent = BUTTON;
-    this->stopButton = switchingButton;
-    this->switchTaskPromptly = true;
+void CCTask::switchToNextTaskByControl(CCControl* switchingControl, comparingMode comparing, int target) {
+    this->stopEvent = CONTROL;
+    this->stopControl = switchingControl;
+    this->stopControlComparing = comparing;
+    this->stopControlTarget = target;
+    this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
 void CCTask::switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = switchingTriggerDevice;
     this->stopTriggerTaskID = switchingTriggerTask->taskID;
-    this->switchTaskPromptly = true;
+    this->switchTaskPromptly = SWITCH_PROMPTLY;
+}
+void CCTask::switchToNextTaskAtPosition(signed long switchingTriggerPosition) {
+    this->stopEvent = MY_POSITION;
+    this->stopTriggerPosition = switchingTriggerPosition;
+    this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
 void CCTask::switchToNextTaskByTriggerpositionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask, signed long switchingTriggerPosition) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = switchingTriggerDevice;
     this->stopTriggerTaskID = switchingTriggerTask->taskID;
     this->stopTriggerPosition = switchingTriggerPosition;
-    this->switchTaskPromptly = true;
+    this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
 
 void CCTask::stopByTimeout(unsigned long timeout, stoppingMode stopping) {
@@ -107,9 +119,11 @@ void CCTask::stopByTimeout(unsigned long timeout, stoppingMode stopping) {
     this->timeout = timeout;
     this->stopping = stopping;
 }
-void CCTask::stopByButton(CCControlButton* stopButton, stoppingMode stopping) {
-    this->stopEvent = BUTTON;
-    this->stopButton = stopButton;
+void CCTask::stopByControl(CCControl* stopControl, comparingMode comparing, int target, stoppingMode stopping) {
+    this->stopEvent = CONTROL;
+    this->stopControl = stopControl;
+    this->stopControlComparing = comparing;
+    this->stopControlTarget = target;
     this->stopping = stopping;
 }
 void CCTask::stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping) {
@@ -125,7 +139,14 @@ void CCTask::stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTr
     this->stopTriggerPosition = stopTriggerPosition;
     this->stopping = stopping;
 }
-void CCTask::stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation) {
+void CCTask::stopAtPosition(signed long stopTriggerPosition, stoppingMode stopping) {
+    this->stopEvent = MY_POSITION;
+    this->stopTriggerPosition = stopTriggerPosition;
+    this->stopping = stopping;
+}
+
+
+void CCTask::stopDynamicallyBySensor(unsigned int sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation) {
     this->stopping = STOP_DYNAMIC;
     this->sensor = sensor;
     this->initiatePerformanceValue = initiatePerformanceValue;
@@ -134,7 +155,7 @@ void CCTask::stopDynamicallyBySensor(unsigned char sensor, unsigned int initiate
     this->approximation = approximation;
 }
 
-void CCTask::stopDynamicallyBySensor_new(unsigned char sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation) {
+void CCTask::stopDynamicallyBySensor_new(unsigned int sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation) {
     this->stopping = STOP_DYNAMIC;
     this->sensor = sensor;
     this->targetValue = targetValue;
@@ -144,7 +165,7 @@ void CCTask::stopDynamicallyBySensor_new(unsigned char sensor, unsigned int targ
 }
 
 
-scheduledTask CCTask::getTaskID(){return taskID;}
+unsigned int CCTask::getTaskID(){return taskID;}
 float CCTask::getTarget(){return target;}
 void CCTask::setTarget(float target){this->target = target;}
 float CCTask::getVelocity(){return velocity;}
@@ -160,17 +181,21 @@ event CCTask::getStartEvent(){return startEvent;}
 event CCTask::getStopEvent(){return stopEvent;}
 unsigned long CCTask::getStartTime(){return startTime;}
 unsigned long CCTask::getTimeout(){return timeout;}
-CCControlButton* CCTask::getStartButton(){return startButton;}
-CCControlButton* CCTask::getStopButton(){return stopButton;}
+CCControl* CCTask::getStartControl(){return startControl;}
+CCControl* CCTask::getStopControl(){return stopControl;}
+int CCTask::getStartControlTarget(){return startControlTarget;}
+int CCTask::getStopControlTarget(){return stopControlTarget;}
+comparingMode CCTask::getStartControlComparing(){return startControlComparing;}
+comparingMode CCTask::getStopControlComparing(){return stopControlComparing;}
 CCDevice* CCTask::getStartTriggerDevice(){return startTriggerDevice;}
 CCDevice* CCTask::getStopTriggerDevice(){return stopTriggerDevice;}
-scheduledTask CCTask::getStartTriggerTaskID(){return startTriggerTaskID;}
-scheduledTask CCTask::getStopTriggerTaskID(){return stopTriggerTaskID;}
+unsigned int CCTask::getStartTriggerTaskID(){return startTriggerTaskID;}
+unsigned int CCTask::getStopTriggerTaskID(){return stopTriggerTaskID;}
 signed long CCTask::getStartTriggerPosition(){return startTriggerPosition;}
 signed long CCTask::getStopTriggerPosition(){return stopTriggerPosition;}
 stoppingMode CCTask::getStopping(){return stopping;}
-bool CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
-unsigned char CCTask::getSensor(){return sensor;}
+switchingMode CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
+unsigned int CCTask::getSensor(){return sensor;}
 signed int CCTask::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCTask::getTargetValue(){return targetValue;}
 float CCTask::getStopPerformance(){return stopPerformance;}

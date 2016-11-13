@@ -11,15 +11,15 @@
 
 
 
-CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char switching_pin, bool switchingPin_activ) : CCDevice() {
+CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned int switching_pin, bool switchingPin_active) : CCDevice() {
     this->deviceName = deviceName;
     
     this->switching_pin = switching_pin;
-    this->switchingPin_activ = switchingPin_activ;
+    this->switchingPin_active = switchingPin_active;
     
     pinMode(switching_pin, OUTPUT);
-    digitalWrite(switching_pin, !switchingPin_activ);
-    isActiv = false;
+    digitalWrite(switching_pin, !switchingPin_active);
+    isActive = false;
     
 
     this->type = DCCONTROLLERDEVICE;
@@ -32,8 +32,8 @@ CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned char swit
         Serial.print(deviceName);
         Serial.print(F(", switching_pin: "));
         Serial.print(switching_pin);
-        Serial.print(F(", switchingPin_activ: "));
-        Serial.print(switchingPin_activ);
+        Serial.print(F(", switchingPin_active: "));
+        Serial.print(switchingPin_active);
         if (DCCONTROLLER_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.print((long) this, HEX);
@@ -60,29 +60,18 @@ void CCDcControllerDevice::disableDevice() {}
 void CCDcControllerDevice::attachDevice() {}
 void CCDcControllerDevice::detachDevice() {}
 
-infoCode CCDcControllerDevice::reviewValues(CCTask* nextTask) {
-    
-//    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
-//        Serial.print(F("[CCDcControllerDevice]: "));
-//        Serial.print(deviceName);
-//        Serial.print(F(" review values... "));
-//    }
-    if (nextTask->getTarget() > 1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getTarget() < 0.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
-    
-//    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
-//        Serial.println(F("   done"));
-//    }
-    return EVERYTHING_OK;
+deviceInfoCode CCDcControllerDevice::reviewValues(CCTask* nextTask) {
+    if (nextTask->getTarget() > 1.0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getTarget() < 0.0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getVelocity() == 0) return DEVICE_PARAMETER_ERROR;
+
+    return DEVICE_OK;
 }
 
 void CCDcControllerDevice::prepareNextTask() {}
 
-void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
-
+deviceInfoCode CCDcControllerDevice::prepareTask(CCTask* nextTask) {
+    
     if (state == MOVING) {
         currentRatio = currentPosition;
         t0 += switchOnTime;
@@ -104,8 +93,8 @@ void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
     startDelay = nextTask->getStartDelay();
     startTime = nextTask->getStartTime();
     timeout = nextTask->getTimeout();
-//    startButton = nextTask->getStartButton();
-//    stopButton = nextTask->getStopButton();
+//    startControl = nextTask->getStartControl();
+//    stopControl = nextTask->getStopControl();
 //    startTriggerDevice = nextTask->getStartTriggerDevice();
 //    startTriggerTaskID = nextTask->getStartTriggerTaskID();
 //    startTriggerPosition = nextTask->getStartTriggerPosition();
@@ -140,7 +129,7 @@ void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
     if (DCCONTROLLER_VERBOSE & CALCULATIONDEBUG) {
         Serial.print(F("[CCDcControllerDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": prepareing... target power: "));
+        Serial.print(F(": praparing... target power: "));
         Serial.print(target);
         Serial.print(F(", frequency (n/sec): "));
         Serial.print(velocity);
@@ -163,7 +152,7 @@ void CCDcControllerDevice::prepareTask(CCTask* nextTask) {
         Serial.println();
     }
     
-    
+    return DEVICE_OK;
 }
 
 
@@ -195,8 +184,8 @@ void CCDcControllerDevice::initiateStop() {
 }
 
 void CCDcControllerDevice::stopTask() {
-    digitalWrite(switching_pin, !switchingPin_activ);
-    isActiv = false;
+    digitalWrite(switching_pin, !switchingPin_active);
+    isActive = false;
     state = MOVE_DONE;
     
     
@@ -309,8 +298,8 @@ void CCDcControllerDevice::operateTask() {
             }
         }
         
-        digitalWrite(switching_pin, switchingPin_activ);
-        isActiv = true;
+        digitalWrite(switching_pin, switchingPin_active);
+        isActive = true;
         
         switchOffTime = switchOnTime + switchingInterval * currentPosition;
         switchOnTime += switchingInterval;
@@ -325,9 +314,9 @@ void CCDcControllerDevice::operateTask() {
         
         
     } else if (elapsedTime > switchOffTime) {
-        if (isActiv == true) {
-            digitalWrite(switching_pin, !switchingPin_activ);
-            isActiv = false;
+        if (isActive == true) {
+            digitalWrite(switching_pin, !switchingPin_active);
+            isActive = false;
             if (DCCONTROLLER_VERBOSE & MOVEMENTDEBUG) {
                 Serial.print(elapsedTime);
                 Serial.print(F(": switched off at "));
@@ -337,5 +326,5 @@ void CCDcControllerDevice::operateTask() {
     }
 }
 
-void CCDcControllerDevice::getReadOut(unsigned char theReadOut) {}
+void CCDcControllerDevice::getReadOut(unsigned int theReadOut) {}
 

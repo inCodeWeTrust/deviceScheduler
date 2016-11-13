@@ -28,7 +28,7 @@
 
 
 
-CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
+CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
     
     
 	this->chipSelect_pin = chipSelect_pin;
@@ -63,7 +63,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     this->currentMax = currentMax;
     
 
-    for (unsigned char codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
+    for (unsigned int codeIndex = 0; codeIndex <= highestSteppingMode; codeIndex++) {
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
     }
     
@@ -94,8 +94,8 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     bool stepInterpolation = 0;
     
     // Enable double edge STEP pulses (DEDGE):
-    //  0: Rising STEP pulse edge is active, falling edge is inactive.
-    //  1: Both rising and falling STEP pulse edges are active.
+    //  0: Rising STEP pulse edge is activee, falling edge is inactivee.
+    //  1: Both rising and falling STEP pulse edges are activee.
     bool doubleEdgeStepPulses = 0;
     
     // Microstep resolution for STEP/DIR mode (MRES3):
@@ -109,7 +109,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     //  %0110 (6): 4
     //  %0111 (7): 2 (halfstep)
     //  %1000 (8): 1 (fullstep)
-    unsigned char microSteppingMode = 8;
+    unsigned int microSteppingMode = 8;
     
     setDriverControlRegister(stepInterpolation, doubleEdgeStepPulses, microSteppingMode);
     
@@ -120,7 +120,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     //  %00: 16; %01: 24; %10: 36; %11: 54
     //  internal clock: 15 MHz ==> 1 systemClockPeriod is 67 ns
     //  16: 1.06 us [= 0]; 24: 1.6 us [= 1]; 36: 2.4 us [= 2]; 54: 3.6 us [= 3]
-    unsigned char blankingTimeValue = 0;
+    unsigned int blankingTimeValue = 0;
     
     // chopper mode (CHM):
     //  This mode bit affects the interpretation of the HDEC, HEND, and HSTRT parameters shown below.
@@ -140,7 +140,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     //  %0001: 1 (use with TBL of minimum 24 clocks) %0010 ... %1111: 2 ... 15
     //  internal clock: 15 MHz ==> 1 systemClockPeriod is 67 ns, clocks = 12 + 32 * offTime
     //  offTime 0: MOSFET shut off; 2: (76 cycles): 5.1 us; 3: (108 cycles): 7.2 us; 15 (492 cycles): 32.8 us
-    unsigned char offTime = 15;
+    unsigned int offTime = 15;
     
     if (chopperMode == 0) {
         // spreadCycleMode
@@ -148,7 +148,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
         // hysteresis decrement interval (HDEC):
         //  Hysteresis decrement period setting, in system clock periods:
         //  %00: 16; %01: 32; %10: 48; %11: 64
-        unsigned char hysteresisDecrementPeriodValue = 1;
+        unsigned int hysteresisDecrementPeriodValue = 1;
         
         // hysteresis end (low) value (HEND):
         //  %0000 ... %1111: Hysteresis is -3, -2, -1, 0, 1, ..., 12
@@ -159,7 +159,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
         //  hysteresis start offset from HEND
         //  %000: 1; %001: 2; %010: 3; %011: 4; ... %111: 8
         //  Effective: HEND + HSTRT must be ≤ 15
-        unsigned char hysteresisStart = 4;
+        unsigned int hysteresisStart = 4;
         
         setChopperControlRegister_spreadCycle(blankingTimeValue, randomTOffTime, hysteresisDecrementPeriodValue, hysteresisEnd, hysteresisStart, offTime);
         
@@ -179,7 +179,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
         // fast decay time (HSTRT):
         //  duration of the fast decay phase. The MSB is HDEC0.
         //  Fast decay time is a multiple of system clock periods: NCLK= 32 x (HDEC0+HSTRT)
-        unsigned char fastDecayTime = 3;
+        unsigned int fastDecayTime = 3;
         
         // Off time/MOSFET disable (TOFF):
         //  Duration of slow decay phase. If TOFF is 0, the MOSFETs are shut off. If TOFF is nonzero, slow decay time is a multiple of system clock periods: NCLK= 12 + (32 x TOFF) (Minimum time is 64clocks.)
@@ -187,7 +187,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
         //  %0001: 1 (use with TBL of minimum 24 clocks) %0010 ... %1111: 2 ... 15
         //  internal clock: 15 MHz ==> 1 systemClockPeriod is 67 ns, clocks = 12 + 32 * offTime
         //  offTime 0: MOSFET shut off; 2: (76 cycles): 5.1 us; 3: (108 cycles): 7.2 us; 15 (492 cycles): 32.8 us
-        unsigned char offTime = 3;
+        unsigned int offTime = 3;
         
         setChopperControlRegister_fastDecay(blankingTimeValue, randomTOffTime, onlyTimerTerminatesDecayPhase, sinwaveOffset, fastDecayTime, offTime);
     }
@@ -203,20 +203,20 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     // current decrerment speed (SEDN):
     //  Number of times that the stallGuard2 value must be sampled equal to or above the upper threshold for each decrement of the coil current:
     //  %00: 32; %01: 8; %10: 2; %11: 1
-    unsigned char currentDecrementSpeedValue = 0x00;
+    unsigned int currentDecrementSpeedValue = 0x00;
     
     // upper cool step treshold as an offset from the lower threshold (SEMAX):
     //  If the stallGuard2 measurement value SG is sampled equal to or above (SEMIN+SEMAX+1) x 32 enough times, then the coil current scaling factor is decremented.
-    unsigned char upperCoolStepThreshold = 2;
+    unsigned int upperCoolStepThreshold = 2;
     
     // current increment size (SEUP):
     // Number of current increment steps for each time that the stallGuard2 value SG is sampled below the lower threshold:
     //  %00: 1; %01: 2; %10: 4; %11: 8
-    unsigned char currentIncrementStepsValue = 0x01;
+    unsigned int currentIncrementStepsValue = 0x01;
     
     // lower coolStep threshold / coolStep disable (SEMIN)
     // If SEMIN is 0, coolStep is disabled. If SEMIN is nonzero and the stallGuard2 value SG falls below SEMIN x 32, the coolStep current scaling factor is increased.
-    unsigned char lowerCoolStepThreshold = 1; // 1
+    unsigned int lowerCoolStepThreshold = 1; // 1
     
     setCoolStepRegister(minCoolStepCurrentValue, currentDecrementSpeedValue, upperCoolStepThreshold, currentIncrementStepsValue, lowerCoolStepThreshold);
     
@@ -253,11 +253,11 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     //  %10: Medium temperature compensation mode.
     //  %11: Maximum
     //  In temperature compensated mode (tc), the MOSFET gate driver strength is increased if the overtemperature warning temperature is reached. This compensates for temperature dependency of high-side slope control.
-    unsigned char slopeControlHighSide = 0x10;
+    unsigned int slopeControlHighSide = 0x10;
     
     // Slope control, low side (SLPL):
     //  %00: Minimum. %01: Minimum. %10: Medium. %11: Maximum.￼
-    unsigned char slopeControlLowSide = 0x10;
+    unsigned int slopeControlLowSide = 0x10;
     
     // Short to GND protection disable (DISS2G):
     //  0: Short to GND protection is enabled. 1: Short to GND protection is disabled.
@@ -265,7 +265,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     
     // Short to GND detection timer (TS2G1):
     //  %00: 3.2μs. %01: 1.6μs. %10: 1.2μs. %11: 0.8μs.
-    unsigned char shortToGndDetectionTimerValue = 0x01;
+    unsigned int shortToGndDetectionTimerValue = 0x01;
     
     // STEP/DIR interface disable (SDOFF):
     //  0: Enable STEP and DIR interface; 1: Disable STEP and DIR interface. SPI interface is used to move motor.
@@ -281,7 +281,7 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned char 
     //  %01: stallGuard2 level read back
     //  %10: stallGuard2 and coolStep current level read back
     //  %11: Reserved, do not use
-    unsigned char selectReadOut = 0x10;
+    unsigned int selectReadOut = 0x10;
     
     setDriverConfigurationRegister(slopeControlHighSide, slopeControlLowSide, shortToGndProtectionDisable, shortToGndDetectionTimerValue, stepDirInterfaceDisable, selectReadOut);
     
@@ -304,7 +304,7 @@ CCStepperDevice_TMC260::~CCStepperDevice_TMC260() {
 }
 
 
-void CCStepperDevice_TMC260::setupMicroSteppingMode(unsigned char data) {
+void CCStepperDevice_TMC260::setupMicroSteppingMode(unsigned int data) {
     microSteppingMode = data;
     CCStepperDevice_TMC260::setupMicroSteppingMode();
 }
@@ -357,7 +357,7 @@ void CCStepperDevice_TMC260::calculateCurrentSetup(unsigned int current) {
     //  1200 mA: 32 * 0.15 * 1.1 / 0.310 = 18.58 --> 19
     //  2060 mA: 32 * 0.15 * 1.0 / 0.310 = 31.89 --> 32
 
-    currentScaleOf32 = min(currentScaleOf32, 32);
+    currentScaleOf32 = fmin(currentScaleOf32, 32);
 
     if (STEPPER_TMC260_VERBOSE & TMC260_SETUPDEBUG) {
         Serial.print(F("[CCStepperDevice_TMC260]: "));
@@ -400,7 +400,7 @@ void CCStepperDevice_TMC260::setCurrentScale(unsigned int currentScale) {
 }
 
 
-void CCStepperDevice_TMC260::getReadOut(unsigned char dataToRead) {
+void CCStepperDevice_TMC260::getReadOut(unsigned int dataToRead) {
     
     driverConfiguration &= ~0x30;
     driverConfiguration |= (dataToRead & 0x3) << 4;
@@ -500,7 +500,7 @@ void CCStepperDevice_TMC260::doTransaction(unsigned long datagram) {
 }
 
 
-void CCStepperDevice_TMC260::setDriverControlRegister(bool stepInterpolation, bool doubleEdgeStepPulses, unsigned char microSteppingMode) {
+void CCStepperDevice_TMC260::setDriverControlRegister(bool stepInterpolation, bool doubleEdgeStepPulses, unsigned int microSteppingMode) {
     
     driverControl = 0x00000;
     
@@ -521,7 +521,7 @@ void CCStepperDevice_TMC260::setDriverControlRegister(bool stepInterpolation, bo
     doTransaction(driverControl);
     
 }
-void CCStepperDevice_TMC260::setChopperControlRegister_spreadCycle(unsigned char blankingTimeValue, bool randomTOffTime, unsigned char hysteresisDecrementPeriodValue, int hysteresisEnd, unsigned char hysteresisStart, unsigned char offTime) {
+void CCStepperDevice_TMC260::setChopperControlRegister_spreadCycle(unsigned int blankingTimeValue, bool randomTOffTime, unsigned int hysteresisDecrementPeriodValue, int hysteresisEnd, unsigned int hysteresisStart, unsigned int offTime) {
     
     chopperControl = 0x80000;
     
@@ -547,7 +547,7 @@ void CCStepperDevice_TMC260::setChopperControlRegister_spreadCycle(unsigned char
     doTransaction(chopperControl);
     
 }
-void CCStepperDevice_TMC260::setChopperControlRegister_fastDecay(unsigned char blankingTimeValue, bool randomTOffTime, bool onlyTimerTerminatesDecayPhase, int sinwaveOffset, unsigned char fastDecayTime, unsigned char offTime) {
+void CCStepperDevice_TMC260::setChopperControlRegister_fastDecay(unsigned int blankingTimeValue, bool randomTOffTime, bool onlyTimerTerminatesDecayPhase, int sinwaveOffset, unsigned int fastDecayTime, unsigned int offTime) {
     
     chopperControl = 0x80000;
     
@@ -576,7 +576,7 @@ void CCStepperDevice_TMC260::setChopperControlRegister_fastDecay(unsigned char b
 }
 
 
-void CCStepperDevice_TMC260::setCoolStepRegister(bool minCoolStepCurrentValue, unsigned char currentDecrementSpeedValue, unsigned char upperCoolStepThreshold, unsigned char currentIncrementStepsValue, unsigned char lowerCoolStepThreshold) {
+void CCStepperDevice_TMC260::setCoolStepRegister(bool minCoolStepCurrentValue, unsigned int currentDecrementSpeedValue, unsigned int upperCoolStepThreshold, unsigned int currentIncrementStepsValue, unsigned int lowerCoolStepThreshold) {
     
     coolStepControl = 0xA0000;
     
@@ -623,7 +623,7 @@ void CCStepperDevice_TMC260::setStallGuard2Register(bool stallGuard2FilterEnable
     doTransaction(stallGuard2Control);
 
 }
-void CCStepperDevice_TMC260::setDriverConfigurationRegister(unsigned char slopeControlHighSide, unsigned char slopeControlLowSide, bool shortToGndProtectionDisable, unsigned char shortToGndDetectionTimerValue, bool stepDirInterfaceDisable, unsigned char selectReadOut) {
+void CCStepperDevice_TMC260::setDriverConfigurationRegister(unsigned int slopeControlHighSide, unsigned int slopeControlLowSide, bool shortToGndProtectionDisable, unsigned int shortToGndDetectionTimerValue, bool stepDirInterfaceDisable, unsigned int selectReadOut) {
     driverConfiguration = 0xE0000;
     
     driverConfiguration |= (slopeControlHighSide & 0x3) << 14;

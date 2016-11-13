@@ -26,17 +26,17 @@
 class CCStepperDevice_A4988 : public CCStepperDevice {
     
 public:
-    CCStepperDevice_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char microStep_00_pin, unsigned char microStep_01_pin, unsigned char microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07);
+    CCStepperDevice_A4988(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int microStep_00_pin, unsigned int microStep_01_pin, unsigned int microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07);
     
     ~CCStepperDevice_A4988();
     
 
-    void getReadOut(unsigned char theReadOut);
+    void getReadOut(unsigned int theReadOut);
 
     
 private:
-    unsigned char        numberOfMicroStepPins;
-    unsigned char        *microStepPin;
+    unsigned int        numberOfMicroStepPins;
+    unsigned int        *microStepPin;
     
     ///    i.e. "0x00, 0x01, 0x02, 0x03, 0x07":
     /// stepModeCode | bin | pin 2 | pin 1 | pin 0 | description
@@ -46,10 +46,10 @@ private:
     /// 0x02         | 010 |   LOW |  HIGH |   LOW | quarter step mode
     /// 0x03         | 011 |   LOW |  HIGH |  HIGH | eighth step mode
     /// 0x07         | 111 |  HIGH |  HIGH |  HIGH | sixteenth step mode
-    unsigned char        *stepModeCode;
+    unsigned int        *stepModeCode;
 
     void setupMicroSteppingMode();
-    void setupMicroSteppingMode(unsigned char data);
+    void setupMicroSteppingMode(unsigned int data);
 
 
  };

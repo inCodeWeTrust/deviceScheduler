@@ -10,7 +10,7 @@
 
 
 
-CCServoDevice::CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
+CCServoDevice::CCServoDevice(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
     this->deviceName = deviceName;
     
     this->servo_pin = servo_pin;
@@ -57,7 +57,7 @@ void CCServoDevice::disableDevice() {}
 void CCServoDevice::attachDevice() {
     theServo.writeMicroseconds(parkPosition);
     currentPosition = parkPosition;
-    unsigned char channel = theServo.attach(servo_pin, minPosition, maxPosition);                                                      // substitute with attatchDevice()
+    unsigned int channel = theServo.attach(servo_pin, minPosition, maxPosition);                                                      // substitute with attatchDevice()
     
     if (SERVO_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
@@ -86,25 +86,25 @@ void CCServoDevice::detachDevice() {
     }
 }
 
-infoCode CCServoDevice::reviewValues(CCTask* nextTask) {
+deviceInfoCode CCServoDevice::reviewValues(CCTask* nextTask) {
     if (SERVO_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(" review values... "));
     }
-    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getVelocity() == 0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return DEVICE_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
     
     if (SERVO_VERBOSE & BASICOUTPUT) {
         Serial.println(F("   done"));
     }
-    return EVERYTHING_OK;
+    return DEVICE_OK;
 }
 
 void CCServoDevice::prepareNextTask() {}
 
-void CCServoDevice::prepareTask(CCTask* nextTask) {
+deviceInfoCode CCServoDevice::prepareTask(CCTask* nextTask) {
 
     currentTaskID = nextTask->getTaskID();
     
@@ -118,14 +118,14 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
     
     startEvent = nextTask->getStartEvent();
     startTime = nextTask->getStartTime();
-//    startButton = nextTask->getStartButton();
+//    startControl = nextTask->getStartControl();
 //    startTriggerDevice = nextTask->getStartTriggerDevice();
 //    startTriggerTaskID = nextTask->getStartTriggerTaskID();
 //    startTriggerPosition = nextTask->getStartTriggerPosition();
     
     stopEvent = nextTask->getStopEvent();
     timeout = nextTask->getTimeout();
-//    stopButton = nextTask->getStopButton();
+//    stopControl = nextTask->getStopControl();
 //    stopTriggerDevice = nextTask->getStopTriggerDevice();
 //    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
 //    stopTriggerPosition = nextTask->getStopTriggerPosition();
@@ -228,7 +228,7 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
     if (SERVO_VERBOSE & CALCULATIONDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": prepareing... "));
+        Serial.print(F(": praparing... "));
         Serial.print(F("current: "));
         Serial.print(currentPosition);
         Serial.print(F(", start: "));
@@ -268,13 +268,13 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
         }
 //        Serial.print(F("[CCServoDevice]: "));
 //        Serial.print(deviceName);
-//        Serial.print(F(": prepareing... "));
+//        Serial.print(F(": praparing... "));
 //        Serial.print(F("startEvent: "));
 //        Serial.print(startEvent);
 //        Serial.print(F(", startTime: "));
 //        Serial.print(startTime);
-//        Serial.print(F(", startButton: "));
-//        Serial.print(startButton);
+//        Serial.print(F(", startControl: "));
+//        Serial.print(startControl);
 //        Serial.print(F(", startTriggerDevice: "));
 //        Serial.print(startTriggerDevice->getName());
 //        Serial.print(F(", startTriggerTaskID: "));
@@ -285,8 +285,8 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
 //        Serial.print(stopEvent);
 //        Serial.print(F(", stopTime: "));
 //        Serial.print(timeout);
-//        Serial.print(F(", stopButton: "));
-//        Serial.print(stopButton);
+//        Serial.print(F(", stopControl: "));
+//        Serial.print(stopControl);
 //        Serial.print(F(", stopTriggerDevice: "));
 //        Serial.print(stopTriggerDevice->getName());
 //        Serial.print(F(", stopTriggerTaskID: "));
@@ -295,6 +295,8 @@ void CCServoDevice::prepareTask(CCTask* nextTask) {
 //        Serial.println(stopTriggerPosition);
         
     }
+
+    return DEVICE_OK;
 }
 
 void CCServoDevice::startTask() {
@@ -338,7 +340,7 @@ void CCServoDevice::stopTask() {
 }
 void CCServoDevice::finishTask() {
     state = SLEEPING;
-    
+        
     if (SERVO_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
@@ -363,7 +365,7 @@ void CCServoDevice::operateTask() {
                 c_perform = 1.0 / (initiatePerformanceValue - targetValue);
                 dynamicalStop = true;
 
-                Serial.print("### init dynamical stop: sens: ");
+                Serial.print("### init dynamical stop at: ");
                 Serial.print(sensorValue);
                 Serial.print(", init: ");
                 Serial.print(initiatePerformanceValue);
@@ -437,12 +439,12 @@ void CCServoDevice::operateTask() {
         //        if (performanceFactor > 0) {
         //            performanceFactor = pow(performanceFactor, stopPerformance);
         //        } else {
-        //            performanceFactor = -pow(abs(performanceFactor), stopPerformance);
+        //            performanceFactor = -pow(fabs(performanceFactor), stopPerformance);
         //        }
 
         currentPosition += deltaDeltaNorm * performanceFactor;
-        currentPosition = min(currentPosition, maxPosition);
-        currentPosition = max(currentPosition, minPosition);
+        currentPosition = fmin(currentPosition, maxPosition);
+        currentPosition = fmax(currentPosition, minPosition);
         
         theServo.writeMicroseconds(currentPosition);
         
@@ -465,7 +467,7 @@ void CCServoDevice::operateTask() {
         if (approximation == SKIP_APPROXIMATION_NEVER) {
             return;
         } else {
-            if (abs(sensorValue - targetValue) < sensorTreshold) {
+            if (fabs(sensorValue - targetValue) < sensorTreshold) {
                 if (valueCounter++ < approximation) {
                     return;
                 }
@@ -474,7 +476,10 @@ void CCServoDevice::operateTask() {
                 return;
             }
         }
-        
+ 
+        Serial.print("### finished dynamical stop at: ");
+        Serial.print((int)sensorValue);
+
 
         if (SERVO_VERBOSE & BASICOUTPUT) {
             Serial.print(F("[CCServoDevice]: "));
@@ -520,5 +525,5 @@ void CCServoDevice::operateTask() {
     
 }
 
-void CCServoDevice::getReadOut(unsigned char theReadOut) {}
+void CCServoDevice::getReadOut(unsigned int theReadOut) {}
 

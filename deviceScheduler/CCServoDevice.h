@@ -9,12 +9,12 @@
 #ifndef __deviceScheduler__CCServoDevice__
 #define __deviceScheduler__CCServoDevice__
 
+#include "CCDevice.h"
 
 #ifndef ARDUINO_SIMULATION
 #include <Servo.h>
 #endif
 
-#include "CCDevice.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ protected:
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;
     unsigned long        timeForAcceleration, timeForConstantSpeed;
     signed long          deltaS;
-    bool              dynamicalStop, sensorValuesFalling;
+    bool                 dynamicalStop, sensorValuesFalling;
     float                deltaDeltaNorm, deltaDelta, performanceFactor, c_perform;
     signed int           valueCounter;
     long                 lastCycleTime;
@@ -43,14 +43,14 @@ protected:
 
 
     Servo                theServo;
-    unsigned char        servo_pin;
+    unsigned int         servo_pin;
     unsigned int         startPosition, targetPosition;
     unsigned int         minPosition, maxPosition, parkPosition;
 
     
 public:
     
-    CCServoDevice(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
+    CCServoDevice(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition);
     ~CCServoDevice();
 
 
@@ -59,16 +59,16 @@ public:
     void enableDevice();
     void disableDevice();
     
-    infoCode reviewValues(CCTask* nextTask);
+    deviceInfoCode reviewValues(CCTask* nextTask);
     void prepareNextTask();
-    void prepareTask(CCTask* nextTask);
+    deviceInfoCode prepareTask(CCTask* nextTask);
     void startTask();
     void operateTask();
     void initiateStop();
     void stopTask();
     void finishTask();
     
-    void getReadOut(unsigned char theReadOut);
+    void getReadOut(unsigned int theReadOut);
 
 
 };

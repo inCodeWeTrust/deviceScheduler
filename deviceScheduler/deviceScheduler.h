@@ -9,10 +9,18 @@
 #ifndef __deviceScheduler__deviceScheduler__
 #define __deviceScheduler__deviceScheduler__
 
-#ifndef ARDUINO_SIMULATION
+
+//  #define ARDUINO_SIMULATION
+
+#ifdef ARDUINO_SIMULATION
+#include "SIMPatchRunner.h"
+static serialViewer Serial;
+#else
 #include <Arduino.h>
 #include <avr/pgmspace.h>
 #endif
+
+
 
 
 //  ################## verbosity: #############################################################################
@@ -32,31 +40,32 @@
 //  -------------------------------------------------------------------------------------------------------------
 
 
-#define SCHEDULER_VERBOSE           0x13
+#define SCHEDULER_VERBOSE           0x10
 #define DEVICE_VERBOSE              0x00
 #define SERVO_VERBOSE               0x00
 #define SERVO_CROSS_VERBOSE         0x00
-#define STEPPER_VERBOSE             0x07
+#define STEPPER_VERBOSE             0x00
 #define STEPPER_A4988_VERBOSE       0x00
-#define STEPPER_TMC260_VERBOSE      0x07
+#define STEPPER_TMC260_VERBOSE      0x00
 #define DCCONTROLLER_VERBOSE        0x00
 #define DCCONTROLLER_FULL_VERBOSE   0x00
 
 #define CONTROLBUTTON_VERBOSE       0x00
+#define CONTROLSENSOR_VERBOSE       0x00
 
-#define WORKFLOW_VERBOSE            0x03
-#define DEVICEFLOW_VERBOSE          0x03
-#define TASK_VERBOSE                0x03
+#define WORKFLOW_VERBOSE            0x00
+#define DEVICEFLOW_VERBOSE          0x00
+#define TASK_VERBOSE                0x00
 
-#define FLOWCONTROL_VERBOSE         0x03
-#define ACTION_VERBOSE              0x03
+#define FLOWCONTROL_VERBOSE         0x00
+#define ACTION_VERBOSE              0x00
 
 
 
 
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################
 
-typedef signed char schedulerDevice, schedulerControlButton, schedulerWorkflow, schedulerDeviceflow, scheduledTask;
+//typedef signed int schedulerDevice, unsigned int, schedulerWorkflow, schedulerDeviceflow, unsigned int;
 
 //  device type
 enum deviceType {
@@ -65,15 +74,22 @@ enum deviceType {
     DCCONTROLLERDEVICE
 };
 
+//  control type
+enum controlType {
+    BUTTON,
+    SENSOR
+};
+
 
 // start/stopEvent:
 enum event {
     NONE,
     DATE,
-    BUTTON,
+    CONTROL,
     FOLLOW,
+    FOLLOW_ME,
     POSITION,
-    CONTROLBUTTON
+    MY_POSITION,
 };
 
 
@@ -88,13 +104,11 @@ enum deviceState {
 
 //  device action:
 enum deviceAction {
-    BREAK_LOOP = -1,
+    BREAK_LOOP_ACTION = -1,
     DO_NOTHING = 0,
-    START_NEXT_TASK,
-    STOP_TASK_AND_SWITCH,
-    STOP_TASK,
-    STOP_TASK_SHARP_AND_SWITCH,
-    STOP_TASK_SHARP
+    TASK_START_ACTION,
+    TASK_SWITCH_ACTION,
+    TASK_STOP_ACTION
 };
 
 //  stop mode:
@@ -103,12 +117,26 @@ enum stoppingMode {
     STOP_NORMAL,
     STOP_DYNAMIC
 };
+//  switch mode:
+enum switchingMode {
+    NO_SWITCHING,
+    SWITCH_PROMPTLY,
+    SWITCH_AFTER_COMPLETION
+};
 
 //  position reset mode:
 enum positionResetMode {
     NO_RESET,
     RESET_ON_START,
-    RESET_ON_COMPLETION,
+    RESET_ON_COMPLETION
+};
+
+//  mode of comparing sensor values
+enum comparingMode {
+    IS,
+    IS_NOT,
+    IS_GREATER_THEN,
+    IS_SMALLER_THEN
 };
 
 //  notification code:
@@ -118,7 +146,7 @@ enum notificationCode {
 };
 
 //  workflow info code:
-enum infoCode {
+enum workflowInfoCode {
     WORKFLOW_CANCELED_ON_ERROR = -0x66,
     WORKFLOW_CANCELED_ON_ENDBUTTON_REACHED = -0x42,
     WORKFLOW_CANCELED_ON_BUTTON_NOT_REACHED = -0x41,
@@ -132,6 +160,19 @@ enum infoCode {
     SONGENDBUTTON_PRESSED =0x12,
     BUTTON_NOT_REACHED = 0x21,
     ENDBUTTON_REACHED = 0x22,
+};
+//  device info code:
+enum deviceInfoCode {
+    DEVICE_PARAMETER_ERROR = -0x44,
+    DISPOSE_THIS_TASK = -0x08,
+    DELAY_THIS_TASK = -0x06,
+    DEVICE_OK = 0x00,
+    TASK_PREPARATION_OK = 0x04,
+    TASK_START_OK = 0x05,
+    TASK_DISPOSED = 0x06,
+    TASK_DELAYED = 0x07,
+    TASK_STOP_OK = 0x08,
+    ALL_TASKS_DONE = 0x0F
 };
 
 //  appriximation mode:
@@ -197,7 +238,7 @@ enum approximationMode {
 /// @section registerTask Registering Tasks
 /// Zu diesen Geräten des Schedulers können nun beliebig viele Aufgaben hinzugefügt werden. Für die Aufgaben existiert eine Klasse mit dem Namen CCTask. Die Klasse CCDevice enthält ein Aufgaben-Array mit dem Namen @c task. Die Eintragung von Aufgaben in dieses Array bewerkstelligt die Funktion @c addTask(...) des jeweiligen Gerätes: Übergeben werden sämtliche Parameter dieser Aufgabe:
 /// @code{.cpp}
-/// scheduledTask lowerHeadForCutting = cuttingProcess->device[liftServo]->addTask(CUTING_POSITION, SPEED_SLOW, ACCELERATION_NORMAL, DECELERATION_SLOW);
+/// unsigned int lowerHeadForCutting = cuttingProcess->device[liftServo]->addTask(CUTING_POSITION, SPEED_SLOW, ACCELERATION_NORMAL, DECELERATION_SLOW);
 /// @endcode
 /// Dem Gerät @c liftServo wird eine neue Aufgabe hinzugefügt: Fahre zur Position @c CUTTING_POSITION mit der Geschwindigkeit @c SPEED_SLOW, der Beschleunigung @c ACCELERATION_NORMAL bzw. @c DECELERATION_SLOW. Die Aufgabe startet ohne Startverzögerung.
 /// Rückgabewert dieser Funktion ist wiederum der Index dieser Aufgabe im Aufgaben-Array, mit dem diese Aufgabe eindeutig identifiziert ist. Dieser Wert wird wiederum in einer aussagekräftigen Variable gespeichert, damit sie später leicht angesprochen werden kann. <br>
@@ -223,15 +264,15 @@ enum approximationMode {
 /// Die Aufgabe "lowerHeadForCutting" wird entsprechend der Sensorwerte des Distanzsensors im Schneidekopf dynamisch gestoppt. Die Fahrgeschwindigkeit wird entsprechend der Sensorwerte geregelt. <br>
 /// Die implementierten Methoden sind:
 /// - @code startByDate(...) @endcode
-/// - @code startByButton(...) @endcode
+/// - @code startByControl(...) @endcode
 /// - @code startAfterCompletionOf(...) @endcode
 /// - @code startByTriggerpositionOf(...) @endcode
 /// - @code switchToNextTaskByDate(...) @endcode
-/// - @code switchToNextTaskByButton(...) @endcode
+/// - @code switchToNextTaskByControl(...) @endcode
 /// - @code switchToNextTaskAfterCompletionOf(...) @endcode
 /// - @code switchToNextTaskByTriggerpositionOf(...) @endcode
 /// - @code stopByTimeout(...) @endcode
-/// - @code stopByButton(...) @endcode
+/// - @code stopByControl(...) @endcode
 /// - @code stopAfterCompletionOf(...) @endcode
 /// - @code stopByTriggerpositionOf(...) @endcode
 /// - @code stopDynamicallyBySensor(...) @endcode
@@ -239,11 +280,11 @@ enum approximationMode {
 /// @section registerActions Registering Action Buttons
 /// Zu dem Scheduler können nun noch beliebig viele Bedienungselemente hinzugefügt werden. Mittels dieser Schalter kann die Abarbeitung der Aufgaben manipuliert werden. Aufgaben können  gestoppt, übersprungen oder wiederholt werden. In der Klasse CCDeviceScheduler existiert ein Array der Klasse CCControlButton. Dort werden die Schalter eingetragen:
 /// @code{.cpp}
-/// schedulerControlButton songEndButton = cuttingProcess->addControlButton(SONG_END_BUTTON_NAME, SONG_END_PIN, SONG_END_ACTIV);
+/// unsigned int songEndButton = cuttingProcess->addControlButton(SONG_END_BUTTON_NAME, SONG_END_PIN, SONG_END_ACTIV);
 /// @endcode
 /// Jedes Element dieser Klasse enthält ein Array von @c actions, die das Stoppen, Überspringen oder Wiederholen von Aufgaben veranlassen. Die Eintragung dieser @c actions bewerkstelligt die Funktion @c evokeJumpToNextTask(...) bzw. @c evokeJumpToTask(...). Übergeben werden sämtliche Parameter dieser Aufgabe:
 /// @code{.cpp}
-/// cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, STOP_TASK_AND_SWITCH, makeEndGroove);
+/// cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, TASK_STOP_ACTION_IMMEDIATELY_AND_SWITCH, makeEndGroove);
 /// @endcode
 /// Die Aufgabe @c makeMainGroove des Schneideschlittenantriebs @c catStepper, also der Schneideprozess, soll abgebrochen werden, wenn der aufzunehmende Song bereits vor dem Ablauf der eingestellten Aufnahmedauer zu ende ist. Dies wird mit dem Schalter @c songEndButton signalisiert. Der Schneideschlittenantrieb soll dann die Aufgabe @c makeMainGroove beenden und direkt zur Aufgabe @c makeEndGroove wechseln, also übergangslos zu der Geschwindigkeit beschleunigen, die zum Schneiden der Endrille notwendig ist. <br>
 /// Die implementierten Methoden sind:

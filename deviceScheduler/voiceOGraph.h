@@ -81,7 +81,7 @@
 
 
 
-
+#define SOME_VALUE   0
 
 
 //  ################## Hardware Cutting Parameters #########################################################
@@ -216,14 +216,14 @@
 #define VACCUUMCLEANER_NAME                     "vacuumCleaner"
 
 #define VACCUUMCLEANER_PIN                      21
-#define VACCUUMCLEANER_ACTIV                    HIGH
+#define VACCUUMCLEANER_ACTIVE                    HIGH
 
 
 
 #define CONTROLLER_LAMP_YELLOW_NAME             "yellowLamp"
 
 #define CONTROLLER_LAMP_YELLOW_PIN              35
-//#define CONTROLLER_LAMP_YELLOW_ACTIV            LOW
+//#define CONTROLLER_LAMP_YELLOW_ACTIVE            LOW
 #define CONTROLLER_LAMP_YELLOW_ON               HIGH
 #define CONTROLLER_LAMP_YELLOW_OFF              LOW
 
@@ -232,8 +232,8 @@
 #define CONTROLLER_LAMP_RED_NAME                "redLamp"
 
 #define CONTROLLER_LAMP_RED_PIN                 37
-//#define CONTROLLER_LAMP_RED_ACTIV               LOW
-#define CONTROLLER_LAMP_RED_ACTIV               HIGH
+//#define CONTROLLER_LAMP_RED_ACTIVE               LOW
+#define CONTROLLER_LAMP_RED_ACTIVE               HIGH
 
 
 
@@ -242,44 +242,44 @@
 
 #define SONG_ENDBUTTON_NAME                 "songEndButton"
 #define SONG_ENDBUTTON_PIN                  48
-#define SONG_ENDBUTTON_ACTIV                LOW
 #define SONG_ENDBUTTON_PULLUP               true
+#define SONG_ENDBUTTON_PRESSED              LOW
 
 #define SONG_CANCELBUTTON_NAME              "songCancelButton"
 #define SONG_CANCELBUTTON_PIN               46
-#define SONG_CANCELBUTTON_ACTIV             LOW
 #define SONG_CANCELBUTTON_PULLUP            true
+#define SONG_CANCELBUTTON_PRESSED           LOW
 
 #define CAT_PARKBUTTON_NAME                 "bridgeParkButton"
 #define CAT_PARKBUTTON_PIN                  53
-#define CAT_PARKBUTTON_ACTIV                HIGH
-#define CAT_PARKBUTTON_PULLUP               true
+// for real running: #define CAT_PARKBUTTON_PULLUP               true
+#define CAT_PARKBUTTON_PULLUP               false
+#define CAT_PARKBUTTON_REACHED              HIGH
 
 #define CAT_ENDBUTTON_NAME                  "bridgeEndButton"
 #define CAT_ENDBUTTON_PIN                   51
-#define CAT_ENDBUTTON_ACTIV                 HIGH
 #define CAT_ENDBUTTON_PULLUP                true
+#define CAT_ENDBUTTON_REACHED               HIGH
 
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-#define RECORDAVAILABLE_BUTTON_ACTIV        LOW
-#define RECORDAVAILABLE_BUTTON_PULLUP       true
-
-#define RECORDNOTAVAILABLE_BUTTON_NAME      "recordNotAvailableButton"
-#define RECORDNOTAVAILABLE_BUTTON_ACTIV     HIGH
+// for real running: #define RECORDAVAILABLE_BUTTON_PULLUP       true
+#define RECORDAVAILABLE_BUTTON_PULLUP       false
+// for real running: #define RECORD_IS_AVAILABLE                 LOW
+#define RECORD_IS_AVAILABLE                 HIGH
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
 #define STOCKBOTTOM_BUTTON_PIN              47
-//#define STOCKBOTTOM_BUTTON_ACTIV            HIGH
-#define STOCKBOTTOM_BUTTON_ACTIV            LOW
 #define STOCKBOTTOM_BUTTON_PULLUP           true
+//#define STOCKBOTTOM_BUTTON_ACTIVE            HIGH
+#define STOCKBOTTOM_BUTTON_IS_REACHED       LOW
 
 #define STOCKTOP_BUTTON_NAME                "stockTopButton"
 #define STOCKTOP_BUTTON_PIN                 45
-//#define STOCKTOP_BUTTON_ACTIV               HIGH
-#define STOCKTOP_BUTTON_ACTIV               LOW
 #define STOCKTOP_BUTTON_PULLUP              true
+//#define STOCKTOP_BUTTON_ACTIVE               HIGH
+#define STOCKTOP_BUTTON_IS_REACHED          LOW
 
 
 
@@ -294,8 +294,9 @@
 #define LOADING_BUTTON                      A7
 
 
-#define HEAD_INCLINATION_SENSOR             A8
-
+#define HEAD_INCLINATION_SENSOR_NAME        "headInclinationSensor"
+// for real running: #define HEAD_INCLINATION_SENSOR_PIN         A8
+#define HEAD_INCLINATION_SENSOR_PIN         A4
 
 
 

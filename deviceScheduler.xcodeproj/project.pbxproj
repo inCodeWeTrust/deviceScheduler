@@ -680,6 +680,10 @@
 		40A4E8281CB7DA49000DE9DD /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html.documentation; path = index.html; sourceTree = "<group>"; };
 		40ABDFB81CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStepperDevice_TMC260.cpp; sourceTree = "<group>"; };
 		40ABDFBA1CC0F2690021BE21 /* CCStepperDevice_TMC260.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice_TMC260.h; sourceTree = "<group>"; };
+		40B211301DD914D800BD41BC /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
+		40B211311DD914D900BD41BC /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
+		40B211321DD914D900BD41BC /* CCControlSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlSensor.cpp; sourceTree = "<group>"; };
+		40B211331DD914D900BD41BC /* CCControlSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlSensor.h; sourceTree = "<group>"; };
 		40B3F88D1CC045F600443547 /* CCStepperDevice_A4988.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice_A4988.h; sourceTree = "<group>"; };
 		40B3F88E1CC045F600443547 /* CCStepperDevice_A4988.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStepperDevice_A4988.cpp; sourceTree = "<group>"; };
 		40C3C0AE1CFE298A001B4B4E /* CCServoDevice_cross.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCServoDevice_cross.cpp; sourceTree = "<group>"; };
@@ -745,8 +749,6 @@
 		A45F72831B1C71EB00B5B7E0 /* CCStepperDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCStepperDevice.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		A45F72841B1C71EB00B5B7E0 /* CCStepperDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice.h; sourceTree = "<group>"; };
 		A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceOGraph.h; sourceTree = "<group>"; };
-		A46035761D9B0B3F005CF1B4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		A46035781D9B0B3F005CF1B4 /* SIMULATE.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SIMULATE.1; sourceTree = "<group>"; };
 		A475640F1CAAF90100902319 /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		A47564101CAAF90100902319 /* Funktionsweise.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = Funktionsweise.md; sourceTree = "<group>"; };
 		A47564121CAAF90100902319 /* howItWorks_old.dox */ = {isa = PBXFileReference; lastKnownFileType = text; path = howItWorks_old.dox; sourceTree = "<group>"; };
@@ -1544,11 +1546,27 @@
 			path = "MeisterStueckwerk - html";
 			sourceTree = "<group>";
 		};
+		40B211341DD9152200BD41BC /* scheduling */ = {
+			isa = PBXGroup;
+			children = (
+				A4EB61831D129369000762B0 /* CCWorkflow.h */,
+				A4EB61821D129369000762B0 /* CCWorkflow.cpp */,
+				A4EB61861D12B6F6000762B0 /* CCDeviceFlow.h */,
+				A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */,
+				A48C24721C3E674600EB3EFA /* CCTask.h */,
+				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
+				A4ADAFEC1D3531AE006C8B3B /* CCFlowControl.h */,
+				A4ADAFEB1D3531AE006C8B3B /* CCFlowControl.cpp */,
+				A4ADAFE91D31BA1A006C8B3B /* CCAction.h */,
+				A4ADAFE81D31BA1A006C8B3B /* CCAction.cpp */,
+			);
+			name = scheduling;
+			sourceTree = "<group>";
+		};
 		A45F72071B1C70E400B5B7E0 = {
 			isa = PBXGroup;
 			children = (
 				A45F721B1B1C70E400B5B7E0 /* deviceScheduler */,
-				A46035751D9B0B3F005CF1B4 /* SIMULATE */,
 				A45F721A1B1C70E400B5B7E0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1564,25 +1582,16 @@
 		A45F721B1B1C70E400B5B7E0 /* deviceScheduler */ = {
 			isa = PBXGroup;
 			children = (
+				A4EB61881D12BAA0000762B0 /* devices */,
+				40B211341DD9152200BD41BC /* scheduling */,
+				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
+				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
+				40A4E81F1D00C93D00409B20 /* deviceScheduler.h */,
+				A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */,
+				A45F72541B1C70E400B5B7E0 /* voiceOGraph.ino */,
 				A45F721C1B1C70E400B5B7E0 /* main.cpp */,
 				A45F721E1B1C70E400B5B7E0 /* Makefile */,
 				A45F72421B1C70E400B5B7E0 /* ReadMe.txt */,
-				A45F72851B1C71EB00B5B7E0 /* voiceOGraph.h */,
-				A45F72541B1C70E400B5B7E0 /* voiceOGraph.ino */,
-				40A4E81F1D00C93D00409B20 /* deviceScheduler.h */,
-				A45F727E1B1C71EB00B5B7E0 /* CCDeviceScheduler.h */,
-				A45F727D1B1C71EB00B5B7E0 /* CCDeviceScheduler.cpp */,
-				A4EB61881D12BAA0000762B0 /* devices */,
-				A4EB61831D129369000762B0 /* CCWorkflow.h */,
-				A4EB61821D129369000762B0 /* CCWorkflow.cpp */,
-				A4EB61861D12B6F6000762B0 /* CCDeviceFlow.h */,
-				A4EB61851D12B6F6000762B0 /* CCDeviceFlow.cpp */,
-				A48C24721C3E674600EB3EFA /* CCTask.h */,
-				A48C24711C3E674600EB3EFA /* CCTask.cpp */,
-				A4ADAFEC1D3531AE006C8B3B /* CCFlowControl.h */,
-				A4ADAFEB1D3531AE006C8B3B /* CCFlowControl.cpp */,
-				A4ADAFE91D31BA1A006C8B3B /* CCAction.h */,
-				A4ADAFE81D31BA1A006C8B3B /* CCAction.cpp */,
 				A475640E1CAAF90100902319 /* Documentation */,
 				A45F72201B1C70E400B5B7E0 /* Sketchbook */,
 				AAAA150601125914AA000000 /* Resources */,
@@ -1672,15 +1681,6 @@
 				A45F72531B1C70E400B5B7E0 /* clupload_osx.sh */,
 			);
 			name = Utilities;
-			sourceTree = "<group>";
-		};
-		A46035751D9B0B3F005CF1B4 /* SIMULATE */ = {
-			isa = PBXGroup;
-			children = (
-				A46035761D9B0B3F005CF1B4 /* main.cpp */,
-				A46035781D9B0B3F005CF1B4 /* SIMULATE.1 */,
-			);
-			path = SIMULATE;
 			sourceTree = "<group>";
 		};
 		A475640E1CAAF90100902319 /* Documentation */ = {
@@ -1874,8 +1874,12 @@
 				A442495B1C9AD1E600C3E457 /* CCDcControllerDevice.cpp */,
 				A4ADAFD11D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.h */,
 				A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */,
+				40B211311DD914D900BD41BC /* CCControl.h */,
+				40B211301DD914D800BD41BC /* CCControl.cpp */,
 				40253D951CAF2136008A99E5 /* CCControlButton.h */,
 				40253D941CAF2136008A99E5 /* CCControlButton.cpp */,
+				40B211331DD914D900BD41BC /* CCControlSensor.h */,
+				40B211321DD914D900BD41BC /* CCControlSensor.cpp */,
 			);
 			name = devices;
 			sourceTree = "<group>";

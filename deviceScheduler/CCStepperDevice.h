@@ -27,7 +27,7 @@
 class CCStepperDevice : public CCDevice {
 
 public:
-    CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation);
+    CCStepperDevice(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation);
     virtual ~CCStepperDevice();
     
     
@@ -36,8 +36,8 @@ public:
     void enableDevice();
     void disableDevice();
     
-    infoCode reviewValues(CCTask* nextTask);
-    void prepareTask(CCTask* nextTask);
+    deviceInfoCode reviewValues(CCTask* nextTask);
+    deviceInfoCode prepareTask(CCTask* nextTask);
     void prepareNextTask();
     void startTask();
     void operateTask();
@@ -45,7 +45,7 @@ public:
     void stopTask();
     void finishTask();
 
-    virtual void getReadOut(unsigned char theReadOut) = 0;
+    virtual void getReadOut(unsigned int theReadOut) = 0;
     
     
 protected:
@@ -59,7 +59,7 @@ protected:
     signed long          t0;
     unsigned long        stepExpiration, elapsedTime, lastStepTime;
     float                c0_acc, c0_dec, c1, acceleration_inv, deceleration_inv;
-    unsigned char        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
+    unsigned int        microSteppingMode;       // 0: none, 1: halfStep, 2: quarterStep, 3: eigthStep, 4: sixteenthStep
     unsigned int         *steppingUnit;
     float                stepsPerDegree, degreesPerMicroStep;
     unsigned long        currentMicroStep;
@@ -70,11 +70,11 @@ protected:
     void                 kickUp();
     
     virtual void         setupMicroSteppingMode() = 0;
-    virtual void         setupMicroSteppingMode(unsigned char data) = 0;
+    virtual void         setupMicroSteppingMode(unsigned int data) = 0;
     
     
-    unsigned char        dir_pin, step_pin, enable_pin;
-    unsigned char        highestSteppingMode;
+    unsigned int        dir_pin, step_pin, enable_pin;
+    unsigned int        highestSteppingMode;
     unsigned int         stepsPerRotation;
     int                  acceleration_max;
     

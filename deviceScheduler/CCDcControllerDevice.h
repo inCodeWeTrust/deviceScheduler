@@ -31,7 +31,8 @@ class CCDcControllerDevice : public CCDevice {
     
 protected:
     
-    unsigned char        switching_pin, switchingPin_activ;
+    unsigned int        switching_pin;
+    bool                switchingPin_active;
     
     // target: dutycycle [0 ... 1.0]
     // velocity: pwm frequency [Hz]
@@ -66,7 +67,7 @@ protected:
     signed long          switchOffTime;
     
     /// Variable is @c true when switched on, @c false when switched off.
-    bool              isActiv;
+    bool              isActive;
     
     /// The initial rate of duty cycle, when the task is switched, like v0.
     float                currentRatio;
@@ -83,7 +84,7 @@ protected:
     
 public:
     
-    CCDcControllerDevice(String deviceName, unsigned char switching_pin, bool switchingPin_activ);
+    CCDcControllerDevice(String deviceName, unsigned int switching_pin, bool switchingPin_active);
     ~CCDcControllerDevice();
     
     
@@ -92,16 +93,16 @@ public:
     void enableDevice();
     void disableDevice();
     
-    infoCode reviewValues(CCTask* nextTask);
+    deviceInfoCode reviewValues(CCTask* nextTask);
     void prepareNextTask();
-    void prepareTask(CCTask* nextTask);
+    deviceInfoCode prepareTask(CCTask* nextTask);
     void startTask();
     void operateTask();
     void initiateStop();
     void stopTask();
     void finishTask();
     
-    void getReadOut(unsigned char theReadOut);
+    void getReadOut(unsigned int theReadOut);
     
 };
 

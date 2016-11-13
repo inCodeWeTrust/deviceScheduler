@@ -1,5 +1,5 @@
 //
-//  CCControlButton.cpp
+//  CCControlSensor.cpp
 //  deviceScheduler
 //
 //  Created by Little Abakus on 01.04.16.
@@ -7,46 +7,39 @@
 //
 
 
-#include "CCControlButton.h"
+#include "CCControlSensor.h"
 
 
 
-CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, unsigned int pin, bool pullup) {
+CCControlSensor::CCControlSensor(unsigned int controlIndex, String controlName, unsigned int pin) {
     
     this->controlIndex = controlIndex;
     this->controlName = controlName;
-    this->type = BUTTON;
+    this->type = SENSOR;
     this->pin = pin;
-    this->pullup = pullup;
-    
-    if (pullup) {
-        pinMode(pin, INPUT_PULLUP);
-    } else {
-        pinMode(pin, INPUT);
-    }
     
     //    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
     //    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
     
-    countOfActions = 0;
+//    countOfActions = 0;
+
     
-    
-    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCControlButton]: setup "));
+    if (CONTROLSENSOR_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCControlSensor]: setup "));
         Serial.print(controlName);
         Serial.print(F(", pin: "));
         Serial.print(pin);
-        Serial.print(F(", pullup: "));
-        Serial.print(pullup);
         if (CONTROLBUTTON_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.println((long)this, HEX);
+        } else {
+            Serial.println();
         }
     }    
 }
-CCControlButton::~CCControlButton() {
-    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCControlButton]: button "));
+CCControlSensor::~CCControlSensor() {
+    if (CONTROLSENSOR_VERBOSE & BASICOUTPUT) {
+        Serial.print(F("[CCControlSensor]: sensor "));
         Serial.print(controlName);
         Serial.println(F(" destructed"));
     }
@@ -54,9 +47,9 @@ CCControlButton::~CCControlButton() {
 
 
 
-
-void CCControlButton::read() {
-    sensorValue = digitalRead(pin);
+void CCControlSensor::read() {
+    sensorValue = analogRead(pin);
+    sensorValue = 480;
 }
 
 

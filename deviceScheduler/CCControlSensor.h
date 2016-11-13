@@ -1,13 +1,13 @@
 //
-//  CCControlButton.h
+//  CCControlSensor.h
 //  deviceScheduler
 //
 //  Created by Little Abakus on 01.04.16.
 //  Copyright (c) 2016 Little Abakus. All rights reserved.
 //
 
-#ifndef __deviceScheduler__CCControlButton__
-#define __deviceScheduler__CCControlButton__
+#ifndef __deviceScheduler__CCControlSensor__
+#define __deviceScheduler__CCControlSensor__
 
 
 
@@ -17,31 +17,29 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-/// @class CCControlButton
+/// @class CCControlSensor
 ///
 /// @brief Class for buttons to control the workflow
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-#define CONTROLLBUTTON_PRESSED_NOTIFICATION     "endpoint reached"
 
 
 class CCDeviceFlow;
 
-class CCControlButton : public CCControl {
+class CCControlSensor : public CCControl {
 public:
     
- 
+    
     
     void        read();
     
     
-    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned int button_pin, bool pullup);
-    ~CCControlButton();
+    CCControlSensor(unsigned int controlIndex, String controlName, unsigned int pin);
+    ~CCControlSensor();
     
-
     
 };
 
-#endif // defined(__deviceScheduler__CCControlButton__)
+#endif // defined(__deviceScheduler__CCControlSensor__)
 

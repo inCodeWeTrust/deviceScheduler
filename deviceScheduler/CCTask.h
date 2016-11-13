@@ -21,34 +21,37 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 class CCDevice;
-class CCControlButton;
+class CCControl;
 
 
 class CCTask {
 
 private:
-    scheduledTask           taskID;
     event                   startEvent;
     event                   stopEvent;
-    bool                 switchTaskPromptly;
+    switchingMode           switchTaskPromptly;
     float                   target;
     float                   velocity;
     float                   acceleration;
     float                   deceleration;
-    bool                 moveRelativ;
+    bool                    moveRelativ;
     positionResetMode       positionReset;
     unsigned long           startDelay;
     unsigned long           startTime;
     unsigned long           timeout;
-    CCControlButton*        startButton;
-    CCControlButton*        stopButton;
+    CCControl*              startControl;
+    CCControl*              stopControl;
+    comparingMode           startControlComparing;
+    comparingMode           stopControlComparing;
+    int                     startControlTarget;
+    int                     stopControlTarget;
     CCDevice*               startTriggerDevice;
-    scheduledTask           startTriggerTaskID;
+    unsigned int           startTriggerTaskID;
     signed long             startTriggerPosition;
     CCDevice*               stopTriggerDevice;
-    scheduledTask           stopTriggerTaskID;
+    unsigned int           stopTriggerTaskID;
     signed long             stopTriggerPosition;
-    unsigned char           sensor;
+    unsigned int           sensor;
     signed int              initiatePerformanceValue;
     signed int              targetValue;
     float                   stopPerformance;
@@ -63,32 +66,64 @@ private:
    
 public:
     
+    /// |              | startEvent                                           | stopEvent
+    /// | -------------|-------------------------------------------------------------------------------
+    /// | NONE         | no specific starting given                           | no specific stopping given
+    /// |              |                                                      |
+    /// | DATE         | start at a specific time                             | stop after a timeout
+    /// |              | @c startByDate()                                     | @c stopByTimeout()
+    /// |              |                                                      | @c switchToNextTaskByDate()
+    /// |              |                                                      |
+    /// | CONTROL      | start on a hardware event                            | stop on a hardware event
+    /// |              | @c startByControl()                                  | @c stopByControl()
+    /// |              |                                                      | @c switchToNextTaskByControl()
+    /// |              |                                                      |
+    /// | FOLLOW       | start when task of other device finished             | stop when task of other device finished
+    /// |              | @c startAfterCompletionOf()                          | @c stopAfterCompletionOf()
+    /// |              |                                                      | @c switchToNextTaskAfterCompletionOf()
+    /// |              |                                                      |
+    /// | FOLLOW_ME    | start when previous task finished                    |
+    /// |              | @c startAfterCompletion()                            |
+    /// |              |                                                      |
+    /// | POSITION     | start when other device reached a specific position  | stop when other device reached a specific position
+    /// |              | @c startByTriggerpositionOf()                        | @c stopByTriggerpositionOf()
+    /// |              |                                                      | @c switchToNextTaskByTriggerpositionOf()
+    /// |              |                                                      |
+    /// | MY_POSITION  |                                                      | stop when previous reached a specific position
+    /// |              |                                                      | @c stopAtPosition()
+    /// |              |                                                      | @c switchToNextTaskAtPosition()
     
-   
+    
+    
+    unsigned int           taskID;
+    
     void setStartDelay(unsigned long startDelay);
     
     void startByDate(unsigned long startTime);
-    void startByButton(CCControlButton* startButton);
+    void startByControl(CCControl* startControl, comparingMode comparing, int target);
+    void startAfterCompletion();
     void startAfterCompletionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask);
     void startByTriggerpositionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
-    void switchToNextTaskByButton(CCControlButton* switchingButton);
+    void switchToNextTaskByControl(CCControl* switchingButton, comparingMode comparing, int target);
     void switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask);
+    void switchToNextTaskAtPosition(signed long switchingTriggerPosition);
     void switchToNextTaskByTriggerpositionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
-    void stopByButton(CCControlButton* stopButton, stoppingMode stopping = STOP_NORMAL);
+    void stopByControl(CCControl* stopControl, comparingMode comparing, int target, stoppingMode stopping = STOP_NORMAL);
     void stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping);
     void stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
+    void stopAtPosition(signed long stopTriggerPosition, stoppingMode stopping);
     
-    void stopDynamicallyBySensor(unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
+    void stopDynamicallyBySensor(unsigned int sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
     
-    void stopDynamicallyBySensor_new(unsigned char sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation);
+    void stopDynamicallyBySensor_new(unsigned int sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation);
     
     
 
-    CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, scheduledTask taskID);
+    CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, unsigned int taskID);
     
     
     
@@ -98,7 +133,7 @@ public:
 
     /// Getter method for getting the target of the device
     /// @sa target;
-    scheduledTask getTaskID();
+    unsigned int getTaskID();
     
     /// Getter method for getting the target of the device
     /// @sa target;
@@ -160,14 +195,21 @@ public:
     /// @sa timeOut;
     unsigned long getTimeout();
     
-    /// Getter method for getting the startButton of the device
-    /// @sa startButton;
-    CCControlButton* getStartButton();
+    /// Getter method for getting the startControl of the device
+    /// @sa startControl;
+    CCControl* getStartControl();
     
-    /// Getter method for getting the stopButton of the device
-    /// @sa stopButton;
-    CCControlButton* getStopButton();
-  
+    /// Getter method for getting the stopControl of the device
+    /// @sa stopControl;
+    CCControl* getStopControl();
+    
+    
+    int getStartControlTarget();
+    int getStopControlTarget();
+
+    comparingMode getStartControlComparing();
+    comparingMode getStopControlComparing();
+
     /// Getter method for getting the startTriggerDevice of the device
     /// @sa startTriggerDevice;
     CCDevice* getStartTriggerDevice();
@@ -178,11 +220,11 @@ public:
     
     /// Getter method for getting the startTriggerTask of the device
     /// @sa startTriggerTask;
-    scheduledTask getStartTriggerTaskID();
+    unsigned int getStartTriggerTaskID();
     
     /// Getter method for getting the stopTriggerTask of the device
     /// @sa stopTriggerTask;
-    scheduledTask getStopTriggerTaskID();
+    unsigned int getStopTriggerTaskID();
     
     /// Getter method for getting the startTriggerPosition of the device
     /// @sa startTriggerPosition;
@@ -198,11 +240,11 @@ public:
     
     /// Getter method for getting the switchTaskPromptly bit of the device
     /// @sa switchTaskPromptly;
-    bool getSwitchTaskPromptly();
+    switchingMode getSwitchTaskPromptly();
     
     /// Getter method for getting the sensor pin of the device
     /// @sa sensor;
-    unsigned char getSensor();
+    unsigned int getSensor();
 
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
     /// @sa initiatePerformanceValue;
@@ -231,8 +273,6 @@ public:
     /// Getter method for getting the direction of the approximation value of this task
     /// @sa approximationCurve;
     bool getReversedApproximation();
-    
-    
     
 };
 

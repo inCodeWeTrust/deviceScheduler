@@ -9,7 +9,8 @@
 #include "CCDeviceFlow.h"
 
 
-CCDeviceFlow::CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) {
+CCDeviceFlow::CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration, unsigned int deviceFlowID) {
+    this->deviceFlowID = deviceFlowID;
     this->deviceFlowName = deviceFlowName;
     this->device = device;
     this->defaultVelocity = defaultVelocity;
@@ -153,11 +154,11 @@ CCTask* CCDeviceFlow::registerTask(float target, float velocity, float accelerat
 }
 
 void CCDeviceFlow::getAllTasks() {
-    for (unsigned char t = 0; t < taskPointer; t++) {
+    for (int t = 0; t < taskPointer; t++) {
         getTask(t);
     }
 }
-void CCDeviceFlow::getTask(unsigned char t) {
+void CCDeviceFlow::getTask(unsigned int t) {
     if (t < countOfTasks) {
         Serial.print(F("[CCDeviceFlow]: "));
         Serial.print(deviceFlowName);
@@ -185,11 +186,12 @@ void CCDeviceFlow::getTask(unsigned char t) {
     }
 }
 
+unsigned int CCDeviceFlow::getID() {return deviceFlowID;}
 String CCDeviceFlow::getName(){return deviceFlowName;}
-unsigned char CCDeviceFlow::getCountOfTasks(){return countOfTasks;}
-void CCDeviceFlow::setCountOfTasks(unsigned char count){countOfTasks = count;}
-unsigned char CCDeviceFlow::getTaskPointer(){return taskPointer;}
-void CCDeviceFlow::setTaskPointer(unsigned char pointer){taskPointer = pointer;}
+unsigned int CCDeviceFlow::getCountOfTasks(){return countOfTasks;}
+void CCDeviceFlow::setCountOfTasks(unsigned int count){countOfTasks = count;}
+int CCDeviceFlow::getTaskPointer(){return taskPointer;}
+void CCDeviceFlow::setTaskPointer(int pointer){taskPointer = pointer;}
 void CCDeviceFlow::increaseTaskPointer(){taskPointer++;}
 float CCDeviceFlow::getDefaultVelocity(){return defaultVelocity;}
 float CCDeviceFlow::getDefaultAcceleration(){return defaultAcceleration;}

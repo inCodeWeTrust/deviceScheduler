@@ -13,9 +13,11 @@
 
 
 
-CCFlowControl::CCFlowControl(String controlName, CCControlButton* button) {
+CCFlowControl::CCFlowControl(String controlName, CCControl* control, comparingMode comparing, int target) {
     this->controlName = controlName;
-    this->button = button;
+    this->control = control;
+    this->comparing = comparing;
+    this->target = target;
     this->countOfActions = 0;
     
     if (FLOWCONTROL_VERBOSE & BASICOUTPUT) {
@@ -48,13 +50,33 @@ CCFlowControl::~CCFlowControl() {
     }
 }
 
-CCAction* CCFlowControl::addAction(String actionName, infoCode workflowInfoCode) {
+CCAction* CCFlowControl::addAction(String actionName, workflowInfoCode workflowInfo) {
     Serial.print(F("[CCFlowControl]: add Action for "));
-    Serial.println(button->getName());
+    Serial.println(control->getName());
     
-    action[countOfActions++] = new CCAction(actionName, workflowInfoCode);
+    action[countOfActions++] = new CCAction(actionName, workflowInfo);
     return action[countOfActions - 1];
 }
 
+bool CCFlowControl::needsToFire() {
+    switch (comparing) {
+        case IS:
+            return control->is(target);
+            break;
+        case IS_NOT:
+            return control->isNot(target);
+            break;
+        case IS_GREATER_THEN:
+            return control->isGreaterThen(target);
+            break;
+        case IS_SMALLER_THEN:
+            return control->isSmallerThen(target);
+            break;
+    }
+    return control->is(target);
+}
+
+comparingMode CCFlowControl::getComparing() {return comparing;}
+int CCFlowControl::getTarget() {return target;}
 String CCFlowControl::getName(){return controlName;}
-unsigned char CCFlowControl::getCountOfActions(){return countOfActions;}
+unsigned int CCFlowControl::getCountOfActions(){return countOfActions;}

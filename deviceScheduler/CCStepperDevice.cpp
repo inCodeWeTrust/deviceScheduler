@@ -12,7 +12,7 @@ void freeRam ();
 #include "CCStepperDevice.h"
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation) {
+CCStepperDevice::CCStepperDevice(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation) {
     
     this->deviceName = deviceName;
     
@@ -44,7 +44,6 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsi
     this->currentMicroStep = 0;
     this->currentPosition = 0;
     
-    this->prepareAndStartNextTaskWhenFinished = false;
     
     if (STEPPER_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: setup stepper "));
@@ -68,18 +67,8 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned char step_pin, unsi
 }
 
 CCStepperDevice::~CCStepperDevice() {
-//    free(steppingUnit);
-    Serial.println("### start stepper constructor: ");
-    freeRam();
-
-    Serial.println("==== delete steppingUnit =====");
-    
     delete [] steppingUnit;
     steppingUnit = NULL;
-    
-    Serial.println("### finish stepper constructor: ");
-    freeRam();
-
 }
 
 void CCStepperDevice::attachDevice() {}
@@ -97,14 +86,14 @@ void CCStepperDevice::disableDevice() {
 
 
 
-infoCode CCStepperDevice::reviewValues(CCTask* nextTask) {
+deviceInfoCode CCStepperDevice::reviewValues(CCTask* nextTask) {
     if (STEPPER_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(" review values/calculate steps for given angle... "));
     }
-    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getVelocity() == 0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return DEVICE_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
 
     
@@ -118,29 +107,42 @@ infoCode CCStepperDevice::reviewValues(CCTask* nextTask) {
     if (STEPPER_VERBOSE & BASICOUTPUT) {
         Serial.println(F("   done"));
     }
-    return EVERYTHING_OK;
+    return DEVICE_OK;
 }
 
 void CCStepperDevice::prepareNextTask() {}
-void CCStepperDevice::prepareTask(CCTask* nextTask) {
-
+deviceInfoCode CCStepperDevice::prepareTask(CCTask* nextTask) {
+    
 //    unsigned long t_prepTask = micros();
 //    unsigned long t_stop, t_sum = 0;
 
     if (state == MOVING) {
         if (switchTaskPromptly) {
             if ((nextTask->getTarget() > currentPosition) == directionDown) {             // XOR: when switching to move in different direction
-                    pendingTask = nextTask;
-                    prepareAndStartNextTaskWhenFinished = true;
-                    initiateStop();
-                    return;
+                
+                if (STEPPER_VERBOSE & BASICOUTPUT) {
+                    Serial.print(F("[CCStepperDevice]: "));
+                    Serial.print(deviceName);
+                    Serial.print(F(": dispose task "));
+                    Serial.print(nextTask->getTaskID());
+                    Serial.println(F(": need to slow down first"));
                 }
+                
+                return DISPOSE_THIS_TASK;
+            }
         }
         
-        if (currentMicroStep & 0x0f) {
-            pendingTask = nextTask;
-            switchAtNextFullStep = true;
-            return;
+        if (currentMicroStep & ((1 << highestSteppingMode) - 1)) {
+            
+            if (STEPPER_VERBOSE & BASICOUTPUT) {
+                Serial.print(F("[CCStepperDevice]: "));
+                Serial.print(deviceName);
+                Serial.print(F(": delay task "));
+                Serial.print(nextTask->getTaskID());
+                Serial.println(F(": need to wait for next fullstep"));
+            }
+
+            return DELAY_THIS_TASK;
         }
         // *** current velocity ***
         if (currentMicroStep < microStepsForAcceleration) {
@@ -179,18 +181,11 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
     startDelay = nextTask->getStartDelay();
     startTime = nextTask->getStartTime();
     timeout = nextTask->getTimeout();
-//    startButton = nextTask->getStartButton();
-//    stopButton = nextTask->getStopButton();
-//    startTriggerDevice = nextTask->getStartTriggerDevice();
-//    startTriggerTaskID = nextTask->getStartTriggerTaskID();
-//    startTriggerPosition = nextTask->getStartTriggerPosition();
-//    stopTriggerDevice = nextTask->getStopTriggerDevice();
-//    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
-//    stopTriggerPosition = nextTask->getStopTriggerPosition();
     switchTaskPromptly = nextTask->getSwitchTaskPromptly();
     stopping = nextTask->getStopping();
     
     //    this takes ca 24us
+
 
     
     if (positionReset == RESET_ON_START) {
@@ -225,7 +220,7 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
     // v * v = 2 * a * n
     // ==> v * v = 2 * a * n ==> n = v * v / (2 * a)
     stepsForDeceleration = (unsigned long)(veloBySquare / deceleration) >> 1;
-    stepsForDeceleration = max(stepsForDeceleration, 1);
+    stepsForDeceleration = fmax(stepsForDeceleration, 1);
     
     //    this takes ca 40us
     
@@ -241,7 +236,7 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
     else {
         stepsForAcceleration = (unsigned long)((veloBySquare - currVeloBySquare) / acceleration) >> 1;
     }
-    stepsForAcceleration = max(stepsForAcceleration, 1);
+    stepsForAcceleration = fmax(stepsForAcceleration, 1);
     
     //    this takes ca 60us
     
@@ -364,14 +359,19 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
 
    }
     
-    if (STEPPER_VERBOSE & CALCULATIONDEBUG) {
+    if (STEPPER_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice]: "));
         Serial.print(deviceName);
-        Serial.print(F(": prepareing... "));
+        Serial.print(F(": praparing... "));
         Serial.print(F("currentPosition: "));
         Serial.print(currentPosition);
         Serial.print(F(", target: "));
-        Serial.print(this->target);
+        Serial.println(this->target);
+    }
+    if (STEPPER_VERBOSE & CALCULATIONDEBUG) {
+        Serial.print(F("[CCStepperDevice]: "));
+        Serial.print(deviceName);
+        Serial.print(F(": praparing... "));
         Serial.print(F(", stepsToGo: "));
         Serial.print(this->stepsToGo);
         Serial.print(F(" ("));
@@ -395,7 +395,7 @@ void CCStepperDevice::prepareTask(CCTask* nextTask) {
         Serial.print(F(", deceleration: "));
         Serial.println(this->deceleration);
     }
-
+    return DEVICE_OK;
 }
 
 
@@ -432,7 +432,7 @@ void CCStepperDevice::initiateStop() {                              // irregular
                                                                     // stop acceleration immediately and decelerate symmetrical
         // what is my speed?
         // v * v [steps/s] = 2 * a * steps = 2 * a * microStep / microStepsPerFullStep
-        veloBySquare = 2 * abs(acceleration) * currentMicroStep / (1 << highestSteppingMode);
+        veloBySquare = 2.0 * fabs(acceleration) * currentMicroStep / (1 << highestSteppingMode);
         velocity = sqrt(veloBySquare);
         
         // do deceleration symetrical to acceleration: take same amount of microSteps for deceleration as used for acceleration till here
@@ -461,7 +461,7 @@ void CCStepperDevice::stopTask() {
 }
 void CCStepperDevice::finishTask() {
     state = SLEEPING;
-    
+        
     if (positionReset == RESET_ON_COMPLETION) {
         currentPosition = 0.0;
     }
@@ -481,13 +481,14 @@ void CCStepperDevice::operateTask() {
     
     elapsedTime = now - t0;
     
-    signed long timeDif = stepExpiration - elapsedTime;
+    signed long timeTillNextStep = stepExpiration - elapsedTime;                                    // timeTillNextStep > 0 time for step will come soon
+                                                                                                    // timeTillNextStep < 0 time for step already expired
     
-    if (timeDif <= 0) {
+    if (timeTillNextStep <= 0) {                                                                    // time for a step already expired?
         digitalWrite(step_pin, LOW);
         digitalWrite(step_pin, HIGH);
         
-        if (timeDif < -100) {
+        if (timeTillNextStep < -100) {
             if (currentMicroStep < microStepsToGo) {
                 digitalWrite(I_AM_LATE_LED, HIGH);
             }
@@ -556,7 +557,7 @@ void CCStepperDevice::operateTask() {
         if (currentMicroStep < microStepsToGo) {
             lastStepTime = stepExpiration;
             stepExpiration = timeForAccAndConstSpeed + (sqrt((currentMicroStep - microStepsForAccAndConstSpeed) * c0_dec + veloBySquare) - velocity) * deceleration_inv * 1000000.0;
-            
+                        
             if (stepExpiration - lastStepTime > STEPPINGPERIOD_TO_KICK_DOWN) kickDown();
             
             if (STEPPER_VERBOSE & MOVEMENTDEBUG) {
@@ -593,23 +594,7 @@ void CCStepperDevice::operateTask() {
         
         // if we didnt return up to here, we are done!
         
-        if (prepareAndStartNextTaskWhenFinished) {
-            prepareAndStartNextTaskWhenFinished = false;
-            state = SLEEPING;
-            prepareTask(pendingTask);
-            startTask();
-        }
-        else {
             stopTask();
-        }
-    }
-    else {
-        if (switchAtNextFullStep) {
-            if ((currentMicroStep & ((1 << highestSteppingMode) - 1)) == 0) {
-                prepareTask(pendingTask);
-                switchAtNextFullStep = false;
-            }
-        }
     }
 }
 

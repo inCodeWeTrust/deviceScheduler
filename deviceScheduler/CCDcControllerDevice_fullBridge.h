@@ -30,30 +30,31 @@ class CCDcControllerDevice_fullBridge : public CCDcControllerDevice {
     
 private:
     
-    unsigned char        switching_B_pin, switchingPin_B_activ;
+    unsigned int        switching_B_pin;
+    bool                switchingPin_B_active;
 
     
     /// Variable is @c true when switched on, @c false when switched off.
-    bool              isActiv_B;
+    bool              isActive_B;
 
     
     
 public:
     
-    CCDcControllerDevice_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ);
+    CCDcControllerDevice_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active);
     ~CCDcControllerDevice_fullBridge();
     
     
-    infoCode reviewValues(CCTask* nextTask);
+    deviceInfoCode reviewValues(CCTask* nextTask);
     void prepareNextTask();
-    void prepareTask(CCTask* nextTask);
+    deviceInfoCode prepareTask(CCTask* nextTask);
     void startTask();
     void operateTask();
     void initiateStop();
     void stopTask();
     void finishTask();
     
-    void getReadOut(unsigned char theReadOut);
+    void getReadOut(unsigned int theReadOut);
     
 };
 

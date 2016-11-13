@@ -26,7 +26,7 @@
 class CCServoDevice_cross : public CCServoDevice {
     
 public:
-    CCServoDevice_cross(String deviceName, unsigned char servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned char servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition);
+    CCServoDevice_cross(String deviceName, unsigned int servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned int servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition);
     ~CCServoDevice_cross();
     
     
@@ -39,7 +39,7 @@ public:
 private:
     
     Servo                secondServo;
-    unsigned char        servo_01_pin;
+    unsigned int        servo_01_pin;
     unsigned int         startPosition_01, targetPosition_01;
     unsigned int         minPosition_01, maxPosition_01;
     unsigned int         midPosition_00, midPosition_01;

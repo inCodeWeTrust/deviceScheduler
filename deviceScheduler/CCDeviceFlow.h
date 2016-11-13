@@ -22,13 +22,15 @@ private:
     
     String deviceFlowName;
 
+    unsigned int                 deviceFlowID;
+    
     /// Parameters of the device as a peer of a run-loop.
     /// Value, that holds the number of tasks to be executed within this run-loop.
-    unsigned char        countOfTasks;
+    unsigned int        countOfTasks;
     
     /// Parameters of the device as a peer of a run-loop.
     /// Value, that holds the index of the current task.
-    unsigned char        taskPointer;
+    int                 taskPointer;
     
     /// Default parameters for the device.
     /// A value for the device's default velocity is provided here.
@@ -54,7 +56,7 @@ public:
     
     
     
-    CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
+    CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration, unsigned int deviceFlowID);
     ~CCDeviceFlow();
   
     
@@ -103,7 +105,7 @@ public:
     
     /// Function lists all tasks of all registered devices.
     /// A list with all tasks and bare informations are presented.
-    void getTask(unsigned char t);
+    void getTask(unsigned int t);
     
     /// Function lists all tasks of all registered devices.
     /// A list with all tasks and bare informations are presented.
@@ -119,6 +121,7 @@ public:
 
     
     
+    unsigned int    getID();
     
     /// Getter method for getting the name of this deviceFlow
     /// @sa deviceFlowName;
@@ -138,19 +141,19 @@ public:
     
     /// Getter method for getting the number of tasks of the device
     /// @sa countOfTasks;
-    unsigned char   getCountOfTasks();
+    unsigned int   getCountOfTasks();
     
     /// Setter method for manipulating the number of tasks of the device
     /// @sa countOfTasks;
-    void            setCountOfTasks(unsigned char count);
+    void            setCountOfTasks(unsigned int count);
     
     /// Getter method for getting the taskPointer of the device
     /// @sa taskPointer;
-    unsigned char   getTaskPointer();
+    int             getTaskPointer();
     
     /// Setter method for setting the taskPointer of the device
     /// @sa taskPointer;
-    void            setTaskPointer(unsigned char pointer);
+    void            setTaskPointer(int pointer);
     
     /// Setter method for increasing the taskPointer of the device
     /// @sa taskPointer;

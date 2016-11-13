@@ -25,7 +25,9 @@
 #include "CCDcControllerDevice.h"
 #include "CCDcControllerDevice_fullBridge.h"
 
+#include "CCControl.h"
 #include "CCControlButton.h"
+#include "CCControlSensor.h"
 
 #define DEVICESCHEDULER_VERBOSE                         0x00
 
@@ -36,8 +38,18 @@
 /// @brief Scheduler engine to manage all devices and their tasks.
 ///
 /// The scheduler holds all devices and controls them by calling their startTask(), operateTask(), stopTask() etc. routines.
-/// 
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// min time for deviceLoop: 15, max time for deviceLoop: 18462
+// min time for controls: 1, max time for controls: 12
+// min time for flowControls: 1, max time for flowControls: 11
+
+// min time for deviceLoop: 14, max time for deviceLoop: 18459
+// min time for controls: 1, max time for controls: 14
+// min time for flowControls: 1, max time for flowControls: 12
 
 
 class CCDeviceScheduler {
@@ -48,8 +60,11 @@ class CCDeviceScheduler {
     
     /// Scheduler parameter:
     /// Value holds the number of devices managed by him.
-    unsigned char countOfDevices, countOfControlButtons;
+    unsigned int countOfDevices, countOfControls;
     
+    unsigned long taskTime;
+    
+    unsigned int nextTaskID[14];
 
     CCDeviceFlow* currentDeviceFlow;
     CCDeviceFlow* triggerDeviceFlow_start;
@@ -59,7 +74,7 @@ class CCDeviceScheduler {
     CCDevice* triggerDevice_start;
     CCDevice* triggerDevice_stop;
     
-    CCControlButton* currentButton;
+    CCControl* currentButton;
     CCAction* currentAction;
     CCFlowControl* currentFlowControl;
     
@@ -67,16 +82,20 @@ class CCDeviceScheduler {
     String  notificationText;
     
     
-    void handleStartEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
-    void handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
+    deviceInfoCode handleStartEvent(unsigned long taskTime, CCDevice* currentDevice);
+    deviceInfoCode handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
+    deviceInfoCode handlePreparation(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
     
     String getNameOfDeviceType(deviceType t);
     String getNameOfTaskEvent(event e);
     String getNameOfState(deviceState s);
-    String getNameOfButtonState(bool s);
+    String getNameOfControlValueComparing(comparingMode c);
+    String getNameOfBooleanState(bool s);
     String getNameOfStoppingMode(stoppingMode s);
+    String getNameOfSwitchingMode(switchingMode s);
     String getNameOfDeviceAction(deviceAction d);
-    String getLiteralOfWorkflowInfo(infoCode i);
+    String getLiteralOfWorkflowInfo(workflowInfoCode i);
+    String getLiteralOfDeviceInfo(deviceInfoCode i);
     
 
 public:
@@ -98,7 +117,7 @@ public:
     /// @param maxPosition the maximum PCM pulse width in microseconds corresponding to other end position.
     /// @param parkPosition the PCM pulse width in microseconds corresponding to the default position.
     /// @return the device index.
-    CCDevice* addServo(String deviceName, unsigned char servo_pin, int minPosition, int maxPosition, int parkPosition);
+    CCDevice* addServo(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition);
     
     /// Function adds a double-servo device to the device array and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -113,7 +132,7 @@ public:
     /// @param maxPosition_01 the maximum PCM pulse width in microseconds corresponding to other end position.
     /// @param parkPosition the PCM pulse width in microseconds corresponding to the default position of the first servo. The position of the second servo is to be calculated.
     /// @return the device index.
-    CCDevice* addServoWithCounterServo(String deviceName, unsigned char servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned char servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition);
+    CCDevice* addServoWithCounterServo(String deviceName, unsigned int servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned int servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition);
     
 
     /// Function adds a stepper device to the device array, that is driven by da driver like the A4988, and returns the index of the device.
@@ -126,7 +145,7 @@ public:
     /// @param microStep_00_pin, microStep_01_pin, microStep_02_pin the pin numbers of the micro stepping pins.
     /// @param steppingCode_00 ... steppingCode_07 the specific pin combinations for the different stepping modes.
     /// @return the device index.
-    CCDevice* addStepper_A4988(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char microStep_00_pin, unsigned char microStep_01_pin, unsigned char microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03 = -1, signed char steppingCode_04 = -1, signed char steppingCode_05 = -1, signed char steppingCode_06 = -1, signed char steppingCode_07 = -1);
+    CCDevice* addStepper_A4988(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int microStep_00_pin, unsigned int microStep_01_pin, unsigned int microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03 = -1, signed char steppingCode_04 = -1, signed char steppingCode_05 = -1, signed char steppingCode_06 = -1, signed char steppingCode_07 = -1);
     
     /// Function adds a stepper device to the device array, that is driven by da driver like the TMC260, and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -138,26 +157,26 @@ public:
     /// @param currentMax the maximum current, that is applied to the motor coils in mA RMS.
     /// @param stepsPerRotation the number of steps needed to make a full rotation.
     /// @return the device index.
-    CCDevice* addStepper_TMC260(String deviceName, unsigned char step_pin, unsigned char dir_pin, unsigned char enable_pin, unsigned int stepsPerRotation, unsigned char chipSelect_pin, unsigned int currentMax);
+    CCDevice* addStepper_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax);
     
     
     /// Function adds a switching device to the device array and returns the index of the device.
     /// A switching device is a device, that is simply switched on or off. Device-specific parameters are passed.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param switching_pin the pin number of the device's controll pin.
-    /// @param switchingPin_activ the state of the switching pin, where the device is activ.
+    /// @param switchingPin_active the state of the switching pin, where the device is active.
     /// @return the device index.
-    CCDevice* addDcController(String deviceName, unsigned char switching_pin, bool switchingPin_activ);
+    CCDevice* addDcController(String deviceName, unsigned int switching_pin, bool switchingPin_active);
 
     /// Function adds a full-bridge switching device (two channel) to the device array and returns the index of the device.
     /// A full-bridge switching device has two switching pins and a direction. Switching_A_pin is used to go froward direction, switching_b_pin for going reverse.
     /// @param deviceName the human-readable name of the device (used for verbose output).
     /// @param switching_A_pin the pin number of the device's forward controll pin.
     /// @param switching_B_pin the pin number of the device's reverse controll pin.
-    /// @param switchingPin_A_activ the state of the switching pin, where the device is activ forward.
-    /// @param switchingPin_B_activ the state of the switching pin, where the device is activ reverse.
+    /// @param switchingPin_A_active the state of the switching pin, where the device is active forward.
+    /// @param switchingPin_B_active the state of the switching pin, where the device is active reverse.
     /// @return the device index.
-    CCDevice* addDcController_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ);
+    CCDevice* addDcController_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active);
     
 
     /// Function lists all registered devices.
@@ -167,20 +186,23 @@ public:
 
     
     /// Array of all control-inputs.
-    CCControlButton *controlButton[8];
+    CCControl *control[8];
     
     /// Function adds a control button to the control button array and returns the index of the button.
     /// A control button is a input device, that can provide either a HIGH or a LOW level at a input pin or simply connect the pin and GND using the internal inputPullup-function. Specific parameters are passed.
     /// @param buttonName the human-readable name of the device (used for verbose output).
     /// @param button_pin the pin number of the button's pin.
-    /// @param buttonActiv the state of the pin, where the button should trigger actions.
-    /// @param pullup if a nonzero value is passed, the input pullup is activated.
+    /// @param buttonActive the state of the pin, where the button should trigger actions.
+    /// @param pullup if a nonzero value is passed, the input pullup is activeated.
     /// @return the button index.
-    CCControlButton* addControlButton(String buttonName, unsigned char button_pin, bool buttonActiv, bool pullup);
+    CCControl* addControlButton(String controlName, unsigned int pin, bool pullup = 0);
+ 
+    
+    CCControl* addControlSensor(String sensorName, unsigned int pin);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.
-    void listControlButtons();
+    void listControls();
     
     void evaluateButtons();
 

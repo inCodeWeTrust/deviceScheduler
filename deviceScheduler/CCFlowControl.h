@@ -10,6 +10,7 @@
 #define __deviceScheduler__CCFlowControl__
 
 #include "CCControlButton.h"
+#include "CCControlSensor.h"
 #include "CCAction.h"
 #include "deviceScheduler.h"
 
@@ -24,25 +25,29 @@ private:
     
     String              controlName;
 
-    
-    unsigned char       countOfActions;
+    comparingMode       comparing;
+    int                 target;
+    unsigned int        countOfActions;
 
     
 public:
 
-    CCControlButton*    button;
+    CCControl*          control;
     CCAction*           action[8];
     
     
     
-    CCFlowControl(String controlName, CCControlButton* button);
+    CCFlowControl(String controlName, CCControl* control, comparingMode comparing, int target);
     ~CCFlowControl();
     
-    CCAction*           addAction(String actionName, infoCode workflowInfoCode);
+    CCAction*           addAction(String actionName, workflowInfoCode workflowInfo);
+
+    bool                needsToFire();
     
-    
+    comparingMode       getComparing();
+    int                 getTarget();
     String              getName();
-    unsigned char       getCountOfActions();
+    unsigned int       getCountOfActions();
     
     
 };

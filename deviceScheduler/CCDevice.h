@@ -42,7 +42,7 @@ protected:
     /// DCCONTROLLERDEVICE  | any device to be pwm driven
     deviceType           type;
 
-    unsigned char       currentTaskID;
+    unsigned int         currentTaskID;
 
     /// Device parameter:
     /// The device's current position.
@@ -99,7 +99,7 @@ protected:
     /// ------------|-------------------------------------------------------------------------------
     /// NONE        | no specific starting given
     /// DATE        | starting at a specific time
-    /// BUTTON      | starting on a hardware event
+    /// CONTROL      | starting on a hardware event
     /// FOLLOW      | starting when an other task of an other device is just finished
     /// POSITION    | starting when an other task of an other device has reached a specific position
     event                startEvent;
@@ -111,7 +111,7 @@ protected:
     /// ------------|-------------------------------------------------------------------------------
     /// NONE        | no specific stopping given
     /// DATE        | stopping after a timeout
-    /// BUTTON      | stopping on a hardware event
+    /// CONTROL      | stopping on a hardware event
     /// FOLLOW      | stopping when an other task of an other device is just finished
     /// POSITION    | stopping when an other task of an other device has reached a specific position
     event                stopEvent;
@@ -123,7 +123,7 @@ protected:
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the timeout to stop this task (ms after the task was started).
     unsigned long        timeout;
-    
+
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the the way stopping this task, when a stopping event occures.
     /// stoppingMode         | behavior
@@ -135,11 +135,11 @@ protected:
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter indicates if any ongoing task should be completed first, before this task is started.
-    bool                 switchTaskPromptly;
+    switchingMode       switchTaskPromptly;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the pin number of a required hardware event to stop this task.
-    unsigned char        sensor;
+    unsigned int        sensor;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the numerical value of the sensor pin, required to initiate the stopping of this task.
@@ -179,11 +179,16 @@ protected:
     approximationMode   approximation;
     
     
-    CCTask* pendingTask;
-
     
      //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventTask
     
+    
+    
+    /// Parameter, related to the task controll of the current task.
+    /// If a task is switched promptly to another, the device is accelerated or decelerated to the requested speed of the new task.
+    /// If the new task runs in opposite direction, the device is decelerated til zero and accelerated in new direction till the new speed.
+    /// In this case the stopping is initiated, the @c stopEvent is cleared @c disposedTaskWaiting flag is set, 
+//    bool                disposedTaskWaiting;
     
     
 public:
@@ -198,9 +203,9 @@ public:
     virtual void enableDevice() = 0;
     virtual void disableDevice() = 0;
     
-    virtual infoCode reviewValues(CCTask* nextTask) = 0;
+    virtual deviceInfoCode reviewValues(CCTask* nextTask) = 0;
     virtual void prepareNextTask() = 0;
-    virtual void prepareTask(CCTask* nextTask) = 0;
+    virtual deviceInfoCode prepareTask(CCTask* nextTask) = 0;
     virtual void startTask() = 0;
     virtual void operateTask() = 0;
     virtual void initiateStop() = 0;
@@ -208,8 +213,9 @@ public:
     virtual void finishTask() = 0;
     
 
-    virtual void getReadOut(unsigned char theReadOut) = 0;
+    virtual void getReadOut(unsigned int theReadOut) = 0;
 
+    
     
     
     /// Getter method for getting the name of the device
@@ -221,7 +227,9 @@ public:
     deviceType getType();
     
     
-    scheduledTask getCurrentTaskID();
+    unsigned int getCurrentTaskID();
+    void setCurrentTaskID(unsigned int taskID);
+    
     
     /// Getter method for getting the current position of the device
     /// @sa currentPosition;
@@ -294,38 +302,12 @@ public:
     /// Getter method for getting the timeOut of the device
     /// @sa timeOut;
     unsigned long getTimeout();
+
+    void setTimeout(unsigned long timeout);
+
+//    bool getDisposedTaskWaiting();
+//    void setDisposedTaskWaiting(bool disposed);
     
-    //    /// Getter method for getting the startButton of the device
-    //    /// @sa startButton;
-    //    schedulerControlButton getStartButton();
-    //
-    //    /// Getter method for getting the stopButton of the device
-    //    /// @sa stopButton;
-    //    schedulerControlButton getStopButton();
-    //
-    //    /// Getter method for getting the startTriggerDevice of the device
-    //    /// @sa startTriggerDevice;
-    //    CCDevice* getStartTriggerDevice();
-    //
-    //    /// Getter method for getting the stopTriggerDevice of the device
-    //    /// @sa stopTriggerDevice;
-    //    CCDevice* getStopTriggerDevice();
-    //
-    //    /// Getter method for getting the startTriggerTask of the device
-    //    /// @sa startTriggerTask;
-    //    scheduledTask getStartTriggerTaskID();
-    //
-    //    /// Getter method for getting the stopTriggerTask of the device
-    //    /// @sa stopTriggerTask;
-    //    scheduledTask getStopTriggerTaskID();
-    //
-    //   /// Getter method for getting the startTriggerPosition of the device
-    //    /// @sa startTriggerPosition;
-    //    signed long getStartTriggerPosition();
-    //
-    //    /// Getter method for getting the stopTriggerPosition of the device
-    //    /// @sa stopTriggerPosition;
-    //    signed long getStopTriggerPosition();
     
     /// Getter method for getting the stopping of the device
     /// @sa stopping, stoppingMode;
@@ -337,15 +319,15 @@ public:
     
     /// Getter method for getting the switchTaskPromptly bit of the device
     /// @sa switchTaskPromptly;
-    bool getSwitchTaskPromptly();
+    switchingMode getSwitchTaskPromptly();
     
     /// Setter method for setting the switchTaskPromptly bit of the device
     /// @sa switchTaskPromptly;
-    void setSwitchTaskPromptly(bool switchPromptly);
+    void setSwitchTaskPromptly(switchingMode switchPromptly);
     
     /// Getter method for getting the sensor of the device
     /// @sa sensor;
-    unsigned char getSensor();
+    unsigned int getSensor();
     
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
     /// @sa initiatePerformanceValue;
@@ -383,6 +365,39 @@ public:
 #endif // defined(__deviceScheduler__CCDevice__)
 
 
+//    /// Getter method for getting the startControl of the device
+//    /// @sa startControl;
+//    CCControlButton* getStartControl();
+//
+//    /// Getter method for getting the stopControl of the device
+//    /// @sa stopControl;
+//    CCControlButton* getStopControl();
+//
+//    /// Getter method for getting the startTriggerDevice of the device
+//    /// @sa startTriggerDevice;
+//    CCDevice* getStartTriggerDevice();
+//
+//    /// Getter method for getting the stopTriggerDevice of the device
+//    /// @sa stopTriggerDevice;
+//    CCDevice* getStopTriggerDevice();
+//
+//    /// Getter method for getting the startTriggerTask of the device
+//    /// @sa startTriggerTask;
+//    unsigned int getStartTriggerTaskID();
+//
+//    /// Getter method for getting the stopTriggerTask of the device
+//    /// @sa stopTriggerTask;
+//    unsigned int getStopTriggerTaskID();
+//
+//   /// Getter method for getting the startTriggerPosition of the device
+//    /// @sa startTriggerPosition;
+//    signed long getStartTriggerPosition();
+//
+//    /// Getter method for getting the stopTriggerPosition of the device
+//    /// @sa stopTriggerPosition;
+//    signed long getStopTriggerPosition();
+
+
 
 /// \startuml
 /// class CCDevice {
@@ -393,7 +408,7 @@ public:
 ///     {abstact} void enableDevice() = 0;
 ///     {abstact} void disableDevice() = 0;
 ///
-///     {abstact} infoCode reviewValues(CCTask* nextTask) = 0;
+///     {abstact} deviceInfoCode reviewValues(CCTask* nextTask) = 0;
 ///     {abstact} void prepareNextTask() = 0;
 ///     {abstact} void prepareTask(CCTask* nextTask) = 0;
 ///     {abstact} void startTask() = 0;
@@ -405,7 +420,7 @@ public:
 ///     {abstact} void getReadOut(unsigned char theReadOut) = 0;
 ///     +String getName();
 ///     +deviceType getType();
-///     +scheduledTask getCurrentTaskID();
+///     +unsigned int getCurrentTaskID();
 ///     +float getCurrentPosition();
 ///     +void setCurrentPosition(float position);
 ///     +float getTarget();

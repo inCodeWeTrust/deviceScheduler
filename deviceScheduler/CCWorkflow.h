@@ -13,7 +13,7 @@
 #include "deviceScheduler.h"
 #include "CCDeviceFlow.h"
 #include "CCFlowControl.h"
-
+#include "CCControl.h"
 
 
 
@@ -33,19 +33,23 @@ private:
     
     /// Parameter of the workflow.
     /// Value holds the number of deviceFlows to be executed within this workflow.
-    unsigned char       countOfDeviceFlows;
-    
+    unsigned int       countOfDeviceFlows;
+
     /// Parameter of the workflow.
     /// Value holds the number of flowControls to be considered within this workflow.
-    unsigned char       countOfFlowControls;
+    unsigned int       countOfControls;
+
+    /// Parameter of the workflow.
+    /// Value holds the number of flowControls to be considered within this workflow.
+    unsigned int       countOfFlowControls;
     
 
-    infoCode            workflowInfo;
+    workflowInfoCode            workflowInfo;
 
 public:
-    CCDeviceFlow        *deviceFlow[10];
-    
-    CCFlowControl       *flowControl[6];
+    CCDeviceFlow*       deviceFlow[10];
+    CCControl*          control[6];
+    CCFlowControl*      flowControl[6];
 
     
     CCWorkflow(String name);
@@ -64,15 +68,23 @@ public:
     /// Function registers a flow-control to be considered within this workflow.
     /// It creates an instance of [CCFlowControl](@ref flowControl) and puts it into the flowControl array of the workflow.
     /// @param controlName the name of this flowControl.
-    /// @param controlButton a pointer to the related button.
+    /// @param control a pointer to the related button.
     /// @return the flowControl instance.
-    CCFlowControl* addFlowControl(String controlName, CCControlButton* controlButton);
+    CCControl* addControl(CCControl* control);
+
+    /// Function registers a flow-control to be considered within this workflow.
+    /// It creates an instance of [CCFlowControl](@ref flowControl) and puts it into the flowControl array of the workflow.
+    /// @param controlName the name of this flowControl.
+    /// @param control a pointer to the related button.
+    /// @return the flowControl instance.
+    CCFlowControl* addFlowControl(String flowControlName, CCControl* control, comparingMode comparing, int target);
 
     String getName();
-    unsigned char getCountOfDeviceFlows();
-    unsigned char getCountOfFlowControls();
-    infoCode getWorkflowInfo();
-    void setWorkflowInfo(infoCode c);
+    unsigned int getCountOfDeviceFlows();
+    unsigned int getCountOfControls();
+    unsigned int getCountOfFlowControls();
+    workflowInfoCode getWorkflowInfo();
+    void setWorkflowInfo(workflowInfoCode c);
     
 };
 

@@ -20,25 +20,30 @@ class CCDeviceFlow;
 class CCAction {
 private:
     String              actionName;
-    scheduledTask       validTaskID;
+    int                 validTaskID;
     deviceAction        targetAction;
-    scheduledTask       followingTaskID;
+    stoppingMode        stopping;
+    switchingMode       switching;
+    int                 followingTaskID;
     int                 notificationCode;
     String              notificationText;
-    infoCode            workflowInfoCode;
-    bool             actionDone;
+    workflowInfoCode    workflowInfo;
+    bool                actionDone;
 
 
 public:
     
     CCDeviceFlow*       targetDeviceFlow;
 
-    CCAction(String actionName, infoCode workflowInfoCode);
+    CCAction(String actionName, workflowInfoCode workflowInfo);
 //    ~CCAction();
-    
-    void evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction, CCTask* followingTask);
+
+
+    void evokeTaskStop(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, stoppingMode stopping);
+
+    void evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, switchingMode switching, CCTask* followingTask);
 //    , int notificationCode = 0, String notificationText = "");
-    void evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, deviceAction targetAction);
+    void evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, switchingMode switching);
 //    , int notificationCode = 0, String notificationText = "");
     
     void evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask);
@@ -47,14 +52,16 @@ public:
 //    int notificationCode = 0, String notificationText = "");
     
 
+    stoppingMode        getStopping();
+    switchingMode       getSwitching();
     String              getName();
-    scheduledTask       getValidTaskID();
+    int                 getValidTaskID();
     deviceAction        getTargetAction();
-    scheduledTask       getFollowingTaskID();
+    int                 getFollowingTaskID();
     int                 getNotificationCode();
     String              getNotificationText();
-    infoCode            getWorkflowInfoCode();
-    bool             getActionDone();
+    workflowInfoCode    getWorkflowInfo();
+    bool                getActionDone();
     void                setActionDone(bool d);
     
 

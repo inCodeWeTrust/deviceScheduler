@@ -11,26 +11,26 @@
 
 
 
-CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(String deviceName, unsigned char switching_A_pin, bool switchingPin_A_activ, unsigned char switching_B_pin, bool switchingPin_B_activ) : CCDcControllerDevice(deviceName, switching_A_pin, switchingPin_A_activ) {
+CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active) : CCDcControllerDevice(deviceName, switching_A_pin, switchingPin_A_active) {
     
     this->switching_B_pin = switching_B_pin;
-    this->switchingPin_B_activ = switchingPin_B_activ;
+    this->switchingPin_B_active = switchingPin_B_active;
     
     pinMode(switching_B_pin, OUTPUT);
-    digitalWrite(switching_B_pin, !switchingPin_B_activ);
-    isActiv_B = false;
+    digitalWrite(switching_B_pin, !switchingPin_B_active);
+    isActive_B = false;
     
     if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: setup "));
         Serial.print(deviceName);
         Serial.print(F(", switching_A_pin: "));
         Serial.print(switching_pin);
-        Serial.print(F(", switchingPin_A_activ: "));
-        Serial.print(switchingPin_activ);
+        Serial.print(F(", switchingPin_A_active: "));
+        Serial.print(switchingPin_active);
         Serial.print(F(", switching_B_pin: "));
         Serial.print(switching_B_pin);
-        Serial.print(F(", switchingPin_B_activ: "));
-        Serial.println(switchingPin_B_activ);
+        Serial.print(F(", switchingPin_B_active: "));
+        Serial.println(switchingPin_B_active);
         if (DCCONTROLLER_FULL_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.print((long) this, HEX);
@@ -50,30 +50,30 @@ CCDcControllerDevice_fullBridge::~CCDcControllerDevice_fullBridge() {
     }
 }
 
-infoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
+deviceInfoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
     
 //    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
 //        Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
 //        Serial.print(deviceName);
 //        Serial.print(F(" review values... "));
 //    }
-    if (nextTask->getTarget() > 1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getTarget() < -1.0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getVelocity() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
-    if (nextTask->getAcceleration() == 0) return WORKFLOW_CANCELED_ON_PARAMETER_ERROR;
+    if (nextTask->getTarget() > 1.0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getTarget() < -1.0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getVelocity() == 0) return DEVICE_PARAMETER_ERROR;
+    if (nextTask->getAcceleration() == 0) return DEVICE_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
     
 //    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
 //        Serial.println(F("   done"));
 //    }
-    return EVERYTHING_OK;
+    return DEVICE_OK;
 }
 
 
 void CCDcControllerDevice_fullBridge::prepareNextTask() {}
 
-void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
-    
+deviceInfoCode CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
+   
     if (state == MOVING) {
         currentRatio = currentPosition;
         t0 += switchOnTime;
@@ -95,8 +95,8 @@ void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     startDelay = nextTask->getStartDelay();
     startTime = nextTask->getStartTime();
     timeout = nextTask->getTimeout();
-    //    startButton = nextTask->getStartButton();
-    //    stopButton = nextTask->getStopButton();
+    //    startControl = nextTask->getStartControl();
+    //    stopControl = nextTask->getStopControl();
     //    startTriggerDevice = nextTask->getStartTriggerDevice();
     //    startTriggerTaskID = nextTask->getStartTriggerTaskID();
     //    startTriggerPosition = nextTask->getStartTriggerPosition();
@@ -136,7 +136,7 @@ void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     if (DCCONTROLLER_FULL_VERBOSE & CALCULATIONDEBUG) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
         Serial.print(deviceName);
-        Serial.print(F(": prepareing... target power: "));
+        Serial.print(F(": praparing... target power: "));
         Serial.print(target);
         Serial.print(F(", frequency (n/sec): "));
         Serial.print(velocity);
@@ -150,7 +150,7 @@ void CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
         Serial.println(deceleration);
     }
     
-    
+    return DEVICE_OK;
 }
 
 
@@ -182,10 +182,10 @@ void CCDcControllerDevice_fullBridge::initiateStop() {
 }
 
 void CCDcControllerDevice_fullBridge::stopTask() {
-    digitalWrite(switching_pin, !switchingPin_activ);
-    isActiv = false;
-    digitalWrite(switching_B_pin, !switchingPin_B_activ);
-    isActiv_B = false;
+    digitalWrite(switching_pin, !switchingPin_active);
+    isActive = false;
+    digitalWrite(switching_B_pin, !switchingPin_B_active);
+    isActive_B = false;
     state = MOVE_DONE;
     
     
@@ -200,7 +200,7 @@ void CCDcControllerDevice_fullBridge::stopTask() {
 
 void CCDcControllerDevice_fullBridge::finishTask() {
     state = SLEEPING;
-    
+        
     if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
         Serial.print(deviceName);
@@ -295,13 +295,13 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         }
         
         if (currentPosition > 0) {
-            digitalWrite(switching_B_pin, !switchingPin_B_activ);
-            digitalWrite(switching_pin, switchingPin_activ);
-            isActiv = true;
+            digitalWrite(switching_B_pin, !switchingPin_B_active);
+            digitalWrite(switching_pin, switchingPin_active);
+            isActive = true;
         } else if (currentPosition < 0) {
-            digitalWrite(switching_pin, !switchingPin_activ);
-            digitalWrite(switching_B_pin, switchingPin_B_activ);
-            isActiv_B = true;
+            digitalWrite(switching_pin, !switchingPin_active);
+            digitalWrite(switching_B_pin, switchingPin_B_active);
+            isActive_B = true;
         }
         
         switchOffTime = switchOnTime + switchingInterval * fabs(currentPosition);
@@ -317,11 +317,11 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         
         
     } else if (elapsedTime > switchOffTime) {
-        if (isActiv == true || isActiv_B == true) {
-            digitalWrite(switching_pin, !switchingPin_activ);
-            digitalWrite(switching_B_pin, !switchingPin_B_activ);
-            isActiv = false;
-            isActiv_B = false;
+        if (isActive == true || isActive_B == true) {
+            digitalWrite(switching_pin, !switchingPin_active);
+            digitalWrite(switching_B_pin, !switchingPin_B_active);
+            isActive = false;
+            isActive_B = false;
             
             if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
                 Serial.print(elapsedTime);
@@ -332,5 +332,5 @@ void CCDcControllerDevice_fullBridge::operateTask() {
     }
 }
 
-void CCDcControllerDevice_fullBridge::getReadOut(unsigned char theReadOut) {}
+void CCDcControllerDevice_fullBridge::getReadOut(unsigned int theReadOut) {}
 
