@@ -49,7 +49,6 @@ CCControlSensor::~CCControlSensor() {
 
 void CCControlSensor::read() {
     sensorValue = analogRead(pin);
-    sensorValue = 480;
 }
 
 

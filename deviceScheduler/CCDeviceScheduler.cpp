@@ -766,13 +766,11 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
                     currentDevice->initiateStop();
                     currentDevice->setStopEvent(NONE);
                     currentDevice->setSwitchTaskPromptly(SWITCH_AFTER_COMPLETION);
-                    Serial.println("dispose task");
                     return TASK_DISPOSED;
                     
                 case DELAY_THIS_TASK:
                     currentDevice->setStopEvent(DATE);
                     currentDevice->setTimeout(0);
-                    Serial.println("delay task");
                     return TASK_DELAYED;
 
                 case TASK_PREPARATION_OK:
@@ -839,27 +837,25 @@ deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDe
     
     if (nextTaskID[currentDeviceFlowID] < currentDeviceFlow->getCountOfTasks()) {                       //  all tasks done? no!
         
-        if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
-            Serial.print(taskTime);
-            Serial.print(F(": "));
-            Serial.print(currentDeviceFlow->getName());
-            Serial.print(F(" prepare Task "));
-            Serial.print(nextTaskID[currentDeviceFlowID]);
-            Serial.print(F(": current Position: "));
-            Serial.print(currentDevice->getCurrentPosition());
-            Serial.print(F(" target: "));
-            Serial.print(currentDevice->getTarget());
-        }
-        
         info = currentDevice->prepareTask(currentDeviceFlow->task[nextTaskID[currentDeviceFlowID]]);
         currentDeviceFlow->setTaskPointer(currentDevice->getCurrentTaskID());
         nextTaskID[currentDeviceFlowID] = currentDeviceFlow->getTaskPointer() + 1;
         
-        if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
-            Serial.print(F(" result: "));
-            Serial.println(getLiteralOfDeviceInfo(info));
+        if (info >= DEVICE_OK) {
+            if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+                Serial.print(taskTime);
+                Serial.print(F(": "));
+                Serial.print(currentDeviceFlow->getName());
+                Serial.print(F(" prepare Task "));
+                Serial.print(nextTaskID[currentDeviceFlowID]);
+                Serial.print(F(": current Position: "));
+                Serial.print(currentDevice->getCurrentPosition());
+                Serial.print(F(" target: "));
+                Serial.print(currentDevice->getTarget());
+                Serial.print(F("; result: "));
+                Serial.println(getLiteralOfDeviceInfo(info));
+            }
         }
-        
         return info;
         
     }                                                                                   // all tasks are done
@@ -1195,8 +1191,8 @@ String CCDeviceScheduler::getNameOfDeviceAction(deviceAction d) {
     return "unknown";
 }
 String CCDeviceScheduler::getLiteralOfDeviceInfo(deviceInfoCode i) {
-    if (i == DISPOSE_THIS_TASK) return "dispose a task";
-    if (i == DELAY_THIS_TASK) return "delay a task";
+    if (i == DISPOSE_THIS_TASK) return "dispose task";
+    if (i == DELAY_THIS_TASK) return "delay task";
     if (i == DEVICE_OK) return "everything ok";
     if (i == TASK_PREPARATION_OK) return "task preparation ok";
     return "unknown";

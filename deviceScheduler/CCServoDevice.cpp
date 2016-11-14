@@ -477,7 +477,7 @@ void CCServoDevice::operateTask() {
             }
         }
  
-        Serial.print("### finished dynamical stop at: ");
+        Serial.print("#*#*# finished dynamical stop at: ");
         Serial.print((int)sensorValue);
 
 

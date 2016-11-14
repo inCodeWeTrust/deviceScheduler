@@ -223,17 +223,15 @@
 #define CONTROLLER_LAMP_YELLOW_NAME             "yellowLamp"
 
 #define CONTROLLER_LAMP_YELLOW_PIN              35
-//#define CONTROLLER_LAMP_YELLOW_ACTIVE            LOW
-#define CONTROLLER_LAMP_YELLOW_ON               HIGH
-#define CONTROLLER_LAMP_YELLOW_OFF              LOW
+#define CONTROLLER_LAMP_YELLOW_ON               LOW
+#define CONTROLLER_LAMP_YELLOW_OFF              HIGH
 
 
 
 #define CONTROLLER_LAMP_RED_NAME                "redLamp"
 
 #define CONTROLLER_LAMP_RED_PIN                 37
-//#define CONTROLLER_LAMP_RED_ACTIVE               LOW
-#define CONTROLLER_LAMP_RED_ACTIVE               HIGH
+#define CONTROLLER_LAMP_RED_ON                  LOW
 
 
 
@@ -252,8 +250,8 @@
 
 #define CAT_PARKBUTTON_NAME                 "bridgeParkButton"
 #define CAT_PARKBUTTON_PIN                  53
-// for real running: #define CAT_PARKBUTTON_PULLUP               true
-#define CAT_PARKBUTTON_PULLUP               false
+#define CAT_PARKBUTTON_PULLUP               true
+// for simulation: #define CAT_PARKBUTTON_PULLUP               false
 #define CAT_PARKBUTTON_REACHED              HIGH
 
 #define CAT_ENDBUTTON_NAME                  "bridgeEndButton"
@@ -295,8 +293,11 @@
 
 
 #define HEAD_INCLINATION_SENSOR_NAME        "headInclinationSensor"
-// for real running: #define HEAD_INCLINATION_SENSOR_PIN         A8
-#define HEAD_INCLINATION_SENSOR_PIN         A4
+#define HEAD_INCLINATION_SENSOR_PIN         A8
+// for simulation: #define HEAD_INCLINATION_SENSOR_PIN         A4
+#define HEAD_INCLINATION_INIT_STOP          600
+#define HEAD_INCLINATION_START_CAT          540
+#define HEAD_INCLINATION_TARGET             460
 
 
 
@@ -344,7 +345,8 @@
 
 
 #define HEAD_LEFT_PARK_POSITION         2100
-#define HEAD_LEFT_CUT_POSITION          1260
+//#define HEAD_LEFT_CUT_POSITION          1260
+#define HEAD_LEFT_CUT_POSITION          1060
 #define HEAD_LEFT_MID_POSITION          1520
 #define HEAD_LEFT_TOP_POSITION          2100
 

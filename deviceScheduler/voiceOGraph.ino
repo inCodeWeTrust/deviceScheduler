@@ -192,7 +192,7 @@ void loop() {
     
     CCDevice* startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
                                                             CONTROLLER_LAMP_RED_PIN,
-                                                            CONTROLLER_LAMP_RED_ACTIVE);
+                                                            CONTROLLER_LAMP_RED_ON);
     
     
     
@@ -254,14 +254,25 @@ void loop() {
         // ============= devices of initMachine =======================================================================================
         
         CCDeviceFlow* catStepperFlow = initTheMachine->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
+        CCDeviceFlow* headLeftServoFlow = initTheMachine->addDeviceFlow("headLeftServoFlow", headLeftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        CCDeviceFlow* headRightServoFlow = initTheMachine->addDeviceFlow("headRightServoFlow", headRightServo, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
+
         CCControl* bridgeParkControl = initTheMachine->addControl(bridgeParkButton);
         
         // ============= tasks of initMachine =========================================================================================
         
-        CCTask* driveBackToParkPosition;
-        driveBackToParkPosition = catStepperFlow->addTaskWithPositionResetOnCompletion(-400000);
-        driveBackToParkPosition->startByDate(100);
-        driveBackToParkPosition->stopByControl(bridgeParkControl, IS, CAT_PARKBUTTON_REACHED, STOP_NORMAL);
+        CCTask* driveHeadLeftToParkPosition;
+        driveHeadLeftToParkPosition = headLeftServoFlow->addTask(HEAD_LEFT_PARK_POSITION);
+        driveHeadLeftToParkPosition->startByDate(10);
+        
+        CCTask* driveHeadRightToParkPosition;
+        driveHeadRightToParkPosition = headRightServoFlow->addTask(HEAD_RIGHT_PARK_POSITION);
+        driveHeadRightToParkPosition->startByDate(20);
+        
+        CCTask* driveCatToParkPosition;
+        driveCatToParkPosition = catStepperFlow->addTaskWithPositionResetOnCompletion(-400000);
+        driveCatToParkPosition->startByDate(100);
+        driveCatToParkPosition->stopByControl(bridgeParkControl, IS, CAT_PARKBUTTON_REACHED, STOP_NORMAL);
         
         scheduler->reviewTasks(initTheMachine);
         scheduler->listAllTasks(initTheMachine);
@@ -464,7 +475,7 @@ void loop() {
         CCTask* approximateHeadRightForCutting;
         approximateHeadRightForCutting = headRightServoFlow->addTask(HEAD_RIGHT_CUT_POSITION);
         approximateHeadRightForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-        approximateHeadRightForCutting->stopDynamicallyBySensor(A4, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
+        approximateHeadRightForCutting->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR_PIN, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_PRECISE);
         //        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
         
         //  (2) blink lamp for start cutting very very soon:
@@ -476,7 +487,7 @@ void loop() {
         CCTask* makeStartGroove;
         makeStartGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
 //        makeStartGroove->startAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
-        makeStartGroove->startByControl(headInclinationControl, IS, 480);
+        makeStartGroove->startByControl(headInclinationControl, IS_SMALLER_THEN, HEAD_INCLINATION_START_CAT);
 //        makeStartGroove->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
         makeStartGroove->switchToNextTaskAtPosition(catSongStartPosition);
         //  (3) keep blinking lamp on for whole cutting process:
@@ -529,7 +540,7 @@ void loop() {
         
         //  drive cat back home
         CCTask* driveToParkPosition;
-        driveToParkPosition = catStepperFlow->addTask(CAT_PARK_POSITION);
+        driveToParkPosition = catStepperFlow->addTaskWithPositionResetOnCompletion(CAT_PARK_POSITION - 600);
         driveToParkPosition->startAfterCompletionOf(headRightServo, liftHeadRightAfterCutting);
         driveToParkPosition->stopByControl(bridgeParkControl, IS, CAT_PARKBUTTON_REACHED, STOP_NORMAL);
         
