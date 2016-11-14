@@ -230,7 +230,11 @@ void loop() {
                                                               SONG_CANCELBUTTON_PIN,
                                                               SONG_CANCELBUTTON_PULLUP);
     
-    CCControl* headInclinationSensor = scheduler->addControlSensor(HEAD_INCLINATION_SENSOR_NAME, HEAD_INCLINATION_SENSOR_PIN);
+    CCControl* headInclinationSensor = scheduler->addControlSensor(HEAD_INCLINATION_SENSOR_NAME,
+                                                                   HEAD_INCLINATION_SENSOR_PIN);
+    
+    CCControl* armTurnSensor = scheduler->addControlSensor(ARM_TURN_SENSOR_NAME,
+                                                           ARM_TURN_SENSOR_PIN);
     
     
     
@@ -249,7 +253,40 @@ void loop() {
     
     CCWorkflow* initTheMachine = new CCWorkflow("initMachine");
     
+    {
+        // ============= devices of initMachine =======================================================================================
+        
+        CCDeviceFlow* turnMotorFlow = initTheMachine->addDeviceFlow("turnMotorFlow", turnMotor, 20, 2000);
+        
+        CCControl* turnControl = initTheMachine->addControl(armTurnSensor);
+        
+        // ============= tasks of initMachine =========================================================================================
+        
+        CCTask* driveLeft;
+        driveLeft =turnMotorFlow->addTask(0.6);
+        driveLeft->startByDate(1000);
+        driveLeft->stopDynamicallyBySensor_new(turnControl, 300, 8000, 4, SKIP_APPROXIMATION_VERY_PRECISE);
+        
+        CCTask* driveRight;
+        driveRight =turnMotorFlow->addTask(0.25);
+        driveRight->startAfterCompletion();
+        driveRight->setStartDelay(1000);
+        driveRight->stopDynamicallyBySensor_new(turnControl, 200, 1000, 4, SKIP_APPROXIMATION_VERY_PRECISE);
+        
+        
+        scheduler->reviewTasks(initTheMachine);
+        scheduler->listAllTasks(initTheMachine);
+     
+        for (; ; ) {
+            scheduler->run(initTheMachine);
+        }
+
+    }
     
+
+    
+    
+/*
     {
         // ============= devices of initMachine =======================================================================================
         
@@ -280,7 +317,7 @@ void loop() {
         scheduler->run(initTheMachine);
         catStepper->setCurrentPosition(0.0);
     }
-    
+  */
     
     
     
@@ -475,7 +512,7 @@ void loop() {
         CCTask* approximateHeadRightForCutting;
         approximateHeadRightForCutting = headRightServoFlow->addTask(HEAD_RIGHT_CUT_POSITION);
         approximateHeadRightForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-        approximateHeadRightForCutting->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR_PIN, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_PRECISE);
+        approximateHeadRightForCutting->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_PRECISE);
         //        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
         
         //  (2) blink lamp for start cutting very very soon:

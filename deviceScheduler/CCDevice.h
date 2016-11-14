@@ -12,6 +12,7 @@
 
 #include "deviceScheduler.h"
 #include "CCTask.h"
+#include "CCControl.h"
 
 
 
@@ -138,8 +139,8 @@ protected:
     switchingMode       switchTaskPromptly;
     
     /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the pin number of a required hardware event to stop this task.
-    unsigned int        sensor;
+    /// This parameter holds the control device of a required hardware event to stop this task.
+    CCControl*           sensor;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the numerical value of the sensor pin, required to initiate the stopping of this task.
@@ -325,9 +326,14 @@ public:
     /// @sa switchTaskPromptly;
     void setSwitchTaskPromptly(switchingMode switchPromptly);
     
+    
+//    /// Getter method for getting the startControl of the device
+//    /// @sa startControl;
+//    CCControl* getControl();
+
     /// Getter method for getting the sensor of the device
     /// @sa sensor;
-    unsigned int getSensor();
+    CCControl* getSensor();
     
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
     /// @sa initiatePerformanceValue;
@@ -365,14 +371,6 @@ public:
 #endif // defined(__deviceScheduler__CCDevice__)
 
 
-//    /// Getter method for getting the startControl of the device
-//    /// @sa startControl;
-//    CCControlButton* getStartControl();
-//
-//    /// Getter method for getting the stopControl of the device
-//    /// @sa stopControl;
-//    CCControlButton* getStopControl();
-//
 //    /// Getter method for getting the startTriggerDevice of the device
 //    /// @sa startTriggerDevice;
 //    CCDevice* getStartTriggerDevice();

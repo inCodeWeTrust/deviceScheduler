@@ -146,7 +146,7 @@ void CCTask::stopAtPosition(signed long stopTriggerPosition, stoppingMode stoppi
 }
 
 
-void CCTask::stopDynamicallyBySensor(unsigned int sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation) {
+void CCTask::stopDynamicallyBySensor(CCControl* sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation) {
     this->stopping = STOP_DYNAMIC;
     this->sensor = sensor;
     this->initiatePerformanceValue = initiatePerformanceValue;
@@ -155,7 +155,7 @@ void CCTask::stopDynamicallyBySensor(unsigned int sensor, unsigned int initiateP
     this->approximation = approximation;
 }
 
-void CCTask::stopDynamicallyBySensor_new(unsigned int sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation) {
+void CCTask::stopDynamicallyBySensor_new(CCControl* sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation) {
     this->stopping = STOP_DYNAMIC;
     this->sensor = sensor;
     this->targetValue = targetValue;
@@ -195,7 +195,7 @@ signed long CCTask::getStartTriggerPosition(){return startTriggerPosition;}
 signed long CCTask::getStopTriggerPosition(){return stopTriggerPosition;}
 stoppingMode CCTask::getStopping(){return stopping;}
 switchingMode CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
-unsigned int CCTask::getSensor(){return sensor;}
+CCControl* CCTask::getSensor(){return sensor;}
 signed int CCTask::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCTask::getTargetValue(){return targetValue;}
 float CCTask::getStopPerformance(){return stopPerformance;}

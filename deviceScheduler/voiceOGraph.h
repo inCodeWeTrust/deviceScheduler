@@ -20,7 +20,7 @@
 /// |   A6  |               |  match head impact switch     |
 /// |   A7  |               |  loading button               |
 /// |   A8  |  <header 01>  |  head inclination sensor      |
-/// |   A9  |  <header 01>  |                               |
+/// |   A9  |  <header 01>  |  arm turn sensor              |
 /// |  A10  |  <header 02>  |                               |
 /// |  A11  |  <header 02>  |                               |
 /// |  A12  |  <header 02>  |                               |
@@ -298,6 +298,10 @@
 #define HEAD_INCLINATION_INIT_STOP          600
 #define HEAD_INCLINATION_START_CAT          540
 #define HEAD_INCLINATION_TARGET             460
+
+
+#define ARM_TURN_SENSOR_NAME                "armTurnSensor"
+#define ARM_TURN_SENSOR_PIN                 A9
 
 
 

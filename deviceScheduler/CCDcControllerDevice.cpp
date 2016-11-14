@@ -251,7 +251,7 @@ void CCDcControllerDevice::operateTask() {
         }
         
         if (stopping == STOP_DYNAMIC) {
-            sensorValue = analogRead(sensor);
+            sensorValue = sensor->value();
             if (reversedApproximation) {
                 relativePosition = targetValue - sensorValue;
             } else {

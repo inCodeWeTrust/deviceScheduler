@@ -46,19 +46,19 @@ private:
     int                     startControlTarget;
     int                     stopControlTarget;
     CCDevice*               startTriggerDevice;
-    unsigned int           startTriggerTaskID;
+    unsigned int            startTriggerTaskID;
     signed long             startTriggerPosition;
     CCDevice*               stopTriggerDevice;
-    unsigned int           stopTriggerTaskID;
+    unsigned int            stopTriggerTaskID;
     signed long             stopTriggerPosition;
-    unsigned int           sensor;
+    CCControl*              sensor;
     signed int              initiatePerformanceValue;
     signed int              targetValue;
     float                   stopPerformance;
     stoppingMode            stopping;
     unsigned int            approximationCurve;
     unsigned int            gap;
-    bool                 reversedApproximation;
+    bool                    reversedApproximation;
     approximationMode       approximation;
     
     
@@ -117,9 +117,9 @@ public:
     void stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     void stopAtPosition(signed long stopTriggerPosition, stoppingMode stopping);
     
-    void stopDynamicallyBySensor(unsigned int sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
+    void stopDynamicallyBySensor(CCControl* sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
     
-    void stopDynamicallyBySensor_new(unsigned int sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation);
+    void stopDynamicallyBySensor_new(CCControl* sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation);
     
     
 
@@ -242,9 +242,9 @@ public:
     /// @sa switchTaskPromptly;
     switchingMode getSwitchTaskPromptly();
     
-    /// Getter method for getting the sensor pin of the device
+    /// Getter method for getting the sensor of the device
     /// @sa sensor;
-    unsigned int getSensor();
+    CCControl* getSensor();
 
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
     /// @sa initiatePerformanceValue;

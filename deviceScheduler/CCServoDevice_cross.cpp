@@ -96,7 +96,7 @@ void CCServoDevice_cross::operateTask() {
     
     if (stopping == STOP_DYNAMIC) {
         if (dynamicalStop == false) {
-            sensorValue = analogRead(sensor);
+            sensorValue = sensor->value();
             if ((sensorValue > initiatePerformanceValue && (!sensorValuesFalling)) || (sensorValue < initiatePerformanceValue && sensorValuesFalling)) {
                 timeForAcceleration = elapsedTime;
                 timeForConstantSpeed = 0;
@@ -157,7 +157,7 @@ void CCServoDevice_cross::operateTask() {
     if (dynamicalStop) {
         deltaDeltaNorm = (float)(elapsedTime - lastCycleTime) * velocity / 1000.0;
         
-        sensorValue = analogRead(sensor);
+        sensorValue = sensor->value();
         
         performanceFactor = c_perform * (sensorValue - targetValue);
         

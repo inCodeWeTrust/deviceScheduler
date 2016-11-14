@@ -48,7 +48,7 @@ void CCDevice::setStopping(stoppingMode mode){stopping = mode;}
 
 switchingMode CCDevice::getSwitchTaskPromptly(){return switchTaskPromptly;}
 void CCDevice::setSwitchTaskPromptly(switchingMode switchPromptly){switchTaskPromptly = switchPromptly;}
-unsigned int CCDevice::getSensor(){return sensor;}
+CCControl* CCDevice::getSensor(){return sensor;}
 signed int CCDevice::getInitiatePerformanceValue(){return initiatePerformanceValue;}
 signed int CCDevice::getTargetValue(){return targetValue;}
 float CCDevice::getStopPerformance(){return stopPerformance;}

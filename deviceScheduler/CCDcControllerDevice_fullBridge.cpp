@@ -170,6 +170,12 @@ void CCDcControllerDevice_fullBridge::startTask() {
             Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
             Serial.print(deviceName);
             Serial.println(F(", starting task"));
+
+                Serial.print(F(": approx: "));
+                Serial.print(approximationCurve);
+                Serial.print(F(", gap: "));
+                Serial.println(gap);
+
         }
     }
     operateTask();
@@ -246,7 +252,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         }
         
         if (stopping == STOP_DYNAMIC) {
-            sensorValue = analogRead(sensor);
+            sensorValue = sensor->value();
             
             relativePosition = targetValue - sensorValue;
 
@@ -255,7 +261,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
                 Serial.print(F(", stopping dynamically"));
             }
             
-            if (fabs(relativePosition) <= gap) {
+            if (abs(relativePosition) <= gap) {
                 
                 currentPosition = 0;
                 targetReachedCounter++;
@@ -282,12 +288,25 @@ void CCDcControllerDevice_fullBridge::operateTask() {
                 //
                 // in 1:
                 // y = -b / (x - cp + b) + 1 = b / (cp - x - b) + 1
-                
-                if (relativePosition > 0) {
-                    currentPosition *= (float)approximationCurve / ((long)gap - relativePosition - approximationCurve) + 1;
+
+                currentPosition = target * (approximationCurve / (gap * gap / 16.0 - relativePosition * relativePosition - approximationCurve) + 1);
+                if (relativePosition < 0) {
+                    //                    currentPositionFirstOrder = target * (approximationCurve / ((float)gap - relativePosition - approximationCurve) + 1);
+                    //                    currentPosition = target * (approximationCurve / ((float)gap * gap - relativePosition * relativePosition - approximationCurve) + 1);
+                    currentPosition = - currentPosition;
                 } else {
-                    currentPosition *= -(float)approximationCurve / ((long)gap + relativePosition - approximationCurve) - 1;
+                    //                    currentPositionFirstOrder = -target * (approximationCurve / ((float)gap + relativePosition - approximationCurve) + 1);
+                    //                    currentPosition = -target * (approximationCurve / ((float)gap * gap - relativePosition * relativePosition - approximationCurve) + 1);
+                    //                    currentPosition = -target * (approximationCurve / (powerGap_square - relativePosition * relativePosition - approximationCurve) + 1);
                 }
+
+
+                
+                Serial.print(sensorValue);
+                Serial.print(", ");
+                Serial.print(relativePosition);
+                Serial.print(", ");
+                Serial.println(currentPosition);
                 
                 targetReachedCounter = 0;
                 
