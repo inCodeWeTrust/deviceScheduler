@@ -51,9 +51,7 @@ private:
     CCDevice*               stopTriggerDevice;
     unsigned int            stopTriggerTaskID;
     signed long             stopTriggerPosition;
-    CCControl*              sensor;
     signed int              initiatePerformanceValue;
-    signed int              targetValue;
     float                   stopPerformance;
     stoppingMode            stopping;
     unsigned int            approximationCurve;
@@ -100,26 +98,26 @@ public:
     void setStartDelay(unsigned long startDelay);
     
     void startByDate(unsigned long startTime);
-    void startByControl(CCControl* startControl, comparingMode comparing, int target);
+    void startByControl(CCControl* startControl, comparingMode comparing, int target, approximationMode approximation = SKIP_APPROXIMATION_IMMEDIATELY);
     void startAfterCompletion();
     void startAfterCompletionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask);
     void startByTriggerpositionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask, signed long startTriggerPosition);
     
     void switchToNextTaskByDate(unsigned long switchingTimeout);
-    void switchToNextTaskByControl(CCControl* switchingButton, comparingMode comparing, int target);
+    void switchToNextTaskByControl(CCControl* switchingButton, comparingMode comparing, int target, approximationMode approximation = SKIP_APPROXIMATION_IMMEDIATELY);
     void switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask);
     void switchToNextTaskAtPosition(signed long switchingTriggerPosition);
     void switchToNextTaskByTriggerpositionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask, signed long switchingTriggerPosition);
     
     void stopByTimeout(unsigned long timeout, stoppingMode stopping);
-    void stopByControl(CCControl* stopControl, comparingMode comparing, int target, stoppingMode stopping = STOP_NORMAL);
+    void stopByControl(CCControl* stopControl, comparingMode comparing, int target, stoppingMode stopping = STOP_NORMAL, approximationMode approximation = SKIP_APPROXIMATION_IMMEDIATELY);
     void stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping);
     void stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping);
     void stopAtPosition(signed long stopTriggerPosition, stoppingMode stopping);
     
     void stopDynamicallyBySensor(CCControl* sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation);
     
-    void stopDynamicallyBySensor_new(CCControl* sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation);
+    void stopDynamicallyBySensor_new(CCControl* stopControl, unsigned int stopControlTarget, float approximationCurve, float gap, approximationMode approximation);
     
     
 
@@ -242,17 +240,9 @@ public:
     /// @sa switchTaskPromptly;
     switchingMode getSwitchTaskPromptly();
     
-    /// Getter method for getting the sensor of the device
-    /// @sa sensor;
-    CCControl* getSensor();
-
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
     /// @sa initiatePerformanceValue;
     signed int getInitiatePerformanceValue();
-    
-    /// Getter method for getting the target sensor value of the device
-    /// @sa targetValue;
-    signed int getTargetValue();
     
     /// Getter method for getting the stopping performance of the device
     /// @sa stopPerformance;

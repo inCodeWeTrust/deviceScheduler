@@ -43,7 +43,7 @@ protected:
     unsigned long        t0;
     
     /// The elapsed time since this task was started or switched.
-    signed long          elapsedTime;
+    signed long          elapsedTime, elapsedTime_previous;
     
     /// The time for ramping up @<= acceleration@>.
     signed long          timeForAcceleration;
@@ -72,14 +72,11 @@ protected:
     /// The initial rate of duty cycle, when the task is switched, like v0.
     float                currentRatio;
     
-    /// The number of times, the target was reached in series
-    unsigned int         targetReachedCounter;
-
     /// The sensor's value
     unsigned int         sensorValue;
 
     /// The distance from the target position
-    signed int           relativePosition;
+    signed int           relativePosition, relativPosition_previous;
     
     
 public:

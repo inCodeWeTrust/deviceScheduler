@@ -32,7 +32,7 @@ class CCControl {
 
 protected:
     
-    int                 sensorValue;
+    int                 sensorValue, sensorValue_prev;
     
     String              controlName;
     controlType         type;

@@ -100,15 +100,6 @@ void loop() {
                                                               LIFT_PARK_POSITION);
     
     
-    CCDevice* turnServo = scheduler->addServo(SERVO_TURN_NAME,
-                                              SERVO_TURN_PIN,
-                                              SERVO_TURN_MIN_POSITION,
-                                              SERVO_TURN_MAX_POSITION,
-                                              TURN_STOCK_POSITION);
-    
-    CCDevice* turnMotor = scheduler->addDcController_fullBridge("turnMotor", 39, HIGH, 41, HIGH);
-    
-    
     CCDevice* pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
                                               SERVO_PUMP_PIN,
                                               SERVO_PUMP_MIN_POSITION,
@@ -129,6 +120,22 @@ void loop() {
                                                    HEAD_RIGHT_PARK_POSITION);
     
     
+    CCDevice* turnStepper = scheduler->addStepper_A4988(STEPPER_TURN_NAME,
+                                                        STEPPER_TURN_STEP_PIN,
+                                                        STEPPER_TURN_DIR_PIN,
+                                                        STEPPER_TURN_ENABLE_PIN,
+                                                        STEPPER_TURN_STEPS_PER_ROTATION,
+                                                        STEPPER_TURN_MICROSTEPPIN_00,
+                                                        STEPPER_TURN_MICROSTEPPIN_01,
+                                                        STEPPER_TURN_MICROSTEPPIN_02,
+                                                        STEPPER_TURN_STEPMODECODE_00,
+                                                        STEPPER_TURN_STEPMODECODE_01,
+                                                        STEPPER_TURN_STEPMODECODE_02,
+                                                        STEPPER_TURN_STEPMODECODE_03,
+                                                        STEPPER_TURN_STEPMODECODE_04,
+                                                        STEPPER_TURN_STEPMODECODE_05);
+    
+    
     CCDevice* stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
                                                          STEPPER_STOCK_STEP_PIN,
                                                          STEPPER_STOCK_DIR_PIN,
@@ -144,32 +151,6 @@ void loop() {
                                                          STEPPER_STOCK_STEPMODECODE_04);
     
     
-    CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
-                                                        STEPPER_CAT_STEP_PIN,
-                                                        STEPPER_CAT_DIR_PIN,
-                                                        STEPPER_CAT_ENABLE_PIN,
-                                                        STEPPER_CAT_STEPS_PER_ROTATION,
-                                                        STEPPER_CAT_CHIPSELECT_PIN,
-                                                        STEPPER_CAT_CURRENT);
-    
-    
-    CCDevice* tableStepper = scheduler->addStepper_A4988(STEPPER_TABLE_NAME,
-                                                         STEPPER_TABLE_STEP_PIN,
-                                                         STEPPER_TABLE_DIR_PIN,
-                                                         STEPPER_TABLE_ENABLE_PIN,
-                                                         STEPPER_TABLE_STEPS_PER_ROTATION,
-                                                         STEPPER_TABLE_MICROSTEPPIN_00,
-                                                         STEPPER_TABLE_MICROSTEPPIN_01,
-                                                         STEPPER_TABLE_MICROSTEPPIN_02,
-                                                         STEPPER_TABLE_STEPMODECODE_00,
-                                                         STEPPER_TABLE_STEPMODECODE_01,
-                                                         STEPPER_TABLE_STEPMODECODE_02,
-                                                         STEPPER_TABLE_STEPMODECODE_03,
-                                                         STEPPER_TABLE_STEPMODECODE_04,
-                                                         STEPPER_TABLE_STEPMODECODE_05);
-    
-    
-    
     CCDevice* conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
                                                           STEPPER_CONVEYOR_STEP_PIN,
                                                           STEPPER_CONVEYOR_DIR_PIN,
@@ -183,6 +164,24 @@ void loop() {
                                                           STEPPER_CONVEYOR_STEPMODECODE_02,
                                                           STEPPER_CONVEYOR_STEPMODECODE_03,
                                                           STEPPER_CONVEYOR_STEPMODECODE_04);
+    
+    
+    CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
+                                                        STEPPER_CAT_STEP_PIN,
+                                                        STEPPER_CAT_DIR_PIN,
+                                                        STEPPER_CAT_ENABLE_PIN,
+                                                        STEPPER_CAT_STEPS_PER_ROTATION,
+                                                        STEPPER_CAT_CHIPSELECT_PIN,
+                                                        STEPPER_CAT_CURRENT);
+    
+    
+    CCDevice* tableStepper = scheduler->addStepper_TMC260(STEPPER_TABLE_NAME,
+                                                         STEPPER_TABLE_STEP_PIN,
+                                                         STEPPER_TABLE_DIR_PIN,
+                                                         STEPPER_TABLE_ENABLE_PIN,
+                                                         STEPPER_TABLE_STEPS_PER_ROTATION,
+                                                         STEPPER_TABLE_CHIPSELECT_PIN,
+                                                         STEPPER_TABLE_CURRENT);
     
     
     CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
@@ -233,8 +232,8 @@ void loop() {
     CCControl* headInclinationSensor = scheduler->addControlSensor(HEAD_INCLINATION_SENSOR_NAME,
                                                                    HEAD_INCLINATION_SENSOR_PIN);
     
-    CCControl* armTurnSensor = scheduler->addControlSensor(ARM_TURN_SENSOR_NAME,
-                                                           ARM_TURN_SENSOR_PIN);
+    CCControl* armTurnSensor = scheduler->addControlSensor(ARM_SENSOR_NAME,
+                                                           ARM_SENSOR_PIN);
     
     
     
@@ -251,50 +250,20 @@ void loop() {
     // =================================================================================================================================================
     // =================================================================================================================================================
     
+    
     CCWorkflow* initTheMachine = new CCWorkflow("initMachine");
-    
-    {
-        // ============= devices of initMachine =======================================================================================
-        
-        CCDeviceFlow* turnMotorFlow = initTheMachine->addDeviceFlow("turnMotorFlow", turnMotor, 20, 2000);
-        
-        CCControl* turnControl = initTheMachine->addControl(armTurnSensor);
-        
-        // ============= tasks of initMachine =========================================================================================
-        
-        CCTask* driveLeft;
-        driveLeft =turnMotorFlow->addTask(0.6);
-        driveLeft->startByDate(1000);
-        driveLeft->stopDynamicallyBySensor_new(turnControl, 300, 8000, 4, SKIP_APPROXIMATION_VERY_PRECISE);
-        
-        CCTask* driveRight;
-        driveRight =turnMotorFlow->addTask(0.25);
-        driveRight->startAfterCompletion();
-        driveRight->setStartDelay(1000);
-        driveRight->stopDynamicallyBySensor_new(turnControl, 200, 1000, 4, SKIP_APPROXIMATION_VERY_PRECISE);
-        
-        
-        scheduler->reviewTasks(initTheMachine);
-        scheduler->listAllTasks(initTheMachine);
-     
-        for (; ; ) {
-            scheduler->run(initTheMachine);
-        }
 
-    }
-    
-
-    
-    
-/*
     {
         // ============= devices of initMachine =======================================================================================
         
         CCDeviceFlow* catStepperFlow = initTheMachine->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
         CCDeviceFlow* headLeftServoFlow = initTheMachine->addDeviceFlow("headLeftServoFlow", headLeftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
-        CCDeviceFlow* headRightServoFlow = initTheMachine->addDeviceFlow("headRightServoFlow", headRightServo, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-
+        CCDeviceFlow* headRightServoFlow = initTheMachine->addDeviceFlow("headRightServoFlow", headRightServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        CCDeviceFlow* liftServoFlow = initTheMachine->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
+        CCDeviceFlow* turnStepperFlow = initTheMachine->addDeviceFlow("turnStepperFlow", turnStepper, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
+        
         CCControl* bridgeParkControl = initTheMachine->addControl(bridgeParkButton);
+        CCControl* armControl = initTheMachine->addControl(armTurnSensor);
         
         // ============= tasks of initMachine =========================================================================================
         
@@ -308,19 +277,36 @@ void loop() {
         
         CCTask* driveCatToParkPosition;
         driveCatToParkPosition = catStepperFlow->addTaskWithPositionResetOnCompletion(-400000);
-        driveCatToParkPosition->startByDate(100);
+        driveCatToParkPosition->startByDate(30);
         driveCatToParkPosition->stopByControl(bridgeParkControl, IS, CAT_PARKBUTTON_REACHED, STOP_NORMAL);
+        
+        //  lift grappler
+        CCTask* liftForCalibratingArm;
+        liftForCalibratingArm = liftServoFlow->addTask(LIFT_LIFTED_POSITION);
+        liftForCalibratingArm->startAfterCompletionOf(catStepper, driveCatToParkPosition);
+        
+        //  find correct parking position of arm
+        CCTask* calibrateArmBack;
+        calibrateArmBack = turnStepperFlow->addTaskMoveRelativ(600, 10, 10);
+        calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
+        calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
+        
+        CCTask* calibrateArmForth;
+        calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
+        calibrateArmForth->startAfterCompletion();
+        calibrateArmForth->stopByControl(armControl, IS_GREATER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
+
+        CCTask* lowerInParkPosition;
+        lowerInParkPosition = liftServoFlow->addTask(LIFT_STOCK_POSITION);
+        lowerInParkPosition->startAfterCompletionOf(turnStepper, calibrateArmForth);
         
         scheduler->reviewTasks(initTheMachine);
         scheduler->listAllTasks(initTheMachine);
         
         scheduler->run(initTheMachine);
         catStepper->setCurrentPosition(0.0);
+        
     }
-  */
-    
-    
-    
     
     // =================================================================================================================================================
     // =================================================================================================================================================
@@ -335,10 +321,12 @@ void loop() {
         // ============= devices of fetchingRecord: =====================================================================================
         
         CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
-        CCDeviceFlow* turnServoFlow = fetchingRecord->addDeviceFlow("turnServoFlow", turnServo, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
+        CCDeviceFlow* turnStepperFlow = fetchingRecord->addDeviceFlow("turnStepperFlow", turnStepper, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
         CCDeviceFlow* pumpServoFlow = fetchingRecord->addDeviceFlow("pumpServoFlow", pumpServo, PUMP_SPEED, PUMP_ACCEL);
         CCDeviceFlow* stockStepperFlow = fetchingRecord->addDeviceFlow("stockStepperFlow", stockStepper, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
         
+        
+        CCControl* armControl = fetchingRecord->addControl(armTurnSensor);
         CCControl* recordAvailableControl = fetchingRecord->addControl(recordAvailableButton);
         CCControl* stockTopControl = fetchingRecord->addControl(stockTopButton);
         CCControl* stockBottomControl = fetchingRecord->addControl(stockBottomButton);
@@ -349,28 +337,38 @@ void loop() {
         
         // ============= tasks of fetchingRecord: =====================================================================================
         
-        //  lift grappler
-        CCTask* liftFromParkPosition;
-        liftFromParkPosition = liftServoFlow->addTask(LIFT_PARK_POSITION + 500, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
-        liftFromParkPosition->startByDate(100);
-        
         //  move stock down first
         CCTask* moveStockStepperDown;
         moveStockStepperDown = stockStepperFlow->addTaskMoveRelativ(-4000);
-        moveStockStepperDown->startByDate(200);
-        moveStockStepperDown->stopByControl(recordAvailableControl, IS_NOT, RECORD_IS_AVAILABLE, STOP_NORMAL);
+        moveStockStepperDown->startByDate(100);
+        moveStockStepperDown->stopByControl(recordAvailableControl, IS_NOT, RECORD_IS_AVAILABLE, STOP_NORMAL, SKIP_APPROXIMATION_VERY_PRECISE);
         
+        //  lift grappler
+        CCTask* liftForCalibratingArm;
+        liftForCalibratingArm = liftServoFlow->addTask(LIFT_LIFTED_POSITION);
+        liftForCalibratingArm->startAfterCompletionOf(stockStepper, moveStockStepperDown);
+        
+        //  find correct parking position of arm
+        CCTask* calibrateArmBack;
+        calibrateArmBack = turnStepperFlow->addTaskMoveRelativ(600, 10, 10);
+        calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
+        calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
+
+        CCTask* calibrateArmForth;
+        calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
+        calibrateArmForth->startAfterCompletion();
+        calibrateArmForth->stopByControl(armControl, IS_GREATER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
+
         //  supply a new record, terminated by recordAvailableButton
         CCTask* supplyRecord;
         supplyRecord = stockStepperFlow->addTaskMoveRelativ(4000);
-        supplyRecord->startAfterCompletionOf(stockStepper, moveStockStepperDown);
-        supplyRecord->stopByControl(recordAvailableControl, IS, RECORD_IS_AVAILABLE, STOP_NORMAL);
+        supplyRecord->startAfterCompletion();
+        supplyRecord->stopByControl(recordAvailableControl, IS, RECORD_IS_AVAILABLE);
         
         //  lower grappler to stock: start when record is available
         CCTask* lowerToStock;
         lowerToStock = liftServoFlow->addTask(LIFT_STOCK_POSITION);
-//        lowerToStock->startByControl(recordAvailableButton);
-        lowerToStock->startAfterCompletionOf(stockStepper, moveStockStepperDown);
+        lowerToStock->startAfterCompletionOf(stockStepper, supplyRecord);
         
         //  pump: prepare
         CCTask* pumpForGrip_down;
@@ -386,20 +384,20 @@ void loop() {
         CCTask* liftNewRecord;
         liftNewRecord = liftServoFlow->addTask(LIFT_UP_POSITION);
         liftNewRecord->startAfterCompletionOf(pumpServo, pumpForGrip_up);
-        
+
         //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnRecordToTable;
-        turnRecordToTable = turnServoFlow->addTask(TURN_TABLE_POSITION);
+        turnRecordToTable = turnStepperFlow->addTask(TURN_TABLE_POSITION);
         turnRecordToTable->startByTriggerpositionOf(liftServo, liftNewRecord, LIFT_UP_TRIGGER_TURN);
         
         //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
-        CCTask* lowerRecordToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION);
-        lowerRecordToTable->startByTriggerpositionOf(turnServo, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+        CCTask* lowerRecordToTable;
+        lowerRecordToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION);
+        lowerRecordToTable->startByTriggerpositionOf(turnStepper, turnRecordToTable, TURN_TO_TABLE_TRIGGER_LIFT);
         
         //  release new record: release vacuum
         CCTask* pumpForRelease_down;
         pumpForRelease_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
-        pumpForRelease_down->startAfterCompletionOf(pumpServo, pumpForGrip_up);
         pumpForRelease_down->startByTriggerpositionOf(liftServo, lowerRecordToTable, LIFT_TABLE_POSITION + 60);
         
         //  lift for going to park position: start when vacuum was released
@@ -410,17 +408,17 @@ void loop() {
         //  release pump when record is placed
         CCTask* pumpForRelease_up;
         pumpForRelease_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
-        pumpForRelease_up->startAfterCompletionOf(liftServo, liftForParkPosition);
+        pumpForRelease_up->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_TABLE_POSITION + 60);
         
         //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnToStockPosition;
-        turnToStockPosition = turnServoFlow->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
+        turnToStockPosition = turnStepperFlow->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
         turnToStockPosition->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
         
         //  lower grappler to park position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
         CCTask* lowerForParkPosition;
         lowerForParkPosition = liftServoFlow->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-        lowerForParkPosition->startByTriggerpositionOf(turnServo, turnToStockPosition, TURN_TO_STOCK_TRIGGER_LIFT);
+        lowerForParkPosition->startByTriggerpositionOf(turnStepper, turnToStockPosition, TURN_TO_STOCK_TRIGGER_LIFT);
         
         
         
@@ -523,10 +521,9 @@ void loop() {
         //  make start groove:
         CCTask* makeStartGroove;
         makeStartGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
-//        makeStartGroove->startAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
         makeStartGroove->startByControl(headInclinationControl, IS_SMALLER_THEN, HEAD_INCLINATION_START_CAT);
-//        makeStartGroove->switchToNextTaskByTriggerpositionOf(catStepper, makeStartGroove, catSongStartPosition);
         makeStartGroove->switchToNextTaskAtPosition(catSongStartPosition);
+
         //  (3) keep blinking lamp on for whole cutting process:
         CCTask* keepLampOn;
         keepLampOn = startingSoonLampFlow->addTask(1.0, 1.0, 0.0);
@@ -584,10 +581,18 @@ void loop() {
         
         
         //  jump over to end groove if songEndButton is pressed
-        CCAction* songEndAction = songEndFlowControl->addAction("songEndAction", SONGENDBUTTON_PRESSED);
-        songEndAction->evokeJumpToTask(catStepperFlow, makeMainGroove, SWITCH_PROMPTLY, makeEndGroove);
+        CCAction* speedUpCatForEndGroove = songEndFlowControl->addAction("speedUpCatAtSongEnd", SONGENDBUTTON_PRESSED);
+        speedUpCatForEndGroove->evokeJumpToTask(catStepperFlow, makeMainGroove, SWITCH_PROMPTLY, makeEndGroove);
         
-        //         cuttingProcess->controlButton[songEndButton]->evokeJumpToTask(catStepper, makeMainGroove, TASK_STOP_ACTION_IMMEDIATELY_AND_SWITCH, makeEndGroove, 32, "songEndButton was pressed");
+        CCAction* songEndBlinking_00 = songEndFlowControl->addAction("songEndBlinking_00", SONGENDBUTTON_PRESSED);
+        songEndBlinking_00->evokeJumpToTask(startingSoonLampFlow, keepLampOn, SWITCH_PROMPTLY, blinkForFinishingVeryVerySoon);
+        
+        CCAction* songEndBlinking_01 = songEndFlowControl->addAction("songEndBlinking_01", SONGENDBUTTON_PRESSED);
+        songEndBlinking_01->evokeJumpToTask(startingSoonLampFlow, blinkForFinishingSoon, SWITCH_PROMPTLY, blinkForFinishingVeryVerySoon);
+        
+        CCAction* songEndBlinking_02 = songEndFlowControl->addAction("songEndBlinking_02", SONGENDBUTTON_PRESSED);
+        songEndBlinking_02->evokeJumpToTask(startingSoonLampFlow, blinkForFinishingVerySoon, SWITCH_PROMPTLY, blinkForFinishingVeryVerySoon);
+        
         
         //  cancel cutting if songCancelButton is pressed
         CCAction* songCancelAction_cat = songCancelFlowControl->addAction("songCancelAction", SONGCANCELBUTTON_PRESSED);
@@ -624,54 +629,73 @@ void loop() {
         // ============= devices of ejectingRecord ====================================================================================
         
         CCDeviceFlow* liftServoFlow = ejectingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
-        CCDeviceFlow* turnServoFlow = ejectingRecord->addDeviceFlow("turnServoFlow", turnServo, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
+        CCDeviceFlow* turnStepperFlow = ejectingRecord->addDeviceFlow("turnStepperFlow", turnStepper, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
         CCDeviceFlow* pumpServoFlow = ejectingRecord->addDeviceFlow("pumpServoFlow", pumpServo, PUMP_SPEED, PUMP_ACCEL);
         CCDeviceFlow* conveyStepperFlow = ejectingRecord->addDeviceFlow("conveyStepperFlow", conveyStepper, CONVEYOR_SPEED, CONVEYOR_ACCEL);
         
+        CCControl* armControl = ejectingRecord->addControl(armTurnSensor);
+
         
         // ============= tasks of ejectingRecord ======================================================================================
       
          //  remove record from turntable: started after cuttingProcess is finished
-         
-         // lift grappler: start when cuttingProcess is finished
-        CCTask* liftFromParkPosition;
-        liftFromParkPosition = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         liftFromParkPosition->startByDate(100);
-         
+        
+        
+        //  lift grappler for calibrating arm
+        CCTask* liftForCalibratingArm;
+        liftForCalibratingArm = liftServoFlow->addTask(LIFT_LIFTED_POSITION);
+        liftForCalibratingArm->startByDate(100);
+        
+        //  find correct parking position of arm
+        CCTask* calibrateArmBack;
+        calibrateArmBack = turnStepperFlow->addTaskMoveRelativ(600, 10, 10);
+        calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
+        calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_PRECISE);
+        
+        CCTask* calibrateArmForth;
+        calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
+        calibrateArmForth->startAfterCompletion();
+        calibrateArmForth->stopByControl(armControl, IS_GREATER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_PRECISE);
+        
+         // lift grappler: start when arm is in correct position
+        CCTask* liftForTable;
+        liftForTable = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
+        liftForTable->startAfterCompletionOf(turnStepper, calibrateArmForth);
+                
          //  turn grappler to turn table: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnToTable;
-        turnToTable = turnServoFlow->addTask(TURN_TABLE_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
-         turnToTable->startByTriggerpositionOf(liftServo, liftFromParkPosition, LIFT_UP_TRIGGER_TURN);
-         
+        turnToTable = turnStepperFlow->addTask(TURN_TABLE_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
+        turnToTable->startByTriggerpositionOf(liftServo, liftForTable, LIFT_LIFTED_POSITION + 60);
+        
          //  lower grappler to turn table: start when turning reached trigger position (TURN_TO_TABLE_TRIGGER_LIFT)
         CCTask* lowerToTable;
         lowerToTable = liftServoFlow->addTask(LIFT_TABLE_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         lowerToTable->startByTriggerpositionOf(turnServo, turnToTable, TURN_TO_TABLE_TRIGGER_LIFT);
+        lowerToTable->startByTriggerpositionOf(turnStepper, turnToTable, TURN_TO_TABLE_TRIGGER_LIFT);
          
          // pump prepare
         CCTask* pumpForGrip_down;
         pumpForGrip_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
-         pumpForGrip_down->startAfterCompletionOf(liftServo, lowerToTable);
+        pumpForGrip_down->startAfterCompletionOf(liftServo, lowerToTable);
          
          // pump make vaccum
         CCTask* pumpForGrip_up;
         pumpForGrip_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
-         pumpForGrip_up->startAfterCompletionOf(pumpServo, pumpForGrip_down);
+        pumpForGrip_up->startAfterCompletionOf(pumpServo, pumpForGrip_down);
          
          //  lift the cutted record: start with startDelay after table was reached (LIFT_TABLE_POSITION)
         CCTask* liftCuttedRecord;
         liftCuttedRecord = liftServoFlow->addTask(LIFT_UP_POSITION);
-         liftCuttedRecord->startAfterCompletionOf(pumpServo, pumpForGrip_up);
+        liftCuttedRecord->startAfterCompletionOf(pumpServo, pumpForGrip_up);
          
          //  turn grappler to conveyer position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnToConveyor;
-        turnToConveyor = turnServoFlow->addTask(TURN_CONVEYOR_POSITION);
-         turnToConveyor->startByTriggerpositionOf(liftServo, liftCuttedRecord, LIFT_UP_TRIGGER_TURN);
-         
+        turnToConveyor = turnStepperFlow->addTask(TURN_CONVEYOR_POSITION);
+        turnToConveyor->startByTriggerpositionOf(liftServo, liftCuttedRecord, LIFT_UP_TRIGGER_TURN);
+        
          //  lower grappler to conveyer position: start when turning reached trigger position (TURN_TO_PARK_TRIGGER_LIFT)
         CCTask* lowerToConveyor;
         lowerToConveyor = liftServoFlow->addTask(LIFT_CONVEYER_POSITION);
-         lowerToConveyor->startByTriggerpositionOf(turnServo, turnToConveyor, TURN_TO_CONVEYER_TRIGGER_LIFT);
+        lowerToConveyor->startByTriggerpositionOf(turnStepper, turnToConveyor, TURN_TO_CONVEYER_TRIGGER_LIFT);
          
          //  release new record, release vacuum
         CCTask* pumpForRelease_down;
@@ -681,27 +705,27 @@ void loop() {
          //  lift for parking
         CCTask* liftForParkPosition;
         liftForParkPosition = liftServoFlow->addTask(LIFT_UP_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         liftForParkPosition->startAfterCompletionOf(liftServo, lowerToConveyor);
+         liftForParkPosition->startAfterCompletionOf(pumpServo, pumpForRelease_down);
          
          //  move it to the user
         CCTask* driveIt;
         driveIt = conveyStepperFlow->addTaskWithPositionReset(CONVEYOR_DISTANCE);
-         driveIt->startAfterCompletionOf(liftServo, liftForParkPosition);
-         
+        driveIt->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_CONVEYER_POSITION + 60);
+        
          //  release pump
         CCTask* pumpForRelease_up;
         pumpForRelease_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
-         pumpForRelease_up->startAfterCompletionOf(liftServo, liftForParkPosition);
+         pumpForRelease_up->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_CONVEYER_POSITION + 160);
          
          //  turn grappler for parking
         CCTask* turnToStock;
-        turnToStock = turnServoFlow->addTask(TURN_STOCK_POSITION, TURN_SPEED_FAST, TURN_ACCEL_FAST);
-         turnToStock->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
-         
+        turnToStock = turnStepperFlow->addTask(TURN_STOCK_POSITION);
+        turnToStock->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_UP_TRIGGER_TURN);
+        
          //  lower grappler to stock: start when turning reached trigger position (TURN_TO_STOCK_TRIGGER_LIFT)
         CCTask* lowerToPark;
         lowerToPark = liftServoFlow->addTask(LIFT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
-         lowerToPark->startByTriggerpositionOf(turnServo, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
+        lowerToPark->startByTriggerpositionOf(turnStepper, turnToStock, TURN_TO_STOCK_TRIGGER_LIFT);
          
          
         scheduler->reviewTasks(ejectingRecord);
@@ -868,10 +892,10 @@ void loop() {
             */
 //        }
 
-//        if (digitalRead(EVALUATE_BUTTONS_SWITCH) == LOW) {
-//            Serial.println("go for evaluatin the buttons");
-//            scheduler->evaluateButtons();
-//        }
+        if (digitalRead(EVALUATE_BUTTONS_SWITCH) == LOW) {
+            Serial.println("go for evaluatin the buttons");
+            scheduler->evaluateButtons();
+        }
 
         if (millis() - blinkTimer > 2000) {
             digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);

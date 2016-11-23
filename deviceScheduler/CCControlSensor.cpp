@@ -18,6 +18,9 @@ CCControlSensor::CCControlSensor(unsigned int controlIndex, String controlName, 
     this->type = SENSOR;
     this->pin = pin;
     
+    this->sensorValue = analogRead(pin);
+    this->sensorValue_prev = sensorValue;
+    
     //    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
     //    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
     
@@ -48,7 +51,8 @@ CCControlSensor::~CCControlSensor() {
 
 
 void CCControlSensor::read() {
-    sensorValue = analogRead(pin);
+    sensorValue = (analogRead(pin) + sensorValue_prev) / 2;
+    sensorValue_prev = sensorValue;
 }
 
 

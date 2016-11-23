@@ -48,16 +48,81 @@ void CCDevice::setStopping(stoppingMode mode){stopping = mode;}
 
 switchingMode CCDevice::getSwitchTaskPromptly(){return switchTaskPromptly;}
 void CCDevice::setSwitchTaskPromptly(switchingMode switchPromptly){switchTaskPromptly = switchPromptly;}
-CCControl* CCDevice::getSensor(){return sensor;}
 signed int CCDevice::getInitiatePerformanceValue(){return initiatePerformanceValue;}
-signed int CCDevice::getTargetValue(){return targetValue;}
 float CCDevice::getStopPerformance(){return stopPerformance;}
 unsigned int CCDevice::getApproximationCurve(){return approximationCurve;}
 unsigned int CCDevice::getGap(){return gap;}
 bool CCDevice::getReversedApproximation(){return reversedApproximation;}
 approximationMode CCDevice::getApproximation(){return approximation;}
 
+bool CCDevice::isStartTargetReached() {
+    return isTargetReached(startControl, startControlComparing, startControlTarget);
+}
+bool CCDevice::isStopTargetReached() {
+    return isTargetReached(stopControl, stopControlComparing, stopControlTarget);
+}
 
+bool CCDevice::isTargetReached(CCControl* control, comparingMode comparing, int controlTarget) {
+//    Serial.print(deviceName);
+//    Serial.print(" sensor: ");
+//    Serial.print(control->value());
+//    Serial.print(", comp: ");
+//    Serial.print((int)comparing);
+//    Serial.print(" with: ");
+//    Serial.print(controlTarget);
+//    Serial.print(" gives: ");
+//    Serial.println(control->is(controlTarget));
+
+    switch (comparing) {
+        case IS:
+            if (control->is(controlTarget)) {                         // it's time to stop!
+                targetReachedCounter++;
+//                Serial.print(deviceName);
+//                Serial.print(" got ");
+                if (targetReachedCounter > approximation) {
+                    Serial.print(deviceName);
+                    Serial.print(" reached: ");
+                    Serial.print(targetReachedCounter);
+                    Serial.print(", now: ");
+                    Serial.println(control->value());
+                    return true;
+                }
+                return false;
+            }
+            break;
+        case IS_NOT:
+            if ((control->isNot(controlTarget))) {                         // it's time to stop!
+                targetReachedCounter++;
+                if (targetReachedCounter > approximation) {
+                    return true;
+                }
+                return false;
+            }
+            break;
+        case IS_GREATER_THEN:
+            if ((control->isGreaterThen(controlTarget))) {                         // it's time to stop!
+                targetReachedCounter++;
+                if (targetReachedCounter > approximation) {
+                    return true;
+                }
+                return false;
+            }
+            break;
+        case IS_SMALLER_THEN:
+            if ((control->isSmallerThen(controlTarget))) {                         // it's time to stop!
+                targetReachedCounter++;
+                if (targetReachedCounter > approximation) {
+                    return true;
+                }
+                return false;
+            }
+            break;
+    }
+    if (targetReachedCounter > 0) {
+        targetReachedCounter--;
+    }
+    return false;
+}
 //    CCControlButton* CCDevice::getStartControl(){return startControl;}
 //    CCControlButton* CCDevice::getStopControl(){return stopControl;}
 //    CCDevice* CCDevice::getStartTriggerDevice(){return startTriggerDevice;}

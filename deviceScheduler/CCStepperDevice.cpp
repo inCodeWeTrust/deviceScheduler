@@ -181,8 +181,19 @@ deviceInfoCode CCStepperDevice::prepareTask(CCTask* nextTask) {
     startDelay = nextTask->getStartDelay();
     startTime = nextTask->getStartTime();
     timeout = nextTask->getTimeout();
+    startControl = nextTask->getStartControl();
+    stopControl = nextTask->getStopControl();
+    startControlComparing = nextTask->getStartControlComparing();
+    stopControlComparing = nextTask->getStopControlComparing();
+    startControlTarget = nextTask->getStartControlTarget();
+    stopControlTarget = nextTask->getStopControlTarget();
     switchTaskPromptly = nextTask->getSwitchTaskPromptly();
     stopping = nextTask->getStopping();
+    approximation = nextTask->getApproximation();
+    
+    targetReachedCounter = 0;
+    
+    
     
     //    this takes ca 24us
 
@@ -418,6 +429,8 @@ void CCStepperDevice::startTask() {                                 // start thi
             Serial.println(F(": starting task"));
         }
         
+        targetReachedCounter = 0;
+
         state = MOVING;                                             // tag device as MOVING
         currentMicroStep = 0;                                       // start counting at 0
         stepExpiration = 0;                                         // set time for next step to 0 (= now)

@@ -444,27 +444,8 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                 break;
                                 
                             case CONTROL:                                                                            // device shall stop by button
-                                switch (currentTask->getStopControlComparing()) {
-                                    case IS:
-                                        if ((currentTask->getStopControl()->is(currentTask->getStopControlTarget()))) {                         // it's time to stop!
-                                            handleStopEvent(taskTime, currentDeviceFlow);
-                                        }
-                                        break;
-                                    case IS_NOT:
-                                        if ((currentTask->getStopControl()->isNot(currentTask->getStopControlTarget()))) {                         // it's time to stop!
-                                            handleStopEvent(taskTime, currentDeviceFlow);
-                                        }
-                                        break;
-                                    case IS_GREATER_THEN:
-                                        if ((currentTask->getStopControl()->isGreaterThen(currentTask->getStopControlTarget()))) {                         // it's time to stop!
-                                            handleStopEvent(taskTime, currentDeviceFlow);
-                                        }
-                                        break;
-                                    case IS_SMALLER_THEN:
-                                        if ((currentTask->getStopControl()->isSmallerThen(currentTask->getStopControlTarget()))) {                         // it's time to stop!
-                                            handleStopEvent(taskTime, currentDeviceFlow);
-                                        }
-                                        break;
+                                if (currentDevice->isStopTargetReached()) {
+                                    handleStopEvent(taskTime, currentDeviceFlow);
                                 }
                                 break;
                                 
@@ -531,27 +512,8 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                     break;
                                     
                                 case CONTROL:                                                                        //  start the next move by button
-                                    switch (currentTask->getStartControlComparing()) {
-                                        case IS:
-                                            if ((currentTask->getStartControl()->is(currentTask->getStartControlTarget()))) {                         // it's time to stop!
-                                                handleStartEvent(taskTime, currentDevice);
-                                            }
-                                            break;
-                                        case IS_NOT:
-                                            if ((currentTask->getStartControl()->isNot(currentTask->getStartControlTarget()))) {                         // it's time to stop!
-                                                handleStartEvent(taskTime, currentDevice);
-                                            }
-                                            break;
-                                        case IS_GREATER_THEN:
-                                            if ((currentTask->getStartControl()->isGreaterThen(currentTask->getStartControlTarget()))) {                         // it's time to stop!
-                                                handleStartEvent(taskTime, currentDevice);
-                                            }
-                                            break;
-                                        case IS_SMALLER_THEN:
-                                            if ((currentTask->getStartControl()->isSmallerThen(currentTask->getStartControlTarget()))) {                         // it's time to stop!
-                                                handleStartEvent(taskTime, currentDevice);
-                                            }
-                                            break;
+                                    if (currentDevice->isStartTargetReached()) {
+                                        handleStartEvent(taskTime, currentDevice);
                                     }
                                     break;
                                     
@@ -847,7 +809,7 @@ deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDe
                 Serial.print(F(": "));
                 Serial.print(currentDeviceFlow->getName());
                 Serial.print(F(" prepare Task "));
-                Serial.print(nextTaskID[currentDeviceFlowID]);
+                Serial.print(currentDeviceFlow->getTaskPointer());
                 Serial.print(F(": current Position: "));
                 Serial.print(currentDevice->getCurrentPosition());
                 Serial.print(F(" target: "));
@@ -1092,7 +1054,7 @@ void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
 
 void CCDeviceScheduler::evaluateButtons() {
     bool lastButtonState[20];
-    Serial.print(F("************************************* evaluate buttons *************************************"));
+    Serial.println(F("************************************* evaluate buttons *************************************"));
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
     Serial.println(F(": Controls: "));
@@ -1111,8 +1073,7 @@ void CCDeviceScheduler::evaluateButtons() {
             if (buttonState != lastButtonState[i]) {
                 Serial.print(control[i]->getName());
                 Serial.print(F(", current: "));
-                control[i]->read();
-                Serial.print(getNameOfBooleanState(control[i]->getDigitalValue()));
+                Serial.println(getNameOfBooleanState(control[i]->getDigitalValue()));
                 lastButtonState[i] = buttonState;
             }
         }

@@ -78,19 +78,6 @@ CCTask* CCDeviceFlow::addTask(float target, float velocity, float acceleration, 
     return registerTask(target, velocity, acceleration, deceleration, false, NO_RESET);
 }
 
-CCTask* CCDeviceFlow::addTaskMoveRelativ(float relativTarget, float velocity, float acceleration, float deceleration) {
-    if (velocity == 0.0) {
-        return registerTask(relativTarget, defaultVelocity, defaultAcceleration, defaultDeceleration, true, NO_RESET);
-    }
-    if (acceleration == 0.0) {
-        return registerTask(relativTarget, velocity, defaultAcceleration, defaultDeceleration, true, NO_RESET);
-    }
-    if (deceleration == 0.0) {
-        return registerTask(relativTarget, velocity, acceleration, acceleration, true, NO_RESET);
-    }
-    return registerTask(relativTarget, velocity, acceleration, deceleration, true, NO_RESET);
-}
-
 CCTask* CCDeviceFlow::addTaskWithPositionReset(float target, float velocity, float acceleration, float deceleration) {
     if (velocity == 0.0) {
         return registerTask(target, defaultVelocity, defaultAcceleration, defaultDeceleration, false, RESET_ON_START);
@@ -115,6 +102,45 @@ CCTask* CCDeviceFlow::addTaskWithPositionResetOnCompletion(float target, float v
         return registerTask(target, velocity, acceleration, acceleration, false, RESET_ON_COMPLETION);
     }
     return registerTask(target, velocity, acceleration, deceleration, false, RESET_ON_COMPLETION);
+}
+
+CCTask* CCDeviceFlow::addTaskMoveRelativ(float relativTarget, float velocity, float acceleration, float deceleration) {
+    if (velocity == 0.0) {
+        return registerTask(relativTarget, defaultVelocity, defaultAcceleration, defaultDeceleration, true, NO_RESET);
+    }
+    if (acceleration == 0.0) {
+        return registerTask(relativTarget, velocity, defaultAcceleration, defaultDeceleration, true, NO_RESET);
+    }
+    if (deceleration == 0.0) {
+        return registerTask(relativTarget, velocity, acceleration, acceleration, true, NO_RESET);
+    }
+    return registerTask(relativTarget, velocity, acceleration, deceleration, true, NO_RESET);
+}
+
+CCTask* CCDeviceFlow::addTaskMoveRelativWithPositionReset(float relativTarget, float velocity, float acceleration, float deceleration) {
+    if (velocity == 0.0) {
+        return registerTask(relativTarget, defaultVelocity, defaultAcceleration, defaultDeceleration, true, RESET_ON_START);
+    }
+    if (acceleration == 0.0) {
+        return registerTask(relativTarget, velocity, defaultAcceleration, defaultDeceleration, true, RESET_ON_START);
+    }
+    if (deceleration == 0.0) {
+        return registerTask(relativTarget, velocity, acceleration, acceleration, true, RESET_ON_START);
+    }
+    return registerTask(relativTarget, velocity, acceleration, deceleration, false, RESET_ON_START);
+}
+
+CCTask* CCDeviceFlow::addTaskMoveRelativWithPositionResetOnCompletion(float relativTarget, float velocity, float acceleration, float deceleration) {
+    if (velocity == 0.0) {
+        return registerTask(relativTarget, defaultVelocity, defaultAcceleration, defaultDeceleration, true, RESET_ON_COMPLETION);
+    }
+    if (acceleration == 0.0) {
+        return registerTask(relativTarget, velocity, defaultAcceleration, defaultDeceleration, true, RESET_ON_COMPLETION);
+    }
+    if (deceleration == 0.0) {
+        return registerTask(relativTarget, velocity, acceleration, acceleration, true, RESET_ON_COMPLETION);
+    }
+    return registerTask(relativTarget, velocity, acceleration, deceleration, true, RESET_ON_COMPLETION);
 }
 
 CCTask* CCDeviceFlow::registerTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) {

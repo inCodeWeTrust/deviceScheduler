@@ -93,23 +93,19 @@ deviceInfoCode CCDcControllerDevice::prepareTask(CCTask* nextTask) {
     startDelay = nextTask->getStartDelay();
     startTime = nextTask->getStartTime();
     timeout = nextTask->getTimeout();
-//    startControl = nextTask->getStartControl();
-//    stopControl = nextTask->getStopControl();
-//    startTriggerDevice = nextTask->getStartTriggerDevice();
-//    startTriggerTaskID = nextTask->getStartTriggerTaskID();
-//    startTriggerPosition = nextTask->getStartTriggerPosition();
-//    stopTriggerDevice = nextTask->getStopTriggerDevice();
-//    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
-//    stopTriggerPosition = nextTask->getStopTriggerPosition();
+    startControl = nextTask->getStartControl();
+    stopControl = nextTask->getStopControl();
+    startControlComparing = nextTask->getStartControlComparing();
+    stopControlComparing = nextTask->getStopControlComparing();
+    startControlTarget = nextTask->getStartControlTarget();
+    stopControlTarget = nextTask->getStopControlTarget();
     switchTaskPromptly = nextTask->getSwitchTaskPromptly();
     stopping = nextTask->getStopping();
-    
-    sensor = nextTask->getSensor();
-    targetValue = nextTask->getTargetValue();
     approximationCurve = nextTask->getApproximationCurve();
     gap = nextTask->getGap();
     approximation = nextTask->getApproximation();
 
+    targetReachedCounter = 0;
     
     // target: dutycycle [0 ... 1.0]
     // velocity: pwm frequency [Hz]
@@ -143,7 +139,7 @@ deviceInfoCode CCDcControllerDevice::prepareTask(CCTask* nextTask) {
         Serial.print(deceleration);
         if (stopping ==STOP_DYNAMIC) {
             Serial.print(F(", stopping dynamically at: "));
-            Serial.print(targetValue);
+            Serial.print(stopControlTarget);
             Serial.print(F(", approximationCurve: "));
             Serial.print(approximationCurve);
             Serial.print(F(", gap: "));
@@ -161,6 +157,8 @@ void CCDcControllerDevice::startTask() {
         stopTask();
     }
     else {
+        targetReachedCounter = 0;
+
         state = MOVING;                                             // tag device as MOVING
         t0 = millis();
         
@@ -251,11 +249,11 @@ void CCDcControllerDevice::operateTask() {
         }
         
         if (stopping == STOP_DYNAMIC) {
-            sensorValue = sensor->value();
+            sensorValue = stopControl->value();
             if (reversedApproximation) {
-                relativePosition = targetValue - sensorValue;
+                relativePosition = stopControlTarget - sensorValue;
             } else {
-                relativePosition = sensorValue - targetValue;
+                relativePosition = sensorValue - stopControlTarget;
             }
             
             if (DCCONTROLLER_VERBOSE & MOVEMENTDEBUG) {
@@ -291,8 +289,10 @@ void CCDcControllerDevice::operateTask() {
                 // y = -b / (x - cp + b) + 1 = b / (cp - x - b) + 1
                 
                 // currentPosition *= approximationCurve / (gap * gap - relativePosition * relativePosition - approximationCurve) + 1;
-                currentPosition *= approximationCurve / (gap - relativePosition - approximationCurve) + 1;
+                // currentPosition *= approximationCurve / (gap - relativePosition - approximationCurve) + 1;
                 
+                currentPosition = target * (approximationCurve / (gap * gap / 16.0 - relativePosition * relativePosition - approximationCurve) + 1);
+
                 targetReachedCounter = 0;
                 
             }

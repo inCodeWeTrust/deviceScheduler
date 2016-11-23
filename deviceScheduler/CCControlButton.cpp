@@ -57,6 +57,9 @@ CCControlButton::~CCControlButton() {
 
 void CCControlButton::read() {
     sensorValue = digitalRead(pin);
+//    if (pin == 49) {
+//        digitalWrite(37, sensorValue == 0);
+//    }
 }
 
 

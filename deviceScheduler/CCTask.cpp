@@ -25,8 +25,10 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->switchTaskPromptly = NO_SWITCHING;
     this->startTime = 0;
     this->timeout = 0;
-    this->startControl = 0;
-    this->stopControl = 0;
+    this->startControl = NULL;
+    this->stopControl = NULL;
+    this->startControlTarget = 0;
+    this->stopControlTarget = 0;
     this->startTriggerDevice = NULL;
     this->stopTriggerDevice = NULL;
     this->startTriggerTaskID = 0;
@@ -34,9 +36,7 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->startTriggerPosition = 0;
     this->stopTriggerPosition = 0;
     this->stopping = STOP_NORMAL;
-    this->sensor = 0;
     this->initiatePerformanceValue = 0;
-    this->targetValue = 0;
     this->stopPerformance = 0;
     this->approximationCurve = 0;
     this->gap = 0;
@@ -62,11 +62,12 @@ void CCTask::startByDate(unsigned long startTime) {
     this->startEvent = DATE;
     this->startTime = startTime;
 }
-void CCTask::startByControl(CCControl* startControl, comparingMode comparing, int target) {
+void CCTask::startByControl(CCControl* startControl, comparingMode comparing, int target, approximationMode approximation) {
     this->startEvent = CONTROL;
     this->startControl = startControl;
     this->startControlComparing = comparing;
     this->startControlTarget = target;
+    this->approximation = approximation;
 }
 void CCTask::startAfterCompletion() {
     this->startEvent = FOLLOW_ME;
@@ -88,12 +89,13 @@ void CCTask::switchToNextTaskByDate(unsigned long switchingTimeout) {
     this->timeout = switchingTimeout;
     this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
-void CCTask::switchToNextTaskByControl(CCControl* switchingControl, comparingMode comparing, int target) {
+void CCTask::switchToNextTaskByControl(CCControl* switchingControl, comparingMode comparing, int target, approximationMode approximation) {
     this->stopEvent = CONTROL;
     this->stopControl = switchingControl;
     this->stopControlComparing = comparing;
     this->stopControlTarget = target;
     this->switchTaskPromptly = SWITCH_PROMPTLY;
+    this->approximation = approximation;
 }
 void CCTask::switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask) {
     this->stopEvent = FOLLOW;
@@ -119,12 +121,13 @@ void CCTask::stopByTimeout(unsigned long timeout, stoppingMode stopping) {
     this->timeout = timeout;
     this->stopping = stopping;
 }
-void CCTask::stopByControl(CCControl* stopControl, comparingMode comparing, int target, stoppingMode stopping) {
+void CCTask::stopByControl(CCControl* stopControl, comparingMode comparing, int target, stoppingMode stopping, approximationMode approximation) {
     this->stopEvent = CONTROL;
     this->stopControl = stopControl;
     this->stopControlComparing = comparing;
     this->stopControlTarget = target;
     this->stopping = stopping;
+    this->approximation = approximation;
 }
 void CCTask::stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping) {
     this->stopEvent = FOLLOW;
@@ -146,19 +149,20 @@ void CCTask::stopAtPosition(signed long stopTriggerPosition, stoppingMode stoppi
 }
 
 
-void CCTask::stopDynamicallyBySensor(CCControl* sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, approximationMode approximation) {
+void CCTask::stopDynamicallyBySensor(CCControl* stopControl, unsigned int initiatePerformanceValue, unsigned int stopControlTarget, float stopPerformance, approximationMode approximation) {
     this->stopping = STOP_DYNAMIC;
-    this->sensor = sensor;
+    this->stopControl = stopControl;
     this->initiatePerformanceValue = initiatePerformanceValue;
-    this->targetValue = targetValue;
+    this->stopControlTarget = stopControlTarget;
     this->stopPerformance = stopPerformance;
     this->approximation = approximation;
 }
 
-void CCTask::stopDynamicallyBySensor_new(CCControl* sensor, unsigned int targetValue, float approximationCurve, float gap, approximationMode approximation) {
+void CCTask::stopDynamicallyBySensor_new(CCControl* stopControl, unsigned int stopControlTarget, float approximationCurve, float gap, approximationMode approximation) {
     this->stopping = STOP_DYNAMIC;
-    this->sensor = sensor;
-    this->targetValue = targetValue;
+    this->stopControl = stopControl;
+//    this->stopControlComparing = stopControlComparing;
+    this->stopControlTarget = stopControlTarget;
     this->approximationCurve = approximationCurve;
     this->gap = gap;
     this->approximation = approximation;
@@ -195,9 +199,7 @@ signed long CCTask::getStartTriggerPosition(){return startTriggerPosition;}
 signed long CCTask::getStopTriggerPosition(){return stopTriggerPosition;}
 stoppingMode CCTask::getStopping(){return stopping;}
 switchingMode CCTask::getSwitchTaskPromptly(){return switchTaskPromptly;}
-CCControl* CCTask::getSensor(){return sensor;}
 signed int CCTask::getInitiatePerformanceValue(){return initiatePerformanceValue;}
-signed int CCTask::getTargetValue(){return targetValue;}
 float CCTask::getStopPerformance(){return stopPerformance;}
 approximationMode CCTask::getApproximation(){return approximation;}
 unsigned int CCTask::getApproximationCurve(){return approximationCurve;}

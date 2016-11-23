@@ -13,7 +13,7 @@
 /// |-------|---------------|-------------------------------|
 /// |   A0  |               |                               |
 /// |   A1  |               |                               |
-/// |   A2  |               |  evaluateButtons switch                             |
+/// |   A2  |               |  evaluateButtons switch       |
 /// |   A3  |               |  move cat manually switch     |
 /// |   A4  |               |  move cat forward button      |
 /// |   A5  |               |  move cat back button         |
@@ -33,17 +33,17 @@
 /// |    0  |               |                               |
 /// |    1  |               |                               |
 /// |    2  |               |                               |
-/// |    3  |               |                               |
-/// |    4  |               |                               |
-/// |    5  |               |                               |
-/// |    6  |               |                               |
-/// |    7  |               |  TMC260 enable                |
+/// |    3  |               |  TMC260 table enable          |
+/// |    4  |               |  TMC260 table step            |
+/// |    5  |               |  TMC260 table dir             |
+/// |    6  |               |  TMC260 table chip select     |
+/// |    7  |               |  TMC260 cat enable            |
 ///
 /// | pin   | header        | function on shields           | function on board             |
 /// |-------|---------------|-------------------------------|-------------------------------|
-/// |    8  |               |  TMC260 step                  |                               |
-/// |    9  |               |  TMC260 dir                   |                               |
-/// |   10  |               |  TMC260 chipSelect            |                               |
+/// |    8  |               |  TMC260 cat step              |                               |
+/// |    9  |               |  TMC260 cat dir               |                               |
+/// |   10  |               |  TMC260 cat chipSelect        |                               |
 /// |   11  |  SPI          |  TMC260                       |                               |
 /// |   12  |  SPI          |  TMC260                       |  i_am_late pin                |
 /// |   13  |  SPI          |  TMC260                       |                               |
@@ -139,20 +139,29 @@
 
 #define STEPPER_TABLE_NAME                      "tableStepper"
 
-#define STEPPER_TABLE_DIR_PIN                   34
-#define STEPPER_TABLE_STEP_PIN                  36
-#define STEPPER_TABLE_ENABLE_PIN                38
-#define STEPPER_TABLE_MICROSTEPPIN_00           40
-#define STEPPER_TABLE_MICROSTEPPIN_01           42
-#define STEPPER_TABLE_MICROSTEPPIN_02           44
-
-#define STEPPER_TABLE_STEPMODECODE_00           0x00
-#define STEPPER_TABLE_STEPMODECODE_01           0x01
-#define STEPPER_TABLE_STEPMODECODE_02           0x02
-#define STEPPER_TABLE_STEPMODECODE_03           0x03
-#define STEPPER_TABLE_STEPMODECODE_04           0x04
-#define STEPPER_TABLE_STEPMODECODE_05           0x05
+#define STEPPER_TABLE_CHIPSELECT_PIN            6
+#define STEPPER_TABLE_DIR_PIN                   5
+#define STEPPER_TABLE_STEP_PIN                  4
+#define STEPPER_TABLE_ENABLE_PIN                3
+#define STEPPER_TABLE_CURRENT                   1100
 #define STEPPER_TABLE_STEPS_PER_ROTATION        48
+
+
+#define STEPPER_TURN_NAME                       "turnStepper"
+#define STEPPER_TURN_DIR_PIN                   34
+#define STEPPER_TURN_STEP_PIN                  36
+#define STEPPER_TURN_ENABLE_PIN                38
+#define STEPPER_TURN_MICROSTEPPIN_00           40
+#define STEPPER_TURN_MICROSTEPPIN_01           42
+#define STEPPER_TURN_MICROSTEPPIN_02           44
+
+#define STEPPER_TURN_STEPMODECODE_00           0x00
+#define STEPPER_TURN_STEPMODECODE_01           0x01
+#define STEPPER_TURN_STEPMODECODE_02           0x02
+#define STEPPER_TURN_STEPMODECODE_03           0x03
+#define STEPPER_TURN_STEPMODECODE_04           0x04
+#define STEPPER_TURN_STEPMODECODE_05           0x05
+#define STEPPER_TURN_STEPS_PER_ROTATION        200
 
 
 
@@ -262,9 +271,8 @@
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-// for real running: #define RECORDAVAILABLE_BUTTON_PULLUP       true
-#define RECORDAVAILABLE_BUTTON_PULLUP       false
-// for real running: #define RECORD_IS_AVAILABLE                 LOW
+#define RECORDAVAILABLE_BUTTON_PULLUP       true
+// for simulation: #define RECORDAVAILABLE_BUTTON_PULLUP       false
 #define RECORD_IS_AVAILABLE                 HIGH
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
@@ -300,8 +308,8 @@
 #define HEAD_INCLINATION_TARGET             460
 
 
-#define ARM_TURN_SENSOR_NAME                "armTurnSensor"
-#define ARM_TURN_SENSOR_PIN                 A9
+#define ARM_SENSOR_NAME                     "armTurnSensor"
+#define ARM_SENSOR_PIN                      A10
 
 
 
@@ -327,26 +335,29 @@
 #define LIFT_ACCEL_VERY_SLOW            200
 
 #define LIFT_UP_POSITION                2200
-#define LIFT_UP_TRIGGER_TURN            1800
+#define LIFT_UP_TRIGGER_TURN            1400
 #define LIFT_TABLE_POSITION             1000
 #define LIFT_STOCK_POSITION             1000
 #define LIFT_CONVEYER_POSITION          1000
+#define LIFT_LIFTED_POSITION            1400
 #define LIFT_PARK_POSITION              1000
 
 
+#define TURN_SPEED_FAST                 120
+#define TURN_SPEED_SLOW                 60
+#define TURN_ACCEL_FAST                 120
+#define TURN_ACCEL_SLOW                 60
 
-#define TURN_SPEED_FAST                 320
-#define TURN_SPEED_SLOW                 680
-#define TURN_ACCEL_FAST                 280
-#define TURN_ACCEL_SLOW                 180
+#define TURN_TABLE_POSITION             -564
+#define TURN_CONVEYOR_POSITION          -264
+#define TURN_STOCK_POSITION             0
+#define TURN_TO_CONVEYER_TRIGGER_LIFT   -360
+#define TURN_TO_TABLE_TRIGGER_LIFT      -460
+#define TURN_TO_STOCK_TRIGGER_LIFT      -70
 
-#define TURN_TABLE_POSITION             1960
-#define TURN_CONVEYOR_POSITION          1480
-#define TURN_STOCK_POSITION             1054
-#define TURN_TO_CONVEYER_TRIGGER_LIFT   TURN_CONVEYOR_POSITION + 60
-#define TURN_TO_TABLE_TRIGGER_LIFT      TURN_TABLE_POSITION - 60
-#define TURN_TO_STOCK_TRIGGER_LIFT      TURN_STOCK_POSITION + 60
-
+#define ARM_STOCK_POSITION              77
+#define ARM_CONVEYOR_POSITION           248
+#define ARM_TABLE_POSITION              483
 
 #define HEAD_LEFT_PARK_POSITION         2100
 //#define HEAD_LEFT_CUT_POSITION          1260
@@ -383,7 +394,7 @@
 #define CAT_PARK_POSITION               0
 #define CAT_CUTTING_START_POSITION      131600
 
-#define CONVEYOR_DISTANCE               9600
+#define CONVEYOR_DISTANCE               8400
 #define CONVEYOR_SPEED                  600
 #define CONVEYOR_ACCEL                  400
 

@@ -138,9 +138,18 @@ protected:
     /// This parameter indicates if any ongoing task should be completed first, before this task is started.
     switchingMode       switchTaskPromptly;
     
+    
+    CCControl*              startControl;
+    CCControl*              stopControl;
+    comparingMode           startControlComparing;
+    comparingMode           stopControlComparing;
+    int                     startControlTarget;
+    int                     stopControlTarget;
+
+    
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the control device of a required hardware event to stop this task.
-    CCControl*           sensor;
+//    CCControl*           sensor;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the numerical value of the sensor pin, required to initiate the stopping of this task.
@@ -148,7 +157,7 @@ protected:
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the numerical value of the sensor pin, on whitch this task comletes.
-    signed int           targetValue;
+//    signed int           targetValue;
     
     /// Parameter, related to the task controll of the current task.
     /// This parameter holds the feedback amplification while approximating the target position.
@@ -179,17 +188,19 @@ protected:
     /// (skip when ´appriximationMode´ times the sensor value is within the tolerance of ´ +/- 256 / approximationMode´)
     approximationMode   approximation;
     
+    /// The number of times, the target was reached in series
+    int         targetReachedCounter;
+    
+
+    
+    
     
     
      //        startTime, startDelay & startEvent could be changed by scheduler, so they need to exist aswell outside of the onEventTask
     
     
-    
-    /// Parameter, related to the task controll of the current task.
-    /// If a task is switched promptly to another, the device is accelerated or decelerated to the requested speed of the new task.
-    /// If the new task runs in opposite direction, the device is decelerated til zero and accelerated in new direction till the new speed.
-    /// In this case the stopping is initiated, the @c stopEvent is cleared @c disposedTaskWaiting flag is set, 
-//    bool                disposedTaskWaiting;
+    bool isTargetReached(CCControl* control, comparingMode comparing, int controlTarget);
+
     
     
 public:
@@ -213,6 +224,10 @@ public:
     virtual void stopTask() = 0;
     virtual void finishTask() = 0;
     
+    bool isStartTargetReached();
+    bool isStopTargetReached();
+
+
 
     virtual void getReadOut(unsigned int theReadOut) = 0;
 
@@ -333,7 +348,7 @@ public:
 
     /// Getter method for getting the sensor of the device
     /// @sa sensor;
-    CCControl* getSensor();
+//    CCControl* getSensor();
     
     /// Getter method for getting the sensor value to initiate the dynamical stop of the device
     /// @sa initiatePerformanceValue;
@@ -341,7 +356,7 @@ public:
     
     /// Getter method for getting the target sensor value of the device
     /// @sa targetValue;
-    signed int getTargetValue();
+//    signed int getTargetValue();
     
     /// Getter method for getting the stopping performance of the device
     /// @sa stopPerformance;
@@ -362,6 +377,12 @@ public:
     /// Getter method for getting the approximation value of the device
     /// @sa approximation;
     approximationMode getApproximation();
+//    
+//    /// The number of times, the target was reached in series
+//    int getTargetReachedCounter();
+//    
+//    /// The number of times, the target was reached in series
+//    void setTargetReachedCounter(int t);
     
     
 

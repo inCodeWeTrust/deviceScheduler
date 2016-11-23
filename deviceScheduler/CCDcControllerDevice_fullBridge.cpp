@@ -95,23 +95,19 @@ deviceInfoCode CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     startDelay = nextTask->getStartDelay();
     startTime = nextTask->getStartTime();
     timeout = nextTask->getTimeout();
-    //    startControl = nextTask->getStartControl();
-    //    stopControl = nextTask->getStopControl();
-    //    startTriggerDevice = nextTask->getStartTriggerDevice();
-    //    startTriggerTaskID = nextTask->getStartTriggerTaskID();
-    //    startTriggerPosition = nextTask->getStartTriggerPosition();
-    //    stopTriggerDevice = nextTask->getStopTriggerDevice();
-    //    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
-    //    stopTriggerPosition = nextTask->getStopTriggerPosition();
+    startControl = nextTask->getStartControl();
+    stopControl = nextTask->getStopControl();
+    startControlComparing = nextTask->getStartControlComparing();
+    stopControlComparing = nextTask->getStopControlComparing();
+    startControlTarget = nextTask->getStartControlTarget();
+    stopControlTarget = nextTask->getStopControlTarget();
     switchTaskPromptly = nextTask->getSwitchTaskPromptly();
     stopping = nextTask->getStopping();
-    
-    sensor = nextTask->getSensor();
-    targetValue = nextTask->getTargetValue();
     approximationCurve = nextTask->getApproximationCurve();
     gap = nextTask->getGap();
     approximation = nextTask->getApproximation();
     
+    targetReachedCounter = 0;
     
     // target: dutycycle (-1.0 ... 1.0)
     // velocity: pwm frequency
@@ -159,13 +155,15 @@ void CCDcControllerDevice_fullBridge::startTask() {
         stopTask();
     }
     else {
+        targetReachedCounter = 0;
+
         state = MOVING;                                             // tag device as MOVING
         t0 = millis();
         
         switchOnTime = 0;
         switchOffTime = switchOnTime + targetOnDuration;
         currentRatio = 0;
-        
+                
         if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
             Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
             Serial.print(deviceName);
@@ -173,11 +171,12 @@ void CCDcControllerDevice_fullBridge::startTask() {
 
                 Serial.print(F(": approx: "));
                 Serial.print(approximationCurve);
-                Serial.print(F(", gap: "));
-                Serial.println(gap);
-
+            Serial.print(F(", gap: "));
+            Serial.println(gap);
+            
         }
     }
+    
     operateTask();
 }
 
@@ -252,9 +251,9 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         }
         
         if (stopping == STOP_DYNAMIC) {
-            sensorValue = sensor->value();
+            sensorValue = stopControl->value();
             
-            relativePosition = targetValue - sensorValue;
+            relativePosition = stopControlTarget - sensorValue;
 
             
             if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
@@ -277,37 +276,48 @@ void CCDcControllerDevice_fullBridge::operateTask() {
                 return;
                 
             } else {
-                
-                // equitation first order:
-                // y = -b / (x - a) + 1; (1)
+                // calculation of a decreasing value by position:
+                //
+                // ********* equitation first order: *********
+                // y = b / (a - x) + 1; (1)
                 //
                 // crossPoint: y = 0 ==>
-                // 0 = -b / (x - a) + 1; b / (x - a) = 1;
-                // b = x - a; x = a + b;
+                // 0 = b / (a - x) + 1; b / (a - x) = -1;
+                // b = -a + x; x = a + b;
                 // crossPoint at x = a + b: cp = a + b ==> a = cp - b
                 //
                 // in 1:
-                // y = -b / (x - cp + b) + 1 = b / (cp - x - b) + 1
-
-                currentPosition = target * (approximationCurve / (gap * gap / 16.0 - relativePosition * relativePosition - approximationCurve) + 1);
+                // *****************************************
+                // *** ==> y = b / (cp - b - x) + 1; <== ***
+                // *****************************************
+                //
+                //
+                // ********* equitation second order: *********
+                // y = b / (a * a - x * x) + 1; (1)
+                //
+                // crossPoint: y = 0 ==>
+                // 0 = b / (a * a - x * x) + 1; b / (a * a - x * x) = -1; b / (x * x - a * a) = 1;
+                // b = x * x - a * a;
+                // crossPoint at x * x = a * a + b: cp * cp = a * a + b ==> a = sqrt(cp * cp - b);
+                //
+                // in 1:
+                // y = b / (sqrt(cp * cp - b) * sqrt(cp * cp - b) - x * x) + 1;
+                // **********************************************
+                // *** ==> y = b / (cp * cp - b - x * x); <== ***
+                // **********************************************
+                //
+                // first attempt: decreasing value == power:
+                // currentPositionFirstOrder = target * (approximationCurve / ((float)gap - approximationCurve -/+ relativePosition) + 1);
+                // currentPositionSecondOrder = target * (approximationCurve / ((float)gap * gap - approximationCurve - relativePosition * relativePosition) + 1);
+                //
+                // second attempt: decreasing value == velocity:
+                // float currentVelocity = (relativePosition - relativePosition_previous) / (elapsedTime - elapsedTime_previous);
+                
+                currentPosition = target * (approximationCurve / ((float)gap * gap - approximationCurve - relativePosition * relativePosition) + 1);
                 if (relativePosition < 0) {
-                    //                    currentPositionFirstOrder = target * (approximationCurve / ((float)gap - relativePosition - approximationCurve) + 1);
-                    //                    currentPosition = target * (approximationCurve / ((float)gap * gap - relativePosition * relativePosition - approximationCurve) + 1);
                     currentPosition = - currentPosition;
-                } else {
-                    //                    currentPositionFirstOrder = -target * (approximationCurve / ((float)gap + relativePosition - approximationCurve) + 1);
-                    //                    currentPosition = -target * (approximationCurve / ((float)gap * gap - relativePosition * relativePosition - approximationCurve) + 1);
-                    //                    currentPosition = -target * (approximationCurve / (powerGap_square - relativePosition * relativePosition - approximationCurve) + 1);
                 }
 
-
-                
-                Serial.print(sensorValue);
-                Serial.print(", ");
-                Serial.print(relativePosition);
-                Serial.print(", ");
-                Serial.println(currentPosition);
-                
                 targetReachedCounter = 0;
                 
             }

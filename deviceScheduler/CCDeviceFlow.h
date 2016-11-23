@@ -99,6 +99,11 @@ public:
     /// @return the task index.
     CCTask* addTaskWithPositionResetOnCompletion(float target, float velocity = 0.0, float acceleration = 0.0, float deceleration = 0.0);
 
+    
+    CCTask* addTaskMoveRelativWithPositionResetOnCompletion(float relativTarget, float velocity = 0.0, float acceleration = 0.0, float deceleration = 0.0);
+    CCTask* addTaskMoveRelativWithPositionReset(float relativTarget, float velocity = 0.0, float acceleration = 0.0, float deceleration = 0.0);
+
+    
     /// Function to register the tasks
     CCTask* registerTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset);
 
