@@ -21,7 +21,6 @@ CCControlSensor::CCControlSensor(unsigned int controlIndex, String controlName, 
     this->sensorValue = analogRead(pin);
     this->sensorValue_prev = sensorValue;
     
-    //    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
     //    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
     
 //    countOfActions = 0;
