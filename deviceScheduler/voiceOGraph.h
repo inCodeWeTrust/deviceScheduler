@@ -143,7 +143,7 @@
 #define STEPPER_TABLE_DIR_PIN                   5
 #define STEPPER_TABLE_STEP_PIN                  4
 #define STEPPER_TABLE_ENABLE_PIN                3
-#define STEPPER_TABLE_CURRENT                   1100
+#define STEPPER_TABLE_CURRENT                   2000
 #define STEPPER_TABLE_STEPS_PER_ROTATION        48
 
 
@@ -348,14 +348,14 @@
 #define TURN_ACCEL_FAST                 120
 #define TURN_ACCEL_SLOW                 60
 
-#define TURN_TABLE_POSITION             -564
+#define TURN_TABLE_POSITION             -563
 #define TURN_CONVEYOR_POSITION          -264
 #define TURN_STOCK_POSITION             0
 #define TURN_TO_CONVEYER_TRIGGER_LIFT   -360
 #define TURN_TO_TABLE_TRIGGER_LIFT      -460
 #define TURN_TO_STOCK_TRIGGER_LIFT      -70
 
-#define ARM_STOCK_POSITION              77
+#define ARM_STOCK_POSITION              76
 #define ARM_CONVEYOR_POSITION           248
 #define ARM_TABLE_POSITION              483
 
