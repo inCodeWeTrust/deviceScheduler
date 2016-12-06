@@ -101,6 +101,7 @@
 
 //  ################## Hardware #############################################################################
 
+//  stockStepper's driver is located next to pin 14 - 21
 #define STEPPER_STOCK_NAME                      "stockStepper"
 
 #define STEPPER_STOCK_DIR_PIN                   22
@@ -118,7 +119,7 @@
 #define STEPPER_STOCK_STEPS_PER_ROTATION        48
 
 
-
+//  conveyer's driver is located next to pin 5 - 13
 #define STEPPER_CONVEYOR_NAME                  "conveyorStepper"
 
 #define STEPPER_CONVEYOR_DIR_PIN                33
@@ -136,18 +137,9 @@
 #define STEPPER_CONVEYOR_STEPS_PER_ROTATION     48
 
 
-
-#define STEPPER_TABLE_NAME                      "tableStepper"
-
-#define STEPPER_TABLE_CHIPSELECT_PIN            6
-#define STEPPER_TABLE_DIR_PIN                   5
-#define STEPPER_TABLE_STEP_PIN                  4
-#define STEPPER_TABLE_ENABLE_PIN                3
-#define STEPPER_TABLE_CURRENT                   2000
-#define STEPPER_TABLE_STEPS_PER_ROTATION        48
-
-
+//  turnStepper's driver is located next to pin A8 - CANTX
 #define STEPPER_TURN_NAME                       "turnStepper"
+
 #define STEPPER_TURN_DIR_PIN                   34
 #define STEPPER_TURN_STEP_PIN                  36
 #define STEPPER_TURN_ENABLE_PIN                38
@@ -162,6 +154,17 @@
 #define STEPPER_TURN_STEPMODECODE_04           0x04
 #define STEPPER_TURN_STEPMODECODE_05           0x05
 #define STEPPER_TURN_STEPS_PER_ROTATION        200
+
+
+#define STEPPER_TABLE_NAME                      "tableStepper"
+
+#define STEPPER_TABLE_CHIPSELECT_PIN            6
+#define STEPPER_TABLE_DIR_PIN                   5
+#define STEPPER_TABLE_STEP_PIN                  4
+#define STEPPER_TABLE_ENABLE_PIN                3
+#define STEPPER_TABLE_CURRENT                   1100
+#define STEPPER_TABLE_STEPS_PER_ROTATION        48
+
 
 
 
@@ -249,55 +252,53 @@
 
 #define SONG_ENDBUTTON_NAME                 "songEndButton"
 #define SONG_ENDBUTTON_PIN                  48
-#define SONG_ENDBUTTON_PULLUP               true
+#define SONG_ENDBUTTON_MODE                 INPUT_PULLUP
 #define SONG_ENDBUTTON_PRESSED              LOW
 
 #define SONG_CANCELBUTTON_NAME              "songCancelButton"
 #define SONG_CANCELBUTTON_PIN               46
-#define SONG_CANCELBUTTON_PULLUP            true
+#define SONG_CANCELBUTTON_MODE              INPUT_PULLUP
 #define SONG_CANCELBUTTON_PRESSED           LOW
 
 #define CAT_PARKBUTTON_NAME                 "bridgeParkButton"
 #define CAT_PARKBUTTON_PIN                  53
-#define CAT_PARKBUTTON_PULLUP               true
-// for simulation: #define CAT_PARKBUTTON_PULLUP               false
+#define CAT_PARKBUTTON_MODE                 INPUT_PULLUP
+// for simulation: #define CAT_PARKBUTTON_MODE               false
 #define CAT_PARKBUTTON_REACHED              HIGH
 
 #define CAT_ENDBUTTON_NAME                  "bridgeEndButton"
 #define CAT_ENDBUTTON_PIN                   51
-#define CAT_ENDBUTTON_PULLUP                true
+#define CAT_ENDBUTTON_MODE                  INPUT_PULLUP
 #define CAT_ENDBUTTON_REACHED               HIGH
 
 
 #define RECORDAVAILABLE_BUTTON_NAME         "recordAvailableButton"
 #define RECORDAVAILABLE_BUTTON_PIN          49
-#define RECORDAVAILABLE_BUTTON_PULLUP       true
-// for simulation: #define RECORDAVAILABLE_BUTTON_PULLUP       false
+#define RECORDAVAILABLE_BUTTON_MODE         INPUT_PULLUP
+// for simulation: #define RECORDAVAILABLE_BUTTON_MODE       false
 #define RECORD_IS_AVAILABLE                 HIGH
 
 #define STOCKBOTTOM_BUTTON_NAME             "stockBottomButton"
 #define STOCKBOTTOM_BUTTON_PIN              47
-#define STOCKBOTTOM_BUTTON_PULLUP           true
-//#define STOCKBOTTOM_BUTTON_ACTIVE            HIGH
-#define STOCKBOTTOM_BUTTON_IS_REACHED       LOW
+#define STOCKBOTTOM_BUTTON_MODE             INPUT_PULLUP
+#define STOCKBOTTOM_BUTTON_IS_REACHED       HIGH
 
 #define STOCKTOP_BUTTON_NAME                "stockTopButton"
 #define STOCKTOP_BUTTON_PIN                 45
-#define STOCKTOP_BUTTON_PULLUP              true
-//#define STOCKTOP_BUTTON_ACTIVE               HIGH
-#define STOCKTOP_BUTTON_IS_REACHED          LOW
+#define STOCKTOP_BUTTON_MODE                INPUT_PULLUP
+#define STOCKTOP_BUTTON_IS_REACHED          HIGH
 
 
 
 #define START_CUTTING_BUTTON                50
-#define FETCH_RECORD_BUTTON                 52
 
-#define EVALUATE_BUTTONS_SWITCH             A2
-#define MOVE_MANUALLY_SWITCH                A3
-#define MOVE_CAT_FWD_BUTTON                 A4
-#define MOVE_CAT_RWD_BUTTON                 A5
-#define MATCH_HEADIMPACT_SWITCH             A6
-#define LOADING_BUTTON                      A7
+#define FETCH_RECORD_BUTTON_NAME            "fetchRecordButton"
+#define FETCH_RECORD_BUTTON_PIN             52
+#define FETCH_RECORD_BUTTON_MODE            INPUT_PULLUP
+#define FETCH_RECORD_BUTTON_PRESSED         LOW
+
+#define EVALUATE_BUTTONS_SWITCH             A4
+#define MATCH_HEADIMPACT_SWITCH             A5
 
 
 #define HEAD_INCLINATION_SENSOR_NAME        "headInclinationSensor"
@@ -309,6 +310,7 @@
 
 
 #define ARM_SENSOR_NAME                     "armTurnSensor"
+// #define ARM_SENSOR_PIN                      A9
 #define ARM_SENSOR_PIN                      A10
 
 
@@ -378,6 +380,8 @@
 
 #define STOCK_SUPPLY_RECORD_SPEED       1000
 #define STOCK_SUPPLY_RECORD_ACCEL       320
+#define STOCK_LOADING_RECORDS_SPEED     1800
+#define STOCK_LOADING_RECORDS_ACCEL     1800
 
 #define STOCK_LOADING_SPEED             520
 #define STOCK_LOADING_ACCEL             260

@@ -339,7 +339,8 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
             Serial.print(F("[CCDeviceScheduler]: "));
             Serial.print(schedulerName);
-            Serial.println(F(": prepare run ..."));
+            Serial.print(F(": prepare workflow "));
+            Serial.println(currentWorkflow->getName());
         }
         
 #ifdef ARDUINO_SIMULATION

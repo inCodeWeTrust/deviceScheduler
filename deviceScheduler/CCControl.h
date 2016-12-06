@@ -38,7 +38,7 @@ protected:
     controlType         type;
     unsigned int        controlIndex;
     unsigned int        pin;
-    bool                pullup;
+    int                 mode;
 
     unsigned int        countOfActions;
 

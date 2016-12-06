@@ -11,19 +11,15 @@
 
 
 
-CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, unsigned int pin, bool pullup) {
+CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, unsigned int pin, int mode) {
     
     this->controlIndex = controlIndex;
     this->controlName = controlName;
     this->type = BUTTON;
     this->pin = pin;
-    this->pullup = pullup;
+    this->mode = mode;
     
-    if (pullup) {
-        pinMode(pin, INPUT_PULLUP);
-    } else {
-        pinMode(pin, INPUT);
-    }
+    pinMode(pin, mode);
     
     //    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;
     //    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
@@ -36,8 +32,8 @@ CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, 
         Serial.print(controlName);
         Serial.print(F(", pin: "));
         Serial.print(pin);
-        Serial.print(F(", pullup: "));
-        Serial.print(pullup);
+        Serial.print(F(", mode: "));
+        Serial.print(mode);
         if (CONTROLBUTTON_VERBOSE & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.println((long)this, HEX);

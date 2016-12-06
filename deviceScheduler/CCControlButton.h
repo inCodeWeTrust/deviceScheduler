@@ -36,7 +36,7 @@ public:
     void        read();
     
     
-    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned int button_pin, bool pullup);
+    CCControlButton(unsigned int buttonIndex, String buttonName, unsigned int button_pin, int mode);
     ~CCControlButton();
     
 
