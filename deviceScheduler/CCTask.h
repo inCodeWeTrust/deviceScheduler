@@ -27,6 +27,8 @@ class CCControl;
 class CCTask {
 
 private:
+    int verbosity;
+
     event                   startEvent;
     event                   stopEvent;
     switchingMode           switchTaskPromptly;
@@ -263,6 +265,9 @@ public:
     /// Getter method for getting the direction of the approximation value of this task
     /// @sa approximationCurve;
     bool getReversedApproximation();
+    
+    void setVerbosity(int verbosity);
+
     
 };
 

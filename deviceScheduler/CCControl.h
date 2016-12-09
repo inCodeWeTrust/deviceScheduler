@@ -23,15 +23,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-#define CONTROLLBUTTON_PRESSED_NOTIFICATION     "endpoint reached"
-
 
 class CCDeviceFlow;
 
 class CCControl {
 
 protected:
-    
+    int verbosity;
+
     int                 sensorValue, sensorValue_prev;
     
     String              controlName;
@@ -68,6 +67,10 @@ public:
 //    CCAction*           addAction(String actionName);    
 //    void                deleteActions();
     
+    
+    
+    void setVerbosity(int verbosity);
+
     
 private:
     

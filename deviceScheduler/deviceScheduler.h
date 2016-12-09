@@ -26,6 +26,7 @@ static serialViewer Serial;
 //  ################## verbosity: #############################################################################
 
 //  -------------------------------------------------------------------------------------------------------------
+#define NO_OUTPUT                   0x00
 #define BASICOUTPUT                 0x01
 #define MEMORYDEBUG                 0x02
 #define CALCULATIONDEBUG            0x04
@@ -39,26 +40,6 @@ static serialViewer Serial;
 #define TMC260_SETUPDEBUG           0x20
 //  -------------------------------------------------------------------------------------------------------------
 
-
-#define SCHEDULER_VERBOSE           0x10
-#define DEVICE_VERBOSE              0x00
-#define SERVO_VERBOSE               0x00
-#define SERVO_CROSS_VERBOSE         0x00
-#define STEPPER_VERBOSE             0x00
-#define STEPPER_A4988_VERBOSE       0x00
-#define STEPPER_TMC260_VERBOSE      0x00
-#define DCCONTROLLER_VERBOSE        0x00
-#define DCCONTROLLER_FULL_VERBOSE   0x00
-
-#define CONTROLBUTTON_VERBOSE       0x00
-#define CONTROLSENSOR_VERBOSE       0x00
-
-#define WORKFLOW_VERBOSE            0x00
-#define DEVICEFLOW_VERBOSE          0x00
-#define TASK_VERBOSE                0x00
-
-#define FLOWCONTROL_VERBOSE         0x00
-#define ACTION_VERBOSE              0x00
 
 
 

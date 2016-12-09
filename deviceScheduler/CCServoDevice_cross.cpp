@@ -21,25 +21,23 @@ CCServoDevice_cross::CCServoDevice_cross(String deviceName, unsigned int servo_0
     this->midPosition_01 = midPosition_01;
     
     
-    if (SERVO_CROSS_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCServoDevice_cross]: setup cross-servo"));
-        Serial.print(deviceName);
-        Serial.print(F(", servo_01_pin: "));
-        Serial.print(servo_01_pin);
-        if (SERVO_CROSS_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-            Serial.print(F(", Servo 01 at $"));
-            Serial.print((long)&secondServo, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCServoDevice_cross]: setup cross-servo"));
+    //        Serial.print(deviceName);
+    //        Serial.print(F(", servo_01_pin: "));
+    //        Serial.print(servo_01_pin);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //            Serial.print(F(", Servo 01 at $"));
+    //            Serial.print((long)&secondServo, HEX);
+    //        }
+    //        Serial.println();
 }
 
 
 CCServoDevice_cross::~CCServoDevice_cross() {
     detachDevice();
-    if (SERVO_CROSS_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice_cross]: "));
         Serial.print(deviceName);
         Serial.println(F(": destructed"));
@@ -61,7 +59,7 @@ void CCServoDevice_cross::attachDevice() {
     
     
     
-    if (SERVO_CROSS_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice_cross]: "));
         Serial.print(deviceName);
         Serial.print(F(", park: "));
@@ -75,13 +73,13 @@ void CCServoDevice_cross::attachDevice() {
     }
 }
 void CCServoDevice_cross::detachDevice() {
-    if (SERVO_CROSS_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice_cross]: "));
         Serial.print(deviceName);
         Serial.print(F(": detach servos: Servo 00"));
     }
     theServo.detach();
-    if (SERVO_CROSS_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F(", Servo 01"));
         Serial.println(secondServo.attached());
     }
@@ -115,7 +113,7 @@ void CCServoDevice_cross::operateTask() {
         theServo.writeMicroseconds(currentPosition);
         secondServo.writeMicroseconds(counterPosition(currentPosition));
         
-        if (SERVO_CROSS_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print(F("[CCServoDevice_cross]: "));
             Serial.print(deviceName);
             Serial.print(F(": ramp up: cur: "));
@@ -138,7 +136,7 @@ void CCServoDevice_cross::operateTask() {
         theServo.writeMicroseconds(currentPosition);
         secondServo.writeMicroseconds(counterPosition(currentPosition));
         
-        if (SERVO_CROSS_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print(F("[CCServoDevice_cross]: "));
             Serial.print(deviceName);
             Serial.print(F(": go constant: cur: "));
@@ -168,7 +166,7 @@ void CCServoDevice_cross::operateTask() {
         theServo.writeMicroseconds(currentPosition);
         secondServo.writeMicroseconds(counterPosition(currentPosition));
         
-        if (SERVO_CROSS_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print("elapsedTime: ");
             Serial.print(elapsedTime);
             Serial.print(", performanceFactor: ");
@@ -198,7 +196,7 @@ void CCServoDevice_cross::operateTask() {
         }
         
         
-        if (SERVO_CROSS_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCServoDevice_cross]: "));
             Serial.print(deviceName);
             Serial.print(F(": stopped at sensor: "));
@@ -218,7 +216,7 @@ void CCServoDevice_cross::operateTask() {
             theServo.writeMicroseconds(currentPosition);
             secondServo.writeMicroseconds(counterPosition(currentPosition));
             
-            if (SERVO_CROSS_VERBOSE & MOVEMENTDEBUG) {
+            if (verbosity & MOVEMENTDEBUG) {
                 Serial.print(F("[CCServoDevice_cross]: "));
                 Serial.print(deviceName);
                 Serial.print(F(": ramp down: cur: "));

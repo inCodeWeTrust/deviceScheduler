@@ -45,4 +45,5 @@ int CCControl::getAnalogValue() {return analogRead(pin);}
 String CCControl::getName() {return controlName;}
 unsigned int CCControl::getCountOfActions() {return countOfActions;}
 
+void CCControl::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 

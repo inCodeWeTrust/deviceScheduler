@@ -15,24 +15,25 @@
 
 
 CCDeviceScheduler::CCDeviceScheduler(String schedulerName) {
+    this->verbosity = NO_OUTPUT;
+    
     this->schedulerName = schedulerName;
     this->countOfDevices = 0;
     this->countOfControls = 0;
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: setup scheduler "));
-        Serial.print(schedulerName);
-        if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(" at $"));
-            Serial.println((long)this, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCDeviceScheduler]: setup scheduler "));
+    //        Serial.print(schedulerName);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(" at $"));
+    //            Serial.println((long)this, HEX);
+    //        }
+    //        Serial.println();
+    
 }
 
 CCDeviceScheduler::~CCDeviceScheduler() {
     for (int i = countOfDevices - 1; i >= 0; i--) {
-        if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCDeviceScheduler]: "));
             Serial.print(schedulerName);
             Serial.print(F(": delete device: "));
@@ -43,17 +44,17 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
     
     for (int i = countOfControls - 1; i >= 0; i--) {
-        if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCDeviceScheduler]: "));
             Serial.print(schedulerName);
-            Serial.print(F(": delete button: "));
+            Serial.print(F(": delete control: "));
             Serial.println(control[i]->getName());
         }
         delete control[i];
         control[i] = NULL;
     }
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.println();
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
@@ -61,12 +62,15 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
     
 }
+String CCDeviceScheduler::getName() {
+    return schedulerName;
+}
 
 
 CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned int switching_pin, bool switchingPin_active) {
     device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_active);
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
@@ -74,7 +78,7 @@ CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned int swi
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCDcControllerDevice constructed at $"));
@@ -90,7 +94,7 @@ CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsig
     
     device[countOfDevices] = new CCDcControllerDevice_fullBridge(deviceName, switching_A_pin, switchingPin_A_active, switching_B_pin, switchingPin_B_active);
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
@@ -98,7 +102,7 @@ CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsig
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCDcControllerDevice_fullBridge constructed at $"));
@@ -116,7 +120,7 @@ CCDevice* CCDeviceScheduler::addServo(String deviceName, unsigned int servo_pin,
     
     device[countOfDevices] = new CCServoDevice(deviceName, servo_pin, minPosition, maxPosition, parkPosition);
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
@@ -124,7 +128,7 @@ CCDevice* CCDeviceScheduler::addServo(String deviceName, unsigned int servo_pin,
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCServoDevice constructed at $"));
@@ -140,7 +144,7 @@ CCDevice* CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigne
     
     device[countOfDevices] = new CCServoDevice_cross(deviceName, servo_00_pin, minPosition_00, midPosition_00, maxPosition_00, servo_01_pin, minPosition_01, midPosition_01, maxPosition_01, parkPosition);
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
@@ -148,7 +152,7 @@ CCDevice* CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigne
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCServoDevice constructed at $"));
@@ -167,7 +171,7 @@ CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int st
     device[countOfDevices] = new CCStepperDevice_A4988(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, microStep_00_pin, microStep_01_pin, microStep_02_pin, steppingCode_00, steppingCode_01, steppingCode_02, steppingCode_03, steppingCode_04, steppingCode_05, steppingCode_06, steppingCode_07);
     
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
@@ -175,7 +179,7 @@ CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int st
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCStepperDevice_A4988 constructed at $"));
@@ -195,7 +199,7 @@ CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int s
     device[countOfDevices] = new CCStepperDevice_TMC260(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, chipSelect_pin, currentMax);
     
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
@@ -203,7 +207,7 @@ CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int s
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCStepperDevice_TMC260 constructed at $"));
@@ -238,13 +242,13 @@ CCControl* CCDeviceScheduler::addControlButton(String controlName, unsigned int 
     
     control[countOfControls] = new CCControlButton(countOfControls, controlName, pin, pullup);
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided controlButton "));
         Serial.println(control[countOfControls]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCControl constructed at $"));
@@ -262,13 +266,13 @@ CCControl* CCDeviceScheduler::addControlSensor(String sensorName, unsigned int p
     
     control[countOfControls] = new CCControlSensor(countOfControls, sensorName, pin);
     
-    if (SCHEDULER_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided controlSensor "));
         Serial.println(control[countOfControls]->getName());
     }
-    if (SCHEDULER_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": CCControl constructed at $"));
@@ -336,7 +340,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         
         // prepare the loop
         
-        if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+        if (verbosity & SHOW_TASK_VIEW) {
             Serial.print(F("[CCDeviceScheduler]: "));
             Serial.print(schedulerName);
             Serial.print(F(": prepare workflow "));
@@ -360,7 +364,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             currentDevice->prepareTask(currentDeviceFlow->task[nextTaskID[df]]);
             nextTaskID[df]++;
             
-            if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+            if (verbosity & SHOW_TASK_VIEW) {
                 Serial.print(currentWorkflow->getName());
                 Serial.print(F("->"));
                 Serial.print(currentDeviceFlow->getName());
@@ -390,7 +394,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         
         
         //  start the workflow
-        if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+        if (verbosity & SHOW_TASK_VIEW) {
             Serial.print(F("[CCDeviceScheduler]: "));
             Serial.print(schedulerName);
             Serial.print(F(": run workflow "));
@@ -481,7 +485,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                     else {                                                                                          // if device is stopped
                         if (currentDevice->getState() == MOVE_DONE) {                                                   // finished right now?
                             
-                            if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+                            if (verbosity & SHOW_TASK_VIEW) {
                                 Serial.print(taskTime);
                                 Serial.print(F(": "));
                                 Serial.print(currentDeviceFlow->getName());
@@ -585,7 +589,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                 //                            notificationCode = min(notificationCode, currentAction->notificationCode);
                                 //                            notificationText = notificationText + currentAction->notificationText + "\n";
                                 
-                                if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+                                if (verbosity & SHOW_TASK_VIEW) {
                                     Serial.print(taskTime);
                                     Serial.print(F(": "));
                                     Serial.print(currentFlowControl->getName());
@@ -693,7 +697,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
 
 deviceInfoCode CCDeviceScheduler::handleStartEvent(unsigned long taskTime, CCDevice* currentDevice) {
     
-    if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+    if (verbosity & SHOW_TASK_VIEW) {
         Serial.print(taskTime);
         Serial.print(F(": "));
         Serial.print(currentDeviceFlow->getName());
@@ -740,7 +744,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
                     currentDeviceFlow->setTaskPointer(currentDevice->getCurrentTaskID());
                     nextTaskID[currentDeviceFlow->getID()] = currentDeviceFlow->getTaskPointer() + 1;
                     
-                    if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+                    if (verbosity & SHOW_TASK_VIEW) {
                         Serial.print(taskTime);
                         Serial.print(F(": "));
                         Serial.print(currentDeviceFlow->getName());
@@ -765,7 +769,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
             if (currentDevice->getStopping() == STOP_IMMEDIATELY) {
                 currentDevice->stopTask();
                 
-                if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+                if (verbosity & SHOW_TASK_VIEW) {
                     Serial.print(taskTime);
                     Serial.print(F(": "));
                     Serial.print(currentDeviceFlow->getName());
@@ -779,7 +783,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
                 currentDevice->initiateStop();
                 currentDevice->setStopEvent(NONE);
                 
-                if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+                if (verbosity & SHOW_TASK_VIEW) {
                     Serial.print(taskTime);
                     Serial.print(F(": "));
                     Serial.print(currentDeviceFlow->getName());
@@ -805,7 +809,7 @@ deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDe
         nextTaskID[currentDeviceFlowID] = currentDeviceFlow->getTaskPointer() + 1;
         
         if (info >= DEVICE_OK) {
-            if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+            if (verbosity & SHOW_TASK_VIEW) {
                 Serial.print(taskTime);
                 Serial.print(F(": "));
                 Serial.print(currentDeviceFlow->getName());
@@ -832,7 +836,7 @@ deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDe
         currentDevice->disableDevice();
     }
     
-    if (SCHEDULER_VERBOSE & SHOW_TASK_VIEW) {
+    if (verbosity & SHOW_TASK_VIEW) {
         Serial.print(taskTime);
         Serial.print(F(": "));
         Serial.print(currentDeviceFlow->getName());
@@ -1097,6 +1101,7 @@ void CCDeviceScheduler::evaluateButtons() {
  }
  */
 
+void CCDeviceScheduler::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
 
 String CCDeviceScheduler::getNameOfDeviceType(deviceType t) {

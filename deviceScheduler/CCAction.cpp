@@ -11,6 +11,8 @@
 
 
 CCAction::CCAction(String actionName, workflowInfoCode workflowInfo) {
+    this->verbosity = NO_OUTPUT;
+    
     this->actionName = actionName;
     this->targetDeviceFlow = NULL;
     this->validTaskID = -1;
@@ -19,17 +21,15 @@ CCAction::CCAction(String actionName, workflowInfoCode workflowInfo) {
     this->workflowInfo = workflowInfo;
     this->actionDone = false;
     
-    if (ACTION_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCAction]: setup action "));
-        Serial.print(actionName);
-        Serial.print(F(" with notification: "));
-        Serial.print(notificationText);
-        if (ACTION_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCAction]: setup action "));
+    //        Serial.print(actionName);
+    //        Serial.print(F(" with notification: "));
+    //        Serial.print(notificationText);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
 
 }
 
@@ -39,7 +39,7 @@ void CCAction::evokeTaskStop(CCDeviceFlow* targetDeviceFlow, CCTask* validTask, 
     this->stopping = stopping;
     this->targetAction = TASK_STOP_ACTION;
 
-    if (ACTION_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCAction]: "));
         Serial.print(actionName);
         Serial.print(F(": evokeTaskStop on task "));
@@ -59,7 +59,7 @@ void CCAction::evokeJumpToNextTask(CCDeviceFlow* targetDeviceFlow, CCTask* valid
     //    this->notificationText = notificationText;
     
     
-    if (ACTION_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCAction]: "));
         Serial.print(actionName);
         Serial.print(F(": evokeJumpToNextTask on task "));
@@ -87,7 +87,7 @@ void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask
 //    this->notificationText = notificationText;
     
     
-    if (ACTION_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCAction]: "));
         Serial.print(actionName);
         Serial.print(F(": evokeJumpToTask on task "));
@@ -112,7 +112,7 @@ void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     
     
     
-    if (ACTION_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCAction]: "));
         Serial.print(actionName);
         Serial.print(F(": evokeBreak on task "));
@@ -137,4 +137,7 @@ String CCAction::getNotificationText(){return notificationText;}
 workflowInfoCode CCAction::getWorkflowInfo(){return workflowInfo;}
 bool CCAction::getActionDone(){return actionDone;}
 void CCAction::setActionDone(bool d){actionDone = d;}
+
+void CCAction::setVerbosity(int verbosity) {this->verbosity = verbosity;}
+
 

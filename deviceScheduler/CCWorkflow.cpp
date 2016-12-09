@@ -9,28 +9,30 @@
 #include "CCWorkflow.h"
 
 
+void CCWorkflow::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
 
 CCWorkflow::CCWorkflow(String workflowName) {
+    this->verbosity = NO_OUTPUT;
+    
     this->workflowName = workflowName;
     this->countOfDeviceFlows = 0;
     this->countOfControls = 0;
     this->countOfFlowControls = 0;
     this->workflowInfo = EVERYTHING_OK;
     
-    if (WORKFLOW_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCWorkflow]: setup workflow "));
-        Serial.print(workflowName);
-        if (WORKFLOW_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCWorkflow]: setup workflow "));
+    //        Serial.print(workflowName);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
+
 }
 CCWorkflow::~CCWorkflow() {
     for (int df = countOfDeviceFlows - 1; df >= 0; df--) {
-        if (WORKFLOW_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCWorkflow]: "));
             Serial.print(workflowName);
             Serial.print(F(": delete deviceFlow: "));
@@ -41,7 +43,7 @@ CCWorkflow::~CCWorkflow() {
     }
     
     for (int fc = countOfFlowControls - 1; fc >= 0; fc--) {
-        if (WORKFLOW_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCWorkflow]: "));
             Serial.print(workflowName);
             Serial.print(F(": delete flowControl: "));
@@ -51,7 +53,7 @@ CCWorkflow::~CCWorkflow() {
         flowControl[fc] = NULL;
     }
     
-    if (WORKFLOW_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.println();
     }
 }

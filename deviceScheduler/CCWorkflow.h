@@ -29,6 +29,9 @@
 
 class CCWorkflow {
 private:
+    int verbosity;
+
+    
     String workflowName;
     
     /// Parameter of the workflow.
@@ -86,6 +89,8 @@ public:
     workflowInfoCode getWorkflowInfo();
     void setWorkflowInfo(workflowInfoCode c);
     
+    void setVerbosity(int verbosity);
+
 };
 
 

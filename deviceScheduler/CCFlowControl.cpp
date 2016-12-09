@@ -14,38 +14,38 @@
 
 
 CCFlowControl::CCFlowControl(String controlName, CCControl* control, comparingMode comparing, int target) {
+    this->verbosity = NO_OUTPUT;
+    
     this->controlName = controlName;
     this->control = control;
     this->comparing = comparing;
     this->target = target;
     this->countOfActions = 0;
     
-    if (FLOWCONTROL_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCFlowControl]: setup flowControl "));
-        Serial.print(controlName);
-        if (FLOWCONTROL_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCFlowControl]: setup flowControl "));
+    //        Serial.print(controlName);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
 
 }
 CCFlowControl::~CCFlowControl() {
-    if (FLOWCONTROL_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCFlowControl]: "));
         Serial.print(controlName);
         Serial.print(F(": delete action "));
     }
     for (int i = countOfActions - 1; i >= 0; i--) {
-        if (FLOWCONTROL_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F(" #"));
             Serial.print(i);
         }
         delete action[i];
         action[i] = NULL;
     }
-    if (FLOWCONTROL_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.println();
     }
 }
@@ -80,3 +80,6 @@ comparingMode CCFlowControl::getComparing() {return comparing;}
 int CCFlowControl::getTarget() {return target;}
 String CCFlowControl::getName(){return controlName;}
 unsigned int CCFlowControl::getCountOfActions(){return countOfActions;}
+
+void CCFlowControl::setVerbosity(int verbosity) {this->verbosity = verbosity;}
+

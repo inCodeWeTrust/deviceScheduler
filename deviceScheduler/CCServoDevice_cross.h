@@ -39,7 +39,7 @@ public:
 private:
     
     Servo                secondServo;
-    unsigned int        servo_01_pin;
+    unsigned int         servo_01_pin;
     unsigned int         startPosition_01, targetPosition_01;
     unsigned int         minPosition_01, maxPosition_01;
     unsigned int         midPosition_00, midPosition_01;

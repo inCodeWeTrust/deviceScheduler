@@ -11,6 +11,8 @@
 
 
 CCServoDevice::CCServoDevice(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
+    this->verbosity = NO_OUTPUT;
+    
     this->deviceName = deviceName;
     
     this->servo_pin = servo_pin;
@@ -23,27 +25,25 @@ CCServoDevice::CCServoDevice(String deviceName, unsigned int servo_pin, int minP
     this->state = SLEEPING;
     
     
-    if (SERVO_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCServoDevice]: setup servo "));
-        Serial.print(deviceName);
-        Serial.print(F(", servo_pin: "));
-        Serial.print(servo_pin);
-        Serial.print(F(", park: "));
-        Serial.print(parkPosition);
-        if (SERVO_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-            Serial.print(F(", Servo at $"));
-            Serial.print((long)&theServo, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCServoDevice]: setup servo "));
+    //        Serial.print(deviceName);
+    //        Serial.print(F(", servo_pin: "));
+    //        Serial.print(servo_pin);
+    //        Serial.print(F(", park: "));
+    //        Serial.print(parkPosition);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //            Serial.print(F(", Servo at $"));
+    //            Serial.print((long)&theServo, HEX);
+    //        }
+    //        Serial.println();
 }
 
 
 CCServoDevice::~CCServoDevice() {
     detachDevice();
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.println(F(": destructed"));
@@ -59,7 +59,7 @@ void CCServoDevice::attachDevice() {
     currentPosition = parkPosition;
     unsigned int channel = theServo.attach(servo_pin, minPosition, maxPosition);                                                      // substitute with attatchDevice()
     
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(", park: "));
@@ -71,14 +71,14 @@ void CCServoDevice::attachDevice() {
 void CCServoDevice::detachDevice() {
     if (theServo.attached()) {
         theServo.detach();
-        if (SERVO_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.println(F(": detached"));
         }
 
     } else {
-        if (SERVO_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.println(F(": detach: servo was not attached"));
@@ -87,7 +87,7 @@ void CCServoDevice::detachDevice() {
 }
 
 deviceInfoCode CCServoDevice::reviewValues(CCTask* nextTask) {
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(" review values... "));
@@ -96,7 +96,7 @@ deviceInfoCode CCServoDevice::reviewValues(CCTask* nextTask) {
     if (nextTask->getAcceleration() == 0) return DEVICE_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
     
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.println(F("   done"));
     }
     return DEVICE_OK;
@@ -214,7 +214,7 @@ deviceInfoCode CCServoDevice::prepareTask(CCTask* nextTask) {
     }
     
     
-    if (SERVO_VERBOSE & MEMORYDEBUG) {
+    if (verbosity & MEMORYDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": currentPosition at $"));
@@ -226,7 +226,7 @@ deviceInfoCode CCServoDevice::prepareTask(CCTask* nextTask) {
         Serial.print(F(", acceleration at $"));
         Serial.println((long)&acceleration, HEX);
     }
-    if (SERVO_VERBOSE & CALCULATIONDEBUG) {
+    if (verbosity & CALCULATIONDEBUG) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": praparing... "));
@@ -304,7 +304,7 @@ void CCServoDevice::startTask() {
     state = MOVING;
     t0 = millis();
     
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": starting task"));
@@ -331,7 +331,7 @@ void CCServoDevice::initiateStop() {
 void CCServoDevice::stopTask() {
     state = MOVE_DONE;
 
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": stopping task"));
@@ -342,7 +342,7 @@ void CCServoDevice::stopTask() {
 void CCServoDevice::finishTask() {
     state = SLEEPING;
         
-    if (SERVO_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCServoDevice]: "));
         Serial.print(deviceName);
         Serial.print(F(": task done"));
@@ -365,13 +365,6 @@ void CCServoDevice::operateTask() {
                 lastCycleTime = 0;
                 c_perform = 1.0 / (initiatePerformanceValue - stopControlTarget);
                 dynamicalStop = true;
-
-                Serial.print("### init dynamical stop at: ");
-                Serial.print(sensorValue);
-                Serial.print(", init: ");
-                Serial.print(initiatePerformanceValue);
-                Serial.print(", fall: ");
-                Serial.println(sensorValuesFalling);
             }
         }
     }
@@ -383,7 +376,7 @@ void CCServoDevice::operateTask() {
         currentPosition = startPosition + deltaS;
         theServo.writeMicroseconds(currentPosition);
         
-        if (SERVO_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.print(F(": ramp up: cur: "));
@@ -405,7 +398,7 @@ void CCServoDevice::operateTask() {
         currentPosition = startPosition + wayForAcceleration + deltaS;
         theServo.writeMicroseconds(currentPosition);
         
-        if (SERVO_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.print(F(": go constant: cur: "));
@@ -449,7 +442,7 @@ void CCServoDevice::operateTask() {
         
         theServo.writeMicroseconds(currentPosition);
         
-        if (SERVO_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print("elapsedTime: ");
             Serial.print(elapsedTime);
             Serial.print(", performanceFactor: ");
@@ -478,11 +471,8 @@ void CCServoDevice::operateTask() {
             }
         }
  
-        Serial.print("#*#*# finished dynamical stop at: ");
-        Serial.print((int)sensorValue);
 
-
-        if (SERVO_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCServoDevice]: "));
             Serial.print(deviceName);
             Serial.print(F(": stopped at sensor: "));
@@ -501,7 +491,7 @@ void CCServoDevice::operateTask() {
             currentPosition = targetPosition - deltaS;
             theServo.writeMicroseconds(currentPosition);
             
-            if (SERVO_VERBOSE & MOVEMENTDEBUG) {
+            if (verbosity & MOVEMENTDEBUG) {
                 Serial.print(F("[CCServoDevice]: "));
                 Serial.print(deviceName);
                 Serial.print(F(": ramp down: cur: "));

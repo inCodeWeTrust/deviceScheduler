@@ -38,6 +38,7 @@ CCDeviceScheduler   *scheduler;
 
 
 
+
 /// parameters for cutting
 
 unsigned long       catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
@@ -68,13 +69,6 @@ void loop() {
     Serial.println(), Serial.println(), Serial.println();
     
     
-//    unsigned int k = -15;
-    
-//    k++;
-    
-    
-    
-    
     freeRam();
     
     // ================================================================================================================================
@@ -82,7 +76,11 @@ void loop() {
     // ================================================================================================================================
     
     scheduler = new CCDeviceScheduler("scheduler");
-    
+    scheduler->setVerbosity(SHOW_TASK_VIEW | BASICOUTPUT);
+    Serial.print(F("created scheduler "));
+    Serial.println(scheduler->getName());
+
+
     
     //============================================================================================================================
     // ============= register devices: ================================================================================================
@@ -98,7 +96,8 @@ void loop() {
                                                               SERVO_LIFT_RIGHT_MID_POSITION,
                                                               SERVO_LIFT_RIGHT_MAX_POSITION,
                                                               LIFT_PARK_POSITION);
-    
+    freeRam();
+ 
     
     CCDevice* pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
                                               SERVO_PUMP_PIN,
@@ -106,6 +105,7 @@ void loop() {
                                               SERVO_PUMP_MAX_POSITION,
                                               PUMP_PARK_POSITION);
     
+    freeRam();
     
     CCDevice* headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
                                                   SERVO_HEAD_LEFT_PIN,
@@ -113,12 +113,15 @@ void loop() {
                                                   SERVO_HEAD_LEFT_MAX_POSITION,
                                                   HEAD_LEFT_PARK_POSITION);
     
+    freeRam();
+
     CCDevice* headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME,
                                                    SERVO_HEAD_RIGHT_PIN,
                                                    SERVO_HEAD_RIGHT_MIN_POSITION,
                                                    SERVO_HEAD_RIGHT_MAX_POSITION,
                                                    HEAD_RIGHT_PARK_POSITION);
-    
+    freeRam();
+
     
     CCDevice* turnStepper = scheduler->addStepper_A4988(STEPPER_TURN_NAME,
                                                         STEPPER_TURN_STEP_PIN,
@@ -134,6 +137,7 @@ void loop() {
                                                         STEPPER_TURN_STEPMODECODE_03,
                                                         STEPPER_TURN_STEPMODECODE_04,
                                                         STEPPER_TURN_STEPMODECODE_05);
+    freeRam();
     
     
     CCDevice* stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
@@ -150,6 +154,7 @@ void loop() {
                                                          STEPPER_STOCK_STEPMODECODE_03,
                                                          STEPPER_STOCK_STEPMODECODE_04);
     
+    freeRam();
     
     CCDevice* conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
                                                           STEPPER_CONVEYOR_STEP_PIN,
@@ -165,6 +170,7 @@ void loop() {
                                                           STEPPER_CONVEYOR_STEPMODECODE_03,
                                                           STEPPER_CONVEYOR_STEPMODECODE_04);
     
+    freeRam();
     
     CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
                                                         STEPPER_CAT_STEP_PIN,
@@ -174,6 +180,7 @@ void loop() {
                                                         STEPPER_CAT_CHIPSELECT_PIN,
                                                         STEPPER_CAT_CURRENT);
     
+    freeRam();
     
     CCDevice* tableStepper = scheduler->addStepper_TMC260(STEPPER_TABLE_NAME,
                                                          STEPPER_TABLE_STEP_PIN,
@@ -183,11 +190,13 @@ void loop() {
                                                          STEPPER_TABLE_CHIPSELECT_PIN,
                                                          STEPPER_TABLE_CURRENT);
     
+    freeRam();
     
     CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
                                                          VACCUUMCLEANER_PIN,
                                                          VACCUUMCLEANER_ACTIVE);
     
+    freeRam();
     
     CCDevice* startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
                                                             CONTROLLER_LAMP_RED_PIN,
@@ -200,45 +209,57 @@ void loop() {
     // ============================================================================================================================
     
     
-    
-    CCControl* recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
-                                                                   RECORDAVAILABLE_BUTTON_PIN,
-                                                                   RECORDAVAILABLE_BUTTON_MODE);
-    
-    CCControl* stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
-                                                            STOCKTOP_BUTTON_PIN,
-                                                            STOCKTOP_BUTTON_MODE);
-    
-    CCControl* stockBottomButton = scheduler->addControlButton(STOCKBOTTOM_BUTTON_NAME,
-                                                               STOCKBOTTOM_BUTTON_PIN,
-                                                               STOCKBOTTOM_BUTTON_MODE);
-    
+    freeRam();
     CCControl* bridgeParkButton = scheduler->addControlButton(CAT_PARKBUTTON_NAME,
                                                               CAT_PARKBUTTON_PIN,
                                                               CAT_PARKBUTTON_MODE);
     
+    freeRam();
     CCControl* bridgeEndButton = scheduler->addControlButton(CAT_ENDBUTTON_NAME,
                                                              CAT_ENDBUTTON_PIN,
                                                              CAT_ENDBUTTON_MODE);
     
+    freeRam();
     CCControl* songEndButton = scheduler->addControlButton(SONG_ENDBUTTON_NAME,
                                                            SONG_ENDBUTTON_PIN,
                                                            SONG_ENDBUTTON_MODE);
     
+    freeRam();
     CCControl* songCancelButton = scheduler->addControlButton(SONG_CANCELBUTTON_NAME,
                                                               SONG_CANCELBUTTON_PIN,
                                                               SONG_CANCELBUTTON_MODE);
     
+    freeRam();
+    
+    
     CCControl* headInclinationSensor = scheduler->addControlSensor(HEAD_INCLINATION_SENSOR_NAME,
                                                                    HEAD_INCLINATION_SENSOR_PIN);
+    freeRam();
     
     CCControl* armTurnSensor = scheduler->addControlSensor(ARM_SENSOR_NAME,
                                                            ARM_SENSOR_PIN);
+    freeRam();
     
     CCControl* loadingButton = scheduler->addControlButton(FETCH_RECORD_BUTTON_NAME,
                                                            FETCH_RECORD_BUTTON_PIN,
                                                            FETCH_RECORD_BUTTON_MODE);
     
+    freeRam();
+    CCControl* recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
+                                                                   RECORDAVAILABLE_BUTTON_PIN,
+                                                                   RECORDAVAILABLE_BUTTON_MODE);
+    
+    freeRam();
+    CCControl* stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
+                                                            STOCKTOP_BUTTON_PIN,
+                                                            STOCKTOP_BUTTON_MODE);
+    
+    freeRam();
+    CCControl* stockBottomButton = scheduler->addControlButton(STOCKBOTTOM_BUTTON_NAME,
+                                                               STOCKBOTTOM_BUTTON_PIN,
+                                                               STOCKBOTTOM_BUTTON_MODE);
+    freeRam();
+   
     
     
     scheduler->listDevices();
@@ -378,7 +399,7 @@ void loop() {
         //  pump: prepare
         CCTask* pumpForGrip_down;
         pumpForGrip_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
-        pumpForGrip_down->startByTriggerpositionOf(liftServo, lowerToStock, LIFT_STOCK_POSITION + 60);
+        pumpForGrip_down->startByTriggerpositionOf(liftServo, lowerToStock, LIFT_STOCK_POSITION + 200);
         
         //  pump: make vaccum
         CCTask* pumpForGrip_up;
@@ -403,7 +424,7 @@ void loop() {
         //  release new record: release vacuum
         CCTask* pumpForRelease_down;
         pumpForRelease_down = pumpServoFlow->addTask(PUMP_DOWN_POSITION);
-        pumpForRelease_down->startByTriggerpositionOf(liftServo, lowerRecordToTable, LIFT_TABLE_POSITION + 60);
+        pumpForRelease_down->startByTriggerpositionOf(liftServo, lowerRecordToTable, LIFT_TABLE_POSITION + 200);
         
         //  lift for going to park position: start when vacuum was released
         CCTask* liftForParkPosition;
@@ -413,7 +434,7 @@ void loop() {
         //  release pump when record is placed
         CCTask* pumpForRelease_up;
         pumpForRelease_up = pumpServoFlow->addTask(PUMP_PARK_POSITION);
-        pumpForRelease_up->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_TABLE_POSITION + 60);
+        pumpForRelease_up->startByTriggerpositionOf(liftServo, liftForParkPosition, LIFT_TABLE_POSITION + 200);
         
         //  turn grappler to park position: start when lifting reached triggerPosition (LIFT_UP_TRIGGER_TURN)
         CCTask* turnToStockPosition;
@@ -770,7 +791,6 @@ void loop() {
         CCControl* armControl = loading->addControl(armTurnSensor);
 
         CCFlowControl* stockTopFlowControl = loading->addFlowControl("stockTopObserver", stockTopControl, IS, STOCKTOP_BUTTON_IS_REACHED);
-        CCFlowControl* stockBottomFlowControl = loading->addFlowControl("stockBottomObserver", stockBottomControl, IS, STOCKBOTTOM_BUTTON_IS_REACHED);
         
         
         
@@ -811,7 +831,7 @@ void loop() {
         CCTask* moveStockStepperDown;
         moveStockStepperDown = stockStepperFlow->addTaskMoveRelativ(-400000);
         moveStockStepperDown->startByTriggerpositionOf(turnStepper, turnToTable, TURN_TO_STOCK_TRIGGER_LIFT);
-        moveStockStepperDown->stopByControl(loadingButtonControl, IS_NOT, FETCH_RECORD_BUTTON_PRESSED, STOP_NORMAL, SKIP_APPROXIMATION_VERY_PRECISE);
+        moveStockStepperDown->stopByControl(stockBottomControl, IS, STOCKBOTTOM_BUTTON_IS_REACHED);
 
         //  wait while the new records are loaded
         
@@ -839,10 +859,6 @@ void loop() {
         
         
         // ============= actions of loading: =====================================================================================
-        
-        //  stop running down when stockBottomButton is reached
-        CCAction* stopRunningDownOnBottomAction = stockBottomFlowControl->addAction("stopRunningDownAction", STOCKBOTTOM_BUTTON_REACHED);
-        stopRunningDownOnBottomAction->evokeTaskStop(stockStepperFlow, moveStockStepperDown, STOP_NORMAL);
         
         //  stop supplying when stockTopButton is reached
         CCAction* stockEmptyAction = stockTopFlowControl->addAction("stockEmptyAction", STOCKTOP_BUTTON_REACHED);
@@ -1028,6 +1044,11 @@ void loop() {
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
                 blinkTimer = millis();
                 Serial.print(".");
+                
+                if (digitalRead(SCHEDULERS_TASKVIEW_SHOW_PIN) == SCHEDULERS_TASKVIEW_HIDE) {
+                    scheduler->setVerbosity(NO_OUTPUT);
+                }
+
             }
         }
     }
@@ -1204,17 +1225,23 @@ void calculateCuttingParameters() {
 }
 
 void setup() {
-    
+    // ============= pin configuration =======================================================================================================
+
     pinMode(FETCH_RECORD_BUTTON_PIN, FETCH_RECORD_BUTTON_MODE);
     pinMode(START_CUTTING_BUTTON, INPUT_PULLUP);
     pinMode(MATCH_HEADIMPACT_SWITCH, INPUT_PULLUP);
     pinMode(EVALUATE_BUTTONS_SWITCH, INPUT_PULLUP);
     
+    pinMode(SCHEDULERS_TASKVIEW_SHOW_PIN, INPUT_PULLUP);
+
     pinMode(I_AM_LATE_LED, OUTPUT);
     
     pinMode(CONTROLLER_LAMP_YELLOW_PIN, OUTPUT);
     
     
+    
+    // ============= prepare output =======================================================================================================
+
     Serial.begin(115200);
     Serial.println(), Serial.println(), Serial.println();
     Serial.println(), Serial.println(), Serial.println();

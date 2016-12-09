@@ -19,6 +19,8 @@ class CCDeviceFlow;
 
 class CCAction {
 private:
+    int verbosity;
+
     String              actionName;
     int                 validTaskID;
     deviceAction        targetAction;
@@ -64,6 +66,7 @@ public:
     bool                getActionDone();
     void                setActionDone(bool d);
     
+    void setVerbosity(int verbosity);
 
     
 };

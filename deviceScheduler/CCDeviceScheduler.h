@@ -29,7 +29,6 @@
 #include "CCControlButton.h"
 #include "CCControlSensor.h"
 
-#define DEVICESCHEDULER_VERBOSE                         0x00
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,8 +51,11 @@
 // min time for flowControls: 1, max time for flowControls: 12
 
 
-class CCDeviceScheduler {
 
+class CCDeviceScheduler {
+    int verbosity;
+
+    
     /// The Scheduler's name
     /// Value, set by the user to be recognized by him.
     String   schedulerName;
@@ -103,6 +105,8 @@ public:
     
     CCDeviceScheduler(String schedulerName);
     ~CCDeviceScheduler();
+    
+    String getName();
     
 
     /// The Scheduler's device array.
@@ -178,7 +182,7 @@ public:
     /// @return the device index.
     CCDevice* addDcController_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active);
     
-
+    
     /// Function lists all registered devices.
     /// A list with all devices and bare informations are presented.
     void listDevices();
@@ -186,7 +190,7 @@ public:
 
     
     /// Array of all control-inputs.
-    CCControl *control[8];
+    CCControl *control[12];
     
     /// Function adds a control button to the control button array and returns the index of the button.
     /// A control button is a input device, that can provide either a HIGH or a LOW level at a input pin or simply connect the pin and GND using the internal inputPullup-function. Specific parameters are passed.
@@ -221,7 +225,8 @@ public:
     /// @image html scheduler__run.png
     int run(CCWorkflow* currentWorkflow);
     
-    
+    void setVerbosity(int verbosity);
+
 };
 
 

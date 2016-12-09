@@ -9,7 +9,12 @@
 #include "CCDeviceFlow.h"
 
 
+
+void CCDeviceFlow::setVerbosity(int verbosity) {this->verbosity = verbosity;}
+
 CCDeviceFlow::CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration, unsigned int deviceFlowID) {
+    this->verbosity = NO_OUTPUT;
+    
     this->deviceFlowID = deviceFlowID;
     this->deviceFlowName = deviceFlowName;
     this->device = device;
@@ -18,39 +23,37 @@ CCDeviceFlow::CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaul
     this->defaultDeceleration = defaultDeceleration;
     this->countOfTasks = 0;
     
-    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCDeviceFlow]: setup deviceFlow "));
-        Serial.print(this->deviceFlowName);
-        Serial.print(F(", defaultVelocity: "));
-        Serial.print(this->defaultVelocity);
-        Serial.print(F(", defaultAcceleration: "));
-        Serial.print(this->defaultAcceleration);
-        Serial.print(F(", defaultDeceleration: "));
-        Serial.print(this->defaultDeceleration);
-        if (DEVICEFLOW_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCDeviceFlow]: setup deviceFlow "));
+    //        Serial.print(this->deviceFlowName);
+    //        Serial.print(F(", defaultVelocity: "));
+    //        Serial.print(this->defaultVelocity);
+    //        Serial.print(F(", defaultAcceleration: "));
+    //        Serial.print(this->defaultAcceleration);
+    //        Serial.print(F(", defaultDeceleration: "));
+    //        Serial.print(this->defaultDeceleration);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
 
 }
 
 CCDeviceFlow::~CCDeviceFlow() {
-    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceFlow]: "));
         Serial.print(deviceFlowName);
         Serial.print(F(": delete task "));
     }
     for (int j = countOfTasks - 1; j >= 0; j--) {
-        if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F(" #"));
             Serial.print(j);
         }
         delete task[j];
         task[j] = NULL;
     }
-    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.println();
     }
 }
@@ -146,7 +149,7 @@ CCTask* CCDeviceFlow::addTaskMoveRelativWithPositionResetOnCompletion(float rela
 CCTask* CCDeviceFlow::registerTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) {
     task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, moveRelativ, positionReset, countOfTasks);
 
-    if (DEVICEFLOW_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
     Serial.print(F("[CCDeviceFlow]: "));
         Serial.print(deviceFlowName);
         Serial.print(F(" add task with target: "));
@@ -167,7 +170,7 @@ CCTask* CCDeviceFlow::registerTask(float target, float velocity, float accelerat
         } else if (positionReset == RESET_ON_COMPLETION) {
             Serial.print(F(", with position reset on completion"));
         }
-        if (DEVICEFLOW_VERBOSE & MEMORYDEBUG) {
+        if (verbosity & MEMORYDEBUG) {
             Serial.print(F(", at $"));
             Serial.print((long)this, HEX);
         }

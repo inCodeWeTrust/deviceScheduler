@@ -12,7 +12,8 @@
 
 
 CCControlSensor::CCControlSensor(unsigned int controlIndex, String controlName, unsigned int pin) {
-    
+    this->verbosity = NO_OUTPUT;
+        
     this->controlIndex = controlIndex;
     this->controlName = controlName;
     this->type = SENSOR;
@@ -21,26 +22,20 @@ CCControlSensor::CCControlSensor(unsigned int controlIndex, String controlName, 
     this->sensorValue = analogRead(pin);
     this->sensorValue_prev = sensorValue;
     
-    //    this->notificationText = CONTROLLBUTTON_PRESSED_NOTIFICATION;
     
-//    countOfActions = 0;
-
+    //        Serial.print(F("[CCControlSensor]: setup "));
+    //        Serial.print(controlName);
+    //        Serial.print(F(", pin: "));
+    //        Serial.print(pin);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
     
-    if (CONTROLSENSOR_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCControlSensor]: setup "));
-        Serial.print(controlName);
-        Serial.print(F(", pin: "));
-        Serial.print(pin);
-        if (CONTROLBUTTON_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.println((long)this, HEX);
-        } else {
-            Serial.println();
-        }
-    }    
 }
 CCControlSensor::~CCControlSensor() {
-    if (CONTROLSENSOR_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCControlSensor]: sensor "));
         Serial.print(controlName);
         Serial.println(F(" destructed"));

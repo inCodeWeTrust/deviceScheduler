@@ -20,30 +20,30 @@ CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(String deviceNa
     digitalWrite(switching_B_pin, !switchingPin_B_active);
     isActive_B = false;
     
-    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCDcControllerDevice_fullBridge]: setup "));
-        Serial.print(deviceName);
-        Serial.print(F(", switching_A_pin: "));
-        Serial.print(switching_pin);
-        Serial.print(F(", switchingPin_A_active: "));
-        Serial.print(switchingPin_active);
-        Serial.print(F(", switching_B_pin: "));
-        Serial.print(switching_B_pin);
-        Serial.print(F(", switchingPin_B_active: "));
-        Serial.println(switchingPin_B_active);
-        if (DCCONTROLLER_FULL_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long) this, HEX);
-        }
-        Serial.println();
-    }
+    
+    //        Serial.print(F("[CCDcControllerDevice_fullBridge]: setup "));
+    //        Serial.print(deviceName);
+    //        Serial.print(F(", switching_A_pin: "));
+    //        Serial.print(switching_pin);
+    //        Serial.print(F(", switchingPin_A_active: "));
+    //        Serial.print(switchingPin_active);
+    //        Serial.print(F(", switching_B_pin: "));
+    //        Serial.print(switching_B_pin);
+    //        Serial.print(F(", switchingPin_B_active: "));
+    //        Serial.println(switchingPin_B_active);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long) this, HEX);
+    //        }
+    //        Serial.println();
+
 }
 
 
 CCDcControllerDevice_fullBridge::~CCDcControllerDevice_fullBridge() {
     pinMode(switching_pin, INPUT);
     
-    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: device "));
         Serial.print(deviceName);
         Serial.println(F(" destructed"));
@@ -52,7 +52,7 @@ CCDcControllerDevice_fullBridge::~CCDcControllerDevice_fullBridge() {
 
 deviceInfoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
     
-//    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+//    if (verbosity & BASICOUTPUT) {
 //        Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
 //        Serial.print(deviceName);
 //        Serial.print(F(" review values... "));
@@ -63,7 +63,7 @@ deviceInfoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
     if (nextTask->getAcceleration() == 0) return DEVICE_PARAMETER_ERROR;
     if (nextTask->getDeceleration() == 0) nextTask->setDeceleration(nextTask->getAcceleration());
     
-//    if (DCCONTROLLER_VERBOSE & BASICOUTPUT) {
+//    if (verbosity_dcController & BASICOUTPUT) {
 //        Serial.println(F("   done"));
 //    }
     return DEVICE_OK;
@@ -129,7 +129,7 @@ deviceInfoCode CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     
     switchOnTime = 0;
     
-    if (DCCONTROLLER_FULL_VERBOSE & CALCULATIONDEBUG) {
+    if (verbosity & CALCULATIONDEBUG) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
         Serial.print(deviceName);
         Serial.print(F(": praparing... target power: "));
@@ -164,7 +164,7 @@ void CCDcControllerDevice_fullBridge::startTask() {
         switchOffTime = switchOnTime + targetOnDuration;
         currentRatio = 0;
                 
-        if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+        if (verbosity & BASICOUTPUT) {
             Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
             Serial.print(deviceName);
             Serial.println(F(", starting task"));
@@ -194,7 +194,7 @@ void CCDcControllerDevice_fullBridge::stopTask() {
     state = MOVE_DONE;
     
     
-    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
         Serial.print(deviceName);
         Serial.println(F(": stopping task"));
@@ -206,7 +206,7 @@ void CCDcControllerDevice_fullBridge::stopTask() {
 void CCDcControllerDevice_fullBridge::finishTask() {
     state = SLEEPING;
         
-    if (DCCONTROLLER_FULL_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDcControllerDevice_fullBridge]: "));
         Serial.print(deviceName);
         Serial.println(F(": task done"));
@@ -219,7 +219,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
     
     if (elapsedTime >= switchOnTime) {
         
-        if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print(elapsedTime);
             Serial.print(F(": switched on"));
         }
@@ -227,7 +227,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         if (elapsedTime < timeForAcceleration) {
             currentPosition = currentRatio + (target - currentRatio) * elapsedTime / (float)timeForAcceleration;
             
-            if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+            if (verbosity & MOVEMENTDEBUG) {
                 Serial.print(F(", accelerating"));
             }
             
@@ -237,7 +237,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         } else {
             elapsedTime -= timeForAccAndConstSpeed;
             
-            if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+            if (verbosity & MOVEMENTDEBUG) {
                 Serial.print(F(", decelerating"));
             }
             
@@ -256,7 +256,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
             relativePosition = stopControlTarget - sensorValue;
 
             
-            if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+            if (verbosity & MOVEMENTDEBUG) {
                 Serial.print(F(", stopping dynamically"));
             }
             
@@ -265,7 +265,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
                 currentPosition = 0;
                 targetReachedCounter++;
                 
-                if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+                if (verbosity & MOVEMENTDEBUG) {
                     Serial.print(F(", times target was reached: "));
                     Serial.print(targetReachedCounter);
                 }
@@ -335,7 +335,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         
         switchOffTime = switchOnTime + switchingInterval * fabs(currentPosition);
         switchOnTime += switchingInterval;
-        if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+        if (verbosity & MOVEMENTDEBUG) {
             Serial.print(F(", scheduled off at "));
             Serial.print(switchOffTime);
             Serial.print(F(", duty cycle: "));
@@ -352,7 +352,7 @@ void CCDcControllerDevice_fullBridge::operateTask() {
             isActive = false;
             isActive_B = false;
             
-            if (DCCONTROLLER_FULL_VERBOSE & MOVEMENTDEBUG) {
+            if (verbosity & MOVEMENTDEBUG) {
                 Serial.print(elapsedTime);
                 Serial.print(F(": switched off at "));
                 Serial.println(switchOffTime);

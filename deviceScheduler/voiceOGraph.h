@@ -30,9 +30,9 @@
 ///
 /// | pin   | header        | function                      |
 /// |-------|---------------|-------------------------------|
-/// |    0  |               |                               |
-/// |    1  |               |                               |
-/// |    2  |               |                               |
+/// |    0  |               |  <communication>              |
+/// |    1  |               |  <communication>              |
+/// |    2  |               |  SCHEDULERS_TASKVIEW_SHOW_PIN |
 /// |    3  |               |  TMC260 table enable          |
 /// |    4  |               |  TMC260 table step            |
 /// |    5  |               |  TMC260 table dir             |
@@ -81,18 +81,20 @@
 
 
 
-#define SOME_VALUE   0
+#define SCHEDULERS_TASKVIEW_SHOW_PIN        2
+#define SCHEDULERS_TASKVIEW_SHOW            LOW
+#define SCHEDULERS_TASKVIEW_HIDE            HIGH
 
 
 //  ################## Hardware Cutting Parameters #########################################################
 
-#define SONGGROOVE_PITCH                    0.2
+#define SONGGROOVE_PITCH                    0.15
 #define STARTGROOVE_PITCH                   1
 #define STARTGROOVE_RANGE                   4
 #define ENDGROOVE_PITCH                     4.8
 #define ENDGROOVE_RANGE_MIN                 10
 #define CUTTING_RANGE                       38
-#define PLAYTIME_MINUTES                    3
+#define PLAYTIME_MINUTES                    4
 
 #define ADJUSTGROOVEPITCH_TO_PLAYTIME       false
 

@@ -16,6 +16,7 @@ CCDevice::~CCDevice() {}
 
 
 
+void CCDevice::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
 
 String CCDevice::getName(){return deviceName;}
@@ -80,11 +81,13 @@ bool CCDevice::isTargetReached(CCControl* control, comparingMode comparing, int 
 //                Serial.print(deviceName);
 //                Serial.print(" got ");
                 if (targetReachedCounter > approximation) {
-                    Serial.print(deviceName);
-                    Serial.print(" reached: ");
-                    Serial.print(targetReachedCounter);
-                    Serial.print(", now: ");
-                    Serial.println(control->value());
+                    if (verbosity == BASICOUTPUT) {
+                        Serial.print(deviceName);
+                        Serial.print(" reached: ");
+                        Serial.print(targetReachedCounter);
+                        Serial.print(", now: ");
+                        Serial.println(control->value());
+                    }
                     return true;
                 }
                 return false;

@@ -22,6 +22,8 @@ class CCDeviceFlow;
 class CCFlowControl {
     
 private:
+    int verbosity;
+
     
     String              controlName;
 
@@ -49,7 +51,8 @@ public:
     String              getName();
     unsigned int       getCountOfActions();
     
-    
+    void setVerbosity(int verbosity);
+
 };
 
 

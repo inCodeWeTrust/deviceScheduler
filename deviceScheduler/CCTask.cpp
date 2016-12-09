@@ -10,7 +10,8 @@
 
 
 CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, unsigned int taskID) {
-
+    this->verbosity = NO_OUTPUT;
+    
     this->taskID = taskID;
     
     this->target = target;
@@ -42,15 +43,13 @@ CCTask::CCTask(float target, float velocity, float acceleration, float decelerat
     this->gap = 0;
     this->reversedApproximation = false;
 
-    if (TASK_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCTask]: setup task "));
-        Serial.print((int)taskID);
-        if (TASK_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.print((long)this, HEX);
-        }
-        Serial.println();
-    }
+    //        Serial.print(F("[CCTask]: setup task "));
+    //        Serial.print((int)taskID);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
 
 }
 
@@ -207,4 +206,5 @@ unsigned int CCTask::getGap(){return gap;}
 bool CCTask::getReversedApproximation(){return reversedApproximation;}
 
 
+void CCTask::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 

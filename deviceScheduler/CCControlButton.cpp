@@ -12,7 +12,8 @@
 
 
 CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, unsigned int pin, int mode) {
-    
+    this->verbosity = NO_OUTPUT;
+        
     this->controlIndex = controlIndex;
     this->controlName = controlName;
     this->type = BUTTON;
@@ -27,21 +28,21 @@ CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, 
     countOfActions = 0;
     
     
-    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
-        Serial.print(F("[CCControlButton]: setup "));
-        Serial.print(controlName);
-        Serial.print(F(", pin: "));
-        Serial.print(pin);
-        Serial.print(F(", mode: "));
-        Serial.print(mode);
-        if (CONTROLBUTTON_VERBOSE & MEMORYDEBUG) {
-            Serial.print(F(", at $"));
-            Serial.println((long)this, HEX);
-        }
-    }    
+    //        Serial.print(F("[CCControlButton]: setup "));
+    //        Serial.print(controlName);
+    //        Serial.print(F(", pin: "));
+    //        Serial.print(pin);
+    //        Serial.print(F(", mode: "));
+    //        Serial.print(mode);
+    //        if (verbosity & MEMORYDEBUG) {
+    //            Serial.print(F(", at $"));
+    //            Serial.print((long)this, HEX);
+    //        }
+    //        Serial.println();
+    
 }
 CCControlButton::~CCControlButton() {
-    if (CONTROLBUTTON_VERBOSE & BASICOUTPUT) {
+    if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCControlButton]: button "));
         Serial.print(controlName);
         Serial.println(F(" destructed"));

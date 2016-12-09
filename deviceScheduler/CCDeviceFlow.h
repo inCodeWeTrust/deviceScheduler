@@ -19,6 +19,8 @@
 class CCDevice;
 class CCDeviceFlow {
 private:
+    int verbosity;
+
     
     String deviceFlowName;
 
@@ -164,7 +166,8 @@ public:
     /// @sa taskPointer;
     void            increaseTaskPointer();
     
-    
+    void setVerbosity(int verbosity);
+
 };
 
 #endif /* defined(__deviceScheduler__CCDeviceFlow__) */

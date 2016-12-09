@@ -28,6 +28,8 @@
 
 class CCDevice {
 protected:
+    int verbosity;
+    
     
     /// Parameters of the device
     /// Value, set by the user to be recognized by him.
@@ -208,7 +210,7 @@ public:
      virtual ~CCDevice() = 0;
 
 
-
+    void setVerbosity(int verbosity);
     
     virtual void attachDevice() = 0;
     virtual void detachDevice() = 0;
