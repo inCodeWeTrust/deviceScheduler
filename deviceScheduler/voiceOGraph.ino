@@ -72,19 +72,30 @@ void loop() {
     freeRam();
     
     // ================================================================================================================================
-    // ============= create scheduler object: ==========================================================================
     // ================================================================================================================================
-    
+    // ============= create scheduler object: =========================================================================================
+    // ================================================================================================================================
+    // ================================================================================================================================
+
+    Serial.print(F("create scheduler: "));
+
     scheduler = new CCDeviceScheduler("scheduler");
     scheduler->setVerbosity(SHOW_TASK_VIEW | BASICOUTPUT);
-    Serial.print(F("created scheduler "));
+
     Serial.println(scheduler->getName());
 
 
-    
-    //============================================================================================================================
+    //  freeRam();
+
+    // ================================================================================================================================
+    // ================================================================================================================================
     // ============= register devices: ================================================================================================
-    // ============================================================================================================================
+    // ================================================================================================================================
+    // ================================================================================================================================
+    
+    Serial.print(F("register devices of scheduler "));
+    Serial.println(scheduler->getName());
+
     
     CCDevice* liftServo = scheduler->addServoWithCounterServo(SERVO_LIFT_NAME,
                                                               SERVO_LIFT_LEFT_PIN,
@@ -96,7 +107,6 @@ void loop() {
                                                               SERVO_LIFT_RIGHT_MID_POSITION,
                                                               SERVO_LIFT_RIGHT_MAX_POSITION,
                                                               LIFT_PARK_POSITION);
-    freeRam();
  
     
     CCDevice* pumpServo = scheduler->addServo(SERVO_PUMP_NAME,
@@ -105,7 +115,6 @@ void loop() {
                                               SERVO_PUMP_MAX_POSITION,
                                               PUMP_PARK_POSITION);
     
-    freeRam();
     
     CCDevice* headLeftServo = scheduler->addServo(SERVO_HEAD_LEFT_NAME,
                                                   SERVO_HEAD_LEFT_PIN,
@@ -113,14 +122,12 @@ void loop() {
                                                   SERVO_HEAD_LEFT_MAX_POSITION,
                                                   HEAD_LEFT_PARK_POSITION);
     
-    freeRam();
 
     CCDevice* headRightServo = scheduler->addServo(SERVO_HEAD_RIGHT_NAME,
                                                    SERVO_HEAD_RIGHT_PIN,
                                                    SERVO_HEAD_RIGHT_MIN_POSITION,
                                                    SERVO_HEAD_RIGHT_MAX_POSITION,
                                                    HEAD_RIGHT_PARK_POSITION);
-    freeRam();
 
     
     CCDevice* turnStepper = scheduler->addStepper_A4988(STEPPER_TURN_NAME,
@@ -137,7 +144,6 @@ void loop() {
                                                         STEPPER_TURN_STEPMODECODE_03,
                                                         STEPPER_TURN_STEPMODECODE_04,
                                                         STEPPER_TURN_STEPMODECODE_05);
-    freeRam();
     
     
     CCDevice* stockStepper = scheduler->addStepper_A4988(STEPPER_STOCK_NAME,
@@ -154,7 +160,6 @@ void loop() {
                                                          STEPPER_STOCK_STEPMODECODE_03,
                                                          STEPPER_STOCK_STEPMODECODE_04);
     
-    freeRam();
     
     CCDevice* conveyStepper = scheduler->addStepper_A4988(STEPPER_CONVEYOR_NAME,
                                                           STEPPER_CONVEYOR_STEP_PIN,
@@ -170,7 +175,6 @@ void loop() {
                                                           STEPPER_CONVEYOR_STEPMODECODE_03,
                                                           STEPPER_CONVEYOR_STEPMODECODE_04);
     
-    freeRam();
     
     CCDevice* catStepper = scheduler->addStepper_TMC260(STEPPER_CAT_NAME,
                                                         STEPPER_CAT_STEP_PIN,
@@ -180,7 +184,6 @@ void loop() {
                                                         STEPPER_CAT_CHIPSELECT_PIN,
                                                         STEPPER_CAT_CURRENT);
     
-    freeRam();
     
     CCDevice* tableStepper = scheduler->addStepper_TMC260(STEPPER_TABLE_NAME,
                                                          STEPPER_TABLE_STEP_PIN,
@@ -190,94 +193,101 @@ void loop() {
                                                          STEPPER_TABLE_CHIPSELECT_PIN,
                                                          STEPPER_TABLE_CURRENT);
     
-    freeRam();
     
     CCDevice* vacuumCleaner = scheduler->addDcController(VACCUUMCLEANER_NAME,
                                                          VACCUUMCLEANER_PIN,
                                                          VACCUUMCLEANER_ACTIVE);
     
-    freeRam();
     
     CCDevice* startingSoonLamp = scheduler->addDcController(CONTROLLER_LAMP_RED_NAME,
                                                             CONTROLLER_LAMP_RED_PIN,
                                                             CONTROLLER_LAMP_RED_ON);
+
+    
+    //  freeRam();
     
     
-    
-    //============================================================================================================================
+    // ================================================================================================================================
+    //=================================================================================================================================
     // ============= register sensors: ================================================================================================
-    // ============================================================================================================================
+    // ================================================================================================================================
+    // ================================================================================================================================
     
+    Serial.print(F("register controls of scheduler "));
+    Serial.println(scheduler->getName());
     
-    freeRam();
+
     CCControl* bridgeParkButton = scheduler->addControlButton(CAT_PARKBUTTON_NAME,
                                                               CAT_PARKBUTTON_PIN,
                                                               CAT_PARKBUTTON_MODE);
     
-    freeRam();
+
     CCControl* bridgeEndButton = scheduler->addControlButton(CAT_ENDBUTTON_NAME,
                                                              CAT_ENDBUTTON_PIN,
                                                              CAT_ENDBUTTON_MODE);
     
-    freeRam();
+
     CCControl* songEndButton = scheduler->addControlButton(SONG_ENDBUTTON_NAME,
                                                            SONG_ENDBUTTON_PIN,
                                                            SONG_ENDBUTTON_MODE);
     
-    freeRam();
+
     CCControl* songCancelButton = scheduler->addControlButton(SONG_CANCELBUTTON_NAME,
                                                               SONG_CANCELBUTTON_PIN,
                                                               SONG_CANCELBUTTON_MODE);
     
-    freeRam();
-    
-    
+
     CCControl* headInclinationSensor = scheduler->addControlSensor(HEAD_INCLINATION_SENSOR_NAME,
                                                                    HEAD_INCLINATION_SENSOR_PIN);
-    freeRam();
+
     
     CCControl* armTurnSensor = scheduler->addControlSensor(ARM_SENSOR_NAME,
                                                            ARM_SENSOR_PIN);
-    freeRam();
+
     
     CCControl* loadingButton = scheduler->addControlButton(FETCH_RECORD_BUTTON_NAME,
                                                            FETCH_RECORD_BUTTON_PIN,
                                                            FETCH_RECORD_BUTTON_MODE);
     
-    freeRam();
+
     CCControl* recordAvailableButton = scheduler->addControlButton(RECORDAVAILABLE_BUTTON_NAME,
                                                                    RECORDAVAILABLE_BUTTON_PIN,
                                                                    RECORDAVAILABLE_BUTTON_MODE);
     
-    freeRam();
+
     CCControl* stockTopButton = scheduler->addControlButton(STOCKTOP_BUTTON_NAME,
                                                             STOCKTOP_BUTTON_PIN,
                                                             STOCKTOP_BUTTON_MODE);
     
-    freeRam();
+
     CCControl* stockBottomButton = scheduler->addControlButton(STOCKBOTTOM_BUTTON_NAME,
                                                                STOCKBOTTOM_BUTTON_PIN,
                                                                STOCKBOTTOM_BUTTON_MODE);
-    freeRam();
-   
     
     
     scheduler->listDevices();
     scheduler->listControls();
     
-    delay(1000);
-    Serial.println("now the work flowing");
-    
-    
+
+    //  freeRam();
+
     // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= register workflows ===========================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    
+    Serial.print(F("register workflows of scheduler "));
+    Serial.println(scheduler->getName());
+    
+    
     // =================================================================================================================================================
     // ============= initialisation workflow ===========================================================================================================
     // =================================================================================================================================================
-    // =================================================================================================================================================
-    
     
     CCWorkflow* initTheMachine = new CCWorkflow("initMachine");
 
+    
     {
         // ============= devices of initMachine =======================================================================================
         
@@ -292,18 +302,22 @@ void loop() {
         
         // ============= tasks of initMachine =========================================================================================
         
+        //  drive head (left) to parking position
         CCTask* driveHeadLeftToParkPosition;
         driveHeadLeftToParkPosition = headLeftServoFlow->addTask(HEAD_LEFT_PARK_POSITION);
         driveHeadLeftToParkPosition->startByDate(10);
         
+        //  drive head (right) to parking position
         CCTask* driveHeadRightToParkPosition;
         driveHeadRightToParkPosition = headRightServoFlow->addTask(HEAD_RIGHT_PARK_POSITION);
         driveHeadRightToParkPosition->startByDate(20);
         
+        //  drive cat to parking position
         CCTask* driveCatToParkPosition;
         driveCatToParkPosition = catStepperFlow->addTaskWithPositionResetOnCompletion(-400000);
         driveCatToParkPosition->startByDate(30);
         driveCatToParkPosition->stopByControl(bridgeParkControl, IS, CAT_PARKBUTTON_REACHED, STOP_NORMAL);
+        
         
         //  lift grappler
         CCTask* liftForCalibratingArm;
@@ -316,27 +330,28 @@ void loop() {
         calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
         calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
         
+        //  find correct parking position of arm
         CCTask* calibrateArmForth;
         calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
         calibrateArmForth->startAfterCompletion();
         calibrateArmForth->stopByControl(armControl, IS_GREATER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
 
+        //  park arm
         CCTask* lowerInParkPosition;
         lowerInParkPosition = liftServoFlow->addTask(LIFT_STOCK_POSITION);
         lowerInParkPosition->startAfterCompletionOf(turnStepper, calibrateArmForth);
         
+        
         scheduler->reviewTasks(initTheMachine);
         scheduler->listAllTasks(initTheMachine);
+        scheduler->listAllActions(initTheMachine);
         
-        scheduler->run(initTheMachine);
-        catStepper->setCurrentPosition(0.0);
-        
+     
+        //  freeRam();
     }
     
     // =================================================================================================================================================
-    // =================================================================================================================================================
     // ============= fetchingRecord workflow ===========================================================================================================
-    // =================================================================================================================================================
     // =================================================================================================================================================
     
     CCWorkflow* fetchingRecord = new CCWorkflow("fetchingRecord");
@@ -380,6 +395,7 @@ void loop() {
         calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
         calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
 
+        //  find correct parking position of arm
         CCTask* calibrateArmForth;
         calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
         calibrateArmForth->startAfterCompletion();
@@ -466,17 +482,13 @@ void loop() {
         scheduler->listAllActions(fetchingRecord);
         
         
-        freeRam();
+        //  freeRam();
     }
     
     
     
-    
-    
-    // =================================================================================================================================================
     // =================================================================================================================================================
     // ============= cuttingProcess workflow ===========================================================================================================
-    // =================================================================================================================================================
     // =================================================================================================================================================
     
     CCWorkflow* cuttingProcess = new CCWorkflow("cuttingProcess");
@@ -640,16 +652,15 @@ void loop() {
         scheduler->listAllTasks(cuttingProcess);
         scheduler->listAllActions(cuttingProcess);
         
-        freeRam();
         
+        //  freeRam();
     }
     
     
     
-    // =================================================================================================================================================
+
     // =================================================================================================================================================
     // ============= ejectingRecord workflow ===========================================================================================================
-    // =================================================================================================================================================
     // =================================================================================================================================================
     
     CCWorkflow* ejectingRecord = new CCWorkflow("ejectingRecord");
@@ -680,6 +691,7 @@ void loop() {
         calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
         calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_PRECISE);
         
+        //  find correct parking position of arm
         CCTask* calibrateArmForth;
         calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
         calibrateArmForth->startAfterCompletion();
@@ -762,15 +774,13 @@ void loop() {
         scheduler->listAllTasks(ejectingRecord);
         
         
-        freeRam();
+        //  freeRam();
     }
     
     
     
     // =================================================================================================================================================
-    // =================================================================================================================================================
-    // ============= loading workflow ===========================================================================================================
-    // =================================================================================================================================================
+    // ============= loading workflow ==================================================================================================================
     // =================================================================================================================================================
     
     CCWorkflow* loading = new CCWorkflow("loading");
@@ -807,6 +817,7 @@ void loop() {
         calibrateArmBack->startAfterCompletionOf(liftServo, liftForCalibratingArm);
         calibrateArmBack->stopByControl(armControl, IS_SMALLER_THEN, ARM_STOCK_POSITION, STOP_IMMEDIATELY, SKIP_APPROXIMATION_VERY_PRECISE);
         
+        //  find correct parking position of arm
         CCTask* calibrateArmForth;
         calibrateArmForth = turnStepperFlow->addTaskMoveRelativWithPositionResetOnCompletion(-600, 10, 10);
         calibrateArmForth->startAfterCompletion();
@@ -871,16 +882,15 @@ void loop() {
         scheduler->listAllTasks(loading);
         scheduler->listAllActions(loading);
         
-        freeRam();
+        
+        //  freeRam();
     }
     
     
     
     
     // =================================================================================================================================================
-    // =================================================================================================================================================
-    // ============= matchHeadImpact workflow ===========================================================================================================
-    // =================================================================================================================================================
+    // ============= matchHeadImpact workflow ==========================================================================================================
     // =================================================================================================================================================
     
     CCWorkflow* matchHeadImpact = new CCWorkflow("matchHeadImpact");
@@ -946,6 +956,9 @@ void loop() {
         
         scheduler->reviewTasks(matchHeadImpact);
         scheduler->listAllTasks(matchHeadImpact);
+        
+        
+        //  freeRam();
     }
     
     
@@ -958,8 +971,10 @@ void loop() {
     // ============================================================================================================================
     // ============================================================================================================================
     
+    scheduler->run(initTheMachine);
+
+    Serial.println(F("initialisation complete!"));
     
-    Serial.println(F("ready to run!"));
     
     bool initNeeded = false;
     long blinkTimer = millis();
@@ -978,19 +993,26 @@ void loop() {
             
             if (millis() - buttonPressedTime > 4000) {
                 Serial.println();
-                Serial.println("go for loading new records");
+                Serial.print(F("loading new records ... "));
                 
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
                 scheduler->run(loading);
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
+                Serial.println(F("done"));
+                Serial.println();
                 
             } else {
                 Serial.println();
-                Serial.println("go for a brand new record");
+                Serial.print(F("fetch new record for cutting ... "));
                 
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
                 scheduler->run(fetchingRecord);
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+
+                Serial.println(F("done"));
+                Serial.println();
+                
             }
         }
         
@@ -999,12 +1021,19 @@ void loop() {
        
         if (digitalRead(START_CUTTING_BUTTON) == LOW) {
             Serial.println();
-            Serial.println("go for cut and scratch");
+            Serial.print(F("cut and scratch the record ... "));
             
             digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
             scheduler->run(cuttingProcess);
+
+            Serial.println(F("done"));
+            Serial.print(F("eject the record ... "));
+
             scheduler->run(ejectingRecord);
             digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
+            
+            Serial.println(F("done"));
+            Serial.println();
             
         }
         
@@ -1013,12 +1042,15 @@ void loop() {
 
         if (digitalRead(MATCH_HEADIMPACT_SWITCH) == LOW) {
             Serial.println();
-            Serial.println("go for matching head impact");
+            Serial.print(F("matching head impact ... "));
             
             while (digitalRead(MATCH_HEADIMPACT_SWITCH) == LOW) {
                 scheduler->run(matchHeadImpact);
                 delay(1000);
             }
+            
+            Serial.println(F("done"));
+            Serial.println();
             
             scheduler->run(initTheMachine);
         }
@@ -1028,8 +1060,12 @@ void loop() {
 
         if (digitalRead(EVALUATE_BUTTONS_SWITCH) == LOW) {
             Serial.println();
-            Serial.println("go for evaluating the buttons");
+            Serial.print(F("evaluate the buttons"));
+            
             scheduler->evaluateButtons();
+            
+            Serial.println(F("done"));
+            Serial.println();
             
             scheduler->run(initTheMachine);
         }
@@ -1043,7 +1079,7 @@ void loop() {
             if (millis() - blinkTimer > 2200) {
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_OFF);
                 blinkTimer = millis();
-                Serial.print(".");
+                Serial.print(F("."));
                 
                 if (digitalRead(SCHEDULERS_TASKVIEW_SHOW_PIN) == SCHEDULERS_TASKVIEW_HIDE) {
                     scheduler->setVerbosity(NO_OUTPUT);
@@ -1054,10 +1090,17 @@ void loop() {
     }
     
     
-    Serial.println(F("done!"));
+    Serial.println(F("exectuion is terminated!"));
 
     delay(2000);
     
+    freeRam();
+
+    Serial.println();
+    Serial.print(F("delete all objects ... "));
+
+    delete initTheMachine;
+    initTheMachine = NULL;
     
     delete fetchingRecord;
     fetchingRecord = NULL;
@@ -1068,10 +1111,17 @@ void loop() {
     delete ejectingRecord;
     ejectingRecord = NULL;
     
+    delete loading;
+    loading = NULL;
+    
+    delete matchHeadImpact;
+    matchHeadImpact = NULL;
 
     delete scheduler;
     scheduler = NULL;
     
+    Serial.println(F("done!"));
+
     freeRam();
     
     delay(2000);
@@ -1081,34 +1131,6 @@ void loop() {
 
 
 
-/*
-CCDeviceFlow* turnMotorFlow = cuttingProcess->addDeviceFlow("turnMotorFlow", turnMotor, 20, 200);
-
-CCTask* turnRight;
-turnRight = turnMotorFlow->addTask(1.0, 20, 8000, 8000);
-turnRight->startByDate(100);
-turnRight->stopByTimeout(10000, STOP_NORMAL);
-
-CCTask* turnLeft;
-turnLeft = turnMotorFlow->addTask(-1.0, 20, 8000, 8000);
-turnLeft->startAfterCompletionOf(turnMotor, turnRight);
-turnLeft->stopByTimeout(10000, STOP_NORMAL);
-
-CCTask* turnRight1;
-turnRight1 = turnMotorFlow->addTask(1.0, 20, 8000, 8000);
-turnRight1->startAfterCompletionOf(turnMotor, turnLeft);
-turnRight1->stopByTimeout(6000, STOP_IMMEDIATELY);
-
-CCTask* turnLeft1;
-turnLeft1 = turnMotorFlow->addTask(-1.0, 20, 8000, 8000);
-turnLeft1->startAfterCompletionOf(turnMotor, turnRight1);
-turnLeft1->stopByTimeout(3000, STOP_NORMAL);
-
-CCTask* turnRecordToTable;
-turnRecordToTable = turnMotorFlow->addTask(0.5);
-turnRecordToTable->startAfterCompletionOf(turnMotor, turnLeft1);
-turnRecordToTable->stopDynamicallyBySensor_new(A0, 300, 20, 2, SKIP_APPROXIMATION_VERY_PRECISE);
-*/
 
 void calculateCuttingParameters() {
     

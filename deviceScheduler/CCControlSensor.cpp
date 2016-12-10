@@ -11,14 +11,9 @@
 
 
 
-CCControlSensor::CCControlSensor(unsigned int controlIndex, String controlName, unsigned int pin) {
+CCControlSensor::CCControlSensor(const String controlName, const unsigned int controlIndex, const unsigned int pin) : CCControl(controlName, controlIndex, SENSOR, pin, -1) {
     this->verbosity = NO_OUTPUT;
-        
-    this->controlIndex = controlIndex;
-    this->controlName = controlName;
-    this->type = SENSOR;
-    this->pin = pin;
-    
+            
     this->sensorValue = analogRead(pin);
     this->sensorValue_prev = sensorValue;
     

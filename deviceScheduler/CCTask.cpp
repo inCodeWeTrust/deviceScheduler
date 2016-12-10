@@ -9,17 +9,10 @@
 #include "CCTask.h"
 
 
-CCTask::CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, unsigned int taskID) {
+CCTask::CCTask(const unsigned int taskID, float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) : taskID(taskID), target(target), velocity(velocity), acceleration(acceleration), deceleration(deceleration), moveRelativ(moveRelativ), positionReset(positionReset) {
+
     this->verbosity = NO_OUTPUT;
     
-    this->taskID = taskID;
-    
-    this->target = target;
-    this->velocity = velocity;
-    this->acceleration = acceleration;
-    this->deceleration = deceleration;
-    this->moveRelativ = moveRelativ;
-    this->positionReset = positionReset;
     this->startDelay = 0;
     this->startEvent = NONE;
     this->stopEvent = NONE;
@@ -74,12 +67,12 @@ void CCTask::startAfterCompletion() {
 void CCTask::startAfterCompletionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask) {
     this->startEvent = FOLLOW;
     this->startTriggerDevice = startTriggerDevice;
-    this->startTriggerTaskID = startTriggerTask->taskID;
+    this->startTriggerTaskID = startTriggerTask->getTaskID();
 }
 void CCTask::startByTriggerpositionOf(CCDevice* startTriggerDevice, CCTask* startTriggerTask, signed long startTriggerPosition) {
     this->startEvent = POSITION;
     this->startTriggerDevice = startTriggerDevice;
-    this->startTriggerTaskID = startTriggerTask->taskID;
+    this->startTriggerTaskID = startTriggerTask->getTaskID();
     this->startTriggerPosition = startTriggerPosition;
 }
 
@@ -99,7 +92,7 @@ void CCTask::switchToNextTaskByControl(CCControl* switchingControl, comparingMod
 void CCTask::switchToNextTaskAfterCompletionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = switchingTriggerDevice;
-    this->stopTriggerTaskID = switchingTriggerTask->taskID;
+    this->stopTriggerTaskID = switchingTriggerTask->getTaskID();
     this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
 void CCTask::switchToNextTaskAtPosition(signed long switchingTriggerPosition) {
@@ -110,7 +103,7 @@ void CCTask::switchToNextTaskAtPosition(signed long switchingTriggerPosition) {
 void CCTask::switchToNextTaskByTriggerpositionOf(CCDevice* switchingTriggerDevice, CCTask* switchingTriggerTask, signed long switchingTriggerPosition) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = switchingTriggerDevice;
-    this->stopTriggerTaskID = switchingTriggerTask->taskID;
+    this->stopTriggerTaskID = switchingTriggerTask->getTaskID();
     this->stopTriggerPosition = switchingTriggerPosition;
     this->switchTaskPromptly = SWITCH_PROMPTLY;
 }
@@ -131,13 +124,13 @@ void CCTask::stopByControl(CCControl* stopControl, comparingMode comparing, int 
 void CCTask::stopAfterCompletionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, stoppingMode stopping) {
     this->stopEvent = FOLLOW;
     this->stopTriggerDevice = stopTriggerDevice;
-    this->stopTriggerTaskID = stopTriggerTask->taskID;
+    this->stopTriggerTaskID = stopTriggerTask->getTaskID();
     this->stopping = stopping;
 }
 void CCTask::stopByTriggerpositionOf(CCDevice* stopTriggerDevice, CCTask* stopTriggerTask, signed long stopTriggerPosition, stoppingMode stopping) {
     this->stopEvent = POSITION;
     this->stopTriggerDevice = stopTriggerDevice;
-    this->stopTriggerTaskID = stopTriggerTask->taskID;
+    this->stopTriggerTaskID = stopTriggerTask->getTaskID();
     this->stopTriggerPosition = stopTriggerPosition;
     this->stopping = stopping;
 }
@@ -168,7 +161,7 @@ void CCTask::stopDynamicallyBySensor_new(CCControl* stopControl, unsigned int st
 }
 
 
-unsigned int CCTask::getTaskID(){return taskID;}
+unsigned int CCTask::getTaskID(){return (unsigned int)taskID;}
 float CCTask::getTarget(){return target;}
 void CCTask::setTarget(float target){this->target = target;}
 float CCTask::getVelocity(){return velocity;}

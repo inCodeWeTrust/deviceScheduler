@@ -58,7 +58,7 @@ class CCDeviceScheduler {
     
     /// The Scheduler's name
     /// Value, set by the user to be recognized by him.
-    String   schedulerName;
+    const String   schedulerName;
     
     /// Scheduler parameter:
     /// Value holds the number of devices managed by him.
@@ -66,7 +66,7 @@ class CCDeviceScheduler {
     
     unsigned long taskTime;
     
-    unsigned int nextTaskID[14];
+    unsigned int nextTaskID[MAX_DEVICES_PER_SCHEDULER];
 
     CCDeviceFlow* currentDeviceFlow;
     CCDeviceFlow* triggerDeviceFlow_start;
@@ -88,14 +88,15 @@ class CCDeviceScheduler {
     deviceInfoCode handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
     deviceInfoCode handlePreparation(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
     
-    String getNameOfDeviceType(deviceType t);
-    String getNameOfTaskEvent(event e);
-    String getNameOfState(deviceState s);
-    String getNameOfControlValueComparing(comparingMode c);
-    String getNameOfBooleanState(bool s);
-    String getNameOfStoppingMode(stoppingMode s);
-    String getNameOfSwitchingMode(switchingMode s);
-    String getNameOfDeviceAction(deviceAction d);
+    String getLiteralOfDeviceType(deviceType t);
+    String getLiteralOfControllerType(controlType t);
+    String getLiteralOfTaskEvent(event e);
+    String getLiteralOfState(deviceState s);
+    String getLiteralOfControlValueComparing(comparingMode c);
+    String getLiteralOfBooleanState(bool s);
+    String getLiteralOfStoppingMode(stoppingMode s);
+    String getLiteralOfSwitchingMode(switchingMode s);
+    String getLiteralOfDeviceAction(deviceAction d);
     String getLiteralOfWorkflowInfo(workflowInfoCode i);
     String getLiteralOfDeviceInfo(deviceInfoCode i);
     
@@ -103,15 +104,15 @@ class CCDeviceScheduler {
 public:
     
     
-    CCDeviceScheduler(String schedulerName);
+    CCDeviceScheduler(const String schedulerName);
     ~CCDeviceScheduler();
     
-    String getName();
+    const String getName();
     
 
     /// The Scheduler's device array.
     /// Array of all devices.
-    CCDevice *device[14];
+    CCDevice *device[MAX_DEVICES_PER_SCHEDULER];
     
     /// Function adds a servo device to the device array and returns the index of the device.
     /// Device-specific parameters are passed.
@@ -190,16 +191,16 @@ public:
 
     
     /// Array of all control-inputs.
-    CCControl *control[12];
+    CCControl *control[MAX_CONTROLS_PER_SCHEDULER];
     
     /// Function adds a control button to the control button array and returns the index of the button.
     /// A control button is a input device, that can provide either a HIGH or a LOW level at a input pin or simply connect the pin and GND using the internal inputPullup-function. Specific parameters are passed.
     /// @param buttonName the human-readable name of the device (used for verbose output).
     /// @param button_pin the pin number of the button's pin.
     /// @param buttonActive the state of the pin, where the button should trigger actions.
-    /// @param pullup if a nonzero value is passed, the input pullup is activeated.
+    /// @param the pinMode macro is passed (INPUT or INPUT_PULLUP).
     /// @return the button index.
-    CCControl* addControlButton(String controlName, unsigned int pin, bool pullup = 0);
+    CCControl* addControlButton(String controlName, unsigned int pin, unsigned int mode = INPUT);
  
     
     CCControl* addControlSensor(String sensorName, unsigned int pin);

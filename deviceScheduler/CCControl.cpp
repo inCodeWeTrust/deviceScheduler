@@ -9,26 +9,26 @@
 #include "CCControl.h"
 
 
-
+CCControl::CCControl(const String controlName, const unsigned int controlIndex, const controlType type, const unsigned int pin, const unsigned int mode) : controlName(controlName), controlIndex(controlIndex), type(type), pin(pin), mode(mode) {}
 CCControl::~CCControl() {}
 
 
 int CCControl::value() {return sensorValue;}
 
 
-bool CCControl::isGreaterThen(int minimum) {
+bool CCControl::isGreaterThen(int minimum) const {
     return sensorValue > minimum;
 }
-bool CCControl::isSmallerThen(int maximum) {
+bool CCControl::isSmallerThen(int maximum) const {
     return sensorValue < maximum;
 }
-bool CCControl::isAbout(int fix, int tolerance) {
+bool CCControl::isAbout(int fix, int tolerance) const {
     return fabs(sensorValue - fix) < tolerance;
 }
-bool CCControl::is(int fix) {
+bool CCControl::is(int fix) const{
     return sensorValue == fix;
 }
-bool CCControl::isNot(int fix) {
+bool CCControl::isNot(int fix) const {
     return !(sensorValue == fix);
 }
 
@@ -38,12 +38,11 @@ bool CCControl::isNot(int fix) {
 
 
 
-
+const String CCControl::getName() const {return controlName;}
+controlType CCControl::getType() {return (controlType)type;}
 
 bool CCControl::getDigitalValue() {return digitalRead(pin);}
 int CCControl::getAnalogValue() {return analogRead(pin);}
-String CCControl::getName() {return controlName;}
-unsigned int CCControl::getCountOfActions() {return countOfActions;}
 
 void CCControl::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 

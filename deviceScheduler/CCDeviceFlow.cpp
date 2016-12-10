@@ -12,15 +12,10 @@
 
 void CCDeviceFlow::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
-CCDeviceFlow::CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration, unsigned int deviceFlowID) {
+CCDeviceFlow::CCDeviceFlow(const String deviceFlowName, const unsigned int deviceFlowID, const CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) : deviceFlowName(deviceFlowName), deviceFlowID(deviceFlowID), device(device), defaultVelocity(defaultVelocity), defaultAcceleration(defaultAcceleration), defaultDeceleration(defaultDeceleration) {
+
     this->verbosity = NO_OUTPUT;
     
-    this->deviceFlowID = deviceFlowID;
-    this->deviceFlowName = deviceFlowName;
-    this->device = device;
-    this->defaultVelocity = defaultVelocity;
-    this->defaultAcceleration = defaultAcceleration;
-    this->defaultDeceleration = defaultDeceleration;
     this->countOfTasks = 0;
     
     //        Serial.print(F("[CCDeviceFlow]: setup deviceFlow "));
@@ -147,7 +142,9 @@ CCTask* CCDeviceFlow::addTaskMoveRelativWithPositionResetOnCompletion(float rela
 }
 
 CCTask* CCDeviceFlow::registerTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) {
-    task[countOfTasks] = new CCTask(target, velocity, acceleration, deceleration, moveRelativ, positionReset, countOfTasks);
+    if (countOfTasks >= MAX_TASKS_PER_DEVICEFLOW - 1) return NULL;
+
+    task[countOfTasks] = new CCTask(countOfTasks, target, velocity, acceleration, deceleration, moveRelativ, positionReset);
 
     if (verbosity & BASICOUTPUT) {
     Serial.print(F("[CCDeviceFlow]: "));
@@ -215,8 +212,9 @@ void CCDeviceFlow::getTask(unsigned int t) {
     }
 }
 
-unsigned int CCDeviceFlow::getID() {return deviceFlowID;}
-String CCDeviceFlow::getName(){return deviceFlowName;}
+CCDevice* CCDeviceFlow::getDevice() {return (CCDevice*)device;}
+const unsigned int CCDeviceFlow::getID() const {return deviceFlowID;}
+const String CCDeviceFlow::getName() const {return deviceFlowName;}
 unsigned int CCDeviceFlow::getCountOfTasks(){return countOfTasks;}
 void CCDeviceFlow::setCountOfTasks(unsigned int count){countOfTasks = count;}
 int CCDeviceFlow::getTaskPointer(){return taskPointer;}

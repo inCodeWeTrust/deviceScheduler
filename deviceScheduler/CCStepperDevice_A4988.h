@@ -13,7 +13,7 @@
 #include "CCStepperDevice.h"
 
 
-
+#define NUMBER_OF_MICROSTEPPING_PINS        3
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @class CCStepperDevice_A4988
@@ -26,7 +26,7 @@
 class CCStepperDevice_A4988 : public CCStepperDevice {
     
 public:
-    CCStepperDevice_A4988(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int microStep_00_pin, unsigned int microStep_01_pin, unsigned int microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07);
+    CCStepperDevice_A4988(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation, const unsigned int microStep_00_pin, const unsigned int microStep_01_pin, const unsigned int microStep_02_pin, const signed char steppingCode_00, const signed char steppingCode_01, const signed char steppingCode_02, const signed char steppingCode_03, const signed char steppingCode_04, const signed char steppingCode_05, const signed char steppingCode_06, const signed char steppingCode_07);
     
     ~CCStepperDevice_A4988();
     
@@ -35,8 +35,7 @@ public:
 
     
 private:
-    unsigned int        numberOfMicroStepPins;
-    unsigned int        *microStepPin;
+    unsigned int        microStepPin[NUMBER_OF_MICROSTEPPING_PINS];
     
     ///    i.e. "0x00, 0x01, 0x02, 0x03, 0x07":
     /// stepModeCode | bin | pin 2 | pin 1 | pin 0 | description

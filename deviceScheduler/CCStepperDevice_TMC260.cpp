@@ -28,10 +28,8 @@
 
 
 
-CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
+CCStepperDevice_TMC260::CCStepperDevice_TMC260(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation, const unsigned int chipSelect_pin, unsigned int currentMax) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation), chipSelect_pin(chipSelect_pin) {
     
-    
-	this->chipSelect_pin = chipSelect_pin;
     pinMode(chipSelect_pin, OUTPUT);
     digitalWrite(chipSelect_pin, HIGH);
     
@@ -51,7 +49,6 @@ CCStepperDevice_TMC260::CCStepperDevice_TMC260(String deviceName, unsigned int s
     
     this->acceleration_max = 4000;
     
-    this->type = STEPPERDEVICE;
     this->state = SLEEPING;
     
     this->currentMicroStep = 0;

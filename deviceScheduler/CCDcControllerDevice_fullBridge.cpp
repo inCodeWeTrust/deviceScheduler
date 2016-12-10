@@ -11,11 +11,8 @@
 
 
 
-CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active) : CCDcControllerDevice(deviceName, switching_A_pin, switchingPin_A_active) {
-    
-    this->switching_B_pin = switching_B_pin;
-    this->switchingPin_B_active = switchingPin_B_active;
-    
+CCDcControllerDevice_fullBridge::CCDcControllerDevice_fullBridge(const String deviceName, const unsigned int switching_A_pin, const bool switchingPin_A_active, const unsigned int switching_B_pin, const bool switchingPin_B_active) : CCDcControllerDevice(deviceName, switching_A_pin, switchingPin_A_active), switching_B_pin(switching_B_pin), switchingPin_B_active(switchingPin_B_active) {
+        
     pinMode(switching_B_pin, OUTPUT);
     digitalWrite(switching_B_pin, !switchingPin_B_active);
     isActive_B = false;

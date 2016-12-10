@@ -29,6 +29,7 @@ class CCServoDevice : public CCDevice {
 
 protected:
     
+    unsigned int         startPosition, targetPosition;
     unsigned long        t0;
     signed long          elapsedTime;
     signed long          wayToGo, wayForAcceleration, wayForConstantSpeed;
@@ -43,14 +44,14 @@ protected:
 
 
     Servo                theServo;
-    unsigned int         servo_pin;
-    unsigned int         startPosition, targetPosition;
-    unsigned int         minPosition, maxPosition, parkPosition;
+
+    const unsigned int   servo_pin;
+    const unsigned int   minPosition, maxPosition, parkPosition;
 
     
 public:
     
-    CCServoDevice(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition);
+    CCServoDevice(const String deviceName, const unsigned int servo_pin, const int minPosition, const int maxPosition, const int parkPosition);
     ~CCServoDevice();
 
 

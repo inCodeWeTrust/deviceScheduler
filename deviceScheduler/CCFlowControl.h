@@ -23,33 +23,35 @@ class CCFlowControl {
     
 private:
     int verbosity;
-
     
-    String              controlName;
-
-    comparingMode       comparing;
-    int                 target;
+    const String              controlName;
+    const CCControl*          control;
+    const comparingMode       comparing;
+    const int                 target;
+    
     unsigned int        countOfActions;
 
+    CCAction*           action[MAX_ACTIONS_PER_FLOWCONTROL];
+    
     
 public:
-
-    CCControl*          control;
-    CCAction*           action[8];
     
-    
-    
-    CCFlowControl(String controlName, CCControl* control, comparingMode comparing, int target);
+    CCFlowControl(const String controlName, const CCControl* control, const comparingMode comparing, const int target);
     ~CCFlowControl();
+    
     
     CCAction*           addAction(String actionName, workflowInfoCode workflowInfo);
 
     bool                needsToFire();
     
+    
+    const String        getName();
+    CCControl*          getControl();
     comparingMode       getComparing();
     int                 getTarget();
-    String              getName();
-    unsigned int       getCountOfActions();
+
+    CCAction*           getAction(int a);
+    unsigned int        getCountOfActions();
     
     void setVerbosity(int verbosity);
 

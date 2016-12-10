@@ -33,7 +33,7 @@ protected:
     
     /// Parameters of the device
     /// Value, set by the user to be recognized by him.
-    String               deviceName;
+    const String               deviceName;
     
     /// Parameters of the device
     /// Parameter that holds the type of the device.
@@ -43,8 +43,9 @@ protected:
     /// SERVODEVICE         | modell servo
     /// STEPPERDEVICE       | stepper motor with stepper driver
     /// DCCONTROLLERDEVICE  | any device to be pwm driven
-    deviceType           type;
+    const deviceType           type;
 
+    
     unsigned int         currentTaskID;
 
     /// Device parameter:
@@ -207,6 +208,7 @@ protected:
     
 public:
 
+    CCDevice(const String deviceName, const deviceType type);
      virtual ~CCDevice() = 0;
 
 
@@ -238,7 +240,7 @@ public:
     
     /// Getter method for getting the name of the device
     /// @sa deviceName;
-    String getName();
+    const String getName();
     
     /// Getter method for getting the type of the device
     /// @sa deviceType;

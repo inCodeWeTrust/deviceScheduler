@@ -21,7 +21,9 @@ class CCAction {
 private:
     int verbosity;
 
-    String              actionName;
+    const String              actionName;
+    const workflowInfoCode    workflowInfo;
+
     int                 validTaskID;
     deviceAction        targetAction;
     stoppingMode        stopping;
@@ -29,7 +31,6 @@ private:
     int                 followingTaskID;
     int                 notificationCode;
     String              notificationText;
-    workflowInfoCode    workflowInfo;
     bool                actionDone;
 
 
@@ -37,7 +38,7 @@ public:
     
     CCDeviceFlow*       targetDeviceFlow;
 
-    CCAction(String actionName, workflowInfoCode workflowInfo);
+    CCAction(const String actionName, const workflowInfoCode workflowInfo);
 //    ~CCAction();
 
 
@@ -54,15 +55,16 @@ public:
 //    int notificationCode = 0, String notificationText = "");
     
 
+    const String              getName();
+    workflowInfoCode    getWorkflowInfo();
+
     stoppingMode        getStopping();
     switchingMode       getSwitching();
-    String              getName();
     int                 getValidTaskID();
     deviceAction        getTargetAction();
     int                 getFollowingTaskID();
     int                 getNotificationCode();
     String              getNotificationText();
-    workflowInfoCode    getWorkflowInfo();
     bool                getActionDone();
     void                setActionDone(bool d);
     

@@ -11,15 +11,9 @@
 
 
 
-CCControlButton::CCControlButton(unsigned int controlIndex, String controlName, unsigned int pin, int mode) {
+CCControlButton::CCControlButton(const String buttonName, const unsigned int buttonIndex, const unsigned int button_pin, const int mode) : CCControl(buttonName, buttonIndex, BUTTON, button_pin, mode){
     this->verbosity = NO_OUTPUT;
-        
-    this->controlIndex = controlIndex;
-    this->controlName = controlName;
-    this->type = BUTTON;
-    this->pin = pin;
-    this->mode = mode;
-    
+            
     pinMode(pin, mode);
     
     //    this->notificationCode = CONTROLLBUTTON_PRESSED_CODE;

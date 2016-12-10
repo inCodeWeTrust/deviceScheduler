@@ -27,7 +27,9 @@ class CCControl;
 class CCTask {
 
 private:
-    int verbosity;
+    int                     verbosity;
+
+    const unsigned int      taskID;
 
     event                   startEvent;
     event                   stopEvent;
@@ -95,7 +97,6 @@ public:
     
     
     
-    unsigned int           taskID;
     
     void setStartDelay(unsigned long startDelay);
     
@@ -123,7 +124,7 @@ public:
     
     
 
-    CCTask(float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset, unsigned int taskID);
+    CCTask(const unsigned int taskID, float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset);
     
     
     

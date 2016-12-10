@@ -10,18 +10,10 @@
 
 
 
-CCServoDevice::CCServoDevice(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition) : CCDevice() {
+CCServoDevice::CCServoDevice(const String deviceName, const unsigned int servo_pin, const int minPosition, const int maxPosition, const int parkPosition) : CCDevice(deviceName, SERVODEVICE), servo_pin(servo_pin), minPosition(minPosition), maxPosition(maxPosition), parkPosition(parkPosition) {
+    
     this->verbosity = NO_OUTPUT;
     
-    this->deviceName = deviceName;
-    
-    this->servo_pin = servo_pin;
-    this->minPosition = minPosition;
-    this->maxPosition = maxPosition;
-    this->parkPosition = parkPosition;
-    
-    
-    this->type = SERVODEVICE;
     this->state = SLEEPING;
     
     

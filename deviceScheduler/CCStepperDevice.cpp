@@ -11,15 +11,9 @@
 #include "CCStepperDevice.h"
 
 
-CCStepperDevice::CCStepperDevice(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation) {
+CCStepperDevice::CCStepperDevice(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation) :CCDevice(deviceName, STEPPERDEVICE), step_pin(step_pin), dir_pin(dir_pin), enable_pin(enable_pin), stepsPerRotation(stepsPerRotation) {
     this->verbosity = NO_OUTPUT;
-    
-    this->deviceName = deviceName;
-    
-    this->dir_pin = dir_pin;
-    this->step_pin = step_pin;
-    this->enable_pin = enable_pin;
-    
+        
     this->highestSteppingMode = 0;
 
     this->steppingUnit = new unsigned int[9];                         // create array for increment of microSteps according to microSteppingMode (be prepared up to 256-times microstepping)
@@ -38,7 +32,6 @@ CCStepperDevice::CCStepperDevice(String deviceName, unsigned int step_pin, unsig
     
     this->acceleration_max = 4000;
     
-    this->type = STEPPERDEVICE;
     this->state = SLEEPING;
     
     this->currentMicroStep = 0;

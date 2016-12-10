@@ -30,8 +30,8 @@ class CCDcControllerDevice_fullBridge : public CCDcControllerDevice {
     
 private:
     
-    unsigned int        switching_B_pin;
-    bool                switchingPin_B_active;
+    const unsigned int        switching_B_pin;
+    const bool                switchingPin_B_active;
 
     
     /// Variable is @c true when switched on, @c false when switched off.
@@ -41,7 +41,7 @@ private:
     
 public:
     
-    CCDcControllerDevice_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active);
+    CCDcControllerDevice_fullBridge(const String deviceName, const unsigned int switching_A_pin, const bool switchingPin_A_active, const unsigned int switching_B_pin, const bool switchingPin_B_active);
     ~CCDcControllerDevice_fullBridge();
     
     

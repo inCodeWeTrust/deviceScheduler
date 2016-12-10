@@ -10,15 +10,13 @@
 
 
 
-CCAction::CCAction(String actionName, workflowInfoCode workflowInfo) {
+CCAction::CCAction(const String actionName, const workflowInfoCode workflowInfo) : actionName(actionName), workflowInfo(workflowInfo) {
     this->verbosity = NO_OUTPUT;
     
-    this->actionName = actionName;
     this->targetDeviceFlow = NULL;
     this->validTaskID = -1;
     this->targetAction = DO_NOTHING;
     this->followingTaskID = -1;
-    this->workflowInfo = workflowInfo;
     this->actionDone = false;
     
     //        Serial.print(F("[CCAction]: setup action "));
@@ -103,7 +101,7 @@ void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask
 
 void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     this->targetDeviceFlow = targetDeviceFlow;
-    this->validTaskID = validTask->taskID;
+    this->validTaskID = validTask->getTaskID();
     this->targetAction = BREAK_LOOP_ACTION;
     this->followingTaskID = 1;
     
@@ -126,15 +124,16 @@ void CCAction::evokeBreak() {
 }
 
 
+const String CCAction::getName(){return actionName;}
+workflowInfoCode CCAction::getWorkflowInfo(){return (workflowInfoCode)workflowInfo;}
+
 stoppingMode CCAction::getStopping() {return stopping;}
 switchingMode CCAction::getSwitching() {return switching;}
-String CCAction::getName(){return actionName;}
 int CCAction::getValidTaskID(){return validTaskID;}
 deviceAction CCAction::getTargetAction(){return targetAction;}
 int CCAction::getFollowingTaskID(){return followingTaskID;}
 int CCAction::getNotificationCode(){return notificationCode;}
 String CCAction::getNotificationText(){return notificationText;}
-workflowInfoCode CCAction::getWorkflowInfo(){return workflowInfo;}
 bool CCAction::getActionDone(){return actionDone;}
 void CCAction::setActionDone(bool d){actionDone = d;}
 

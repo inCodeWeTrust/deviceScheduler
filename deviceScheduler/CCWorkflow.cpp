@@ -12,14 +12,15 @@
 void CCWorkflow::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
 
-CCWorkflow::CCWorkflow(String workflowName) {
+CCWorkflow::CCWorkflow(const String workflowName) : workflowName(workflowName) {
+
     this->verbosity = NO_OUTPUT;
     
-    this->workflowName = workflowName;
     this->countOfDeviceFlows = 0;
     this->countOfControls = 0;
     this->countOfFlowControls = 0;
     this->workflowInfo = EVERYTHING_OK;
+    
     
     //        Serial.print(F("[CCWorkflow]: setup workflow "));
     //        Serial.print(workflowName);
@@ -59,24 +60,30 @@ CCWorkflow::~CCWorkflow() {
 }
 
 CCDeviceFlow* CCWorkflow::addDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) {
-    deviceFlow[countOfDeviceFlows] = new CCDeviceFlow(deviceFlowName, device, defaultVelocity, defaultAcceleration, defaultDeceleration, countOfDeviceFlows);
+    if (countOfDeviceFlows >= MAX_DEVICEFLOWS_PER_WORKFLOW - 1) return NULL;
+    
+    deviceFlow[countOfDeviceFlows] = new CCDeviceFlow(deviceFlowName, countOfDeviceFlows, device, defaultVelocity, defaultAcceleration, defaultDeceleration);
     countOfDeviceFlows++;
     return deviceFlow[countOfDeviceFlows - 1];
 }
 
 CCControl* CCWorkflow::addControl(CCControl* control) {
+    if (countOfControls >= MAX_CONTROLS_PER_WORKFLOW - 1) return NULL;
+
     this->control[this->countOfControls++] = control;
     return this->control[this->countOfControls - 1];
 }
 
 CCFlowControl* CCWorkflow::addFlowControl(String flowControlName, CCControl* control, comparingMode comparing, int target) {
+    if (countOfFlowControls >= MAX_FLOWCONTROLS_PER_WORKFLOW - 1) return NULL;
+
     this->flowControl[countOfFlowControls++] = new CCFlowControl(flowControlName, control, comparing, target);
     return this->flowControl[countOfFlowControls - 1];
 }
 
 
 
-String CCWorkflow::getName(){return workflowName;}
+const String CCWorkflow::getName() {return workflowName;}
 unsigned int CCWorkflow::getCountOfDeviceFlows(){return countOfDeviceFlows;}
 unsigned int CCWorkflow::getCountOfFlowControls(){return countOfFlowControls;}
 unsigned int CCWorkflow::getCountOfControls(){return countOfControls;}

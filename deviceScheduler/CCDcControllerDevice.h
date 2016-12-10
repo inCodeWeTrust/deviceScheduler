@@ -31,8 +31,8 @@ class CCDcControllerDevice : public CCDevice {
     
 protected:
     
-    unsigned int        switching_pin;
-    bool                switchingPin_active;
+    const unsigned int        switching_pin;
+    const bool                switchingPin_active;
     
     // target: dutycycle [0 ... 1.0]
     // velocity: pwm frequency [Hz]
@@ -81,7 +81,7 @@ protected:
     
 public:
     
-    CCDcControllerDevice(String deviceName, unsigned int switching_pin, bool switchingPin_active);
+    CCDcControllerDevice(const String deviceName, const unsigned int switching_pin, const bool switchingPin_active);
     ~CCDcControllerDevice();
     
     

@@ -49,7 +49,7 @@ public:
     bool overTemperatureWarning, overTemperatureShutdown, stallGuard2Status;
     
 
-    CCStepperDevice_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax);
+    CCStepperDevice_TMC260(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation, const unsigned int chipSelect_pin, unsigned int currentMax);
     
     ~CCStepperDevice_TMC260();
     
@@ -147,7 +147,7 @@ private:
     void setupMicroSteppingMode();
     void setupMicroSteppingMode(unsigned int data);
     
-    unsigned int chipSelect_pin;
+    const unsigned int chipSelect_pin;
     
 
     unsigned int currentMax;        //  current in mA

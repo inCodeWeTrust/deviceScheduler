@@ -35,7 +35,7 @@ public:
     void        read();
     
     
-    CCControlSensor(unsigned int controlIndex, String controlName, unsigned int pin);
+    CCControlSensor(const String controlName, const unsigned int controlIndex, const unsigned int pin);
     ~CCControlSensor();
     
     

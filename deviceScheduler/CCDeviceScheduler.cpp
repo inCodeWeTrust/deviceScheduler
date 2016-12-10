@@ -14,10 +14,9 @@
 
 
 
-CCDeviceScheduler::CCDeviceScheduler(String schedulerName) {
+CCDeviceScheduler::CCDeviceScheduler(const String schedulerName) : schedulerName(schedulerName) {
     this->verbosity = NO_OUTPUT;
     
-    this->schedulerName = schedulerName;
     this->countOfDevices = 0;
     this->countOfControls = 0;
     
@@ -62,7 +61,7 @@ CCDeviceScheduler::~CCDeviceScheduler() {
     }
     
 }
-String CCDeviceScheduler::getName() {
+const String CCDeviceScheduler::getName() {
     return schedulerName;
 }
 
@@ -70,11 +69,13 @@ String CCDeviceScheduler::getName() {
 CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned int switching_pin, bool switchingPin_active) {
     device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_active);
     
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
@@ -92,13 +93,15 @@ CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned int swi
 }
 CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active) {
     
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+
     device[countOfDevices] = new CCDcControllerDevice_fullBridge(deviceName, switching_A_pin, switchingPin_A_active, switching_B_pin, switchingPin_B_active);
     
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
@@ -118,13 +121,15 @@ CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsig
 
 CCDevice* CCDeviceScheduler::addServo(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition) {
     
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+
     device[countOfDevices] = new CCServoDevice(deviceName, servo_pin, minPosition, maxPosition, parkPosition);
     
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
@@ -142,13 +147,15 @@ CCDevice* CCDeviceScheduler::addServo(String deviceName, unsigned int servo_pin,
 }
 CCDevice* CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigned int servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned int servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition) {
     
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+
     device[countOfDevices] = new CCServoDevice_cross(deviceName, servo_00_pin, minPosition_00, midPosition_00, maxPosition_00, servo_01_pin, minPosition_01, midPosition_01, maxPosition_01, parkPosition);
     
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
@@ -167,7 +174,9 @@ CCDevice* CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigne
 
 
 CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int microStep_00_pin, unsigned int microStep_01_pin, unsigned int microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07) {
-    
+
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+
     device[countOfDevices] = new CCStepperDevice_A4988(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, microStep_00_pin, microStep_01_pin, microStep_02_pin, steppingCode_00, steppingCode_01, steppingCode_02, steppingCode_03, steppingCode_04, steppingCode_05, steppingCode_06, steppingCode_07);
     
     
@@ -175,7 +184,7 @@ CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int st
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
@@ -195,7 +204,9 @@ CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int st
 
 
 CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) {
-    
+
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+
     device[countOfDevices] = new CCStepperDevice_TMC260(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, chipSelect_pin, currentMax);
     
     
@@ -203,7 +214,7 @@ CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int s
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
         Serial.print(F(": provided "));
-        Serial.print(getNameOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
         Serial.print(F(": "));
         Serial.println(device[countOfDevices]->getName());
     }
@@ -232,15 +243,16 @@ void CCDeviceScheduler::listDevices() {
         Serial.print(F(", name: "));
         Serial.print(device[i]->getName());
         Serial.print(F(", type: "));
-        Serial.println(getNameOfDeviceType(device[i]->getType()));
+        Serial.println(getLiteralOfDeviceType(device[i]->getType()));
     }
     Serial.println();
 }
 
 
-CCControl* CCDeviceScheduler::addControlButton(String controlName, unsigned int pin, bool pullup) {
-    
-    control[countOfControls] = new CCControlButton(countOfControls, controlName, pin, pullup);
+CCControl* CCDeviceScheduler::addControlButton(String controlName, unsigned int pin, unsigned int mode) {
+    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) return NULL;
+
+    control[countOfControls] = new CCControlButton(controlName, countOfControls, pin, mode);
     
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
@@ -263,8 +275,9 @@ CCControl* CCDeviceScheduler::addControlButton(String controlName, unsigned int 
 }
 
 CCControl* CCDeviceScheduler::addControlSensor(String sensorName, unsigned int pin) {
-    
-    control[countOfControls] = new CCControlSensor(countOfControls, sensorName, pin);
+    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) return NULL;
+
+    control[countOfControls] = new CCControlSensor(sensorName, countOfControls, pin);
     
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
@@ -295,7 +308,9 @@ void CCDeviceScheduler::listControls() {
         Serial.print(F("   # "));
         Serial.print(i);
         Serial.print(F(", name: "));
-        Serial.println(control[i]->getName());
+        Serial.print(control[i]->getName());
+        Serial.print(F(", type: "));
+        Serial.println(getLiteralOfControllerType(control[i]->getType()));
     }
     Serial.println();
 }
@@ -305,21 +320,17 @@ void CCDeviceScheduler::reviewTasks(CCWorkflow* currentWorkflow) {
     for (unsigned int df = 0; df < currentWorkflow->getCountOfDeviceFlows(); df++) {
         for (unsigned int t = 0; t < currentWorkflow->deviceFlow[df]->getCountOfTasks(); t++) {
             
-            deviceInfoCode i = currentWorkflow->deviceFlow[df]->device->reviewValues(currentWorkflow->deviceFlow[df]->task[t]);
+            deviceInfoCode i = currentWorkflow->deviceFlow[df]->getDevice()->reviewValues(currentWorkflow->deviceFlow[df]->task[t]);
             
-            Serial.print(currentWorkflow->getName());
-            Serial.print(F(" > "));
-            Serial.print(currentWorkflow->deviceFlow[df]->getName());
-            Serial.print(F(" task #"));
-            Serial.print(t);
-            Serial.print(F(": "));
-            if (i == DEVICE_OK) {
-                Serial.println(getLiteralOfWorkflowInfo(EVERYTHING_OK));
-            } else if (i == DEVICE_PARAMETER_ERROR) {
-                Serial.println(WORKFLOW_CANCELED_ON_PARAMETER_ERROR);
-            } else {
-                Serial.print(F("unknown device error:"));
-                Serial.println((int)i);
+            if (i != DEVICE_OK) {
+                Serial.print(currentWorkflow->getName());
+                Serial.print(F(" > "));
+                Serial.print(currentWorkflow->deviceFlow[df]->getName());
+                Serial.print(F(" task #"));
+                Serial.print(t);
+                Serial.print(F(": "));
+                Serial.println(getLiteralOfDeviceInfo(i));
+                
             }
         }
     }
@@ -355,7 +366,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             currentDeviceFlow = currentWorkflow->deviceFlow[df];
             currentDeviceFlow->setTaskPointer(0);
             
-            currentDevice = currentDeviceFlow->device;
+            currentDevice = currentDeviceFlow->getDevice();
             currentDevice->setState(PENDING_MOVES);
             currentDevice->attachDevice();
             
@@ -375,7 +386,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             }
             
 #ifdef ARDUINO_SIMULATION
-            copyDeviceName(df, currentDeviceFlow->device->getName());
+            copyDeviceName(df, currentDeviceFlow->getDevice()->getName());
 #endif
             
         }
@@ -383,7 +394,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         
         for (unsigned int fc = 0; fc < currentWorkflow->getCountOfFlowControls(); fc++) {
             for (unsigned int a = 0; a < currentWorkflow->flowControl[fc]->getCountOfActions(); a++) {
-                currentWorkflow->flowControl[fc]->action[0]->setActionDone(false);
+                currentWorkflow->flowControl[fc]->getAction(0)->setActionDone(false);
             }
         }
 
@@ -426,7 +437,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 taskTime = loopTime - taskStartTime;
                 
                 currentDeviceFlow = currentWorkflow->deviceFlow[df];
-                currentDevice = currentDeviceFlow->device;
+                currentDevice = currentDeviceFlow->getDevice();
                 currentTask = currentDeviceFlow->task[currentDeviceFlow->getTaskPointer()];
                 
                 if (currentDevice->getState() > SLEEPING) {                                                             // (== MOVING || MOVE_DONE || PENDING_MOVES)
@@ -580,7 +591,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 currentFlowControl = currentWorkflow->flowControl[theFlowControlID];
                 if ((currentFlowControl->needsToFire())) {
                     for (unsigned int actionIndex = 0; actionIndex < currentFlowControl->getCountOfActions(); actionIndex++) {
-                        currentAction = currentFlowControl->action[actionIndex];
+                        currentAction = currentFlowControl->getAction(actionIndex);
                         if (!currentAction->getActionDone()) {
                             if ((currentAction->getValidTaskID() == -1) || (currentAction->getValidTaskID() == currentAction->targetDeviceFlow->getTaskPointer())) {
                                 
@@ -604,7 +615,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                         breakLoop = true;
                                         break;
                                     case TASK_START_ACTION:
-                                        handleStartEvent(taskTime, currentAction->targetDeviceFlow->device);
+                                        handleStartEvent(taskTime, currentAction->targetDeviceFlow->getDevice());
                                         break;
                                     case TASK_SWITCH_ACTION:
                                         currentDevice->setSwitchTaskPromptly(currentAction->getSwitching());
@@ -648,7 +659,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         
         
         for (unsigned int df = 0; df < currentWorkflow->getCountOfDeviceFlows(); df++) {
-            currentDevice = currentWorkflow->deviceFlow[df]->device;
+            currentDevice = currentWorkflow->deviceFlow[df]->getDevice();
             currentDevice->disableDevice();
             currentDevice->detachDevice();
         }
@@ -704,7 +715,7 @@ deviceInfoCode CCDeviceScheduler::handleStartEvent(unsigned long taskTime, CCDev
         Serial.print(F(" start task "));
         Serial.print(currentDeviceFlow->getTaskPointer());
         Serial.print(" by ");
-        Serial.println(getNameOfTaskEvent(currentDevice->getStartEvent()));
+        Serial.println(getLiteralOfTaskEvent(currentDevice->getStartEvent()));
     }
     
     if (currentDevice->getStartDelay() > 0) {                                               // startDelay given?
@@ -724,7 +735,7 @@ deviceInfoCode CCDeviceScheduler::handleStartEvent(unsigned long taskTime, CCDev
     return TASK_START_OK;
 }
 deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow) {
-    currentDevice = currentDeviceFlow->device;
+    currentDevice = currentDeviceFlow->getDevice();
     
     switch (currentDevice->getSwitchTaskPromptly()) {
         case SWITCH_PROMPTLY:
@@ -751,7 +762,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
                         Serial.print(F(" stop task "));
                         Serial.print(currentDeviceFlow->getTaskPointer());
                         Serial.print(" by ");
-                        Serial.print(getNameOfTaskEvent(currentDevice->getStopEvent()));
+                        Serial.print(getLiteralOfTaskEvent(currentDevice->getStopEvent()));
                         Serial.println(", switching promptly");
                     }
                     return TASK_PREPARATION_OK;
@@ -776,7 +787,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
                     Serial.print(F(" stop task "));
                     Serial.print(currentDeviceFlow->getTaskPointer());
                     Serial.print(" by ");
-                    Serial.print(getNameOfTaskEvent(currentDevice->getStopEvent()));
+                    Serial.print(getLiteralOfTaskEvent(currentDevice->getStopEvent()));
                     Serial.println(", stopping immediately");
                 }
             } else {
@@ -790,7 +801,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
                     Serial.print(F(" initiate stop of task "));
                     Serial.print(currentDeviceFlow->getTaskPointer());
                     Serial.print(" by ");
-                    Serial.println(getNameOfTaskEvent(currentDevice->getStopEvent()));
+                    Serial.println(getLiteralOfTaskEvent(currentDevice->getStopEvent()));
                 }
             }
             break;
@@ -798,7 +809,7 @@ deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDevi
     return TASK_PREPARATION_OK;
 }
 deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow) {
-    currentDevice = currentDeviceFlow->device;
+    currentDevice = currentDeviceFlow->getDevice();
     int currentDeviceFlowID = currentDeviceFlow->getID();
     deviceInfoCode info;
     
@@ -849,13 +860,13 @@ deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDe
 }
 
 void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
-    Serial.print(F("workflow "));
+    Serial.print(F("tasks of workflow "));
     Serial.println(workflow->getName());
     for (unsigned int df = 0; df < workflow->getCountOfDeviceFlows(); df++) {
         Serial.print(F("   deviceFlow "));
         Serial.print(workflow->deviceFlow[df]->getName());
         Serial.print(F(": with device: "));
-        Serial.print(workflow->deviceFlow[df]->device->getName());
+        Serial.print((workflow->deviceFlow[df]->getDevice())->getName());
         Serial.print(F(", defaultVelocity: "));
         Serial.print(workflow->deviceFlow[df]->getDefaultVelocity());
         Serial.print(F(", defaultAcceleration: "));
@@ -887,7 +898,7 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                 Serial.print(workflow->deviceFlow[df]->task[i]->getStartDelay());
             }
             //            Serial.print(F(", started by "));
-            //            Serial.print(getNameOfTaskEvent(workflow->deviceFlow[df]->task[i]->getStartEvent()));
+            //            Serial.print(getLiteralOfTaskEvent(workflow->deviceFlow[df]->task[i]->getStartEvent()));
             switch (workflow->deviceFlow[df]->task[i]->getStartEvent()) {
                 case DATE:
                     Serial.print(F(", startTime: "));
@@ -897,7 +908,7 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", startControl: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStartControl()->getName());
                     Serial.print(F(", "));
-                    Serial.print(getNameOfControlValueComparing(workflow->deviceFlow[df]->task[i]->getStartControlComparing()));
+                    Serial.print(getLiteralOfControlValueComparing(workflow->deviceFlow[df]->task[i]->getStartControlComparing()));
                     Serial.print(F(", "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStartControlTarget());
                     break;
@@ -924,14 +935,14 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                 default: ;
             }
             //            Serial.print(F(", terminated by: "));
-            //            Serial.print(getNameOfTaskEvent(workflow->deviceFlow[df]->task[i]->getStopEvent()));
+            //            Serial.print(getLiteralOfTaskEvent(workflow->deviceFlow[df]->task[i]->getStopEvent()));
             
             switch (workflow->deviceFlow[df]->task[i]->getStopEvent()) {
                 case DATE:
                     Serial.print(F(", timeout: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getTimeout());
                     Serial.print(", stopping: ");
-                    Serial.print(getNameOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
+                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
                         if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
                             Serial.print(F(", switch after completion"));
@@ -944,11 +955,11 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", stopControl: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopControl()->getName());
                     Serial.print(F(", "));
-                    Serial.print(getNameOfControlValueComparing(workflow->deviceFlow[df]->task[i]->getStopControlComparing()));
+                    Serial.print(getLiteralOfControlValueComparing(workflow->deviceFlow[df]->task[i]->getStopControlComparing()));
                     Serial.print(F(", "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopControlTarget());
                     Serial.print(", stopping: ");
-                    Serial.print(getNameOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
+                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
                         if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
                             Serial.print(F(", switch after completion"));
@@ -963,7 +974,7 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", after move: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerTaskID());
                     Serial.print(", stopping: ");
-                    Serial.print(getNameOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
+                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
                         if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
                             Serial.print(F(", switch after completion"));
@@ -983,7 +994,7 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", at position: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerPosition());
                     Serial.print(", stopping: ");
-                    Serial.print(getNameOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
+                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
                         if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
                             Serial.print(F(", switch after completion"));
@@ -996,7 +1007,7 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", stop at position: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerPosition());
                     Serial.print(", stopping: ");
-                    Serial.print(getNameOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
+                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
                         if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
                             Serial.print(F(", switch after completion"));
@@ -1013,13 +1024,13 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
     }
 }
 void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
-    Serial.print(F("workflow "));
+    Serial.print(F("actions of workflow "));
     Serial.println(workflow->getName());
     for (unsigned int fc = 0; fc < workflow->getCountOfFlowControls(); fc++) {
         Serial.print(F("   flowControl "));
         Serial.print(workflow->flowControl[fc]->getName());
         Serial.print(F(", with device: "));
-        Serial.print(workflow->flowControl[fc]->control->getName());
+        Serial.print(workflow->flowControl[fc]->getControl()->getName());
         Serial.print(F(", actions: "));
         Serial.println(workflow->flowControl[fc]->getCountOfActions());
         
@@ -1027,29 +1038,29 @@ void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
             Serial.print(F("      # "));
             Serial.print(i);
             Serial.print(F(": action: "));
-            Serial.print(workflow->flowControl[fc]->action[i]->getName());
+            Serial.print(workflow->flowControl[fc]->getAction(i)->getName());
             Serial.print(F(", on deviceFlow: "));
-            if (workflow->flowControl[fc]->action[i]->targetDeviceFlow == NULL) {
+            if (workflow->flowControl[fc]->getAction(i)->targetDeviceFlow == NULL) {
                 Serial.print(F(" any"));
             } else {
-                Serial.print(workflow->flowControl[fc]->action[i]->targetDeviceFlow->getName());
+                Serial.print(workflow->flowControl[fc]->getAction(i)->targetDeviceFlow->getName());
             }
             Serial.print(F(", on task: "));
-            if (workflow->flowControl[fc]->action[i]->getValidTaskID() < 0) {
+            if (workflow->flowControl[fc]->getAction(i)->getValidTaskID() < 0) {
                 Serial.print(F(" any"));
             } else {
-                Serial.print(workflow->flowControl[fc]->action[i]->getValidTaskID());
+                Serial.print(workflow->flowControl[fc]->getAction(i)->getValidTaskID());
             }
             Serial.print(F(", following: "));
-            if (workflow->flowControl[fc]->action[i]->getFollowingTaskID() < 0) {
+            if (workflow->flowControl[fc]->getAction(i)->getFollowingTaskID() < 0) {
                 Serial.print(F(" any"));
             } else {
-                Serial.print(workflow->flowControl[fc]->action[i]->getFollowingTaskID());
+                Serial.print(workflow->flowControl[fc]->getAction(i)->getFollowingTaskID());
             }
             Serial.print(F(", do: "));
-            Serial.print(getNameOfDeviceAction(workflow->flowControl[fc]->action[i]->getTargetAction()));
+            Serial.print(getLiteralOfDeviceAction(workflow->flowControl[fc]->getAction(i)->getTargetAction()));
             Serial.print(F(", infoCode: ["));
-            Serial.print(getLiteralOfWorkflowInfo(workflow->flowControl[fc]->action[i]->getWorkflowInfo()));
+            Serial.print(getLiteralOfWorkflowInfo(workflow->flowControl[fc]->getAction(i)->getWorkflowInfo()));
             Serial.println(F("]"));
             
         }
@@ -1066,7 +1077,7 @@ void CCDeviceScheduler::evaluateButtons() {
     for (unsigned int i = 0; i < countOfControls; i++) {
         Serial.print(control[i]->getName());
         Serial.print(F(", current: "));
-        Serial.print(getNameOfBooleanState(control[i]->getDigitalValue()));
+        Serial.print(getLiteralOfBooleanState(control[i]->getDigitalValue()));
         Serial.println();
         
         lastButtonState[i] = control[i]->getDigitalValue();
@@ -1078,7 +1089,7 @@ void CCDeviceScheduler::evaluateButtons() {
             if (buttonState != lastButtonState[i]) {
                 Serial.print(control[i]->getName());
                 Serial.print(F(", current: "));
-                Serial.println(getNameOfBooleanState(control[i]->getDigitalValue()));
+                Serial.println(getLiteralOfBooleanState(control[i]->getDigitalValue()));
                 lastButtonState[i] = buttonState;
             }
         }
@@ -1086,31 +1097,22 @@ void CCDeviceScheduler::evaluateButtons() {
 }
 
 
-/*
- void CCWorkflow::getAllTasksForAllDeviceFlows() {
- for (unsigned int df = 0; df < getCountOfDeviceFlows(); df++) {
- getTasksForDeviceFlow(df);
- }
- }
- 
- void CCWorkflow::deleteAllDeviceFlows() {
- for (int i = 0; i < getCountOfDeviceFlows(); i++) {
- delete deviceFlow[i];
- deviceFlow[i] = NULL;
- }
- }
- */
 
 void CCDeviceScheduler::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
 
-String CCDeviceScheduler::getNameOfDeviceType(deviceType t) {
+String CCDeviceScheduler::getLiteralOfDeviceType(deviceType t) {
     if (t == SERVODEVICE) return "Servo";
     if (t == STEPPERDEVICE) return "Stepper";
     if (t == DCCONTROLLERDEVICE) return "Switch";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfTaskEvent(event e) {
+String CCDeviceScheduler::getLiteralOfControllerType(controlType t) {
+    if (t == BUTTON) return "Button";
+    if (t == SENSOR) return "Sensor";
+    return "unknown";
+}
+String CCDeviceScheduler::getLiteralOfTaskEvent(event e) {
     if (e == NONE) return "none";
     if (e == DATE) return "date";
     if (e == CONTROL) return "button or sensor";
@@ -1120,37 +1122,37 @@ String CCDeviceScheduler::getNameOfTaskEvent(event e) {
     if (e == MY_POSITION) return "my position";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfState(deviceState s) {
+String CCDeviceScheduler::getLiteralOfState(deviceState s) {
     if (s == SLEEPING) return "sleeping";
     if (s == MOVING) return "moving";
     if (s == MOVE_DONE) return "move done";
     if (s == PENDING_MOVES) return "pending moves";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfStoppingMode(stoppingMode s) {
+String CCDeviceScheduler::getLiteralOfStoppingMode(stoppingMode s) {
     if (s == STOP_IMMEDIATELY) return "immediately";
     if (s == STOP_NORMAL) return "normal";
     if (s == STOP_DYNAMIC) return "dynamic";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfSwitchingMode(switchingMode s) {
+String CCDeviceScheduler::getLiteralOfSwitchingMode(switchingMode s) {
     if (s == NO_SWITCHING) return "none";
     if (s == SWITCH_AFTER_COMPLETION) return "after completion";
     if (s == SWITCH_PROMPTLY) return "promptly";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfBooleanState(bool s) {
+String CCDeviceScheduler::getLiteralOfBooleanState(bool s) {
     if (s) return "HIGH";
     return "LOW";
 }
-String CCDeviceScheduler::getNameOfControlValueComparing(comparingMode c) {
+String CCDeviceScheduler::getLiteralOfControlValueComparing(comparingMode c) {
     if (c == IS) return "is";
     if (c == IS_NOT) return "is not";
     if (c == IS_GREATER_THEN) return "is greater then";
     if (c == IS_SMALLER_THEN) return "is smaller then";
     return "unknown";
 }
-String CCDeviceScheduler::getNameOfDeviceAction(deviceAction d) {
+String CCDeviceScheduler::getLiteralOfDeviceAction(deviceAction d) {
     if (d == BREAK_LOOP_ACTION) return "break loop";
     if (d == TASK_START_ACTION) return "start";
     if (d == TASK_SWITCH_ACTION) return "switch";

@@ -11,6 +11,7 @@
 
 
 
+CCDevice::CCDevice(const String deviceName, const deviceType type) : deviceName(deviceName), type(type) {}
 
 CCDevice::~CCDevice() {}
 
@@ -19,8 +20,9 @@ CCDevice::~CCDevice() {}
 void CCDevice::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
 
-String CCDevice::getName(){return deviceName;}
-deviceType CCDevice::getType(){return type;}
+const String CCDevice::getName(){return deviceName;}
+deviceType CCDevice::getType(){return (deviceType)type;}
+
 unsigned int CCDevice::getCurrentTaskID(){return currentTaskID;}
 void CCDevice::setCurrentTaskID(unsigned int taskID) {currentTaskID = taskID;}
 float CCDevice::getCurrentPosition(){return currentPosition;}
@@ -64,22 +66,10 @@ bool CCDevice::isStopTargetReached() {
 }
 
 bool CCDevice::isTargetReached(CCControl* control, comparingMode comparing, int controlTarget) {
-//    Serial.print(deviceName);
-//    Serial.print(" sensor: ");
-//    Serial.print(control->value());
-//    Serial.print(", comp: ");
-//    Serial.print((int)comparing);
-//    Serial.print(" with: ");
-//    Serial.print(controlTarget);
-//    Serial.print(" gives: ");
-//    Serial.println(control->is(controlTarget));
-
     switch (comparing) {
         case IS:
             if (control->is(controlTarget)) {                         // it's time to stop!
                 targetReachedCounter++;
-//                Serial.print(deviceName);
-//                Serial.print(" got ");
                 if (targetReachedCounter > approximation) {
                     if (verbosity == BASICOUTPUT) {
                         Serial.print(deviceName);
@@ -126,11 +116,3 @@ bool CCDevice::isTargetReached(CCControl* control, comparingMode comparing, int 
     }
     return false;
 }
-//    CCControlButton* CCDevice::getStartControl(){return startControl;}
-//    CCControlButton* CCDevice::getStopControl(){return stopControl;}
-//    CCDevice* CCDevice::getStartTriggerDevice(){return startTriggerDevice;}
-//    unsigned int CCDevice::getStartTriggerTaskID(){return startTriggerTaskID;}
-//    signed long CCDevice::getStartTriggerPosition(){return startTriggerPosition;}
-//    CCDevice* CCDevice::getStopTriggerDevice(){return stopTriggerDevice;}
-//    unsigned int CCDevice::getStopTriggerTaskID(){return stopTriggerTaskID;}
-//    signed long CCDevice::getStopTriggerPosition(){return stopTriggerPosition;}

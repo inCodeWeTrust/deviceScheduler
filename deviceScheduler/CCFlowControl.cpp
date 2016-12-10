@@ -13,13 +13,9 @@
 
 
 
-CCFlowControl::CCFlowControl(String controlName, CCControl* control, comparingMode comparing, int target) {
+CCFlowControl::CCFlowControl(const String controlName, const CCControl* control, const comparingMode comparing, const int target) : controlName(controlName), control(control), comparing(comparing), target(target) {
     this->verbosity = NO_OUTPUT;
     
-    this->controlName = controlName;
-    this->control = control;
-    this->comparing = comparing;
-    this->target = target;
     this->countOfActions = 0;
     
     //        Serial.print(F("[CCFlowControl]: setup flowControl "));
@@ -31,6 +27,7 @@ CCFlowControl::CCFlowControl(String controlName, CCControl* control, comparingMo
     //        Serial.println();
 
 }
+
 CCFlowControl::~CCFlowControl() {
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCFlowControl]: "));
@@ -51,9 +48,13 @@ CCFlowControl::~CCFlowControl() {
 }
 
 CCAction* CCFlowControl::addAction(String actionName, workflowInfoCode workflowInfo) {
-    Serial.print(F("[CCFlowControl]: add Action for "));
-    Serial.println(control->getName());
+    if (verbosity & BASICOUTPUT) {
+        Serial.print(F("[CCFlowControl]: add Action for "));
+        Serial.println(control->getName());
+    }
     
+    if (countOfActions >= MAX_ACTIONS_PER_FLOWCONTROL - 1) return NULL;
+
     action[countOfActions++] = new CCAction(actionName, workflowInfo);
     return action[countOfActions - 1];
 }
@@ -76,9 +77,12 @@ bool CCFlowControl::needsToFire() {
     return control->is(target);
 }
 
-comparingMode CCFlowControl::getComparing() {return comparing;}
-int CCFlowControl::getTarget() {return target;}
-String CCFlowControl::getName(){return controlName;}
+const String CCFlowControl::getName() {return controlName;}
+CCControl* CCFlowControl::getControl() {return (CCControl*)control;}
+comparingMode CCFlowControl::getComparing() {return (comparingMode)comparing;}
+int CCFlowControl::getTarget() {return (int)target;}
+
+CCAction* CCFlowControl:: getAction(int a) {return action[a];}
 unsigned int CCFlowControl::getCountOfActions(){return countOfActions;}
 
 void CCFlowControl::setVerbosity(int verbosity) {this->verbosity = verbosity;}

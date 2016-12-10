@@ -11,14 +11,7 @@
 
 
 
-CCServoDevice_cross::CCServoDevice_cross(String deviceName, unsigned int servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned int servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition) : CCServoDevice(deviceName, servo_00_pin, minPosition_00, maxPosition_00, parkPosition) {
-    
-    this->midPosition_00 = midPosition_00;
-    
-    this->servo_01_pin = servo_01_pin;
-    this->minPosition_01 = minPosition_01;
-    this->maxPosition_01 = maxPosition_01;
-    this->midPosition_01 = midPosition_01;
+CCServoDevice_cross::CCServoDevice_cross(const String deviceName, const unsigned int servo_00_pin, const int minPosition_00, const int midPosition_00, const int maxPosition_00, const unsigned int servo_01_pin, const int minPosition_01, const int midPosition_01, const int maxPosition_01, const int parkPosition) : CCServoDevice(deviceName, servo_00_pin, minPosition_00, maxPosition_00, parkPosition), midPosition_00(midPosition_00), servo_01_pin(servo_01_pin), minPosition_01(minPosition_01), midPosition_01(midPosition_01), maxPosition_01(maxPosition_01) {
     
     
     //        Serial.print(F("[CCServoDevice_cross]: setup cross-servo"));

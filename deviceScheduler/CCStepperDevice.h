@@ -27,7 +27,7 @@
 class CCStepperDevice : public CCDevice {
 
 public:
-    CCStepperDevice(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation);
+    CCStepperDevice(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation);
     virtual ~CCStepperDevice();
     
     
@@ -72,11 +72,14 @@ protected:
     virtual void         setupMicroSteppingMode() = 0;
     virtual void         setupMicroSteppingMode(unsigned int data) = 0;
     
-    
-    unsigned int        dir_pin, step_pin, enable_pin;
+
     unsigned int        highestSteppingMode;
-    unsigned int         stepsPerRotation;
-    int                  acceleration_max;
+    int                 acceleration_max;
+
+    const unsigned int        step_pin;
+    const unsigned int        dir_pin;
+    const unsigned int        enable_pin;
+    const unsigned int        stepsPerRotation;
     
 };
 

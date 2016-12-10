@@ -11,20 +11,14 @@
 
 
 
-CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned int switching_pin, bool switchingPin_active) : CCDevice() {
+CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned int switching_pin, bool switchingPin_active) : CCDevice(deviceName, DCCONTROLLERDEVICE), switching_pin(switching_pin), switchingPin_active(switchingPin_active) {
+    
     this->verbosity = NO_OUTPUT;
-    
-    this->deviceName = deviceName;
-    
-    this->switching_pin = switching_pin;
-    this->switchingPin_active = switchingPin_active;
     
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, !switchingPin_active);
     isActive = false;
     
-
-    this->type = DCCONTROLLERDEVICE;
     this->state = SLEEPING;
     
     

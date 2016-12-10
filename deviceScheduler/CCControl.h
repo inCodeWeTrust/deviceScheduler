@@ -31,41 +31,38 @@ class CCControl {
 protected:
     int verbosity;
 
+    const String              controlName;
+    const unsigned int        controlIndex;
+    const controlType         type;
+    const unsigned int        pin;
+    const int                 mode;
+
     int                 sensorValue, sensorValue_prev;
     
-    String              controlName;
-    controlType         type;
-    unsigned int        controlIndex;
-    unsigned int        pin;
-    int                 mode;
-
     unsigned int        countOfActions;
 
+    
 public:
     
-    CCAction*           action[8];
-    
+    CCControl(const String controlName, const unsigned int controlIndex, const controlType type, const unsigned int pin, const unsigned int mode);
     virtual             ~CCControl() = 0;
     virtual void        read() = 0;
     
     int                 value();
     
-    bool                isGreaterThen(int minimum);
-    bool                isSmallerThen(int maximum);
-    bool                is(int fix);
-    bool                isNot(int fix);
-    bool                isAbout(int fix, int tolerance = 10);
+    bool                isGreaterThen(int minimum) const;
+    bool                isSmallerThen(int maximum) const;
+    bool                is(int fix) const;
+    bool                isNot(int fix) const;
+    bool                isAbout(int fix, int tolerance = 10) const;
     
     bool                getDigitalValue();
     int                 getAnalogValue();
     
     
     
-    String              getName();
-    unsigned int        getCountOfActions();
-    
-//    CCAction*           addAction(String actionName);    
-//    void                deleteActions();
+    const String              getName() const;
+    controlType         getType();
     
     
     

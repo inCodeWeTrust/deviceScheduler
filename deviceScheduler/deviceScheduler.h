@@ -25,7 +25,6 @@ static serialViewer Serial;
 
 //  ################## verbosity: #############################################################################
 
-//  -------------------------------------------------------------------------------------------------------------
 #define NO_OUTPUT                   0x00
 #define BASICOUTPUT                 0x01
 #define MEMORYDEBUG                 0x02
@@ -38,10 +37,21 @@ static serialViewer Serial;
 //  stepper tmc260:
 #define TMC260_SPIDEBUG             0x10
 #define TMC260_SETUPDEBUG           0x20
-//  -------------------------------------------------------------------------------------------------------------
 
 
 
+//  ################## memory management: #############################################################################
+
+#define MAX_DEVICES_PER_SCHEDULER           14
+#define MAX_CONTROLS_PER_SCHEDULER          14
+
+#define MAX_DEVICEFLOWS_PER_WORKFLOW        10
+#define MAX_CONTROLS_PER_WORKFLOW           10
+#define MAX_FLOWCONTROLS_PER_WORKFLOW       10
+
+#define MAX_TASKS_PER_DEVICEFLOW            10
+
+#define MAX_ACTIONS_PER_FLOWCONTROL         10
 
 
 //  ################## PROGRAMMATICAL DEFINITIONS AND CONSTANTS #############################################################################

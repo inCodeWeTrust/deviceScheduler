@@ -22,10 +22,24 @@ private:
     int verbosity;
 
     
-    String deviceFlowName;
+    const String        deviceFlowName;
 
-    unsigned int                 deviceFlowID;
+    const unsigned int  deviceFlowID;
     
+    const CCDevice*           device; // making CCDevice* constant requires much casting efford...
+
+    /// Default parameters for the device.
+    /// A value for the device's default velocity is provided here.
+    float               defaultVelocity;
+    
+    /// Default parameters for the device.
+    /// A value for the device's default acceleration is provided here.
+    float               defaultAcceleration;
+    
+    /// Default parameters for the device.
+    /// A value for the device's default deceleration is provided here.
+    float               defaultDeceleration;
+
     /// Parameters of the device as a peer of a run-loop.
     /// Value, that holds the number of tasks to be executed within this run-loop.
     unsigned int        countOfTasks;
@@ -34,31 +48,18 @@ private:
     /// Value, that holds the index of the current task.
     int                 taskPointer;
     
-    /// Default parameters for the device.
-    /// A value for the device's default velocity is provided here.
-    float                defaultVelocity;
-    
-    /// Default parameters for the device.
-    /// A value for the device's default acceleration is provided here.
-    float                defaultAcceleration;
-    
-    /// Default parameters for the device.
-    /// A value for the device's default deceleration is provided here.
-    float                defaultDeceleration;
-    
 
     
 public:
     
     /// Array of tasks to be performed.
     /// @see CCTask
-    CCTask*             task[10];
-    
-    CCDevice*           device;
+    CCTask*             task[MAX_TASKS_PER_DEVICEFLOW];
     
     
     
-    CCDeviceFlow(String deviceFlowName, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration, unsigned int deviceFlowID);
+    
+    CCDeviceFlow(const String deviceFlowName, const unsigned int deviceFlowID, const CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration);
     ~CCDeviceFlow();
   
     
@@ -127,13 +128,14 @@ public:
     void defineDefaults(float defaultVelocity, float defaultAcceleration, float defaultDeceleration = 0.0);
 
     
-    
-    unsigned int    getID();
+    const unsigned int  getID() const;
     
     /// Getter method for getting the name of this deviceFlow
     /// @sa deviceFlowName;
-    String          getName();
+    const String    getName() const;
     
+    CCDevice*           getDevice();
+
     /// Getter method for getting the device's default velocity within this deviceFlow.
     /// @sa defaultVelocity;
     float           getDefaultVelocity();
@@ -166,7 +168,7 @@ public:
     /// @sa taskPointer;
     void            increaseTaskPointer();
     
-    void setVerbosity(int verbosity);
+    void            setVerbosity(int verbosity);
 
 };
 

@@ -20,10 +20,11 @@
 
 #include "CCStepperDevice_A4988.h"
 
-CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int microStep_00_pin, unsigned int microStep_01_pin, unsigned int microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
+CCStepperDevice_A4988::CCStepperDevice_A4988(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation, const unsigned int microStep_00_pin, const unsigned int microStep_01_pin, const unsigned int microStep_02_pin, const signed char steppingCode_00, const signed char steppingCode_01, const signed char steppingCode_02, const signed char steppingCode_03, const signed char steppingCode_04, const signed char steppingCode_05, const signed char steppingCode_06, const signed char steppingCode_07) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
 
-    this->numberOfMicroStepPins = 3;
-    this->microStepPin = new unsigned int[numberOfMicroStepPins];                          // create array for the pins
+//    microStepPin{microStep_00_pin, microStep_01_pin, microStep_02_pin};
+//    this->microStepPin = new unsigned int[NUMBER_OF_MICROSTEPPING_PINS] {microStep_00_pin, microStep_01_pin, microStep_02_pin};
+    
     this->microStepPin[0] = microStep_00_pin;                              // and fill it
     this->microStepPin[1] = microStep_01_pin;                              // and fill it
     this->microStepPin[2] = microStep_02_pin;                              // and fill it
@@ -64,7 +65,7 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned int ste
         this->steppingUnit[codeIndex] = (1 << (highestSteppingMode - codeIndex));
     }
     
-    for (unsigned int pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+    for (unsigned int pinIndex = 0; pinIndex < NUMBER_OF_MICROSTEPPING_PINS; pinIndex++) {
         pinMode(microStepPin[pinIndex], OUTPUT);
         digitalWrite(microStepPin[pinIndex], LOW);
     }
@@ -75,7 +76,6 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned int ste
     
     this->acceleration_max = 4000;
     
-    this->type = STEPPERDEVICE;
     this->state = SLEEPING;
     
     this->currentMicroStep = 0;
@@ -86,10 +86,10 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(String deviceName, unsigned int ste
     
     //        Serial.print(F("[CCStepperDevice_A4988]: setup stepper "));
     //        Serial.print(deviceName);
-    //        Serial.print(F(": numberOfMicroStepPins: "));
-    //        Serial.print(numberOfMicroStepPins);
+    //        Serial.print(F(": NUMBER_OF_MICROSTEPPING_PINS: "));
+    //        Serial.print(NUMBER_OF_MICROSTEPPING_PINS);
     //        Serial.print(F(", pins: "));
-    //        for (unsigned int pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+    //        for (unsigned int pinIndex = 0; pinIndex < NUMBER_OF_MICROSTEPPING_PINS; pinIndex++) {
     //            Serial.print(microStepPin[pinIndex]);
     //            Serial.print(F(", "));
     //        }
@@ -115,18 +115,12 @@ CCStepperDevice_A4988::~CCStepperDevice_A4988() {
     pinMode(step_pin, INPUT);
     pinMode(enable_pin, INPUT_PULLUP);
     
-    for (unsigned int pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+    for (unsigned int pinIndex = 0; pinIndex < NUMBER_OF_MICROSTEPPING_PINS; pinIndex++) {
         pinMode(microStepPin[pinIndex], INPUT);
     }
     
-//    free(stepModeCode);
-//    free(microStepPin);
-
     delete [] stepModeCode;
     stepModeCode = NULL;
-    
-    delete [] microStepPin;
-    microStepPin = NULL;
     
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCStepperDevice_A4988]: device "));
@@ -137,12 +131,12 @@ CCStepperDevice_A4988::~CCStepperDevice_A4988() {
 
 
 void CCStepperDevice_A4988::setupMicroSteppingMode() {
-    for (unsigned int pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+    for (unsigned int pinIndex = 0; pinIndex < NUMBER_OF_MICROSTEPPING_PINS; pinIndex++) {
         digitalWrite(microStepPin[pinIndex], stepModeCode[microSteppingMode] & (1 << pinIndex));
     }
 }
 void CCStepperDevice_A4988::setupMicroSteppingMode(unsigned int data) {
-    for (unsigned int pinIndex = 0; pinIndex < numberOfMicroStepPins; pinIndex++) {
+    for (unsigned int pinIndex = 0; pinIndex < NUMBER_OF_MICROSTEPPING_PINS; pinIndex++) {
         digitalWrite(microStepPin[pinIndex], data & (1 << pinIndex));
     }
 }
