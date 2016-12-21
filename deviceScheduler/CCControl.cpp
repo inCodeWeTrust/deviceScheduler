@@ -32,6 +32,8 @@ bool CCControl::isNot(int fix) const {
     return !(sensorValue == fix);
 }
 
+//void CCControl::setTarget(CCDeviceFlow* targetDeviceFlow) {}
+
 
 
 
@@ -39,10 +41,10 @@ bool CCControl::isNot(int fix) const {
 
 
 const String CCControl::getName() const {return controlName;}
-controlType CCControl::getType() {return (controlType)type;}
+controlType CCControl::getType() const {return (controlType)type;}
 
 bool CCControl::getDigitalValue() {return digitalRead(pin);}
 int CCControl::getAnalogValue() {return analogRead(pin);}
 
-void CCControl::setVerbosity(int verbosity) {this->verbosity = verbosity;}
+//void CCControl::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 

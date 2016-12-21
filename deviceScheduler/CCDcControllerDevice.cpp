@@ -18,9 +18,7 @@ CCDcControllerDevice::CCDcControllerDevice(String deviceName, unsigned int switc
     pinMode(switching_pin, OUTPUT);
     digitalWrite(switching_pin, !switchingPin_active);
     isActive = false;
-    
-    this->state = SLEEPING;
-    
+        
     
     //        Serial.print(F("[CCDcControllerDevice]: setup dc-controller"));
     //        Serial.print(deviceName);
@@ -81,19 +79,11 @@ deviceInfoCode CCDcControllerDevice::prepareTask(CCTask* nextTask) {
     acceleration = nextTask->getAcceleration();
     deceleration = nextTask->getDeceleration();
     
-    startEvent = nextTask->getStartEvent();
-    stopEvent = nextTask->getStopEvent();
-    startDelay = nextTask->getStartDelay();
-    startTime = nextTask->getStartTime();
-    timeout = nextTask->getTimeout();
-    startControl = nextTask->getStartControl();
-    stopControl = nextTask->getStopControl();
-    startControlComparing = nextTask->getStartControlComparing();
-    stopControlComparing = nextTask->getStopControlComparing();
-    startControlTarget = nextTask->getStartControlTarget();
-    stopControlTarget = nextTask->getStopControlTarget();
-    switchTaskPromptly = nextTask->getSwitchTaskPromptly();
+    switching = nextTask->getSwitching();
     stopping = nextTask->getStopping();
+
+    approximationControl = nextTask->getStopControl();
+    approximationTarget = nextTask->getStopControlTarget();
     approximationCurve = nextTask->getApproximationCurve();
     gap = nextTask->getGap();
     approximation = nextTask->getApproximation();
@@ -132,7 +122,7 @@ deviceInfoCode CCDcControllerDevice::prepareTask(CCTask* nextTask) {
         Serial.print(deceleration);
         if (stopping ==STOP_DYNAMIC) {
             Serial.print(F(", stopping dynamically at: "));
-            Serial.print(stopControlTarget);
+            Serial.print(approximationTarget);
             Serial.print(F(", approximationCurve: "));
             Serial.print(approximationCurve);
             Serial.print(F(", gap: "));
@@ -165,7 +155,7 @@ void CCDcControllerDevice::startTask() {
             Serial.println(F(", starting task"));
         }
     }
-    operateTask();
+//    operateTask();
 }
 
 void CCDcControllerDevice::initiateStop() {
@@ -175,6 +165,7 @@ void CCDcControllerDevice::initiateStop() {
 }
 
 void CCDcControllerDevice::stopTask() {
+    currentPosition = 0;
     digitalWrite(switching_pin, !switchingPin_active);
     isActive = false;
     state = MOVE_DONE;
@@ -242,11 +233,11 @@ void CCDcControllerDevice::operateTask() {
         }
         
         if (stopping == STOP_DYNAMIC) {
-            sensorValue = stopControl->value();
+            sensorValue = approximationControl->value();
             if (reversedApproximation) {
-                relativePosition = stopControlTarget - sensorValue;
+                relativePosition = approximationTarget - sensorValue;
             } else {
-                relativePosition = sensorValue - stopControlTarget;
+                relativePosition = sensorValue - approximationTarget;
             }
             
             if (verbosity & MOVEMENTDEBUG) {

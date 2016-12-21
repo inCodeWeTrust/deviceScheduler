@@ -30,12 +30,12 @@ class CCDcControllerDevice_fullBridge : public CCDcControllerDevice {
     
 private:
     
-    const unsigned int        switching_B_pin;
-    const bool                switchingPin_B_active;
+    const unsigned int  switching_B_pin;
+    const bool          switchingPin_B_active;
 
     
     /// Variable is @c true when switched on, @c false when switched off.
-    bool              isActive_B;
+    bool                isActive_B;
 
     
     
@@ -45,16 +45,16 @@ public:
     ~CCDcControllerDevice_fullBridge();
     
     
-    deviceInfoCode reviewValues(CCTask* nextTask);
-    void prepareNextTask();
-    deviceInfoCode prepareTask(CCTask* nextTask);
-    void startTask();
-    void operateTask();
-    void initiateStop();
-    void stopTask();
-    void finishTask();
+    deviceInfoCode      reviewValues(CCTask* nextTask);
+    void                prepareNextTask();
+    deviceInfoCode      prepareTask(CCTask* nextTask);
+    void                startTask();
+    void                operateTask();
+    void                initiateStop();
+    void                stopTask();
+    void                finishTask();
     
-    void getReadOut(unsigned int theReadOut);
+    void                getReadOut(unsigned int theReadOut);
     
 };
 

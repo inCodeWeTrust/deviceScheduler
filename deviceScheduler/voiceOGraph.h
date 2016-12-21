@@ -80,7 +80,7 @@
 
 
 
-#define SCHEDULERS_TASKVIEW_SHOW_PIN        2
+#define SCHEDULERS_TASKVIEW_SHOW_PIN        69
 #define SCHEDULERS_TASKVIEW_SHOW            LOW
 #define SCHEDULERS_TASKVIEW_HIDE            HIGH
 
@@ -306,7 +306,7 @@
 #define HEAD_INCLINATION_SENSOR_PIN         A8
 // for simulation: #define HEAD_INCLINATION_SENSOR_PIN         A4
 #define HEAD_INCLINATION_INIT_STOP          600
-#define HEAD_INCLINATION_START_CAT          540
+#define HEAD_INCLINATION_START_CAT          580
 #define HEAD_INCLINATION_TARGET             460
 
 

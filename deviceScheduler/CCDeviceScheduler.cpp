@@ -67,10 +67,16 @@ const String CCDeviceScheduler::getName() {
 
 
 CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned int switching_pin, bool switchingPin_active) {
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at device: "));
+        Serial.println(countOfDevices);
+        return NULL;
+    }
     device[countOfDevices] = new CCDcControllerDevice(deviceName, switching_pin, switchingPin_active);
     
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
-
     if (verbosity & BASICOUTPUT) {
         Serial.print(F("[CCDeviceScheduler]: "));
         Serial.print(schedulerName);
@@ -93,8 +99,14 @@ CCDevice* CCDeviceScheduler::addDcController(String deviceName, unsigned int swi
 }
 CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsigned int switching_A_pin, bool switchingPin_A_active, unsigned int switching_B_pin, bool switchingPin_B_active) {
     
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
-
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at device: "));
+        Serial.println(countOfDevices);
+        return NULL;
+    }
     device[countOfDevices] = new CCDcControllerDevice_fullBridge(deviceName, switching_A_pin, switchingPin_A_active, switching_B_pin, switchingPin_B_active);
     
     if (verbosity & BASICOUTPUT) {
@@ -121,7 +133,14 @@ CCDevice* CCDeviceScheduler::addDcController_fullBridge(String deviceName, unsig
 
 CCDevice* CCDeviceScheduler::addServo(String deviceName, unsigned int servo_pin, int minPosition, int maxPosition, int parkPosition) {
     
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at device: "));
+        Serial.println(countOfDevices);
+        return NULL;
+    }
 
     device[countOfDevices] = new CCServoDevice(deviceName, servo_pin, minPosition, maxPosition, parkPosition);
     
@@ -147,7 +166,14 @@ CCDevice* CCDeviceScheduler::addServo(String deviceName, unsigned int servo_pin,
 }
 CCDevice* CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigned int servo_00_pin, int minPosition_00, int midPosition_00, int maxPosition_00, unsigned int servo_01_pin, int minPosition_01, int midPosition_01, int maxPosition_01, int parkPosition) {
     
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at device: "));
+        Serial.println(countOfDevices);
+        return NULL;
+    }
 
     device[countOfDevices] = new CCServoDevice_cross(deviceName, servo_00_pin, minPosition_00, midPosition_00, maxPosition_00, servo_01_pin, minPosition_01, midPosition_01, maxPosition_01, parkPosition);
     
@@ -175,7 +201,14 @@ CCDevice* CCDeviceScheduler::addServoWithCounterServo(String deviceName, unsigne
 
 CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int microStep_00_pin, unsigned int microStep_01_pin, unsigned int microStep_02_pin, signed char steppingCode_00, signed char steppingCode_01, signed char steppingCode_02, signed char steppingCode_03, signed char steppingCode_04, signed char steppingCode_05, signed char steppingCode_06, signed char steppingCode_07) {
 
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at device: "));
+        Serial.println(countOfDevices);
+        return NULL;
+    }
 
     device[countOfDevices] = new CCStepperDevice_A4988(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, microStep_00_pin, microStep_01_pin, microStep_02_pin, steppingCode_00, steppingCode_01, steppingCode_02, steppingCode_03, steppingCode_04, steppingCode_05, steppingCode_06, steppingCode_07);
     
@@ -205,7 +238,14 @@ CCDevice* CCDeviceScheduler::addStepper_A4988(String deviceName, unsigned int st
 
 CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) {
 
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at device: "));
+        Serial.println(countOfDevices);
+        return NULL;
+    }
 
     device[countOfDevices] = new CCStepperDevice_TMC260(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, chipSelect_pin, currentMax);
     
@@ -231,26 +271,66 @@ CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int s
     return device[countOfDevices - 1];
     
 }
+CCDevice* CCDeviceScheduler::addStepper_TMC2130(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) {
+    
+    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+    
+    device[countOfDevices] = new CCStepperDevice_TMC2130(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, chipSelect_pin, currentMax);
+    
+    
+    if (verbosity & BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided "));
+        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
+        Serial.print(F(": "));
+        Serial.println(device[countOfDevices]->getName());
+    }
+    if (verbosity & MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCStepperDevice_TMC2130 constructed at $"));
+        Serial.println((long)device[countOfDevices], HEX);
+    }
+    
+    countOfDevices++;
+    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
+    
+    return device[countOfDevices - 1];
+    
+}
 
 
 void CCDeviceScheduler::listDevices() {
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
     Serial.println(F(": Devices: "));
-    for (unsigned int i = 0; i < countOfDevices; i++) {
-        Serial.print(F("   # "));
-        Serial.print(i);
-        Serial.print(F(", name: "));
-        Serial.print(device[i]->getName());
-        Serial.print(F(", type: "));
-        Serial.println(getLiteralOfDeviceType(device[i]->getType()));
+    if (countOfDevices == 0) {
+        Serial.println(F("   - none -"));
+    } else {
+        for (unsigned int i = 0; i < countOfDevices; i++) {
+            Serial.print(F("   # "));
+            Serial.print(i);
+            Serial.print(F(", name: "));
+            Serial.print(device[i]->getName());
+            Serial.print(F(", type: "));
+            Serial.println(getLiteralOfDeviceType(device[i]->getType()));
+        }
     }
     Serial.println();
 }
 
 
 CCControl* CCDeviceScheduler::addControlButton(String controlName, unsigned int pin, unsigned int mode) {
-    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) return NULL;
+
+    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at control: "));
+        Serial.println(countOfControls);
+        return NULL;
+    }
 
     control[countOfControls] = new CCControlButton(controlName, countOfControls, pin, mode);
     
@@ -275,7 +355,15 @@ CCControl* CCDeviceScheduler::addControlButton(String controlName, unsigned int 
 }
 
 CCControl* CCDeviceScheduler::addControlSensor(String sensorName, unsigned int pin) {
-    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) return NULL;
+
+    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) {
+        Serial.print(F("!!!!! array dimensions exceeded !!!!"));
+        Serial.print(F(" [CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(" at control: "));
+        Serial.println(countOfControls);
+        return NULL;
+    }
 
     control[countOfControls] = new CCControlSensor(sensorName, countOfControls, pin);
     
@@ -299,18 +387,48 @@ CCControl* CCDeviceScheduler::addControlSensor(String sensorName, unsigned int p
     
 }
 
+CCControl* CCDeviceScheduler::addControlEvent(String eventName) {
+    if (countOfControls >= MAX_CONTROLS_PER_SCHEDULER - 1) return NULL;
+    
+    control[countOfControls] = new CCControlEvent(eventName, countOfControls);
+    
+    if (verbosity & BASICOUTPUT) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": provided controlEvent "));
+        Serial.println(control[countOfControls]->getName());
+    }
+    if (verbosity & MEMORYDEBUG) {
+        Serial.print(F("[CCDeviceScheduler]: "));
+        Serial.print(schedulerName);
+        Serial.print(F(": CCControl constructed at $"));
+        Serial.println((long)control[countOfControls], HEX);
+    }
+    
+    countOfControls++;
+    //	control button index = countOfControls - 1 [8 buttons: index of first: 0, last: 7]
+    
+    return control[countOfControls - 1];
+    
+}
+
+
 
 void CCDeviceScheduler::listControls() {
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
     Serial.println(F(": Controls: "));
-    for (unsigned int i = 0; i < countOfControls; i++) {
-        Serial.print(F("   # "));
-        Serial.print(i);
-        Serial.print(F(", name: "));
-        Serial.print(control[i]->getName());
-        Serial.print(F(", type: "));
-        Serial.println(getLiteralOfControllerType(control[i]->getType()));
+    if (countOfControls == 0) {
+        Serial.println(F("   - none -"));
+    } else {
+        for (unsigned int i = 0; i < countOfControls; i++) {
+            Serial.print(F("   # "));
+            Serial.print(i);
+            Serial.print(F(", name: "));
+            Serial.print(control[i]->getName());
+            Serial.print(F(", type: "));
+            Serial.println(getLiteralOfControllerType(control[i]->getType()));
+        }
     }
     Serial.println();
 }
@@ -342,6 +460,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
     
     unsigned long loopCounter = 0;
     unsigned int ongoingOperations = 0;
+    deviceInfoCode info;
     bool breakLoop = false;
     notificationCode = 0;
     notificationText = "";
@@ -367,14 +486,14 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             currentDeviceFlow->setTaskPointer(0);
             
             currentDevice = currentDeviceFlow->getDevice();
-            currentDevice->setState(PENDING_MOVES);
             currentDevice->attachDevice();
             
             //	prepare first Tasks
-            nextTaskID[df] = 0;
-            currentDevice->prepareTask(currentDeviceFlow->task[nextTaskID[df]]);
-            nextTaskID[df]++;
-            
+            currentDeviceFlow->setProposedTaskID(0);
+            currentDeviceFlow->handlePreparation(0);
+            currentDeviceFlow->setProposedTaskID(currentDeviceFlow->getTaskPointer() + 1);
+            currentDevice->setState(PENDING_MOVES);
+
             if (verbosity & SHOW_TASK_VIEW) {
                 Serial.print(currentWorkflow->getName());
                 Serial.print(F("->"));
@@ -450,43 +569,80 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                         if (currentDevice->getType() == SERVODEVICE) {
                             copyAnalogInValue(df, 2000.0 - currentDevice->getCurrentPosition());
                         }
+                        if (currentDeviceFlow->getID() == 1) {
+                            copyAnalogInValue(7, -(currentDevice->getCurrentPosition()));
+//                            copyAnalogInValue(10, -(currentDevice->getCurrentPosition()));
+                        }
 #endif
                         
-                        switch (currentDevice->getStopEvent()) {                                                        // is there a stopEvent defined?
+                        switch (currentDeviceFlow->getStopEvent()) {                                                        // is there a stopEvent defined?
                             case DATE:                                                                              // yes, device shall stop by date
-                                if (taskTime > currentDevice->getStartTime() + currentDevice->getStartDelay() + currentDevice->getTimeout()) { // it's time to stop!
-                                    handleStopEvent(taskTime, currentDeviceFlow);
+                                if (currentDeviceFlow->isStopTimeReached(taskTime)) { // it's time to stop!
+                                
+                                    if (verbosity == SHOW_TASK_VIEW) {
+                                        printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_STOP);
+                                    }
+                                    
+                                    currentDeviceFlow->handleStopEvent(taskTime);
                                 }
                                 break;
                                 
                             case CONTROL:                                                                            // device shall stop by button
-                                if (currentDevice->isStopTargetReached()) {
-                                    handleStopEvent(taskTime, currentDeviceFlow);
+                                if (currentDeviceFlow->isStopTargetReached()) {
+                                    
+                                    if (verbosity == SHOW_TASK_VIEW) {
+                                        printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_STOP);
+                                    }
+                                    
+                                    currentDeviceFlow->handleStopEvent(taskTime);;
                                 }
                                 break;
                                 
                             case FOLLOW:                                                                // device shall stop when a device finished a task
-                                if (currentTask->getStopTriggerDevice()->getCurrentTaskID() > currentTask->getStopTriggerTaskID()) { //  trigger device on trigger move?
-                                    handleStopEvent(taskTime, currentDeviceFlow);
+                                if (currentDeviceFlow->getStopTriggerDevice()->getCurrentTaskID() > currentDeviceFlow->getStopTriggerTaskID()) { //  trigger device on trigger move?
+                                  
+                                    if (verbosity == SHOW_TASK_VIEW) {
+                                        printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_STOP);
+                                    }
+                                    
+                                    currentDeviceFlow->handleStopEvent(taskTime);;
                                 }
                                 break;
                                 
                             case FOLLOW_ME:                                                                // device shall stop when a device finished a task
-                                    handleStopEvent(taskTime, currentDeviceFlow);
+//                                    currentDeviceFlow->handleStopEvent(taskTime);;
+                                // guess this is obsolet!!!
                                 break;
                                 
                             case POSITION:                                                           // device shall stop when a device reached a certain position
-                                triggerDevice_stop = currentTask->getStopTriggerDevice();
-                                if (triggerDevice_stop->getCurrentTaskID() >= currentTask->getStopTriggerTaskID()) {          //  trigger device on trigger move?
-                                    if (triggerDevice_stop->getDirectionDown() == (triggerDevice_stop->getCurrentPosition() <= currentTask->getStopTriggerPosition())) {
-                                        handleStopEvent(taskTime, currentDeviceFlow);
+                                triggerDevice_stop = currentDeviceFlow->getStopTriggerDevice();
+                                if (triggerDevice_stop->getCurrentTaskID() >= currentDeviceFlow->getStopTriggerTaskID()) {          //  trigger device on trigger move?
+                                    if (triggerDevice_stop->getCurrentTaskID() > currentDeviceFlow->getStopTriggerTaskID()) {
+                                        
+                                        if (verbosity == SHOW_TASK_VIEW) {
+                                            printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_STOP);
+                                        }
+                                        
+                                        currentDeviceFlow->handleStopEvent(taskTime);;
+                                    } else if (triggerDevice_stop->getDirectionDown() == (triggerDevice_stop->getCurrentPosition() <= currentDeviceFlow->getStopTriggerPosition())) {
+                                        
+                                        if (verbosity == SHOW_TASK_VIEW) {
+                                            printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_STOP);
+                                        }
+                                        
+                                        currentDeviceFlow->handleStopEvent(taskTime);;
                                     }
                                 }
                                 break;
                                 
                             case MY_POSITION:                                                           // device shall stop when it reached a certain position
-                                if (currentDevice->getDirectionDown() == (currentDevice->getCurrentPosition() <= currentTask->getStopTriggerPosition())) {
-                                    handleStopEvent(taskTime, currentDeviceFlow);
+                                if (currentDevice->getDirectionDown() == (currentDevice->getCurrentPosition() <= currentDeviceFlow->getStopTriggerPosition())) {
+
+                                    if (verbosity == SHOW_TASK_VIEW) {
+                                        printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_STOP);
+                                    }
+                                    
+                                    currentDeviceFlow->handleStopEvent(taskTime);;
                                 }
                                 
                             default:
@@ -497,60 +653,102 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                         if (currentDevice->getState() == MOVE_DONE) {                                                   // finished right now?
                             
                             if (verbosity & SHOW_TASK_VIEW) {
-                                Serial.print(taskTime);
-                                Serial.print(F(": "));
-                                Serial.print(currentDeviceFlow->getName());
-                                Serial.print(F(" Task "));
-                                Serial.print(currentDeviceFlow->getTaskPointer());
-                                Serial.println(F(" done"));
+                                printMessage(taskTime, currentDeviceFlow, NOTICE_TASK_STOP);
                             }
                             
-                            if (currentDevice->getSwitchTaskPromptly() > NO_SWITCHING) {
-                                handlePreparation(taskTime, currentDeviceFlow);
-                                currentDevice->setStartEvent(DATE);
-                                currentDevice->setStartTime(taskTime);
-   
+                            if (currentDeviceFlow->getStartProposedTaskAutomatically()) {
+                                if (verbosity & SHOW_TASK_VIEW) {
+                                    printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_PREPARATION);
+                                }
+                                
+                                info = currentDeviceFlow->handlePreparation(taskTime);
+                                currentDevice->setState(PENDING_MOVES);
+                                currentDeviceFlow->setStartEvent(DATE);
+                                currentDeviceFlow->setStartTime(taskTime);
+                                
                             } else {
                                 currentDevice->finishTask();                                                        // no position reset in this case
                                 currentDevice->disableDevice();                                                     // no device disableing in this case
-                                if (handlePreparation(taskTime, currentDeviceFlow) < ALL_TASKS_DONE) {
+
+                                if (verbosity & SHOW_TASK_VIEW) {
+                                    printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_PREPARATION);
+                                }
+                                
+                                if (currentDeviceFlow->handlePreparation(taskTime) < ALL_TASKS_DONE) {
                                     currentDevice->setState(PENDING_MOVES);
+
+                                } else {
+                                    currentDevice->setState(SLEEPING);
+
+                                    if (verbosity & SHOW_TASK_VIEW) {
+                                        printMessage(taskTime, currentDeviceFlow, NOTICE_ALL_TASKS_FINISHED);
+                                        
+                                    }
                                 }
                             }
                             
                         }
                         else {    //  (currentDevice->getState() == MOVE_DONE)                                          //  device is idle
-                            switch (currentDevice->getStartEvent()) {                                                   //  what kind of startEvent is given?
+                            switch (currentDeviceFlow->getStartEvent()) {                                                   //  what kind of startEvent is given?
                                 case DATE:                                                                          //  start the next move by date
-                                    if (taskTime > currentDevice->getStartTime()) {
-                                        handleStartEvent(taskTime, currentDevice);
+                                    if (currentDeviceFlow->isStartTimeReached(taskTime)) {
+                                        if (verbosity & SHOW_TASK_VIEW) {
+                                            printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_START);
+                                        }
+                                        
+                                        currentDeviceFlow->handleStartEvent(taskTime);;
                                     }
                                     break;
                                     
                                 case CONTROL:                                                                        //  start the next move by button
-                                    if (currentDevice->isStartTargetReached()) {
-                                        handleStartEvent(taskTime, currentDevice);
+                                    if (currentDeviceFlow->isStartTargetReached()) {
+                                        if (verbosity & SHOW_TASK_VIEW) {
+                                            printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_START);
+                                        }
+
+                                        currentDeviceFlow->handleStartEvent(taskTime);;
                                     }
                                     break;
                                     
                                 case FOLLOW:                                                                        //  start the next move when a device reached a certain
-                                    if (currentTask->getStartTriggerDevice()->getCurrentTaskID() > currentTask->getStartTriggerTaskID()) {          //  is the trigger servo doing the trigger move?
+                                    if (currentDeviceFlow->getStartTriggerDevice()->getCurrentTaskID() > currentDeviceFlow->getStartTriggerTaskID()) {          //  is the trigger servo doing the trigger move?
                                         
-                                        handleStartEvent(taskTime, currentDevice);
+                                        if (verbosity & SHOW_TASK_VIEW) {
+                                            printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_START);
+                                        }
+
+                                        currentDeviceFlow->handleStartEvent(taskTime);;
                                     }
                                     break;
                                     
                                 case FOLLOW_ME:                                                                        //  start the next move when a device reached a certain
-                                        handleStartEvent(taskTime, currentDevice);
+                                    if (verbosity & SHOW_TASK_VIEW) {
+                                        printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_START);
+                                    }
+
+                                    currentDeviceFlow->handleStartEvent(taskTime);;
                                     break;
                                     
-                                case POSITION:                                                                      //  start the next move when a device reached a certain
-                                    triggerDevice_start = currentTask->getStartTriggerDevice();
-                                    if (triggerDevice_start->getCurrentTaskID() >= currentTask->getStartTriggerTaskID()) {        //  is the trigger servo doing the trigger move?
-                                        
-                                        if ((triggerDevice_start->getDirectionDown() && triggerDevice_start->getCurrentPosition() <= currentTask->getStartTriggerPosition()) || (!triggerDevice_start->getDirectionDown() && triggerDevice_start->getCurrentPosition() >= currentTask->getStartTriggerPosition())) {
+                                case POSITION:
+                                    
+                                    //  start the next move when a device reached a certain
+                                    triggerDevice_start = currentDeviceFlow->getStartTriggerDevice();
+                                    if (triggerDevice_start->getCurrentTaskID() >= currentDeviceFlow->getStartTriggerTaskID()) {        //  is the trigger servo doing the trigger move?
+                                        if (triggerDevice_start->getCurrentTaskID() > currentDeviceFlow->getStartTriggerTaskID()) {
+                                            
+                                            if (verbosity & SHOW_TASK_VIEW) {
+                                                printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_START);
+                                            }
+                                            
+                                            currentDeviceFlow->handleStartEvent(taskTime);;
+                                        } else if (triggerDevice_start->getDirectionDown() == ( triggerDevice_start->getCurrentPosition() <= currentDeviceFlow->getStartTriggerPosition())) {
                                             //  did the trigger servo pass the trigger position?
-                                            handleStartEvent(taskTime, currentDevice);
+                                            
+                                            if (verbosity & SHOW_TASK_VIEW) {
+                                                printMessage(taskTime, currentDeviceFlow, TRIGGER_TASK_START);
+                                            }
+                                            
+                                            currentDeviceFlow->handleStartEvent(taskTime);;
                                         }
                                     }
                                     break;
@@ -565,15 +763,15 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             }
 
             elapsedLoopMicros = micros() - loopMicros;
-            deviceLoopPeriod_min = min(deviceLoopPeriod_min, elapsedLoopMicros);
-            deviceLoopPeriod_max = max(deviceLoopPeriod_max, elapsedLoopMicros);
+            deviceLoopPeriod_min = fmin(deviceLoopPeriod_min, elapsedLoopMicros);
+            deviceLoopPeriod_max = fmax(deviceLoopPeriod_max, elapsedLoopMicros);
             
 
             //        if (taskTime - lastPrintTime > 1000) {
             //            device[6]->getReadOut(0);
             //            lastPrintTime = taskTime;
             //        }
-
+            
             loopMicros = micros();
             if (theControlID < currentWorkflow->getCountOfControls()) {
                 currentWorkflow->control[theControlID]->read();
@@ -582,8 +780,8 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 theControlID = 0;
             }
             elapsedLoopMicros = micros() - loopMicros;
-            controlPeriod_min = min(controlPeriod_min, elapsedLoopMicros);
-            controlPeriod_max = max(controlPeriod_max, elapsedLoopMicros);
+            controlPeriod_min = fmin(controlPeriod_min, elapsedLoopMicros);
+            controlPeriod_max = fmax(controlPeriod_max, elapsedLoopMicros);
             
             
             loopMicros = micros();
@@ -592,8 +790,9 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 if ((currentFlowControl->needsToFire())) {
                     for (unsigned int actionIndex = 0; actionIndex < currentFlowControl->getCountOfActions(); actionIndex++) {
                         currentAction = currentFlowControl->getAction(actionIndex);
+                        currentDeviceFlow = currentAction->targetDeviceFlow;
                         if (!currentAction->getActionDone()) {
-                            if ((currentAction->getValidTaskID() == -1) || (currentAction->getValidTaskID() == currentAction->targetDeviceFlow->getTaskPointer())) {
+                            if ((currentAction->getValidTaskID() == -1) || (currentAction->getValidTaskID() == currentDeviceFlow->getTaskPointer())) {
                                 
                                 currentWorkflow->setWorkflowInfo(currentAction->getWorkflowInfo());
                                 
@@ -615,22 +814,32 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                                         breakLoop = true;
                                         break;
                                     case TASK_START_ACTION:
-                                        handleStartEvent(taskTime, currentAction->targetDeviceFlow->getDevice());
+                                        if (currentAction->getFollowingTaskID() > -1) {
+                                        currentDeviceFlow->setProposedTaskID(currentAction->getFollowingTaskID());
+                                        currentDeviceFlow->handlePreparation(taskTime);
+                                        }
+                                        currentDeviceFlow->handleStartEvent(taskTime);;
                                         break;
                                     case TASK_SWITCH_ACTION:
-                                        currentDevice->setSwitchTaskPromptly(currentAction->getSwitching());
-                                        nextTaskID[currentAction->targetDeviceFlow->getID()] = currentAction->getFollowingTaskID();
-                                        if (currentAction->getSwitching() == SWITCH_PROMPTLY) {
-                                            handleStopEvent(taskTime, currentAction->targetDeviceFlow);
+                                        if (currentAction->getFollowingTaskID() > -1) {
+                                            currentDeviceFlow->setProposedTaskID(currentAction->getFollowingTaskID());
                                         }
+                                            currentDeviceFlow->setSwitching(currentAction->getSwitching());
+                        
+                                        if (currentAction->getSwitching() > NO_SWITCHING) {
+                                                currentDeviceFlow->handleStopEvent(taskTime);
+                                        }
+                                        break;
                                     case TASK_STOP_ACTION:
-                                        currentDevice->setStopping(currentAction->getStopping());
-                                        handleStopEvent(taskTime, currentAction->targetDeviceFlow);
+                                        currentAction->targetDeviceFlow->setStopping(currentAction->getStopping());
+                                        currentDeviceFlow->handleStopEvent(taskTime);
                                         break;
                                     default: ;
                                 }
-                               }
-                            currentAction->setActionDone(true);
+                            }
+                            if (!currentAction->getRiseActionRepeatedly()) {
+                                currentAction->setActionDone(true);
+                            }
                         }
                     }
                 }
@@ -639,8 +848,8 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 theFlowControlID = 0;
             }
             elapsedLoopMicros = micros() - loopMicros;
-            flowControlPeriod_min = min(flowControlPeriod_min, elapsedLoopMicros);
-            flowControlPeriod_max = max(flowControlPeriod_max, elapsedLoopMicros);
+            flowControlPeriod_min = fmin(flowControlPeriod_min, elapsedLoopMicros);
+            flowControlPeriod_max = fmax(flowControlPeriod_max, elapsedLoopMicros);
             
             
             if (breakLoop) {
@@ -706,157 +915,41 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
     return notificationCode;
 }
 
-deviceInfoCode CCDeviceScheduler::handleStartEvent(unsigned long taskTime, CCDevice* currentDevice) {
-    
-    if (verbosity & SHOW_TASK_VIEW) {
-        Serial.print(taskTime);
-        Serial.print(F(": "));
-        Serial.print(currentDeviceFlow->getName());
-        Serial.print(F(" start task "));
-        Serial.print(currentDeviceFlow->getTaskPointer());
-        Serial.print(" by ");
-        Serial.println(getLiteralOfTaskEvent(currentDevice->getStartEvent()));
-    }
-    
-    if (currentDevice->getStartDelay() > 0) {                                               // startDelay given?
-        if (currentDevice->getStartEvent() == DATE) {
-            currentDevice->setStartTime(currentDevice->getStartTime() + currentDevice->getStartDelay());
-        } else {
-            currentDevice->setStartTime(taskTime + currentDevice->getStartDelay());             // so start the move by date
-            currentDevice->setStartEvent(DATE);
-        }
-        currentDevice->setStartDelay(0);
-    }
-    else {
-        currentDevice->setStartTime(taskTime);
-        currentDevice->enableDevice();
-        currentDevice->startTask();
-    }
-    return TASK_START_OK;
-}
-deviceInfoCode CCDeviceScheduler::handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow) {
-    currentDevice = currentDeviceFlow->getDevice();
-    
-    switch (currentDevice->getSwitchTaskPromptly()) {
-        case SWITCH_PROMPTLY:
-            switch (handlePreparation(taskTime, currentDeviceFlow)) {
-                case DISPOSE_THIS_TASK:
-                    currentDevice->initiateStop();
-                    currentDevice->setStopEvent(NONE);
-                    currentDevice->setSwitchTaskPromptly(SWITCH_AFTER_COMPLETION);
-                    return TASK_DISPOSED;
-                    
-                case DELAY_THIS_TASK:
-                    currentDevice->setStopEvent(DATE);
-                    currentDevice->setTimeout(0);
-                    return TASK_DELAYED;
-
-                case TASK_PREPARATION_OK:
-                    currentDeviceFlow->setTaskPointer(currentDevice->getCurrentTaskID());
-                    nextTaskID[currentDeviceFlow->getID()] = currentDeviceFlow->getTaskPointer() + 1;
-                    
-                    if (verbosity & SHOW_TASK_VIEW) {
-                        Serial.print(taskTime);
-                        Serial.print(F(": "));
-                        Serial.print(currentDeviceFlow->getName());
-                        Serial.print(F(" stop task "));
-                        Serial.print(currentDeviceFlow->getTaskPointer());
-                        Serial.print(" by ");
-                        Serial.print(getLiteralOfTaskEvent(currentDevice->getStopEvent()));
-                        Serial.println(", switching promptly");
-                    }
-                    return TASK_PREPARATION_OK;
-                    
-                default:
-                    return ALL_TASKS_DONE;
-            }
-
-        case SWITCH_AFTER_COMPLETION:
-            currentDevice->initiateStop();
-            currentDevice->setStopEvent(NONE);
-            return TASK_DELAYED;
-            
-        default:
-            if (currentDevice->getStopping() == STOP_IMMEDIATELY) {
-                currentDevice->stopTask();
-                
-                if (verbosity & SHOW_TASK_VIEW) {
-                    Serial.print(taskTime);
-                    Serial.print(F(": "));
-                    Serial.print(currentDeviceFlow->getName());
-                    Serial.print(F(" stop task "));
-                    Serial.print(currentDeviceFlow->getTaskPointer());
-                    Serial.print(" by ");
-                    Serial.print(getLiteralOfTaskEvent(currentDevice->getStopEvent()));
-                    Serial.println(", stopping immediately");
-                }
-            } else {
-                currentDevice->initiateStop();
-                currentDevice->setStopEvent(NONE);
-                
-                if (verbosity & SHOW_TASK_VIEW) {
-                    Serial.print(taskTime);
-                    Serial.print(F(": "));
-                    Serial.print(currentDeviceFlow->getName());
-                    Serial.print(F(" initiate stop of task "));
-                    Serial.print(currentDeviceFlow->getTaskPointer());
-                    Serial.print(" by ");
-                    Serial.println(getLiteralOfTaskEvent(currentDevice->getStopEvent()));
-                }
+void CCDeviceScheduler::printMessage(unsigned long taskTime, CCDeviceFlow* df, schedulersJob job) {
+    Serial.print(taskTime);
+    Serial.print(F(": "));
+    Serial.print(df->getName());
+    switch (job) {
+        case TRIGGER_TASK_PREPARATION:
+            Serial.print(F(" prepare task "));
+            Serial.print(df->getProposedTaskID());
+            break;
+        case TRIGGER_TASK_START:
+            Serial.print(F(" start task "));
+            Serial.print(df->getTaskPointer());
+            Serial.print(" by ");
+            Serial.print(getLiteralOfTaskEvent(df->getStartEvent()));
+            break;
+        case TRIGGER_TASK_STOP:
+            Serial.print(F(" stop task "));
+            Serial.print(df->getTaskPointer());
+            Serial.print(" by ");
+            Serial.print(getLiteralOfTaskEvent(df->getStopEvent()));
+            if (df->getSwitching() == SWITCH_PROMPTLY) {
+                Serial.print(", switching promptly");
             }
             break;
+        case NOTICE_TASK_STOP:
+            Serial.print(F(" Task "));
+            Serial.print(df->getTaskPointer());
+            Serial.print(F(" done"));
+            break;
+        case NOTICE_ALL_TASKS_FINISHED:
+            Serial.print(F(" finished all Tasks"));
+
     }
-    return TASK_PREPARATION_OK;
-}
-deviceInfoCode CCDeviceScheduler::handlePreparation(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow) {
-    currentDevice = currentDeviceFlow->getDevice();
-    int currentDeviceFlowID = currentDeviceFlow->getID();
-    deviceInfoCode info;
-    
-    if (nextTaskID[currentDeviceFlowID] < currentDeviceFlow->getCountOfTasks()) {                       //  all tasks done? no!
-        
-        info = currentDevice->prepareTask(currentDeviceFlow->task[nextTaskID[currentDeviceFlowID]]);
-        currentDeviceFlow->setTaskPointer(currentDevice->getCurrentTaskID());
-        nextTaskID[currentDeviceFlowID] = currentDeviceFlow->getTaskPointer() + 1;
-        
-        if (info >= DEVICE_OK) {
-            if (verbosity & SHOW_TASK_VIEW) {
-                Serial.print(taskTime);
-                Serial.print(F(": "));
-                Serial.print(currentDeviceFlow->getName());
-                Serial.print(F(" prepare Task "));
-                Serial.print(currentDeviceFlow->getTaskPointer());
-                Serial.print(F(": current Position: "));
-                Serial.print(currentDevice->getCurrentPosition());
-                Serial.print(F(" target: "));
-                Serial.print(currentDevice->getTarget());
-                Serial.print(F("; result: "));
-                Serial.println(getLiteralOfDeviceInfo(info));
-            }
-        }
-        return info;
-        
-    }                                                                                   // all tasks are done
-    
-    nextTaskID[currentDeviceFlowID] = currentDeviceFlow->getTaskPointer() + 1;
-    currentDeviceFlow->setTaskPointer(nextTaskID[currentDeviceFlowID]);
-    currentDevice->setCurrentTaskID(currentDeviceFlow->getTaskPointer());
-    
-    if (currentDevice->getState() != SLEEPING) {
-        currentDevice->finishTask();
-        currentDevice->disableDevice();
-    }
-    
-    if (verbosity & SHOW_TASK_VIEW) {
-        Serial.print(taskTime);
-        Serial.print(F(": "));
-        Serial.print(currentDeviceFlow->getName());
-        Serial.println(F(" finished all Tasks"));
-        
-    }
-    
-    return ALL_TASKS_DONE;
-    
+    Serial.println();
+
 }
 
 void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
@@ -897,8 +990,6 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                 Serial.print(F(", startDelay: "));
                 Serial.print(workflow->deviceFlow[df]->task[i]->getStartDelay());
             }
-            //            Serial.print(F(", started by "));
-            //            Serial.print(getLiteralOfTaskEvent(workflow->deviceFlow[df]->task[i]->getStartEvent()));
             switch (workflow->deviceFlow[df]->task[i]->getStartEvent()) {
                 case DATE:
                     Serial.print(F(", startTime: "));
@@ -919,7 +1010,7 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStartTriggerTaskID());
                     break;
                 case FOLLOW_ME:
-                    Serial.print(F(", running after me"));
+                    Serial.print(F(", follows me"));
                     break;
                 case POSITION:
                     Serial.print(F(", started by position of: "));
@@ -934,21 +1025,16 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     break;
                 default: ;
             }
-            //            Serial.print(F(", terminated by: "));
-            //            Serial.print(getLiteralOfTaskEvent(workflow->deviceFlow[df]->task[i]->getStopEvent()));
             
             switch (workflow->deviceFlow[df]->task[i]->getStopEvent()) {
                 case DATE:
                     Serial.print(F(", timeout: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getTimeout());
                     Serial.print(", stopping: ");
-                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
-                    if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
-                        if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
-                            Serial.print(F(", switch after completion"));
-                        } else {
-                            Serial.print(F(", switch promptly to next task"));
-                        }
+                    if (workflow->deviceFlow[df]->task[i]->getSwitching() > NO_SWITCHING) {
+                            Serial.print(F("switch promptly to next task"));
+                    } else {
+                        Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     }
                     break;
                 case CONTROL:
@@ -959,32 +1045,26 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopControlTarget());
                     Serial.print(", stopping: ");
-                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
-                    if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
-                        if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
-                            Serial.print(F(", switch after completion"));
-                        } else {
-                            Serial.print(F(", switch promptly to next task"));
-                        }
+                    if (workflow->deviceFlow[df]->task[i]->getSwitching() > NO_SWITCHING) {
+                            Serial.print(F("switch promptly to next task"));
+                    } else {
+                        Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     }
                   break;
                 case FOLLOW:
-                    Serial.print(F(", follows: "));
+                    Serial.print(F(", stop after completion: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerDevice()->getName());
                     Serial.print(F(", after move: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerTaskID());
                     Serial.print(", stopping: ");
-                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
-                    if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
-                        if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
-                            Serial.print(F(", switch after completion"));
-                        } else {
-                            Serial.print(F(", switch promptly to next task"));
-                        }
+                    if (workflow->deviceFlow[df]->task[i]->getSwitching() > NO_SWITCHING) {
+                            Serial.print(F("switch promptly to next task"));
+                    } else {
+                        Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     }
                     break;
                 case FOLLOW_ME:
-                    Serial.print(F(", [THIS MAKES NO SENSE!]"));
+                    Serial.print(F(", stopped by me [THIS MAKES NO SENSE!]"));
                     break;
                 case POSITION:
                     Serial.print(F(", stop by position of: "));
@@ -994,26 +1074,20 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
                     Serial.print(F(", at position: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerPosition());
                     Serial.print(", stopping: ");
-                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
-                    if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
-                        if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
-                            Serial.print(F(", switch after completion"));
-                        } else {
-                            Serial.print(F(", switch promptly to next task"));
-                        }
+                    if (workflow->deviceFlow[df]->task[i]->getSwitching() > NO_SWITCHING) {
+                            Serial.print(F("switch promptly to next task"));
+                    } else {
+                        Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     }
                     break;
                 case MY_POSITION:
                     Serial.print(F(", stop at position: "));
                     Serial.print(workflow->deviceFlow[df]->task[i]->getStopTriggerPosition());
                     Serial.print(", stopping: ");
-                    Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
-                    if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() > NO_SWITCHING) {
-                        if (workflow->deviceFlow[df]->task[i]->getSwitchTaskPromptly() == SWITCH_AFTER_COMPLETION) {
-                            Serial.print(F(", switch after completion"));
-                        } else {
-                            Serial.print(F(", switch promptly to next task"));
-                        }
+                    if (workflow->deviceFlow[df]->task[i]->getSwitching() > NO_SWITCHING) {
+                            Serial.print(F("switch promptly to next task"));
+                    } else {
+                        Serial.print(getLiteralOfStoppingMode(workflow->deviceFlow[df]->task[i]->getStopping()));
                     }
                     break;
                 default: ;
@@ -1026,49 +1100,59 @@ void CCDeviceScheduler::listAllTasks(CCWorkflow* workflow) {
 void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
     Serial.print(F("actions of workflow "));
     Serial.println(workflow->getName());
-    for (unsigned int fc = 0; fc < workflow->getCountOfFlowControls(); fc++) {
-        Serial.print(F("   flowControl "));
-        Serial.print(workflow->flowControl[fc]->getName());
-        Serial.print(F(", with device: "));
-        Serial.print(workflow->flowControl[fc]->getControl()->getName());
-        Serial.print(F(", actions: "));
-        Serial.println(workflow->flowControl[fc]->getCountOfActions());
+    if (workflow->getCountOfFlowControls() == 0) {
+        Serial.println(F("   - no flowControls -"));
         
-        for (unsigned int i = 0; i < workflow->flowControl[fc]->getCountOfActions(); i++) {
-            Serial.print(F("      # "));
-            Serial.print(i);
-            Serial.print(F(": action: "));
-            Serial.print(workflow->flowControl[fc]->getAction(i)->getName());
-            Serial.print(F(", on deviceFlow: "));
-            if (workflow->flowControl[fc]->getAction(i)->targetDeviceFlow == NULL) {
-                Serial.print(F(" any"));
-            } else {
-                Serial.print(workflow->flowControl[fc]->getAction(i)->targetDeviceFlow->getName());
-            }
-            Serial.print(F(", on task: "));
-            if (workflow->flowControl[fc]->getAction(i)->getValidTaskID() < 0) {
-                Serial.print(F(" any"));
-            } else {
-                Serial.print(workflow->flowControl[fc]->getAction(i)->getValidTaskID());
-            }
-            Serial.print(F(", following: "));
-            if (workflow->flowControl[fc]->getAction(i)->getFollowingTaskID() < 0) {
-                Serial.print(F(" any"));
-            } else {
-                Serial.print(workflow->flowControl[fc]->getAction(i)->getFollowingTaskID());
-            }
-            Serial.print(F(", do: "));
-            Serial.print(getLiteralOfDeviceAction(workflow->flowControl[fc]->getAction(i)->getTargetAction()));
-            Serial.print(F(", infoCode: ["));
-            Serial.print(getLiteralOfWorkflowInfo(workflow->flowControl[fc]->getAction(i)->getWorkflowInfo()));
-            Serial.println(F("]"));
+    } else {
+        for (unsigned int fc = 0; fc < workflow->getCountOfFlowControls(); fc++) {
+            Serial.print(F("   flowControl "));
+            Serial.print(workflow->flowControl[fc]->getName());
+            Serial.print(F(", with device: "));
+            Serial.print(workflow->flowControl[fc]->getControl()->getName());
+            Serial.print(F(", actions: "));
+            Serial.println(workflow->flowControl[fc]->getCountOfActions());
             
+            if (workflow->flowControl[fc]->getCountOfActions() == 0) {
+                Serial.println(F("      - no actions -"));
+            } else {
+                for (unsigned int i = 0; i < workflow->flowControl[fc]->getCountOfActions(); i++) {
+                    Serial.print(F("      # "));
+                    Serial.print(i);
+                    Serial.print(F(": action: "));
+                    Serial.print(workflow->flowControl[fc]->getAction(i)->getName());
+                    Serial.print(F(", on deviceFlow: "));
+                    if (workflow->flowControl[fc]->getAction(i)->targetDeviceFlow == NULL) {
+                        Serial.print(F("any"));
+                    } else {
+                        Serial.print(workflow->flowControl[fc]->getAction(i)->targetDeviceFlow->getName());
+                    }
+                    Serial.print(F(", on task: "));
+                    if (workflow->flowControl[fc]->getAction(i)->getValidTaskID() < 0) {
+                        Serial.print(F("any"));
+                    } else {
+                        Serial.print(workflow->flowControl[fc]->getAction(i)->getValidTaskID());
+                    }
+                    Serial.print(F(", following: "));
+                    if (workflow->flowControl[fc]->getAction(i)->getFollowingTaskID() < 0) {
+                        Serial.print(F("any"));
+                    } else {
+                        Serial.print(workflow->flowControl[fc]->getAction(i)->getFollowingTaskID());
+                    }
+                    Serial.print(F(", do: "));
+                    Serial.print(getLiteralOfDeviceAction(workflow->flowControl[fc]->getAction(i)->getTargetAction()));
+                    Serial.print(F(", infoCode: ["));
+                    Serial.print(getLiteralOfWorkflowInfo(workflow->flowControl[fc]->getAction(i)->getWorkflowInfo()));
+                    Serial.println(F("]"));
+                    
+                }
+            }
         }
-        Serial.println();
     }
+    Serial.println();
 }
 
 void CCDeviceScheduler::evaluateButtons() {
+    /*
     bool lastButtonState[20];
     Serial.println(F("************************************* evaluate buttons *************************************"));
     Serial.print(F("[CCDeviceScheduler]: "));
@@ -1094,6 +1178,7 @@ void CCDeviceScheduler::evaluateButtons() {
             }
         }
     }
+*/
 }
 
 
@@ -1137,7 +1222,6 @@ String CCDeviceScheduler::getLiteralOfStoppingMode(stoppingMode s) {
 }
 String CCDeviceScheduler::getLiteralOfSwitchingMode(switchingMode s) {
     if (s == NO_SWITCHING) return "none";
-    if (s == SWITCH_AFTER_COMPLETION) return "after completion";
     if (s == SWITCH_PROMPTLY) return "promptly";
     return "unknown";
 }

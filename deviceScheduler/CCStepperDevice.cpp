@@ -11,15 +11,12 @@
 #include "CCStepperDevice.h"
 
 
-CCStepperDevice::CCStepperDevice(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation) :CCDevice(deviceName, STEPPERDEVICE), step_pin(step_pin), dir_pin(dir_pin), enable_pin(enable_pin), stepsPerRotation(stepsPerRotation) {
-    this->verbosity = NO_OUTPUT;
-        
-    this->highestSteppingMode = 0;
+CCStepperDevice::CCStepperDevice(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation) : CCDevice(deviceName, STEPPERDEVICE), step_pin(step_pin), dir_pin(dir_pin), enable_pin(enable_pin), stepsPerRotation(stepsPerRotation) {
 
-    this->steppingUnit = new unsigned int[9];                         // create array for increment of microSteps according to microSteppingMode (be prepared up to 256-times microstepping)
-    
-    this->steppingUnit[0] = 1;
-    
+    this->verbosity = NO_OUTPUT;
+
+    this->acceleration_max = 4000;
+
     
     pinMode(dir_pin, OUTPUT);
     pinMode(step_pin, OUTPUT);
@@ -27,12 +24,15 @@ CCStepperDevice::CCStepperDevice(const String deviceName, const unsigned int ste
     digitalWrite(enable_pin, HIGH);
     
 
+    this->steppingUnit = new unsigned int[(int)log2(HIGHEST_MICROSTEP_RESOLUTION) + 1];                         // create array for increment of microSteps according to microSteppingMode
+        this->steppingUnit[0] = 1;
+    
+    this->highestSteppingMode = 0;
+
+    
     this->stepsPerDegree = stepsPerRotation / 360.0;                                        // save time executing prepareNextTask()
     this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);      // save time when calculatin currentPosition in operateTask()
     
-    this->acceleration_max = 4000;
-    
-    this->state = SLEEPING;
     
     this->currentMicroStep = 0;
     this->currentPosition = 0;
@@ -108,7 +108,7 @@ deviceInfoCode CCStepperDevice::prepareTask(CCTask* nextTask) {
 //    unsigned long t_stop, t_sum = 0;
 
     if (state == MOVING) {
-        if (switchTaskPromptly) {
+        if (switching) {
             if ((nextTask->getTarget() > currentPosition) == directionDown) {             // XOR: when switching to move in different direction
                 
                 if (verbosity & BASICOUTPUT) {
@@ -167,18 +167,7 @@ deviceInfoCode CCStepperDevice::prepareTask(CCTask* nextTask) {
     moveRelativ = nextTask->getMoveRelativ();
     positionReset = nextTask->getPositionReset();
     
-    startEvent = nextTask->getStartEvent();
-    stopEvent = nextTask->getStopEvent();
-    startDelay = nextTask->getStartDelay();
-    startTime = nextTask->getStartTime();
-    timeout = nextTask->getTimeout();
-    startControl = nextTask->getStartControl();
-    stopControl = nextTask->getStopControl();
-    startControlComparing = nextTask->getStartControlComparing();
-    stopControlComparing = nextTask->getStopControlComparing();
-    startControlTarget = nextTask->getStartControlTarget();
-    stopControlTarget = nextTask->getStopControlTarget();
-    switchTaskPromptly = nextTask->getSwitchTaskPromptly();
+    switching = nextTask->getSwitching();
     stopping = nextTask->getStopping();
     approximation = nextTask->getApproximation();
     
@@ -427,7 +416,7 @@ void CCStepperDevice::startTask() {                                 // start thi
         stepExpiration = 0;                                         // set time for next step to 0 (= now)
         t0 = micros() & 0x7fffffff;                                 // remember starting time (but be aware of overflows)
         
-        operateTask();                                              // do first step and calculate time for next step
+//        operateTask();                                              // do first step and calculate time for next step
     }
 }
 
@@ -492,7 +481,7 @@ void CCStepperDevice::operateTask() {
         digitalWrite(step_pin, LOW);
         digitalWrite(step_pin, HIGH);
         
-        if (timeTillNextStep < -100) {
+        if (timeTillNextStep < -200) {
             if (currentMicroStep < microStepsToGo) {
                 digitalWrite(I_AM_LATE_LED, HIGH);
             }

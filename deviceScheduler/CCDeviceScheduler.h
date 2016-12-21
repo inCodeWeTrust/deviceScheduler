@@ -22,12 +22,14 @@
 #include "CCStepperDevice.h"
 #include "CCStepperDevice_A4988.h"
 #include "CCStepperDevice_TMC260.h"
+#include "CCStepperDevice_TMC2130.h"
 #include "CCDcControllerDevice.h"
 #include "CCDcControllerDevice_fullBridge.h"
 
 #include "CCControl.h"
 #include "CCControlButton.h"
 #include "CCControlSensor.h"
+#include "CCControlEvent.h"
 
 
 
@@ -84,9 +86,6 @@ class CCDeviceScheduler {
     String  notificationText;
     
     
-    deviceInfoCode handleStartEvent(unsigned long taskTime, CCDevice* currentDevice);
-    deviceInfoCode handleStopEvent(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
-    deviceInfoCode handlePreparation(unsigned long taskTime, CCDeviceFlow* currentDeviceFlow);
     
     String getLiteralOfDeviceType(deviceType t);
     String getLiteralOfControllerType(controlType t);
@@ -164,6 +163,18 @@ public:
     /// @return the device index.
     CCDevice* addStepper_TMC260(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax);
     
+    /// Function adds a stepper device to the device array, that is driven by da driver like the TMC2130, and returns the index of the device.
+    /// Device-specific parameters are passed.
+    /// @param deviceName the human-readable name of the device (used for verbose output).
+    /// @param dir_pin the pin number of the stepper driver's direction pin.
+    /// @param step_pin the pin number of the stepper driver's step pin.
+    /// @param enable_pin the pin number of the stepper driver's enable pin.
+    /// @param chipSelect_pin the number of the drivers chip select pin (CS) for the SPI communication.
+    /// @param currentMax the maximum current, that is applied to the motor coils in mA RMS.
+    /// @param stepsPerRotation the number of steps needed to make a full rotation.
+    /// @return the device index.
+    CCDevice* addStepper_TMC2130(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax);
+
     
     /// Function adds a switching device to the device array and returns the index of the device.
     /// A switching device is a device, that is simply switched on or off. Device-specific parameters are passed.
@@ -187,7 +198,7 @@ public:
     /// Function lists all registered devices.
     /// A list with all devices and bare informations are presented.
     void listDevices();
-    
+    void printMessage(unsigned long taskTime, CCDeviceFlow* df, schedulersJob job);
 
     
     /// Array of all control-inputs.
@@ -204,6 +215,8 @@ public:
  
     
     CCControl* addControlSensor(String sensorName, unsigned int pin);
+    
+    CCControl* addControlEvent(String eventName);
     
     /// Function lists all registered control buttons.
     /// A list with all buttons and bare informations are presented.

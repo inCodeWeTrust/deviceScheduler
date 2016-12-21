@@ -11,7 +11,8 @@
 
 
 
-CCControlSensor::CCControlSensor(const String controlName, const unsigned int controlIndex, const unsigned int pin) : CCControl(controlName, controlIndex, SENSOR, pin, -1) {
+CCControlSensor::CCControlSensor(const String controlName, const unsigned int controlIndex, const unsigned int pin) : CCControl(controlName, controlIndex, SENSOR, pin, INPUT) {
+
     this->verbosity = NO_OUTPUT;
             
     this->sensorValue = analogRead(pin);
@@ -44,6 +45,7 @@ void CCControlSensor::read() {
     sensorValue_prev = sensorValue;
 }
 
+void CCControlSensor::setTarget(CCDeviceFlow* targetDeviceFlow) {}
 
 
 

@@ -40,43 +40,43 @@ protected:
     // deceleration: time for ramping down [ms]
     
     /// The current task's starting time.
-    unsigned long        t0;
+    unsigned long       t0;
     
     /// The elapsed time since this task was started or switched.
-    signed long          elapsedTime, elapsedTime_previous;
+    signed long         elapsedTime, elapsedTime_previous;
     
     /// The time for ramping up @<= acceleration@>.
-    signed long          timeForAcceleration;
+    signed long         timeForAcceleration;
     
     /// The time for ramping down @<= deceleration@>.
-    signed long          timeForDeceleration;
+    signed long         timeForDeceleration;
     
     /// This variable could be used when the task should be terminated automatically.
-    signed long          timeForAccAndConstSpeed;
+    signed long         timeForAccAndConstSpeed;
     
     /// The switching time interval @<1 / pwmFrequency = 1 / velocity@>.
-    unsigned int         switchingInterval;
+    unsigned int        switchingInterval;
     
     /// The duration of onTime @< = target * switchingInterval@>.
-    unsigned int         targetOnDuration;
+    unsigned int        targetOnDuration;
     
     /// The effectiv date for switching on.
-    signed long          switchOnTime;
+    signed long         switchOnTime;
     
     /// The effectiv date for switching off.
-    signed long          switchOffTime;
+    signed long         switchOffTime;
     
     /// Variable is @c true when switched on, @c false when switched off.
-    bool              isActive;
+    bool                isActive;
     
     /// The initial rate of duty cycle, when the task is switched, like v0.
-    float                currentRatio;
+    float               currentRatio;
     
     /// The sensor's value
-    unsigned int         sensorValue;
+    unsigned int        sensorValue;
 
     /// The distance from the target position
-    signed int           relativePosition, relativPosition_previous;
+    signed int          relativePosition, relativPosition_previous;
     
     
 public:
@@ -85,21 +85,21 @@ public:
     ~CCDcControllerDevice();
     
     
-    void attachDevice();
-    void detachDevice();
-    void enableDevice();
-    void disableDevice();
+    void                attachDevice();
+    void                detachDevice();
+    void                enableDevice();
+    void                disableDevice();
     
-    deviceInfoCode reviewValues(CCTask* nextTask);
-    void prepareNextTask();
-    deviceInfoCode prepareTask(CCTask* nextTask);
-    void startTask();
-    void operateTask();
-    void initiateStop();
-    void stopTask();
-    void finishTask();
+    deviceInfoCode      reviewValues(CCTask* nextTask);
+    void                prepareNextTask();
+    deviceInfoCode      prepareTask(CCTask* nextTask);
+    void                startTask();
+    void                operateTask();
+    void                initiateStop();
+    void                stopTask();
+    void                finishTask();
     
-    void getReadOut(unsigned int theReadOut);
+    void                getReadOut(unsigned int theReadOut);
     
 };
 

@@ -87,12 +87,12 @@ void CCServoDevice_cross::operateTask() {
     
     if (stopping == STOP_DYNAMIC) {
         if (dynamicalStop == false) {
-            sensorValue = stopControl->value();
+            sensorValue = approximationControl->value();
             if ((sensorValue > initiatePerformanceValue && (!sensorValuesFalling)) || (sensorValue < initiatePerformanceValue && sensorValuesFalling)) {
                 timeForAcceleration = elapsedTime;
                 timeForConstantSpeed = 0;
                 lastCycleTime = 0;
-                c_perform = 1.0 / (initiatePerformanceValue - stopControlTarget);
+                c_perform = 1.0 / (initiatePerformanceValue - approximationTarget);
                 dynamicalStop = true;
             }
         }
@@ -148,9 +148,9 @@ void CCServoDevice_cross::operateTask() {
     if (dynamicalStop) {
         deltaDeltaNorm = (float)(elapsedTime - lastCycleTime) * velocity / 1000.0;
         
-        sensorValue = stopControl->value();
+        sensorValue = approximationControl->value();
         
-        performanceFactor = c_perform * (sensorValue - stopControlTarget);
+        performanceFactor = c_perform * (sensorValue - approximationTarget);
         
         currentPosition += deltaDeltaNorm * performanceFactor;
         currentPosition = fmin(currentPosition, maxPosition);
@@ -178,7 +178,7 @@ void CCServoDevice_cross::operateTask() {
         if (approximation == SKIP_APPROXIMATION_NEVER) {
             return;
         } else {
-            if (fabs(sensorValue - stopControlTarget) < sensorTreshold) {
+            if (fabs(sensorValue - approximationTarget) < sensorTreshold) {
                 if (valueCounter++ < approximation) {
                     return;
                 }

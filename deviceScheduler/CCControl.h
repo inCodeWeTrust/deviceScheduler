@@ -11,6 +11,8 @@
 
 
 #include "deviceScheduler.h"
+#include "CCDeviceFlow.h"
+#include "CCTask.h"
 #include "CCAction.h"
 
 
@@ -24,7 +26,6 @@
 
 
 
-class CCDeviceFlow;
 
 class CCControl {
 
@@ -36,16 +37,17 @@ protected:
     const controlType         type;
     const unsigned int        pin;
     const int                 mode;
+    
+    CCDeviceFlow*       targetDeviceFlow;
 
     int                 sensorValue, sensorValue_prev;
     
-    unsigned int        countOfActions;
-
     
 public:
     
     CCControl(const String controlName, const unsigned int controlIndex, const controlType type, const unsigned int pin, const unsigned int mode);
-    virtual             ~CCControl() = 0;
+    virtual ~CCControl() = 0;
+
     virtual void        read() = 0;
     
     int                 value();
@@ -62,11 +64,14 @@ public:
     
     
     const String              getName() const;
-    controlType         getType();
+    controlType         getType() const;
     
     
     
-    void setVerbosity(int verbosity);
+    virtual void        setTarget(CCDeviceFlow* targetDeviceFlow) = 0;
+
+    
+    void                setVerbosity(int verbosity);
 
     
 private:

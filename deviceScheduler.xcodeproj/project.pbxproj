@@ -684,6 +684,11 @@
 		40B211311DD914D900BD41BC /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
 		40B211321DD914D900BD41BC /* CCControlSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlSensor.cpp; sourceTree = "<group>"; };
 		40B211331DD914D900BD41BC /* CCControlSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlSensor.h; sourceTree = "<group>"; };
+		40B388781E0B2EFF009A5937 /* CCControlEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlEvent.cpp; sourceTree = "<group>"; };
+		40B388791E0B2EFF009A5937 /* CCControlEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlEvent.h; sourceTree = "<group>"; };
+		40B3887A1E0B2EFF009A5937 /* CCStepperDevice_TMC2130.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStepperDevice_TMC2130.cpp; sourceTree = "<group>"; };
+		40B3887B1E0B2EFF009A5937 /* CCStepperDevice_TMC2130.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice_TMC2130.h; sourceTree = "<group>"; };
+		40B3887C1E0B2EFF009A5937 /* Trinamic_TMC2130_registers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trinamic_TMC2130_registers.h; sourceTree = "<group>"; };
 		40B3F88D1CC045F600443547 /* CCStepperDevice_A4988.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStepperDevice_A4988.h; sourceTree = "<group>"; };
 		40B3F88E1CC045F600443547 /* CCStepperDevice_A4988.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStepperDevice_A4988.cpp; sourceTree = "<group>"; };
 		40C3C0AE1CFE298A001B4B4E /* CCServoDevice_cross.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCServoDevice_cross.cpp; sourceTree = "<group>"; };
@@ -1549,6 +1554,10 @@
 		40B211341DD9152200BD41BC /* scheduling */ = {
 			isa = PBXGroup;
 			children = (
+				40B211311DD914D900BD41BC /* CCControl.h */,
+				40B211301DD914D800BD41BC /* CCControl.cpp */,
+				40B388791E0B2EFF009A5937 /* CCControlEvent.h */,
+				40B388781E0B2EFF009A5937 /* CCControlEvent.cpp */,
 				A4EB61831D129369000762B0 /* CCWorkflow.h */,
 				A4EB61821D129369000762B0 /* CCWorkflow.cpp */,
 				A4EB61861D12B6F6000762B0 /* CCDeviceFlow.h */,
@@ -1870,12 +1879,13 @@
 				40B3F88E1CC045F600443547 /* CCStepperDevice_A4988.cpp */,
 				40ABDFBA1CC0F2690021BE21 /* CCStepperDevice_TMC260.h */,
 				40ABDFB81CC0F2530021BE21 /* CCStepperDevice_TMC260.cpp */,
+				40B3887B1E0B2EFF009A5937 /* CCStepperDevice_TMC2130.h */,
+				40B3887A1E0B2EFF009A5937 /* CCStepperDevice_TMC2130.cpp */,
+				40B3887C1E0B2EFF009A5937 /* Trinamic_TMC2130_registers.h */,
 				A442495C1C9AD1E600C3E457 /* CCDcControllerDevice.h */,
 				A442495B1C9AD1E600C3E457 /* CCDcControllerDevice.cpp */,
 				A4ADAFD11D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.h */,
 				A4ADAFD01D296DDB006C8B3B /* CCDcControllerDevice_fullBridge.cpp */,
-				40B211311DD914D900BD41BC /* CCControl.h */,
-				40B211301DD914D800BD41BC /* CCControl.cpp */,
 				40253D951CAF2136008A99E5 /* CCControlButton.h */,
 				40253D941CAF2136008A99E5 /* CCControlButton.cpp */,
 				40B211331DD914D900BD41BC /* CCControlSensor.h */,

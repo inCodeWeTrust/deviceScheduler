@@ -21,7 +21,12 @@
 #include "CCStepperDevice_A4988.h"
 
 CCStepperDevice_A4988::CCStepperDevice_A4988(const String deviceName, const unsigned int step_pin, const unsigned int dir_pin, const unsigned int enable_pin, const unsigned int stepsPerRotation, const unsigned int microStep_00_pin, const unsigned int microStep_01_pin, const unsigned int microStep_02_pin, const signed char steppingCode_00, const signed char steppingCode_01, const signed char steppingCode_02, const signed char steppingCode_03, const signed char steppingCode_04, const signed char steppingCode_05, const signed char steppingCode_06, const signed char steppingCode_07) : CCStepperDevice(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation) {
+    
+    this->verbosity = NO_OUTPUT;
 
+    this->acceleration_max = 4000;
+    
+    
 //    microStepPin{microStep_00_pin, microStep_01_pin, microStep_02_pin};
 //    this->microStepPin = new unsigned int[NUMBER_OF_MICROSTEPPING_PINS] {microStep_00_pin, microStep_01_pin, microStep_02_pin};
     
@@ -74,9 +79,6 @@ CCStepperDevice_A4988::CCStepperDevice_A4988(const String deviceName, const unsi
     this->stepsPerDegree = stepsPerRotation / 360.0;                                        // save time executing prepareNextTask()
     this->degreesPerMicroStep = 360.0 / stepsPerRotation / (1 << highestSteppingMode);      // save time when calculatin currentPosition in operateTask()
     
-    this->acceleration_max = 4000;
-    
-    this->state = SLEEPING;
     
     this->currentMicroStep = 0;
     this->currentPosition = 0;

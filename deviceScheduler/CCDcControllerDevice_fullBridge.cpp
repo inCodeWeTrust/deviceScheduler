@@ -87,19 +87,11 @@ deviceInfoCode CCDcControllerDevice_fullBridge::prepareTask(CCTask *nextTask) {
     acceleration = nextTask->getAcceleration();
     deceleration = nextTask->getDeceleration();
     
-    startEvent = nextTask->getStartEvent();
-    stopEvent = nextTask->getStopEvent();
-    startDelay = nextTask->getStartDelay();
-    startTime = nextTask->getStartTime();
-    timeout = nextTask->getTimeout();
-    startControl = nextTask->getStartControl();
-    stopControl = nextTask->getStopControl();
-    startControlComparing = nextTask->getStartControlComparing();
-    stopControlComparing = nextTask->getStopControlComparing();
-    startControlTarget = nextTask->getStartControlTarget();
-    stopControlTarget = nextTask->getStopControlTarget();
-    switchTaskPromptly = nextTask->getSwitchTaskPromptly();
+    switching = nextTask->getSwitching();
     stopping = nextTask->getStopping();
+
+    approximationControl = nextTask->getStopControl();
+    approximationTarget = nextTask->getStopControlTarget();
     approximationCurve = nextTask->getApproximationCurve();
     gap = nextTask->getGap();
     approximation = nextTask->getApproximation();
@@ -174,7 +166,7 @@ void CCDcControllerDevice_fullBridge::startTask() {
         }
     }
     
-    operateTask();
+//    operateTask();
 }
 
 void CCDcControllerDevice_fullBridge::initiateStop() {
@@ -184,6 +176,7 @@ void CCDcControllerDevice_fullBridge::initiateStop() {
 }
 
 void CCDcControllerDevice_fullBridge::stopTask() {
+    currentPosition = 0;
     digitalWrite(switching_pin, !switchingPin_active);
     isActive = false;
     digitalWrite(switching_B_pin, !switchingPin_B_active);
@@ -248,9 +241,9 @@ void CCDcControllerDevice_fullBridge::operateTask() {
         }
         
         if (stopping == STOP_DYNAMIC) {
-            sensorValue = stopControl->value();
+            sensorValue = approximationControl->value();
             
-            relativePosition = stopControlTarget - sensorValue;
+            relativePosition = approximationTarget - sensorValue;
 
             
             if (verbosity & MOVEMENTDEBUG) {

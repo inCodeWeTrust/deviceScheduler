@@ -55,21 +55,21 @@ public:
     ~CCServoDevice();
 
 
-    void attachDevice();
-    void detachDevice();
-    void enableDevice();
-    void disableDevice();
+    void                attachDevice();
+    void                detachDevice();
+    void                enableDevice();
+    void                disableDevice();
     
-    deviceInfoCode reviewValues(CCTask* nextTask);
-    void prepareNextTask();
-    deviceInfoCode prepareTask(CCTask* nextTask);
-    void startTask();
-    void operateTask();
-    void initiateStop();
-    void stopTask();
-    void finishTask();
+    deviceInfoCode      reviewValues(CCTask* nextTask);
+    void                prepareNextTask();
+    deviceInfoCode      prepareTask(CCTask* nextTask);
+    void                startTask();
+    void                operateTask();
+    void                initiateStop();
+    void                stopTask();
+    void                finishTask();
     
-    void getReadOut(unsigned int theReadOut);
+    void                getReadOut(unsigned int theReadOut);
 
 
 };

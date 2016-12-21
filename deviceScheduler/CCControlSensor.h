@@ -39,6 +39,8 @@ public:
     ~CCControlSensor();
     
     
+    void        setTarget(CCDeviceFlow* targetDeviceFlow);
+
 };
 
 #endif // defined(__deviceScheduler__CCControlSensor__)

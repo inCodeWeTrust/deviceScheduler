@@ -13,9 +13,7 @@
 CCServoDevice::CCServoDevice(const String deviceName, const unsigned int servo_pin, const int minPosition, const int maxPosition, const int parkPosition) : CCDevice(deviceName, SERVODEVICE), servo_pin(servo_pin), minPosition(minPosition), maxPosition(maxPosition), parkPosition(parkPosition) {
     
     this->verbosity = NO_OUTPUT;
-    
-    this->state = SLEEPING;
-    
+        
     
     //        Serial.print(F("[CCServoDevice]: setup servo "));
     //        Serial.print(deviceName);
@@ -106,36 +104,18 @@ deviceInfoCode CCServoDevice::prepareTask(CCTask* nextTask) {
     deceleration = nextTask->getDeceleration();
     moveRelativ = nextTask->getMoveRelativ();
     
-    startDelay = nextTask->getStartDelay();
-    
-    startEvent = nextTask->getStartEvent();
-    startTime = nextTask->getStartTime();
-    startControl = nextTask->getStartControl();
-    startControlTarget = nextTask->getStartControlTarget();
-//    startTriggerDevice = nextTask->getStartTriggerDevice();
-//    startTriggerTaskID = nextTask->getStartTriggerTaskID();
-//    startTriggerPosition = nextTask->getStartTriggerPosition();
-    
-    stopEvent = nextTask->getStopEvent();
-    timeout = nextTask->getTimeout();
-    stopControl = nextTask->getStopControl();
-    stopControlTarget = nextTask->getStopControlTarget();
-//    stopTriggerDevice = nextTask->getStopTriggerDevice();
-//    stopTriggerTaskID = nextTask->getStopTriggerTaskID();
-//    stopTriggerPosition = nextTask->getStopTriggerPosition();
-    
-    switchTaskPromptly = nextTask->getSwitchTaskPromptly();
+    switching = nextTask->getSwitching();
     stopping = nextTask->getStopping();
 
-    
+    approximationTarget = nextTask->getStopControlTarget();
+    approximationControl = nextTask->getStopControl();
     initiatePerformanceValue = nextTask->getInitiatePerformanceValue();
-    stopControlTarget = nextTask->getStopControlTarget();
     stopPerformance = nextTask->getStopPerformance();
     approximation = nextTask->getApproximation();
 
     dynamicalStop = false;
     valueCounter = 0;
-    sensorValuesFalling = (initiatePerformanceValue > stopControlTarget);
+    sensorValuesFalling = (initiatePerformanceValue > approximationTarget);
     if (approximation == SKIP_APPROXIMATION_IMMEDIATELY) {
         sensorTreshold = 64;
     } else {
@@ -249,7 +229,7 @@ deviceInfoCode CCServoDevice::prepareTask(CCTask* nextTask) {
             Serial.print(F(", initiatePerformanceValue: "));
             Serial.print(initiatePerformanceValue);
             Serial.print(F(", targetValue: "));
-            Serial.print(stopControlTarget);
+            Serial.print(approximationTarget);
             Serial.print(F(", stopPerformance: "));
             Serial.print(stopPerformance);
             Serial.print(F(", stopping: "));
@@ -278,8 +258,8 @@ deviceInfoCode CCServoDevice::prepareTask(CCTask* nextTask) {
 //        Serial.print(stopEvent);
 //        Serial.print(F(", stopTime: "));
 //        Serial.print(timeout);
-//        Serial.print(F(", stopControl: "));
-//        Serial.print(stopControl);
+//        Serial.print(F(", approximationControl: "));
+//        Serial.print(approximationControl);
 //        Serial.print(F(", stopTriggerDevice: "));
 //        Serial.print(stopTriggerDevice->getName());
 //        Serial.print(F(", stopTriggerTaskID: "));
@@ -304,6 +284,7 @@ void CCServoDevice::startTask() {
         Serial.println(analogRead(A5));
     }
 }
+
 void CCServoDevice::initiateStop() {
     elapsedTime = millis() - t0;
     if (elapsedTime < (signed long)timeForAcceleration) {
@@ -350,12 +331,12 @@ void CCServoDevice::operateTask() {
     
     if (stopping == STOP_DYNAMIC) {
         if (dynamicalStop == false) {
-            sensorValue = stopControl->value();
+            sensorValue = approximationControl->value();
             if ((sensorValue > initiatePerformanceValue && (!sensorValuesFalling)) || (sensorValue < initiatePerformanceValue && sensorValuesFalling)) {
                 timeForAcceleration = elapsedTime;
                 timeForConstantSpeed = 0;
                 lastCycleTime = 0;
-                c_perform = 1.0 / (initiatePerformanceValue - stopControlTarget);
+                c_perform = 1.0 / (initiatePerformanceValue - approximationTarget);
                 dynamicalStop = true;
             }
         }
@@ -409,9 +390,9 @@ void CCServoDevice::operateTask() {
     if (dynamicalStop) {
         deltaDeltaNorm = (float)(elapsedTime - lastCycleTime) * velocity / 1000.0;
         
-        sensorValue = stopControl->value();
+        sensorValue = approximationControl->value();
         
-        performanceFactor = c_perform * (sensorValue - stopControlTarget);
+        performanceFactor = c_perform * (sensorValue - approximationTarget);
         
         //        int dif = targetValue - sensorValue;
         //        
@@ -453,7 +434,7 @@ void CCServoDevice::operateTask() {
         if (approximation == SKIP_APPROXIMATION_NEVER) {
             return;
         } else {
-            if (fabs(sensorValue - stopControlTarget) < sensorTreshold) {
+            if (fabs(sensorValue - approximationTarget) < sensorTreshold) {
                 if (valueCounter++ < approximation) {
                     return;
                 }

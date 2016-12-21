@@ -10,7 +10,7 @@
 #define __deviceScheduler__deviceScheduler__
 
 
-//  #define ARDUINO_SIMULATION
+//#define ARDUINO_SIMULATION
 
 #ifdef ARDUINO_SIMULATION
 #include "SIMPatchRunner.h"
@@ -37,6 +37,10 @@ static serialViewer Serial;
 //  stepper tmc260:
 #define TMC260_SPIDEBUG             0x10
 #define TMC260_SETUPDEBUG           0x20
+
+//  stepper TMC2130:
+#define TMC2130_SPIDEBUG             0x10
+#define TMC2130_SETUPDEBUG           0x20
 
 
 
@@ -68,9 +72,18 @@ enum deviceType {
 //  control type
 enum controlType {
     BUTTON,
-    SENSOR
+    SENSOR,
+    EVENT
 };
 
+// schedulers job
+enum schedulersJob {
+    TRIGGER_TASK_PREPARATION,
+    TRIGGER_TASK_START,
+    TRIGGER_TASK_STOP,
+    NOTICE_TASK_STOP,
+    NOTICE_ALL_TASKS_FINISHED
+};
 
 // start/stopEvent:
 enum event {
@@ -111,8 +124,9 @@ enum stoppingMode {
 //  switch mode:
 enum switchingMode {
     NO_SWITCHING,
-    SWITCH_PROMPTLY,
-    SWITCH_AFTER_COMPLETION
+    SWITCH_AFTER_STOP,
+    SWITCH_AFTER_COMPLETION,
+    SWITCH_PROMPTLY
 };
 
 //  position reset mode:
@@ -187,7 +201,7 @@ enum approximationMode {
 
 
 
-#define I_AM_LATE_LED                       12
+#define I_AM_LATE_LED                       2
 
 
 
@@ -227,7 +241,7 @@ enum approximationMode {
 /// - @code addServoWithCounterServo(...) @endcode
 /// - @code addDcController(...) @endcode
 /// - @code addStepper_A4988(...) @endcode
-/// - @code addStepper_TMC260(...) @endcode
+/// - @code addStepper_TMC2130(...) @endcode
 /// <br><br>
 /// @section registerTask Registering Tasks
 /// Zu diesen Geräten des Schedulers können nun beliebig viele Aufgaben hinzugefügt werden. Für die Aufgaben existiert eine Klasse mit dem Namen CCTask. Die Klasse CCDevice enthält ein Aufgaben-Array mit dem Namen @c task. Die Eintragung von Aufgaben in dieses Array bewerkstelligt die Funktion @c addTask(...) des jeweiligen Gerätes: Übergeben werden sämtliche Parameter dieser Aufgabe:
