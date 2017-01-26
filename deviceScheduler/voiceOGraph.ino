@@ -85,7 +85,7 @@ void loop() {
     Serial.println(scheduler->getName());
 
 
-    //  freeRam();
+    freeRam();
 
     // ================================================================================================================================
     // ================================================================================================================================
@@ -204,7 +204,7 @@ void loop() {
                                                             CONTROLLER_LAMP_RED_ON);
 
     
-    //  freeRam();
+    freeRam();
     
     
     // ================================================================================================================================
@@ -269,7 +269,7 @@ void loop() {
     scheduler->listControls();
     
 
-    //  freeRam();
+    freeRam();
 
     // =================================================================================================================================================
     // =================================================================================================================================================
@@ -347,7 +347,7 @@ void loop() {
         scheduler->listAllActions(initTheMachine);
         
      
-        //  freeRam();
+        freeRam();
     }
     
     // =================================================================================================================================================
@@ -482,7 +482,7 @@ void loop() {
         scheduler->listAllActions(fetchingRecord);
         
         
-        //  freeRam();
+        freeRam();
     }
     
     
@@ -523,7 +523,7 @@ void loop() {
         
         //  move to start groove:
         CCTask* driveToCuttingStartPosition;
-        driveToCuttingStartPosition = catStepperFlow->addTask(CAT_CUTTING_START_POSITION);
+        driveToCuttingStartPosition = catStepperFlow->addTaskWithPositionReset(CAT_CUTTING_START_POSITION);
         driveToCuttingStartPosition->startByDate(100);
         
         // switch on vacuum device
@@ -653,7 +653,7 @@ void loop() {
         scheduler->listAllActions(cuttingProcess);
         
         
-        //  freeRam();
+        freeRam();
     }
     
     
@@ -774,7 +774,7 @@ void loop() {
         scheduler->listAllTasks(ejectingRecord);
         
         
-        //  freeRam();
+        freeRam();
     }
     
     
@@ -883,7 +883,7 @@ void loop() {
         scheduler->listAllActions(loading);
         
         
-        //  freeRam();
+        freeRam();
     }
     
     
@@ -958,7 +958,7 @@ void loop() {
         scheduler->listAllTasks(matchHeadImpact);
         
         
-        //  freeRam();
+        freeRam();
     }
     
     

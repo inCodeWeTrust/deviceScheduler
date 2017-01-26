@@ -58,28 +58,37 @@ $(document).ready(function(){initNavTree('voice_o_graph_8ino.html','');});
 <div class="title">voiceOGraph.ino File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
+<code>#include &lt;Servo.h&gt;</code><br />
+<code>#include &lt;malloc.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="voice_o_graph_8h_source.html">voiceOGraph.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_c_c_device_scheduler_8h_source.html">CCDeviceScheduler.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
 Include dependency graph for voiceOGraph.ino:</div>
 <div class="dyncontent">
 <div class="center"><img src="voice_o_graph_8ino__incl.png" border="0" usemap="#voice_o_graph_8ino" alt=""/></div>
 <map name="voice_o_graph_8ino" id="voice_o_graph_8ino">
-<area shape="rect" id="node4" href="voice_o_graph_8h.html" title="voiceOGraph.h" alt="" coords="93,163,205,189"/>
-<area shape="rect" id="node5" href="_c_c_device_scheduler_8h.html" title="CCDeviceScheduler.h" alt="" coords="525,80,677,107"/>
-<area shape="rect" id="node6" href="device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="1257,544,1388,571"/>
-<area shape="rect" id="node8" href="_c_c_workflow_8h.html" title="CCWorkflow.h" alt="" coords="1289,163,1396,189"/>
-<area shape="rect" id="node12" href="_c_c_control_button_8h.html" title="CCControlButton.h" alt="" coords="1529,320,1663,347"/>
-<area shape="rect" id="node14" href="_c_c_device_8h.html" title="CCDevice.h" alt="" coords="827,320,920,347"/>
-<area shape="rect" id="node15" href="_c_c_servo_device_8h.html" title="CCServoDevice.h" alt="" coords="315,245,443,272"/>
-<area shape="rect" id="node16" href="_c_c_servo_device__cross_8h.html" title="CCServoDevice_cross.h" alt="" coords="331,163,497,189"/>
-<area shape="rect" id="node17" href="_c_c_stepper_device_8h.html" title="CCStepperDevice.h" alt="" coords="627,245,767,272"/>
-<area shape="rect" id="node18" href="_c_c_stepper_device___a4988_8h.html" title="CCStepperDevice_A4988.h" alt="" coords="574,163,759,189"/>
-<area shape="rect" id="node19" href="_c_c_stepper_device___t_m_c260_8h.html" title="CCStepperDevice_TMC260.h" alt="" coords="783,163,981,189"/>
-<area shape="rect" id="node21" href="_c_c_dc_controller_device_8h.html" title="CCDcControllerDevice.h" alt="" coords="937,245,1103,272"/>
-<area shape="rect" id="node22" href="_c_c_dc_controller_device__full_bridge_8h.html" title="CCDcControllerDevice\l_fullBridge.h" alt="" coords="1058,155,1213,197"/>
-<area shape="rect" id="node9" href="_c_c_device_flow_8h.html" title="CCDeviceFlow.h" alt="" coords="1282,395,1403,421"/>
-<area shape="rect" id="node11" href="_c_c_flow_control_8h.html" title="CCFlowControl.h" alt="" coords="1406,245,1529,272"/>
-<area shape="rect" id="node10" href="_c_c_task_8h.html" title="CCTask.h" alt="" coords="1282,469,1363,496"/>
-<area shape="rect" id="node13" href="_c_c_action_8h.html" title="CCAction.h" alt="" coords="1479,395,1568,421"/>
+<area shape="rect" id="node5" href="voice_o_graph_8h.html" title="voiceOGraph.h" alt="" coords="240,163,352,189"/>
+<area shape="rect" id="node6" href="_c_c_device_scheduler_8h.html" title="CCDeviceScheduler.h" alt="" coords="1067,80,1220,107"/>
+<area shape="rect" id="node7" href="device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="1486,619,1617,645"/>
+<area shape="rect" id="node9" href="_c_c_workflow_8h.html" title="CCWorkflow.h" alt="" coords="1767,163,1873,189"/>
+<area shape="rect" id="node11" href="_c_c_device_8h.html" title="CCDevice.h" alt="" coords="1117,320,1211,347"/>
+<area shape="rect" id="node13" href="_c_c_control_8h.html" title="CCControl.h" alt="" coords="1379,395,1475,421"/>
+<area shape="rect" id="node16" href="_c_c_control_button_8h.html" title="CCControlButton.h" alt="" coords="1651,320,1784,347"/>
+<area shape="rect" id="node17" href="_c_c_control_sensor_8h.html" title="CCControlSensor.h" alt="" coords="1910,320,2047,347"/>
+<area shape="rect" id="node18" href="_c_c_servo_device_8h.html" title="CCServoDevice.h" alt="" coords="729,245,857,272"/>
+<area shape="rect" id="node19" href="_c_c_servo_device__cross_8h.html" title="CCServoDevice_cross.h" alt="" coords="710,163,876,189"/>
+<area shape="rect" id="node20" href="_c_c_stepper_device_8h.html" title="CCStepperDevice.h" alt="" coords="1122,245,1261,272"/>
+<area shape="rect" id="node22" href="_c_c_stepper_device___a4988_8h.html" title="CCStepperDevice_A4988.h" alt="" coords="1182,163,1367,189"/>
+<area shape="rect" id="node23" href="_c_c_stepper_device___t_m_c260_8h.html" title="CCStepperDevice_TMC260.h" alt="" coords="1391,163,1589,189"/>
+<area shape="rect" id="node24" href="_c_c_stepper_device___t_m_c2130_8h.html" title="CCStepperDevice_TMC2130.h" alt="" coords="901,163,1107,189"/>
+<area shape="rect" id="node25" href="_c_c_dc_controller_device_8h.html" title="CCDcControllerDevice.h" alt="" coords="538,245,704,272"/>
+<area shape="rect" id="node26" href="_c_c_dc_controller_device__full_bridge_8h.html" title="CCDcControllerDevice\l_fullBridge.h" alt="" coords="427,155,583,197"/>
+<area shape="rect" id="node27" href="_c_c_control_event_8h.html" title="CCControlEvent.h" alt="" coords="1366,245,1495,272"/>
+<area shape="rect" id="node10" href="_c_c_device_flow_8h.html" title="CCDeviceFlow.h" alt="" coords="1519,245,1640,272"/>
+<area shape="rect" id="node15" href="_c_c_flow_control_8h.html" title="CCFlowControl.h" alt="" coords="1767,245,1891,272"/>
+<area shape="rect" id="node12" href="_c_c_task_8h.html" title="CCTask.h" alt="" coords="1429,544,1509,571"/>
+<area shape="rect" id="node14" href="_c_c_action_8h.html" title="CCAction.h" alt="" coords="1507,469,1596,496"/>
 </map>
 </div>
 </div>
@@ -105,10 +114,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ab47b6fdaed730f270a6200283b32f8a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_device_scheduler.html">CCDeviceScheduler</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="voice_o_graph_8ino.html#ab47b6fdaed730f270a6200283b32f8a0">scheduler</a></td></tr>
 <tr class="memdesc:ab47b6fdaed730f270a6200283b32f8a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Scheduler and it's device array.  <a href="#ab47b6fdaed730f270a6200283b32f8a0">More...</a><br /></td></tr>
 <tr class="separator:ab47b6fdaed730f270a6200283b32f8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c9d13f7025de8c7e635317197f13b50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_device.html">CCDevice</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="voice_o_graph_8ino.html#a6c9d13f7025de8c7e635317197f13b50">device</a> [12]</td></tr>
-<tr class="separator:a6c9d13f7025de8c7e635317197f13b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f413ca80ebc47218ab33a041a283bbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="voice_o_graph_8ino.html#a2f413ca80ebc47218ab33a041a283bbf">controlButton</a> [10]</td></tr>
-<tr class="separator:a2f413ca80ebc47218ab33a041a283bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1511d501416a76c113b41d5c0940aef8"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="voice_o_graph_8ino.html#a1511d501416a76c113b41d5c0940aef8">catSongStartPosition</a></td></tr>
 <tr class="memdesc:a1511d501416a76c113b41d5c0940aef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">parameters for cutting  <a href="#a1511d501416a76c113b41d5c0940aef8">More...</a><br /></td></tr>
 <tr class="separator:a1511d501416a76c113b41d5c0940aef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,7 +150,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00987">987</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l01249">1249</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="voice_o_graph_8ino_a4fc01d736fe50cf5b977f755b675f11d_cgraph.png" border="0" usemap="#voice_o_graph_8ino_a4fc01d736fe50cf5b977f755b675f11d_cgraph" alt=""/></div>
+<map name="voice_o_graph_8ino_a4fc01d736fe50cf5b977f755b675f11d_cgraph" id="voice_o_graph_8ino_a4fc01d736fe50cf5b977f755b675f11d_cgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#a1af0265b5bf1768c338f1f6e5f5c7ea8" title="calculateCuttingParameters" alt="" coords="110,5,295,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -162,7 +177,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00873">873</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l01135">1135</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="voice_o_graph_8ino_a1af0265b5bf1768c338f1f6e5f5c7ea8_icgraph.png" border="0" usemap="#voice_o_graph_8ino_a1af0265b5bf1768c338f1f6e5f5c7ea8_icgraph" alt=""/></div>
+<map name="voice_o_graph_8ino_a1af0265b5bf1768c338f1f6e5f5c7ea8_icgraph" id="voice_o_graph_8ino_a1af0265b5bf1768c338f1f6e5f5c7ea8_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="241,5,295,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -194,7 +219,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l01011">1011</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l01275">1275</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_cgraph.png" border="0" usemap="#voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_cgraph" alt=""/></div>
+<map name="voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_cgraph" id="voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_cgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#a6087c9bd2ab81ea38a5d7c0747cc8262" title="sbrk" alt="" coords="129,5,175,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_icgraph.png" border="0" usemap="#voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_icgraph" alt=""/></div>
+<map name="voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_icgraph" id="voice_o_graph_8ino_a28c5d3868f2225a396f3685cea50832c_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="129,5,175,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -212,6 +257,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="voice_o_graph_8ino_a6087c9bd2ab81ea38a5d7c0747cc8262_icgraph.png" border="0" usemap="#voice_o_graph_8ino_a6087c9bd2ab81ea38a5d7c0747cc8262_icgraph" alt=""/></div>
+<map name="voice_o_graph_8ino_a6087c9bd2ab81ea38a5d7c0747cc8262_icgraph" id="voice_o_graph_8ino_a6087c9bd2ab81ea38a5d7c0747cc8262_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#a28c5d3868f2225a396f3685cea50832c" title="freeRam" alt="" coords="102,5,175,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="225,5,271,32"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="afe461d27b9c48d5921c00d521181f12f"></a>
@@ -227,7 +283,115 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00054">54</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00065">65</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="voice_o_graph_8ino_afe461d27b9c48d5921c00d521181f12f_cgraph.png" border="0" usemap="#voice_o_graph_8ino_afe461d27b9c48d5921c00d521181f12f_cgraph" alt=""/></div>
+<map name="voice_o_graph_8ino_afe461d27b9c48d5921c00d521181f12f_cgraph" id="voice_o_graph_8ino_afe461d27b9c48d5921c00d521181f12f_cgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#a28c5d3868f2225a396f3685cea50832c" title="freeRam" alt="" coords="194,5,267,32"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a9f9e08df15b17a8713c2497c1e040c1f" title="CCDeviceScheduler::\lsetVerbosity" alt="" coords="156,57,305,98"/>
+<area shape="rect" id="node5" href="class_c_c_device_scheduler.html#a7d003fa61660da726da4610283455bd5" title="CCDeviceScheduler::\lgetName" alt="" coords="447,231,596,273"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#a7d5f3f258a3385fedb7afd006b22f984" title="CCDeviceScheduler::\laddServoWithCounterServo" alt="" coords="137,174,325,215"/>
+<area shape="rect" id="node7" href="class_c_c_device_scheduler.html#aa18f475a4e693076d79f708c6e42b055" title="CCDeviceScheduler::\laddServo" alt="" coords="156,239,305,281"/>
+<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#a7c0d4d3bedc467595a207c4a66d92cef" title="CCDeviceScheduler::\laddStepper_A4988" alt="" coords="156,305,305,346"/>
+<area shape="rect" id="node9" href="class_c_c_device_scheduler.html#a1f3a97a18651b8f3b3d773e905f714aa" title="CCDeviceScheduler::\laddStepper_TMC260" alt="" coords="156,370,305,411"/>
+<area shape="rect" id="node10" href="class_c_c_device_scheduler.html#a8bfaf451d1f0c1388f2daa1f04d4858b" title="CCDeviceScheduler::\laddDcController" alt="" coords="156,435,305,477"/>
+<area shape="rect" id="node11" href="class_c_c_device_scheduler.html#af0333c68450028f5262f3ae1183d0575" title="CCDeviceScheduler::\laddControlButton" alt="" coords="156,501,305,542"/>
+<area shape="rect" id="node12" href="class_c_c_device_scheduler.html#aaf76505985d5acf22418282ee2450150" title="CCDeviceScheduler::\laddControlSensor" alt="" coords="156,566,305,607"/>
+<area shape="rect" id="node13" href="class_c_c_device_scheduler.html#a59cccb8c615c36fbd303df806a96c9bc" title="CCDeviceScheduler::\llistDevices" alt="" coords="156,631,305,673"/>
+<area shape="rect" id="node14" href="class_c_c_device_scheduler.html#a7998a3518b3f7dc86a31d603cf2f965a" title="CCDeviceScheduler::\llistControls" alt="" coords="156,697,305,738"/>
+<area shape="rect" id="node15" href="class_c_c_workflow.html#a9465107059aa1cad0e3be148edc19523" title="CCWorkflow::addDeviceFlow" alt="" coords="133,2235,328,2261"/>
+<area shape="rect" id="node16" href="class_c_c_workflow.html#a4c82bb39526a2c30e8e0046e65595faf" title="CCWorkflow::addControl" alt="" coords="146,763,315,789"/>
+<area shape="rect" id="node18" href="class_c_c_device_flow.html#a3149d5b75bad1b32d05c8189a1a705d3" title="CCDeviceFlow::addTask" alt="" coords="146,2285,315,2312"/>
+<area shape="rect" id="node20" href="class_c_c_task.html#a73858c361f70e0395e98d01ff34bba36" title="CCTask::startByDate" alt="" coords="157,2599,304,2625"/>
+<area shape="rect" id="node21" href="class_c_c_device_flow.html#a0d6f09aed9a1800991c425ebaf77acba" title="CCDeviceFlow::addTaskWith\lPositionResetOnCompletion" alt="" coords="133,2337,329,2378"/>
+<area shape="rect" id="node22" href="class_c_c_task.html#a6634bd4cb6421854ce3076f24612a15c" title="CCTask::stopByControl" alt="" coords="150,2649,311,2676"/>
+<area shape="rect" id="node23" href="class_c_c_task.html#a4b73f9f26a6a4548b626ff03b0bb69e6" title="CCTask::startAfterCompletionOf" alt="" coords="124,2868,337,2895"/>
+<area shape="rect" id="node25" href="class_c_c_device_flow.html#a0fd756c8e58a306b51bf2614032eb8dc" title="CCDeviceFlow::addTaskMove\lRelativ" alt="" coords="130,2402,331,2443"/>
+<area shape="rect" id="node26" href="class_c_c_device_flow.html#a1c6d1e9a7a30d3d1901254e8795d5c5c" title="CCDeviceFlow::addTaskMove\lRelativWithPositionResetOnCompletion" alt="" coords="102,2467,359,2509"/>
+<area shape="rect" id="node27" href="class_c_c_task.html#af8666dca35e9d12d9a2876289e498665" title="CCTask::startAfterCompletion" alt="" coords="131,3087,330,3113"/>
+<area shape="rect" id="node28" href="class_c_c_device_scheduler.html#a4ad69efb5904b4b0fe981f4afa995ed6" title="CCDeviceScheduler::\lreviewTasks" alt="" coords="156,1157,305,1198"/>
+<area shape="rect" id="node35" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="156,2169,305,2210"/>
+<area shape="rect" id="node62" href="class_c_c_device_scheduler.html#ae208c96d17db2cd9a45c4d2845e4fc1a" title="CCDeviceScheduler::\llistAllActions" alt="" coords="156,865,305,906"/>
+<area shape="rect" id="node73" href="class_c_c_workflow.html#a47ad16be0ae612797aa6dba368853395" title="CCWorkflow::addFlowControl" alt="" coords="132,3137,329,3164"/>
+<area shape="rect" id="node74" href="class_c_c_task.html#a6e34d420061112b2aaae592d4fc19d12" title="CCTask::startByTriggerpositionOf" alt="" coords="120,2919,341,2945"/>
+<area shape="rect" id="node75" href="class_c_c_flow_control.html#a9b6017c8211b8d4de147f8ddf950bfc8" title="CCFlowControl::addAction" alt="" coords="141,813,320,840"/>
+<area shape="rect" id="node76" href="class_c_c_action.html#a8b35c18eee843f9422265d69a0ef6407" title="CCAction::evokeTaskStop" alt="" coords="142,2969,319,2996"/>
+<area shape="rect" id="node77" href="class_c_c_device_flow.html#a1f93d17451887e55537369891bd174d3" title="CCDeviceFlow::addTaskWith\lPositionReset" alt="" coords="133,2533,329,2574"/>
+<area shape="rect" id="node78" href="class_c_c_task.html#af5c13f9a6f98631c271e758d3c28da00" title="CCTask::switchToNextTask\lAfterCompletionOf" alt="" coords="137,3021,324,3062"/>
+<area shape="rect" id="node79" href="class_c_c_task.html#a2d6813ca9f2cf157091e064b9ee4a678" title="CCTask::stopDynamicallyBy\lSensor" alt="" coords="135,3189,326,3230"/>
+<area shape="rect" id="node80" href="class_c_c_task.html#ae97b862a83dbe58fd7176b571db43f37" title="CCTask::startByControl" alt="" coords="149,3255,312,3281"/>
+<area shape="rect" id="node81" href="class_c_c_task.html#ad18b5310137441dc5a367f5e76c07000" title="CCTask::switchToNextTask\lAtPosition" alt="" coords="137,3306,324,3347"/>
+<area shape="rect" id="node82" href="class_c_c_task.html#a92298b955c1ac16b81a1d076deedbad9" title="CCTask::switchToNextTask\lByTriggerpositionOf" alt="" coords="137,2701,324,2742"/>
+<area shape="rect" id="node83" href="class_c_c_task.html#a7828ba2dea2fbe5d0c0ef932ce97d11e" title="CCTask::stopAfterCompletionOf" alt="" coords="125,2767,337,2793"/>
+<area shape="rect" id="node84" href="class_c_c_action.html#ac719f7c6d83439d5af444d8d8c34e979" title="CCAction::evokeJumpToTask" alt="" coords="131,2817,330,2844"/>
+<area shape="rect" id="node85" href="class_c_c_task.html#a4210274fc91b333e0cfe1c0f830d9ab9" title="CCTask::setStartDelay" alt="" coords="152,3372,309,3399"/>
+<area shape="rect" id="node86" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="146,1252,315,1279"/>
+<area shape="rect" id="node100" href="class_c_c_device_scheduler.html#adc051056fa4c7e118faf862cd063bbb0" title="CCDeviceScheduler::\levaluateButtons" alt="" coords="156,3423,305,3465"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#a6087c9bd2ab81ea38a5d7c0747cc8262" title="sbrk" alt="" coords="498,5,545,32"/>
+<area shape="rect" id="node17" href="class_c_c_control.html#a8bc65e7a302652e0cbffd9260e4c4710" title="CCControl::getName" alt="" coords="449,297,594,324"/>
+<area shape="rect" id="node19" href="class_c_c_device_flow.html#ae0d89a08757319c98aeace198eecaea1" title="CCDeviceFlow::registerTask" alt="" coords="426,3260,617,3287"/>
+<area shape="rect" id="node24" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="452,3311,591,3337"/>
+<area shape="rect" id="node29" href="class_c_c_workflow.html#ab5389cec0134bda078875c33d79ebc3c" title="CCWorkflow::getCountOfDevice\lFlows" alt="" coords="415,1274,627,1315"/>
+<area shape="rect" id="node30" href="class_c_c_device_flow.html#a622b644d239c57c020aafbe005db2da0" title="CCDeviceFlow::getCountOf\lTasks" alt="" coords="429,1157,614,1198"/>
+<area shape="rect" id="node31" href="class_c_c_device_flow.html#a18143c7da2dee94b6fdc000bfd915315" title="CCDeviceFlow::getDevice" alt="" coords="433,1340,610,1367"/>
+<area shape="rect" id="node32" href="class_c_c_device.html#abbb3e2a3838375474619edca0d77eaec" title="CCDevice::reviewValues" alt="" coords="437,769,606,796"/>
+<area shape="rect" id="node33" href="class_c_c_workflow.html#aec6a22a3f34a7aaa8745398752484045" title="CCWorkflow::getName" alt="" coords="443,988,600,1015"/>
+<area shape="rect" id="node34" href="class_c_c_device_flow.html#af8e32466bae56da82779b06ce6f271b9" title="CCDeviceFlow::getName" alt="" coords="435,937,607,964"/>
+<area shape="rect" id="node36" href="class_c_c_device_flow.html#ab7aaaba0d4da9ada283bc2cdfa934465" title="CCDeviceFlow::getDefault\lVelocity" alt="" coords="432,2911,611,2953"/>
+<area shape="rect" id="node37" href="class_c_c_device_flow.html#a1175c82c2102def0409d48cac54aa1bc" title="CCDeviceFlow::getDefault\lAcceleration" alt="" coords="432,2977,611,3018"/>
+<area shape="rect" id="node38" href="class_c_c_device_flow.html#aff2b934707b433307be0ba5f22a26638" title="CCDeviceFlow::getDefault\lDeceleration" alt="" coords="432,3042,611,3083"/>
+<area shape="rect" id="node39" href="class_c_c_task.html#ad32d98d82ea1ac9d3c3314603a37bfeb" title="CCTask::getTarget" alt="" coords="454,3108,589,3135"/>
+<area shape="rect" id="node40" href="class_c_c_task.html#afafdfed47082451bef88e3b9b3d6e48a" title="CCTask::getMoveRelativ" alt="" coords="437,3159,606,3185"/>
+<area shape="rect" id="node41" href="class_c_c_task.html#ad7976b2e882476b311a193d2e4fa5376" title="CCTask::getPositionReset" alt="" coords="432,3209,611,3236"/>
+<area shape="rect" id="node42" href="class_c_c_task.html#ad79147e97f602b32f09003e3cdec7672" title="CCTask::getStartDelay" alt="" coords="719,2455,878,2481"/>
+<area shape="rect" id="node43" href="class_c_c_task.html#a02e1d408a24914ec29d9c92221242360" title="CCTask::getStartEvent" alt="" coords="719,2505,878,2532"/>
+<area shape="rect" id="node44" href="class_c_c_task.html#a40b46a4d7c44e9333297c492dd4337d4" title="CCTask::getStartTime" alt="" coords="722,2556,875,2583"/>
+<area shape="rect" id="node45" href="class_c_c_task.html#a132f5787365ab949ebc78c08a399fd15" title="CCTask::getStartControl" alt="" coords="715,2759,882,2785"/>
+<area shape="rect" id="node46" href="class_c_c_task.html#a8cdf336a59900f9c2049304c4b36dc4d" title="CCTask::getStartControlComparing" alt="" coords="683,2809,915,2836"/>
+<area shape="rect" id="node47" href="class_c_c_task.html#abc68639838bfd0353aaeec60b085cb18" title="CCTask::getStartControlTarget" alt="" coords="696,1899,901,1925"/>
+<area shape="rect" id="node48" href="class_c_c_task.html#a7f471d2eefa91f32eec0706116a5d344" title="CCTask::getStartTriggerDevice" alt="" coords="695,1949,902,1976"/>
+<area shape="rect" id="node49" href="class_c_c_device.html#a1b132b80bdfce073f5bde30beb4b9d46" title="CCDevice::getName" alt="" coords="449,1847,593,1873"/>
+<area shape="rect" id="node50" href="class_c_c_task.html#a0f5725114e1658d82cba4f9b85e1d695" title="CCTask::getStartTriggerTaskID" alt="" coords="694,2000,903,2027"/>
+<area shape="rect" id="node51" href="class_c_c_task.html#a1127f3a2d71334b3f6a4c669b9e4e515" title="CCTask::getStartTriggerPosition" alt="" coords="692,2052,905,2079"/>
+<area shape="rect" id="node52" href="class_c_c_task.html#aa0990c484fc7906532dbe99a2077471a" title="CCTask::getStopEvent" alt="" coords="720,2104,877,2131"/>
+<area shape="rect" id="node53" href="class_c_c_task.html#af70ccc239b58b682c398fe5888d2d65a" title="CCTask::getTimeout" alt="" coords="727,2157,871,2184"/>
+<area shape="rect" id="node54" href="class_c_c_task.html#a9634d50406e3dca8460da7fead59780f" title="CCTask::getSwitching" alt="" coords="722,2215,875,2241"/>
+<area shape="rect" id="node55" href="class_c_c_task.html#adeb53bd7a8530664d41c837b56e1f6a9" title="CCTask::getStopping" alt="" coords="724,2277,873,2304"/>
+<area shape="rect" id="node56" href="class_c_c_task.html#a185a2c7ce285426f6c9b06c530f01cbf" title="CCTask::getStopControl" alt="" coords="715,2353,882,2380"/>
+<area shape="rect" id="node57" href="class_c_c_task.html#a3c5b5764df1e91e0ba182cfd197978dc" title="CCTask::getStopControlComparing" alt="" coords="683,2860,915,2887"/>
+<area shape="rect" id="node58" href="class_c_c_task.html#ab69e443132911d86729ef481ea1336e4" title="CCTask::getStopControlTarget" alt="" coords="696,2404,901,2431"/>
+<area shape="rect" id="node59" href="class_c_c_task.html#aa6771fd2f3acffe10f5dba92ef31bc9e" title="CCTask::getStopTriggerDevice" alt="" coords="695,2607,902,2633"/>
+<area shape="rect" id="node60" href="class_c_c_task.html#aca423d2312b1facbc526498232d76c38" title="CCTask::getStopTriggerTaskID" alt="" coords="695,2657,903,2684"/>
+<area shape="rect" id="node61" href="class_c_c_task.html#aedad4e84cf68b45503c64858a179fe17" title="CCTask::getStopTriggerPosition" alt="" coords="692,2708,905,2735"/>
+<area shape="rect" id="node63" href="class_c_c_workflow.html#a1fec87bcf9639eeb2e84099fa709c0ee" title="CCWorkflow::getCountOfFlow\lControls" alt="" coords="421,871,621,913"/>
+<area shape="rect" id="node64" href="class_c_c_flow_control.html#a1abff2d368673aecaf765805859396e7" title="CCFlowControl::getName" alt="" coords="435,399,608,425"/>
+<area shape="rect" id="node65" href="class_c_c_flow_control.html#a23c99da68289a5f2e0ffca91d9ecad5e" title="CCFlowControl::getControl" alt="" coords="431,348,612,375"/>
+<area shape="rect" id="node66" href="class_c_c_flow_control.html#a906a4df90476934f97a2e73f0ca5eb15" title="CCFlowControl::getCountOf\lActions" alt="" coords="427,450,615,491"/>
+<area shape="rect" id="node67" href="class_c_c_flow_control.html#a5c777ec59322c39ac191a4cf12dcad5b" title="CCFlowControl::getAction" alt="" coords="433,516,609,543"/>
+<area shape="rect" id="node68" href="class_c_c_action.html#a057347c517265546139342c45cbc57b9" title="CCAction::getName" alt="" coords="451,567,591,593"/>
+<area shape="rect" id="node69" href="class_c_c_action.html#ad823d1c99dc3a96b65ace01caa97059e" title="CCAction::getValidTaskID" alt="" coords="433,617,609,644"/>
+<area shape="rect" id="node70" href="class_c_c_action.html#ab8e22f0d997dc8c11f78c3e4b624d637" title="CCAction::getFollowingTaskID" alt="" coords="420,668,623,695"/>
+<area shape="rect" id="node71" href="class_c_c_action.html#a234e0cf2f39d01181e2907e77279af31" title="CCAction::getTargetAction" alt="" coords="431,719,611,745"/>
+<area shape="rect" id="node72" href="class_c_c_action.html#a80d364e5deac08632bb998dd2213a871" title="CCAction::getWorkflowInfo" alt="" coords="431,820,612,847"/>
+<area shape="rect" id="node87" href="class_c_c_workflow.html#a7956d4dc8157c36d9a18fed46c7c954d" title="CCWorkflow::getWorkflowInfo" alt="" coords="422,1695,621,1721"/>
+<area shape="rect" id="node88" href="class_c_c_device_flow.html#ab0ac9264697b3e6988d1c120e4fcd64d" title="CCDeviceFlow::setTaskPointer" alt="" coords="418,1745,625,1772"/>
+<area shape="rect" id="node89" href="class_c_c_device.html#a83ea989dc1fe663bfb57a0d8a988d795" title="CCDevice::attachDevice" alt="" coords="438,1796,605,1823"/>
+<area shape="rect" id="node90" href="class_c_c_device_flow.html#ac787ef44d9bade1b8815ad09d4bcc33c" title="CCDeviceFlow::setProposed\lTaskID" alt="" coords="425,1039,617,1081"/>
+<area shape="rect" id="node91" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="408,2353,635,2380"/>
+<area shape="rect" id="node92" href="class_c_c_device_flow.html#a6dec5bd516630bf2f305b7d91cf565b2" title="CCDeviceFlow::getTaskPointer" alt="" coords="418,1105,625,1132"/>
+<area shape="rect" id="node93" href="class_c_c_device.html#ae1b0bcfb3e534b233986f70cfb7eda0c" title="CCDevice::setState" alt="" coords="452,1223,591,1249"/>
+<area shape="rect" id="node94" href="class_c_c_device.html#a829cc215985ebad2a8f1641d957aa7d0" title="CCDevice::getCurrentPosition" alt="" coords="421,1391,621,1417"/>
+<area shape="rect" id="node95" href="class_c_c_device.html#a4816bf071a9b797b8d0743d119071585" title="CCDevice::getTarget" alt="" coords="448,1441,595,1468"/>
+<area shape="rect" id="node96" href="class_c_c_action.html#aa7bb023dc6d1d95e3478e8eb6e611fca" title="CCAction::setActionDone" alt="" coords="435,1492,607,1519"/>
+<area shape="rect" id="node97" href="class_c_c_workflow.html#a14680bcfe04c633d01841c1d135c8160" title="CCWorkflow::getCountOfControls" alt="" coords="411,1543,632,1569"/>
+<area shape="rect" id="node98" href="class_c_c_control.html#a33e37902ae820de6cae3e0b9c713bc2f" title="CCControl::read" alt="" coords="462,1593,581,1620"/>
+<area shape="rect" id="node99" href="class_c_c_device.html#a7fb09ab317419f8895b9c30a0ef48469" title="CCDevice::getState" alt="" coords="452,1644,591,1671"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -242,35 +406,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00026">26</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6c9d13f7025de8c7e635317197f13b50"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_c_c_device.html">CCDevice</a>* device[12]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00028">28</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2f413ca80ebc47218ab33a041a283bbf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_c_c_control_button.html">CCControlButton</a>* controlButton[10]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00029">29</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00036">36</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -284,7 +420,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00035">35</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00044">44</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -298,7 +434,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00035">35</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00044">44</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -312,7 +448,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00035">35</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00044">44</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -326,7 +462,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00036">36</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00045">45</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -340,7 +476,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00036">36</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00045">45</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -354,7 +490,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00036">36</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00045">45</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -368,7 +504,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00037">37</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00046">46</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -382,7 +518,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00038">38</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00047">47</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>
@@ -396,7 +532,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00038">38</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
+<p>Definition at line <a class="el" href="voice_o_graph_8ino_source.html#l00047">47</a> of file <a class="el" href="voice_o_graph_8ino_source.html">voiceOGraph.ino</a>.</p>
 
 </div>
 </div>

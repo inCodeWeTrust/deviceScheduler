@@ -1,3 +1,5 @@
 <map id="CCDevice" name="CCDevice">
-<area shape="rect" id="node2" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="11,5,81,32"/>
+<area shape="rect" id="node2" href="$class_c_c_control.html" title="Class for physical interaction to control the workflow. " alt="" coords="18,187,101,213"/>
+<area shape="rect" id="node3" href="$class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="5,96,115,123"/>
+<area shape="rect" id="node4" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="25,5,95,32"/>
 </map>

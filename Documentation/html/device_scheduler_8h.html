@@ -53,22 +53,71 @@ $(document).ready(function(){initNavTree('device_scheduler_8h.html','');});
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">deviceScheduler.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
+<code>#include &lt;avr/pgmspace.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
 Include dependency graph for deviceScheduler.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="device_scheduler_8h__incl.png" border="0" usemap="#device_scheduler_8h" alt=""/></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="device_scheduler_8h__dep__incl.png" border="0" usemap="#device_scheduler_8hdep" alt=""/></div>
+<map name="device_scheduler_8hdep" id="device_scheduler_8hdep">
+<area shape="rect" id="node2" href="_c_c_action_8h.html" title="CCAction.h" alt="" coords="2118,155,2207,181"/>
+<area shape="rect" id="node4" href="_c_c_control_8h.html" title="CCControl.h" alt="" coords="1827,229,1923,256"/>
+<area shape="rect" id="node6" href="_c_c_device_8h.html" title="CCDevice.h" alt="" coords="1393,304,1487,331"/>
+<area shape="rect" id="node7" href="_c_c_device_flow_8h.html" title="CCDeviceFlow.h" alt="" coords="1767,379,1888,405"/>
+<area shape="rect" id="node9" href="_c_c_workflow_8h.html" title="CCWorkflow.h" alt="" coords="2473,461,2580,488"/>
+<area shape="rect" id="node10" href="_c_c_device_scheduler_8h.html" title="CCDeviceScheduler.h" alt="" coords="1299,552,1452,579"/>
+<area shape="rect" id="node33" href="_c_c_flow_control_8h.html" title="CCFlowControl.h" alt="" coords="2414,379,2537,405"/>
+<area shape="rect" id="node39" href="_c_c_task_8h.html" title="CCTask.h" alt="" coords="1950,80,2031,107"/>
+<area shape="rect" id="node3" href="_c_c_action_8cpp.html" title="CCAction.cpp" alt="" coords="2111,229,2215,256"/>
+<area shape="rect" id="node5" href="_c_c_control_8cpp.html" title="CCControl.cpp" alt="" coords="1739,304,1848,331"/>
+<area shape="rect" id="node31" href="_c_c_control_button_8h.html" title="CCControlButton.h" alt="" coords="2240,304,2373,331"/>
+<area shape="rect" id="node35" href="_c_c_control_event_8h.html" title="CCControlEvent.h" alt="" coords="1534,304,1663,331"/>
+<area shape="rect" id="node37" href="_c_c_control_sensor_8h.html" title="CCControlSensor.h" alt="" coords="2067,304,2204,331"/>
+<area shape="rect" id="node14" href="_c_c_dc_controller_device_8h.html" title="CCDcControllerDevice.h" alt="" coords="1357,379,1523,405"/>
+<area shape="rect" id="node18" href="_c_c_device_8cpp.html" title="CCDevice.cpp" alt="" coords="1225,379,1332,405"/>
+<area shape="rect" id="node19" href="_c_c_servo_device_8h.html" title="CCServoDevice.h" alt="" coords="533,379,661,405"/>
+<area shape="rect" id="node23" href="_c_c_stepper_device_8h.html" title="CCStepperDevice.h" alt="" coords="947,379,1087,405"/>
+<area shape="rect" id="node8" href="_c_c_device_flow_8cpp.html" title="CCDeviceFlow.cpp" alt="" coords="1851,461,1987,488"/>
+<area shape="rect" id="node13" href="_c_c_workflow_8cpp.html" title="CCWorkflow.cpp" alt="" coords="2466,552,2587,579"/>
+<area shape="rect" id="node11" href="_c_c_device_scheduler_8cpp.html" title="CCDeviceScheduler.cpp" alt="" coords="1209,635,1375,661"/>
+<area shape="rect" id="node12" href="voice_o_graph_8ino.html" title="voiceOGraph.ino" alt="" coords="1400,635,1523,661"/>
+<area shape="rect" id="node15" href="_c_c_dc_controller_device_8cpp.html" title="CCDcControllerDevice.cpp" alt="" coords="1413,461,1595,488"/>
+<area shape="rect" id="node16" href="_c_c_dc_controller_device__full_bridge_8h.html" title="CCDcControllerDevice\l_fullBridge.h" alt="" coords="1670,454,1825,495"/>
+<area shape="rect" id="node17" href="_c_c_dc_controller_device__full_bridge_8cpp.html" title="CCDcControllerDevice\l_fullBridge.cpp" alt="" coords="1670,545,1825,586"/>
+<area shape="rect" id="node20" href="_c_c_servo_device__cross_8h.html" title="CCServoDevice_cross.h" alt="" coords="13,461,179,488"/>
+<area shape="rect" id="node22" href="_c_c_servo_device_8cpp.html" title="CCServoDevice.cpp" alt="" coords="203,461,345,488"/>
+<area shape="rect" id="node21" href="_c_c_servo_device__cross_8cpp.html" title="CCServoDevice_cross.cpp" alt="" coords="5,552,187,579"/>
+<area shape="rect" id="node24" href="_c_c_stepper_device___a4988_8h.html" title="CCStepperDevice_A4988.h" alt="" coords="370,461,555,488"/>
+<area shape="rect" id="node26" href="_c_c_stepper_device___t_m_c260_8h.html" title="CCStepperDevice_TMC260.h" alt="" coords="579,461,777,488"/>
+<area shape="rect" id="node28" href="_c_c_stepper_device___t_m_c2130_8h.html" title="CCStepperDevice_TMC2130.h" alt="" coords="853,461,1059,488"/>
+<area shape="rect" id="node30" href="_c_c_stepper_device_8cpp.html" title="CCStepperDevice.cpp" alt="" coords="1134,461,1287,488"/>
+<area shape="rect" id="node25" href="_c_c_stepper_device___a4988_8cpp.html" title="CCStepperDevice_A4988.cpp" alt="" coords="355,552,555,579"/>
+<area shape="rect" id="node27" href="_c_c_stepper_device___t_m_c260_8cpp.html" title="CCStepperDevice_TMC260.cpp" alt="" coords="579,552,791,579"/>
+<area shape="rect" id="node29" href="_c_c_stepper_device___t_m_c2130_8cpp.html" title="CCStepperDevice_TMC2130.cpp" alt="" coords="846,552,1065,579"/>
+<area shape="rect" id="node32" href="_c_c_control_button_8cpp.html" title="CCControlButton.cpp" alt="" coords="2242,379,2389,405"/>
+<area shape="rect" id="node34" href="_c_c_flow_control_8cpp.html" title="CCFlowControl.cpp" alt="" coords="2311,461,2448,488"/>
+<area shape="rect" id="node36" href="_c_c_control_event_8cpp.html" title="CCControlEvent.cpp" alt="" coords="1548,379,1692,405"/>
+<area shape="rect" id="node38" href="_c_c_control_sensor_8cpp.html" title="CCControlSensor.cpp" alt="" coords="1964,379,2116,405"/>
+<area shape="rect" id="node40" href="_c_c_task_8cpp.html" title="CCTask.cpp" alt="" coords="1997,155,2093,181"/>
+</map>
 </div>
 </div>
 <p><a href="device_scheduler_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a0b64516451f088cc73b3a76d07e50cee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a0b64516451f088cc73b3a76d07e50cee">NO_OUTPUT</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:a0b64516451f088cc73b3a76d07e50cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0d7a26b5b88d00e8b9b2fb616d8e76d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#ab0d7a26b5b88d00e8b9b2fb616d8e76d">BASICOUTPUT</a>&#160;&#160;&#160;0x01</td></tr>
 <tr class="separator:ab0d7a26b5b88d00e8b9b2fb616d8e76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02430aebd0e73e3dc51ee07aae04c349"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a02430aebd0e73e3dc51ee07aae04c349">MEMORYDEBUG</a>&#160;&#160;&#160;0x02</td></tr>
@@ -83,60 +132,49 @@ Macros</h2></td></tr>
 <tr class="separator:ac72059fd79a60cafbd54365953109b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9fbacbc0a4c80fc4692378bdb82eefc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#ab9fbacbc0a4c80fc4692378bdb82eefc">TMC260_SETUPDEBUG</a>&#160;&#160;&#160;0x20</td></tr>
 <tr class="separator:ab9fbacbc0a4c80fc4692378bdb82eefc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6596eda5225ecd21165f24fc6f6e65cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a6596eda5225ecd21165f24fc6f6e65cc">SCHEDULER_VERBOSE</a>&#160;&#160;&#160;0x13</td></tr>
-<tr class="separator:a6596eda5225ecd21165f24fc6f6e65cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a914e18c64dd1a389e117dfce35b60857"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a914e18c64dd1a389e117dfce35b60857">DEVICE_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:a914e18c64dd1a389e117dfce35b60857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ca290d969021a7e51e911945e907c84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a6ca290d969021a7e51e911945e907c84">SERVO_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:a6ca290d969021a7e51e911945e907c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a348bb07f6f60e2e6dafb82c375a71a10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a348bb07f6f60e2e6dafb82c375a71a10">SERVO_CROSS_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:a348bb07f6f60e2e6dafb82c375a71a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c7af0e0ceaaab3f2727c97394ee8e17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a0c7af0e0ceaaab3f2727c97394ee8e17">STEPPER_VERBOSE</a>&#160;&#160;&#160;0x07</td></tr>
-<tr class="separator:a0c7af0e0ceaaab3f2727c97394ee8e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd59c04f99950e588348a405a9578c71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#abd59c04f99950e588348a405a9578c71">STEPPER_A4988_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:abd59c04f99950e588348a405a9578c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad90c3d9103c0e421d821a964a5f0f2e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#ad90c3d9103c0e421d821a964a5f0f2e3">STEPPER_TMC260_VERBOSE</a>&#160;&#160;&#160;0x07</td></tr>
-<tr class="separator:ad90c3d9103c0e421d821a964a5f0f2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa97abd533d5dcf138a477d850a7a5b48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#aa97abd533d5dcf138a477d850a7a5b48">DCCONTROLLER_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:aa97abd533d5dcf138a477d850a7a5b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a521c54bf01d62341943c85bf14fa756e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a521c54bf01d62341943c85bf14fa756e">DCCONTROLLER_FULL_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:a521c54bf01d62341943c85bf14fa756e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9aee8b4d7a864ab2d95bc86978c832e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#ae9aee8b4d7a864ab2d95bc86978c832e">CONTROLBUTTON_VERBOSE</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ae9aee8b4d7a864ab2d95bc86978c832e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bd9e8f36ba97031b453683fa5c89242"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a0bd9e8f36ba97031b453683fa5c89242">WORKFLOW_VERBOSE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:a0bd9e8f36ba97031b453683fa5c89242"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8cc100474c5fb09852fcc866dfbdb27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#aa8cc100474c5fb09852fcc866dfbdb27">DEVICEFLOW_VERBOSE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:aa8cc100474c5fb09852fcc866dfbdb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39f9d36d93524de37b1a018438fa9b1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a39f9d36d93524de37b1a018438fa9b1c">TASK_VERBOSE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:a39f9d36d93524de37b1a018438fa9b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe36453feefd601b8de3a7c232a35e13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#afe36453feefd601b8de3a7c232a35e13">FLOWCONTROL_VERBOSE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:afe36453feefd601b8de3a7c232a35e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abce3ff9a831b75396d90a7cb739d8e5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#abce3ff9a831b75396d90a7cb739d8e5a">ACTION_VERBOSE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:abce3ff9a831b75396d90a7cb739d8e5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc983f8d2ed7b56eec0d4d099b4a9cae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#acc983f8d2ed7b56eec0d4d099b4a9cae">TMC2130_SPIDEBUG</a>&#160;&#160;&#160;0x10</td></tr>
+<tr class="separator:acc983f8d2ed7b56eec0d4d099b4a9cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f870d082eceb53987568b52284928e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a11f870d082eceb53987568b52284928e">TMC2130_SETUPDEBUG</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:a11f870d082eceb53987568b52284928e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19110836f701118ee070c1e11c253429"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a19110836f701118ee070c1e11c253429">MAX_DEVICES_PER_SCHEDULER</a>&#160;&#160;&#160;14</td></tr>
+<tr class="separator:a19110836f701118ee070c1e11c253429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae93ef2528de9fb627b7a1810d695dac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#aae93ef2528de9fb627b7a1810d695dac">MAX_CONTROLS_PER_SCHEDULER</a>&#160;&#160;&#160;14</td></tr>
+<tr class="separator:aae93ef2528de9fb627b7a1810d695dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adabfd699c8d741f1fe3db4dfe67ee593"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#adabfd699c8d741f1fe3db4dfe67ee593">MAX_DEVICEFLOWS_PER_WORKFLOW</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:adabfd699c8d741f1fe3db4dfe67ee593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b5f7ce618d213cdc053a0feca5d7ff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a98b5f7ce618d213cdc053a0feca5d7ff">MAX_CONTROLS_PER_WORKFLOW</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a98b5f7ce618d213cdc053a0feca5d7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed16f722578216c3808432076714bd78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#aed16f722578216c3808432076714bd78">MAX_FLOWCONTROLS_PER_WORKFLOW</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:aed16f722578216c3808432076714bd78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0ff3297a9d8cba6862190bf599bbcef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#aa0ff3297a9d8cba6862190bf599bbcef">MAX_TASKS_PER_DEVICEFLOW</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:aa0ff3297a9d8cba6862190bf599bbcef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00abb26ff8c536a486cb6c89f83de383"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a00abb26ff8c536a486cb6c89f83de383">MAX_ACTIONS_PER_FLOWCONTROL</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a00abb26ff8c536a486cb6c89f83de383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc6d24ad76359321143075df3e73941d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#adc6d24ad76359321143075df3e73941d">STEPPINGPERIOD_TO_KICK_UP</a>&#160;&#160;&#160;150</td></tr>
 <tr class="separator:adc6d24ad76359321143075df3e73941d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0b54c61a848013182d911972220348f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#ab0b54c61a848013182d911972220348f">STEPPINGPERIOD_TO_KICK_DOWN</a>&#160;&#160;&#160;300</td></tr>
 <tr class="separator:ab0b54c61a848013182d911972220348f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78e82e2ee0bdecbce529d3fdcecc30de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a78e82e2ee0bdecbce529d3fdcecc30de">I_AM_LATE_LED</a>&#160;&#160;&#160;12</td></tr>
+<tr class="memitem:a78e82e2ee0bdecbce529d3fdcecc30de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a78e82e2ee0bdecbce529d3fdcecc30de">I_AM_LATE_LED</a>&#160;&#160;&#160;2</td></tr>
 <tr class="separator:a78e82e2ee0bdecbce529d3fdcecc30de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ae45c4e11e95da37ed0ad2281d8fe9b01"><td class="memItemLeft" align="right" valign="top">typedef signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#ae45c4e11e95da37ed0ad2281d8fe9b01">schedulerDevice</a></td></tr>
-<tr class="separator:ae45c4e11e95da37ed0ad2281d8fe9b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedac3f0a4894427b21eb0868abc7ec88"><td class="memItemLeft" align="right" valign="top">typedef signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#aedac3f0a4894427b21eb0868abc7ec88">schedulerControlButton</a></td></tr>
-<tr class="separator:aedac3f0a4894427b21eb0868abc7ec88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f7c0f01b164bfc5c8941e98208bffd8"><td class="memItemLeft" align="right" valign="top">typedef signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a0f7c0f01b164bfc5c8941e98208bffd8">schedulerWorkflow</a></td></tr>
-<tr class="separator:a0f7c0f01b164bfc5c8941e98208bffd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a719fefb1d4ae7752f653759dcc279c6d"><td class="memItemLeft" align="right" valign="top">typedef signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a719fefb1d4ae7752f653759dcc279c6d">schedulerDeviceflow</a></td></tr>
-<tr class="separator:a719fefb1d4ae7752f653759dcc279c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e07717dde6367fc26c245e64619b767"><td class="memItemLeft" align="right" valign="top">typedef signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a></td></tr>
-<tr class="separator:a5e07717dde6367fc26c245e64619b767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a0b64516451f088cc73b3a76d07e50cee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NO_OUTPUT&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00028">28</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab0d7a26b5b88d00e8b9b2fb616d8e76d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +185,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00021">21</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00029">29</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -161,7 +199,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00022">22</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00030">30</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -175,7 +213,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00023">23</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00031">31</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -189,7 +227,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00024">24</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00032">32</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -203,7 +241,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00027">27</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00035">35</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -217,7 +255,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00030">30</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00038">38</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -231,114 +269,16 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00031">31</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6596eda5225ecd21165f24fc6f6e65cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SCHEDULER_VERBOSE&#160;&#160;&#160;0x13</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00035">35</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a914e18c64dd1a389e117dfce35b60857"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEVICE_VERBOSE&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00036">36</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6ca290d969021a7e51e911945e907c84"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERVO_VERBOSE&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00037">37</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a348bb07f6f60e2e6dafb82c375a71a10"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERVO_CROSS_VERBOSE&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00038">38</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0c7af0e0ceaaab3f2727c97394ee8e17"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STEPPER_VERBOSE&#160;&#160;&#160;0x07</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 <p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00039">39</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abd59c04f99950e588348a405a9578c71"></a>
+<a class="anchor" id="acc983f8d2ed7b56eec0d4d099b4a9cae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define STEPPER_A4988_VERBOSE&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00040">40</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad90c3d9103c0e421d821a964a5f0f2e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STEPPER_TMC260_VERBOSE&#160;&#160;&#160;0x07</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00041">41</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa97abd533d5dcf138a477d850a7a5b48"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DCCONTROLLER_VERBOSE&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define TMC2130_SPIDEBUG&#160;&#160;&#160;0x10</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -347,12 +287,12 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a521c54bf01d62341943c85bf14fa756e"></a>
+<a class="anchor" id="a11f870d082eceb53987568b52284928e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DCCONTROLLER_FULL_VERBOSE&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define TMC2130_SETUPDEBUG&#160;&#160;&#160;0x20</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -361,54 +301,12 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae9aee8b4d7a864ab2d95bc86978c832e"></a>
+<a class="anchor" id="a19110836f701118ee070c1e11c253429"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CONTROLBUTTON_VERBOSE&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00045">45</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0bd9e8f36ba97031b453683fa5c89242"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WORKFLOW_VERBOSE&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00047">47</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa8cc100474c5fb09852fcc866dfbdb27"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEVICEFLOW_VERBOSE&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00048">48</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a39f9d36d93524de37b1a018438fa9b1c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TASK_VERBOSE&#160;&#160;&#160;0x03</td>
+          <td class="memname">#define MAX_DEVICES_PER_SCHEDULER&#160;&#160;&#160;14</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -417,31 +315,87 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afe36453feefd601b8de3a7c232a35e13"></a>
+<a class="anchor" id="aae93ef2528de9fb627b7a1810d695dac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FLOWCONTROL_VERBOSE&#160;&#160;&#160;0x03</td>
+          <td class="memname">#define MAX_CONTROLS_PER_SCHEDULER&#160;&#160;&#160;14</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00051">51</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00050">50</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abce3ff9a831b75396d90a7cb739d8e5a"></a>
+<a class="anchor" id="adabfd699c8d741f1fe3db4dfe67ee593"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ACTION_VERBOSE&#160;&#160;&#160;0x03</td>
+          <td class="memname">#define MAX_DEVICEFLOWS_PER_WORKFLOW&#160;&#160;&#160;10</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00052">52</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a98b5f7ce618d213cdc053a0feca5d7ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_CONTROLS_PER_WORKFLOW&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00053">53</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aed16f722578216c3808432076714bd78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_FLOWCONTROLS_PER_WORKFLOW&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00054">54</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa0ff3297a9d8cba6862190bf599bbcef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_TASKS_PER_DEVICEFLOW&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00056">56</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a00abb26ff8c536a486cb6c89f83de383"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_ACTIONS_PER_FLOWCONTROL&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00058">58</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -455,7 +409,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00150">150</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00201">201</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -469,7 +423,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00151">151</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00202">202</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -478,83 +432,12 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I_AM_LATE_LED&#160;&#160;&#160;12</td>
+          <td class="memname">#define I_AM_LATE_LED&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00155">155</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ae45c4e11e95da37ed0ad2281d8fe9b01"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef signed char <a class="el" href="device_scheduler_8h.html#ae45c4e11e95da37ed0ad2281d8fe9b01">schedulerDevice</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00059">59</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aedac3f0a4894427b21eb0868abc7ec88"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef signed char <a class="el" href="device_scheduler_8h.html#aedac3f0a4894427b21eb0868abc7ec88">schedulerControlButton</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00059">59</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0f7c0f01b164bfc5c8941e98208bffd8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef signed char <a class="el" href="device_scheduler_8h.html#a0f7c0f01b164bfc5c8941e98208bffd8">schedulerWorkflow</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00059">59</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a719fefb1d4ae7752f653759dcc279c6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef signed char <a class="el" href="device_scheduler_8h.html#a719fefb1d4ae7752f653759dcc279c6d">schedulerDeviceflow</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00059">59</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a5e07717dde6367fc26c245e64619b767"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef signed char <a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00059">59</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00206">206</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -577,7 +460,55 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00062">62</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00066">66</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af91beaf28f691051c0506514c8f4d137"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#af91beaf28f691051c0506514c8f4d137">controlType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="af91beaf28f691051c0506514c8f4d137a7d67f007544f534278ecca3cdca12565"></a>BUTTON&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="af91beaf28f691051c0506514c8f4d137a6d497d39379053324114e5611323b558"></a>SENSOR&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="af91beaf28f691051c0506514c8f4d137a08d627d21e6424f54671673ff1611d59"></a>EVENT&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00073">73</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aecdd752a8498bdc6d8b0e8e6d57f97d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#aecdd752a8498bdc6d8b0e8e6d57f97d4">schedulersJob</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="aecdd752a8498bdc6d8b0e8e6d57f97d4a29ea433a07c1987706664dcb9b41abee"></a>TRIGGER_TASK_PREPARATION&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="aecdd752a8498bdc6d8b0e8e6d57f97d4ae2ea3b9690e77be8b27766b003bb76a9"></a>TRIGGER_TASK_START&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="aecdd752a8498bdc6d8b0e8e6d57f97d4a8a8e238759d5716780a3a8f3f86c08c3"></a>TRIGGER_TASK_STOP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="aecdd752a8498bdc6d8b0e8e6d57f97d4a70fd1aa7f83e4d7f4d96b8c770e05a3f"></a>NOTICE_TASK_STOP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="aecdd752a8498bdc6d8b0e8e6d57f97d4a61a1bd5b1849e1f21b233f7faf338292"></a>NOTICE_ALL_TASKS_FINISHED&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00080">80</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -595,17 +526,19 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9ea0ace72efd9e987dfd807365d0ca50141"></a>DATE&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9ea7d67f007544f534278ecca3cdca12565"></a>BUTTON&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9eaf722a5faa36087c914da53ebe4711f08"></a>CONTROL&#160;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9eafc2d929d777e6aacbcd9fe9f1ce43555"></a>FOLLOW&#160;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9ea8543e8b40c9533c1a914826b4ac18427"></a>FOLLOW_ME&#160;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9ead34d5395053a1781444508e570283be1"></a>POSITION&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9ea626c628bd9c525b448f1bf39b4b7a50b"></a>CONTROLBUTTON&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a3b65133bb9997cd1ccf311af0927fc9ea38a58f201a7cfcc18e995d8c110402bb"></a>MY_POSITION&#160;</td><td class="fielddoc">
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00070">70</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00089">89</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -629,7 +562,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00081">81</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00101">101</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -643,23 +576,19 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa9f0911580e7a70901dfba81d636582d3"></a>BREAK_LOOP&#160;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa7abb30987365993129e4f9a417b13f13"></a>BREAK_LOOP_ACTION&#160;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263faa3c06bc7e4d652a970cab72026c6fed1"></a>DO_NOTHING&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa760cb953e42b775c045919d7b0b37426"></a>START_NEXT_TASK&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa58692e266d80f0d1157720dcc4b1b79d"></a>TASK_START_ACTION&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa74e1d264e3331d2e5f627d5b54a8d784"></a>STOP_TASK_AND_SWITCH&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa94bd3ab1a33a8b5465cb39b1a801e60f"></a>TASK_SWITCH_ACTION&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa794d4bfff03ae62b5fd28d9eaa72d7bb"></a>STOP_TASK&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa4e905fe04eae8b51278f783fa3e87ef5"></a>STOP_TASK_SHARP_AND_SWITCH&#160;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fa26ca4f65ee1df524c5e41c7f796048d0"></a>STOP_TASK_SHARP&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a46e69191c64a1194a22bc13d7e77263fac7dce530e56c0adb6b6e523c547f6d0d"></a>TASK_STOP_ACTION&#160;</td><td class="fielddoc">
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00090">90</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00110">110</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -681,7 +610,31 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00101">101</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00119">119</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae04df4138739e425344296dc412f5d78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ae04df4138739e425344296dc412f5d78acb44e930ff8952baec4c9320d95433b7"></a>NO_SWITCHING&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ae04df4138739e425344296dc412f5d78a5d1ba8ae84c524271a7a5ac242e2daeb"></a>SWITCH_AFTER_STOP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ae04df4138739e425344296dc412f5d78a1861c48cb9d5a8dd22883f6d519da40b"></a>SWITCH_AFTER_COMPLETION&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ae04df4138739e425344296dc412f5d78a3b238fd3624f976e9f9184c46af7e8ce"></a>SWITCH_PROMPTLY&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00125">125</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -703,7 +656,31 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00108">108</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00133">133</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af630707b6eb4252a9c96db80b6723ba8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="af630707b6eb4252a9c96db80b6723ba8a6cc1972e6d9d37556d516f78205a682b"></a>IS&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="af630707b6eb4252a9c96db80b6723ba8a7c07a7c70af69b660be600e25b95d7e1"></a>IS_NOT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="af630707b6eb4252a9c96db80b6723ba8a466e6cd0809aa1a873c1fb2a638ff2bf"></a>IS_GREATER_THEN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="af630707b6eb4252a9c96db80b6723ba8a7a9065e84ba81f8c515cfaaf360b295a"></a>IS_SMALLER_THEN&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00140">140</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -723,49 +700,93 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00115">115</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00148">148</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9"></a>
+<a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#ae75d9451f4521bc235d458bfb0a0a8d9">infoCode</a></td>
+          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#ac4058074cf23f7c69f6acded22c3ef94">workflowInfoCode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a097ca8dcaed70035d371342af1471ef0"></a>WORKFLOW_CANCELED_ON_ERROR&#160;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a097ca8dcaed70035d371342af1471ef0"></a>WORKFLOW_CANCELED_ON_ERROR&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a8cbb7aadc6a01e8f8156e19c3a699f59"></a>WORKFLOW_CANCELED_ON_ENDBUTTON_REACHED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a8cbb7aadc6a01e8f8156e19c3a699f59"></a>WORKFLOW_CANCELED_ON_ENDBUTTON_REACHED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a66259e066260edc09b96908f132a88e9"></a>WORKFLOW_CANCELED_ON_BUTTON_NOT_REACHED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a66259e066260edc09b96908f132a88e9"></a>WORKFLOW_CANCELED_ON_BUTTON_NOT_REACHED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9ac8e0101f9273c6ab8cca4fad49145b49"></a>WORKFLOW_CANCELED_ON_PARAMETER_ERROR&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94ac8e0101f9273c6ab8cca4fad49145b49"></a>WORKFLOW_CANCELED_ON_PARAMETER_ERROR&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9af01b6a4180002f7288cd66f6509db5b2"></a>WORKFLOW_CANCELED_ON_FLOWCONTROL_ERROR&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94af01b6a4180002f7288cd66f6509db5b2"></a>WORKFLOW_CANCELED_ON_FLOWCONTROL_ERROR&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a8d529067e2ed9f95bfb403d5f16e08b8"></a>WORKFLOW_DISABLED_ON_ERROR&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94ab3ca76f0ee6a7ebb6623b65f70abead2"></a>WORKFLOW_CANCELED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9ad23687e2eefde69457d5a4deb253b0b1"></a>WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a8d529067e2ed9f95bfb403d5f16e08b8"></a>WORKFLOW_DISABLED_ON_ERROR&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a655dcb5344750742aec6c67cb2599279"></a>WORKFLOW_DISABLED_ON_BUTTON_NOT_REACHED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94ad23687e2eefde69457d5a4deb253b0b1"></a>WORKFLOW_DISABLED_ON_ENDBUTTON_REACHED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a1ececf96846f9c46f3711c9acba6654e"></a>EVERYTHING_OK&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a655dcb5344750742aec6c67cb2599279"></a>WORKFLOW_DISABLED_ON_BUTTON_NOT_REACHED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a092f66f6d5f7f4f9f5c969e291d8c03a"></a>SONGCANCELBUTTON_PRESSED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a1ececf96846f9c46f3711c9acba6654e"></a>EVERYTHING_OK&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9afbc726a6e8500cc88d31135a99be8afd"></a>SONGENDBUTTON_PRESSED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94af3add54f1efd055363c3580b189a8740"></a>WORKFLOW_STOPPED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9ad27e56c3e1759ed0b3d697222794baf3"></a>BUTTON_NOT_REACHED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a092f66f6d5f7f4f9f5c969e291d8c03a"></a>SONGCANCELBUTTON_PRESSED&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae75d9451f4521bc235d458bfb0a0a8d9a15e3d3f26dd1046db7cf3683220d2852"></a>ENDBUTTON_REACHED&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94afbc726a6e8500cc88d31135a99be8afd"></a>SONGENDBUTTON_PRESSED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a17ba7a94aa3da79c4ab45e8359661e53"></a>STOCKBOTTOM_BUTTON_REACHED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a229e35816abc0ee714ff9b19f0323a72"></a>STOCKTOP_BUTTON_REACHED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94ad27e56c3e1759ed0b3d697222794baf3"></a>BUTTON_NOT_REACHED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ac4058074cf23f7c69f6acded22c3ef94a15e3d3f26dd1046db7cf3683220d2852"></a>ENDBUTTON_REACHED&#160;</td><td class="fielddoc">
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00121">121</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00154">154</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54ac6d771c03123b9f59c9507ed597cd780"></a>DEVICE_PARAMETER_ERROR&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54ac185e1dc9bae12c6d264256531a02cf0"></a>DISPOSE_THIS_TASK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54aeebad6e232d80875e22a09fa6418c0d1"></a>DELAY_THIS_TASK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54a60f332c4d7857a63a205cfd75096a3a4"></a>DEVICE_OK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54ade5111d9f33fdfa140ea362ba5e7c72f"></a>TASK_PREPARATION_OK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54a1e583f64e149cc4c283cfbe9c5c61e55"></a>TASK_START_OK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54aaace4c4d3e6a7bd89aba28edd0c4de14"></a>TASK_DISPOSED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54a98402e85a4073576c307516b727c69d3"></a>TASK_DELAYED&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54af76b436b90162bfeca1e83d5c64f9b59"></a>TASK_STOP_OK&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6b1c8497a43e3975fac0636b3b972e54a728421e2f91d7a0059b55b63cb2a8894"></a>ALL_TASKS_DONE&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00174">174</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>
@@ -785,6 +806,8 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="abb664f16e10d899b378c70b8c4643210ab268aaf3ebd6a713bc83316cd05742ad"></a>SKIP_APPROXIMATION_FAST&#160;</td><td class="fielddoc">
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="abb664f16e10d899b378c70b8c4643210aa78d04932fc5dce375bf0a8fd1450ee0"></a>SKIP_APPROXIMATION_MODERATE&#160;</td><td class="fielddoc">
+</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="abb664f16e10d899b378c70b8c4643210a47af37576db66b8adcd894d5d3e5ddd7"></a>SKIP_APPROXIMATION_PRECISE&#160;</td><td class="fielddoc">
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="abb664f16e10d899b378c70b8c4643210a4146f12e5458362d56269f45d2e11526"></a>SKIP_APPROXIMATION_VERY_PRECISE&#160;</td><td class="fielddoc">
@@ -793,7 +816,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00138">138</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
+<p>Definition at line <a class="el" href="device_scheduler_8h_source.html#l00188">188</a> of file <a class="el" href="device_scheduler_8h_source.html">deviceScheduler.h</a>.</p>
 
 </div>
 </div>

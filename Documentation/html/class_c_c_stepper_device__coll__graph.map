@@ -1,4 +1,6 @@
 <map id="CCStepperDevice" name="CCStepperDevice">
-<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="28,96,111,123"/>
-<area shape="rect" id="node3" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="34,5,104,32"/>
+<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="28,277,111,304"/>
+<area shape="rect" id="node3" href="$class_c_c_control.html" title="Class for physical interaction to control the workflow. " alt="" coords="27,187,111,213"/>
+<area shape="rect" id="node4" href="$class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="14,96,124,123"/>
+<area shape="rect" id="node5" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="34,5,104,32"/>
 </map>

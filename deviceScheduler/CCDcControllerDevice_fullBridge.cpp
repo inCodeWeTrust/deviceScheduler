@@ -47,6 +47,11 @@ CCDcControllerDevice_fullBridge::~CCDcControllerDevice_fullBridge() {
     }
 }
 
+void CCDcControllerDevice_fullBridge::disableDevice() {
+    digitalWrite(switching_pin, !switchingPin_active);
+    digitalWrite(switching_B_pin, !switchingPin_B_active);
+}
+
 deviceInfoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
     
 //    if (verbosity & BASICOUTPUT) {
@@ -65,7 +70,6 @@ deviceInfoCode CCDcControllerDevice_fullBridge::reviewValues(CCTask* nextTask) {
 //    }
     return DEVICE_OK;
 }
-
 
 void CCDcControllerDevice_fullBridge::prepareNextTask() {}
 
@@ -166,7 +170,7 @@ void CCDcControllerDevice_fullBridge::startTask() {
         }
     }
     
-//    operateTask();
+    operateTask();
 }
 
 void CCDcControllerDevice_fullBridge::initiateStop() {

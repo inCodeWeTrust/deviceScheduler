@@ -46,7 +46,9 @@ CCDcControllerDevice::~CCDcControllerDevice() {
 
 
 void CCDcControllerDevice::enableDevice() {}
-void CCDcControllerDevice::disableDevice() {}
+void CCDcControllerDevice::disableDevice() {
+    digitalWrite(switching_pin, !switchingPin_active);
+}
 
 void CCDcControllerDevice::attachDevice() {}
 void CCDcControllerDevice::detachDevice() {}
@@ -155,7 +157,7 @@ void CCDcControllerDevice::startTask() {
             Serial.println(F(", starting task"));
         }
     }
-//    operateTask();
+    operateTask();
 }
 
 void CCDcControllerDevice::initiateStop() {

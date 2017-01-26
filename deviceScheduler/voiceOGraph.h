@@ -29,8 +29,8 @@
 ///
 /// | pin   | header        | function                      |
 /// |-------|---------------|-------------------------------|
-/// |    0  |               |  <communication>              |
-/// |    1  |               |  <communication>              |
+/// |    0  |               |  <serial communication>       |
+/// |    1  |               |  <serial communication>       |
 /// |    2  |               |  SCHEDULERS_TASKVIEW_SHOW_PIN |
 /// |    3  |               |  TMC260 table enable          |
 /// |    4  |               |  TMC260 table step            |

@@ -62,6 +62,8 @@ $(document).ready(function(){initNavTree('class_c_c_dc_controller_device.html','
 
 <p>Device class for devices controlled by PWM-signals or spimply switched on and off <a class="el" href="class_c_c_device.html#a7b6ea00110fc81fb70ebe694a9a78fd4">target</a>: duty cycle of pwm signal. <a class="el" href="class_c_c_device.html#ae735ffca0b8a630f7e9df47686e3bd3a">velocity</a>: pwm frequency in n/sec = Hz. <a class="el" href="class_c_c_device.html#a8e994a6ba016bf8b54d0edc96e88f1f2">acceleration</a>: time for ramping up. <a class="el" href="class_c_c_device.html#a1a83ef6598686823b8334a987deedd53">deceleration</a>: time for ramping down.  
  <a href="class_c_c_dc_controller_device.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for CCDcControllerDevice:</div>
 <div class="dyncontent">
@@ -76,15 +78,17 @@ Collaboration diagram for CCDcControllerDevice:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_c_dc_controller_device__coll__graph.png" border="0" usemap="#_c_c_dc_controller_device_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_c_dc_controller_device_coll__map" id="_c_c_dc_controller_device_coll__map">
-<area shape="rect" id="node2" href="class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="41,96,124,123"/>
-<area shape="rect" id="node3" href="class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="47,5,117,32"/>
+<area shape="rect" id="node2" href="class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="41,277,124,304"/>
+<area shape="rect" id="node3" href="class_c_c_control.html" title="Class for physical interaction to control the workflow. " alt="" coords="41,187,124,213"/>
+<area shape="rect" id="node4" href="class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="27,96,137,123"/>
+<area shape="rect" id="node5" href="class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="47,5,117,32"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab77e2ea0ee47844ed1e8db5d575f9f44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ab77e2ea0ee47844ed1e8db5d575f9f44">CCDcControllerDevice</a> (String <a class="el" href="class_c_c_device.html#af1afcf08ebcd33db60108bb1d5cb2cd9">deviceName</a>, unsigned char <a class="el" href="class_c_c_dc_controller_device.html#ab8e2d6b5f2e216ecf3e1981e8c78627f">switching_pin</a>, boolean <a class="el" href="class_c_c_dc_controller_device.html#a1dfeac2ec029da12017f724876d7d645">switchingPin_activ</a>)</td></tr>
-<tr class="separator:ab77e2ea0ee47844ed1e8db5d575f9f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab56dbe2efde0b190e1296a11a9560564"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ab56dbe2efde0b190e1296a11a9560564">CCDcControllerDevice</a> (const String <a class="el" href="class_c_c_device.html#add524d7603e017ffcd8b4a9f469572d7">deviceName</a>, const unsigned int <a class="el" href="class_c_c_dc_controller_device.html#a3148f408a9985d9f28a166f0905e77c8">switching_pin</a>, const bool <a class="el" href="class_c_c_dc_controller_device.html#aae9043d45366dbbd448bff0c40dabe9d">switchingPin_active</a>)</td></tr>
+<tr class="separator:ab56dbe2efde0b190e1296a11a9560564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e787a1a8c824726f91b22abf9289ccd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a8e787a1a8c824726f91b22abf9289ccd">~CCDcControllerDevice</a> ()</td></tr>
 <tr class="separator:a8e787a1a8c824726f91b22abf9289ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13f7a0f104a3162c556c2487b145e07b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a13f7a0f104a3162c556c2487b145e07b">attachDevice</a> ()</td></tr>
@@ -95,12 +99,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1d45d6859ce3f30552ba83fb7c5dd7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad38317bcc80eb831819f5be5280a551e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ad38317bcc80eb831819f5be5280a551e">disableDevice</a> ()</td></tr>
 <tr class="separator:ad38317bcc80eb831819f5be5280a551e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af38efac229cf52e60eae662eb49b6ac8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#ae75d9451f4521bc235d458bfb0a0a8d9">infoCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#af38efac229cf52e60eae662eb49b6ac8">reviewValues</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)</td></tr>
-<tr class="separator:af38efac229cf52e60eae662eb49b6ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c058447047a09cb9c85ad0d3590cd5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a6c058447047a09cb9c85ad0d3590cd5c">reviewValues</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)</td></tr>
+<tr class="separator:a6c058447047a09cb9c85ad0d3590cd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c08dd8c24aa8058b0d332c4ce3891e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a8c08dd8c24aa8058b0d332c4ce3891e2">prepareNextTask</a> ()</td></tr>
 <tr class="separator:a8c08dd8c24aa8058b0d332c4ce3891e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6acb2f612d33128076ac9f1ff5cac04f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a6acb2f612d33128076ac9f1ff5cac04f">prepareTask</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)</td></tr>
-<tr class="separator:a6acb2f612d33128076ac9f1ff5cac04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec75a074bdd779d38a1c6b90deb92e77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77">prepareTask</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)</td></tr>
+<tr class="separator:aec75a074bdd779d38a1c6b90deb92e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab044f02c340bd584d8787292f1a04f06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ab044f02c340bd584d8787292f1a04f06">startTask</a> ()</td></tr>
 <tr class="separator:ab044f02c340bd584d8787292f1a04f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad70ba1a5f17bc30473647628b8f17b52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ad70ba1a5f17bc30473647628b8f17b52">operateTask</a> ()</td></tr>
@@ -111,17 +115,25 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6e9579fdc356825c58290213883cb152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2c17fd0a879ed1e11b16ff00797d214"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ad2c17fd0a879ed1e11b16ff00797d214">finishTask</a> ()</td></tr>
 <tr class="separator:ad2c17fd0a879ed1e11b16ff00797d214"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ae4d016b8e5da8f135199cac8154c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a8ae4d016b8e5da8f135199cac8154c22">getReadOut</a> (byte theReadOut)</td></tr>
-<tr class="separator:a8ae4d016b8e5da8f135199cac8154c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae840fb18c49fbe32caaad72c46fad392"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ae840fb18c49fbe32caaad72c46fad392">getReadOut</a> (unsigned int theReadOut)</td></tr>
+<tr class="separator:ae840fb18c49fbe32caaad72c46fad392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_c_c_device"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_c_c_device')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_c_c_device.html">CCDevice</a></td></tr>
+<tr class="memitem:a69e635dd5b643393f215a09ed4390baa inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a69e635dd5b643393f215a09ed4390baa">CCDevice</a> (const String <a class="el" href="class_c_c_device.html#add524d7603e017ffcd8b4a9f469572d7">deviceName</a>, const <a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a> <a class="el" href="class_c_c_device.html#a6c4406cfbb37811a98c5478dc63c00ec">type</a>)</td></tr>
+<tr class="separator:a69e635dd5b643393f215a09ed4390baa inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae86588c0d5f0d0acfbe153c3afe89a2e inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae86588c0d5f0d0acfbe153c3afe89a2e">~CCDevice</a> ()=0</td></tr>
 <tr class="separator:ae86588c0d5f0d0acfbe153c3afe89a2e inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ff14cfb320820802bc4ad96027449f inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab3ff14cfb320820802bc4ad96027449f">getName</a> ()</td></tr>
-<tr class="separator:ab3ff14cfb320820802bc4ad96027449f inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68d44217dfaad1df698077f2bd425717 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a68d44217dfaad1df698077f2bd425717">getType</a> ()</td></tr>
-<tr class="separator:a68d44217dfaad1df698077f2bd425717 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af91e5cfa614fae8d08a08ca00fa08cfe inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#af91e5cfa614fae8d08a08ca00fa08cfe">getCurrentTaskID</a> ()</td></tr>
-<tr class="separator:af91e5cfa614fae8d08a08ca00fa08cfe inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd564f42fc3aed3d2037b7084780354 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aafd564f42fc3aed3d2037b7084780354">isStartTargetReached</a> ()</td></tr>
+<tr class="separator:aafd564f42fc3aed3d2037b7084780354 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5db20bd1b1b8106fab3dc8deba85e2 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#acc5db20bd1b1b8106fab3dc8deba85e2">isStopTargetReached</a> ()</td></tr>
+<tr class="separator:acc5db20bd1b1b8106fab3dc8deba85e2 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b132b80bdfce073f5bde30beb4b9d46 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">const String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1b132b80bdfce073f5bde30beb4b9d46">getName</a> () const </td></tr>
+<tr class="separator:a1b132b80bdfce073f5bde30beb4b9d46 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8095a9ae71f33c77128dba458c879c73 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a8095a9ae71f33c77128dba458c879c73">getType</a> () const </td></tr>
+<tr class="separator:a8095a9ae71f33c77128dba458c879c73 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22265b7f22465d84027241f116fb6388 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a22265b7f22465d84027241f116fb6388">getCurrentTaskID</a> ()</td></tr>
+<tr class="separator:a22265b7f22465d84027241f116fb6388 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f6a5669009455ff13662cbfeab0b8f3 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1f6a5669009455ff13662cbfeab0b8f3">setCurrentTaskID</a> (unsigned int taskID)</td></tr>
+<tr class="separator:a1f6a5669009455ff13662cbfeab0b8f3 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a829cc215985ebad2a8f1641d957aa7d0 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a829cc215985ebad2a8f1641d957aa7d0">getCurrentPosition</a> ()</td></tr>
 <tr class="separator:a829cc215985ebad2a8f1641d957aa7d0 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4b0c1acaff908eeb2362c4faabf0302 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa4b0c1acaff908eeb2362c4faabf0302">setCurrentPosition</a> (float position)</td></tr>
@@ -140,61 +152,48 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7fb09ab317419f8895b9c30a0ef48469 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1b0bcfb3e534b233986f70cfb7eda0c inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae1b0bcfb3e534b233986f70cfb7eda0c">setState</a> (<a class="el" href="device_scheduler_8h.html#a403c8de28829d82eaac4afa11170f60a">deviceState</a> <a class="el" href="class_c_c_device.html#acb02fe7eee8cf6ddb7cc22b9d0eec8d7">state</a>)</td></tr>
 <tr class="separator:ae1b0bcfb3e534b233986f70cfb7eda0c inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aef67f84b934d0404c0bb9efabbadc8 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5aef67f84b934d0404c0bb9efabbadc8">getStartDelay</a> ()</td></tr>
-<tr class="separator:a5aef67f84b934d0404c0bb9efabbadc8 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28f9de1355c2fa4bbb421c21ca252db3 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a28f9de1355c2fa4bbb421c21ca252db3">setStartDelay</a> (unsigned long delay)</td></tr>
-<tr class="separator:a28f9de1355c2fa4bbb421c21ca252db3 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a684d08ff78799c9a8691af945669fbbe inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a684d08ff78799c9a8691af945669fbbe">getStartEvent</a> ()</td></tr>
-<tr class="separator:a684d08ff78799c9a8691af945669fbbe inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae195fc2a5aca717e5d3b16b657fbd6ed inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae195fc2a5aca717e5d3b16b657fbd6ed">setStartEvent</a> (<a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> <a class="el" href="class_c_c_device.html#adc450642f94ef4ab65043c26a002e8e2">startEvent</a>)</td></tr>
-<tr class="separator:ae195fc2a5aca717e5d3b16b657fbd6ed inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab06d00d6214df753c11aaefb1a6547fd inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab06d00d6214df753c11aaefb1a6547fd">getStopEvent</a> ()</td></tr>
-<tr class="separator:ab06d00d6214df753c11aaefb1a6547fd inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36a2ce266fb32f2da2b0035712c51b64 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a36a2ce266fb32f2da2b0035712c51b64">setStopEvent</a> (<a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> <a class="el" href="class_c_c_device.html#a7610c5f03b3b91e7c9d057b4d3992892">stopEvent</a>)</td></tr>
-<tr class="separator:a36a2ce266fb32f2da2b0035712c51b64 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57527b831835fe2e83e0ccb6191c89ba inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a57527b831835fe2e83e0ccb6191c89ba">getStartTime</a> ()</td></tr>
-<tr class="separator:a57527b831835fe2e83e0ccb6191c89ba inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae41b3e2af6f7fa7f01078e51ad70b734 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae41b3e2af6f7fa7f01078e51ad70b734">setStartTime</a> (unsigned long <a class="el" href="class_c_c_device.html#ad0afd36de517a583872a484ca4915f98">startTime</a>)</td></tr>
-<tr class="separator:ae41b3e2af6f7fa7f01078e51ad70b734 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa654fe7ffd0a9cec17c0d56ee7c53aad inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa654fe7ffd0a9cec17c0d56ee7c53aad">getTimeout</a> ()</td></tr>
-<tr class="separator:aa654fe7ffd0a9cec17c0d56ee7c53aad inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c2abc34eedcb244e3a5552e03fe30ec inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1c2abc34eedcb244e3a5552e03fe30ec">getStopping</a> ()</td></tr>
 <tr class="separator:a1c2abc34eedcb244e3a5552e03fe30ec inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a506352dc4143c5ed384d3c393adab090 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a506352dc4143c5ed384d3c393adab090">setStopping</a> (<a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> mode)</td></tr>
 <tr class="separator:a506352dc4143c5ed384d3c393adab090 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d47a69ba3505fdb072c924d2a4994fa inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6d47a69ba3505fdb072c924d2a4994fa">getSwitchTaskPromptly</a> ()</td></tr>
-<tr class="separator:a6d47a69ba3505fdb072c924d2a4994fa inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2eca9d24ba16b173c2e1eef66fe2585 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab2eca9d24ba16b173c2e1eef66fe2585">setSwitchTaskPromptly</a> (boolean switchPromptly)</td></tr>
-<tr class="separator:ab2eca9d24ba16b173c2e1eef66fe2585 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b0bbc9fe7c8d4d5b97659466450c120 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6b0bbc9fe7c8d4d5b97659466450c120">getSensor</a> ()</td></tr>
-<tr class="separator:a6b0bbc9fe7c8d4d5b97659466450c120 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f5594bf4dc230fc6573efb0b0d039ee inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4f5594bf4dc230fc6573efb0b0d039ee">getSwitching</a> ()</td></tr>
+<tr class="separator:a4f5594bf4dc230fc6573efb0b0d039ee inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c15333185e2c1d153dcbe3f33c4b423 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a9c15333185e2c1d153dcbe3f33c4b423">setSwitching</a> (<a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a> switchPromptly)</td></tr>
+<tr class="separator:a9c15333185e2c1d153dcbe3f33c4b423 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97d0a4511bc4a652ac550ad53df82712 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a97d0a4511bc4a652ac550ad53df82712">getInitiatePerformanceValue</a> ()</td></tr>
 <tr class="separator:a97d0a4511bc4a652ac550ad53df82712 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf22b84dedbeffacdb5545f8834d1e6 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#acdf22b84dedbeffacdb5545f8834d1e6">getTargetValue</a> ()</td></tr>
-<tr class="separator:acdf22b84dedbeffacdb5545f8834d1e6 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6614d5764e33fea1372c8daff26f485c inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6614d5764e33fea1372c8daff26f485c">getStopPerformance</a> ()</td></tr>
 <tr class="separator:a6614d5764e33fea1372c8daff26f485c inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe42b1027d9e50144123937798526e11 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#abe42b1027d9e50144123937798526e11">getApproximationCurve</a> ()</td></tr>
 <tr class="separator:abe42b1027d9e50144123937798526e11 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad0ed591e4cd485bb3c8347225bffcd9 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aad0ed591e4cd485bb3c8347225bffcd9">getGap</a> ()</td></tr>
 <tr class="separator:aad0ed591e4cd485bb3c8347225bffcd9 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5169ba06dcabb3e9eb7d190b2209bcd3 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5169ba06dcabb3e9eb7d190b2209bcd3">getReversedApproximation</a> ()</td></tr>
-<tr class="separator:a5169ba06dcabb3e9eb7d190b2209bcd3 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8310f9abd8ef6a83c4b3b0df924e3131 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a8310f9abd8ef6a83c4b3b0df924e3131">getReversedApproximation</a> ()</td></tr>
+<tr class="separator:a8310f9abd8ef6a83c4b3b0df924e3131 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa26f4097374e03c9d37b92ef3c28e1dc inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa26f4097374e03c9d37b92ef3c28e1dc">getApproximation</a> ()</td></tr>
 <tr class="separator:aa26f4097374e03c9d37b92ef3c28e1dc inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc1d8edffd7c342b019fe2eb112f220 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#adbc1d8edffd7c342b019fe2eb112f220">increaseTargetReachedCounter</a> ()</td></tr>
+<tr class="separator:adbc1d8edffd7c342b019fe2eb112f220 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c760d79d665da63d65e58cc96b77a04 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a0c760d79d665da63d65e58cc96b77a04">decreaseTargetReachedCounter</a> ()</td></tr>
+<tr class="separator:a0c760d79d665da63d65e58cc96b77a04 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2084ff077855d4f2f302a2480ab00fb2 inherit pub_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a2084ff077855d4f2f302a2480ab00fb2">setVerbosity</a> (int <a class="el" href="class_c_c_device.html#aba77160e8b85305d045793a5b7a9305c">verbosity</a>)</td></tr>
+<tr class="memdesc:a2084ff077855d4f2f302a2480ab00fb2 inherit pub_methods_class_c_c_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">verbosity of the device  <a href="#a2084ff077855d4f2f302a2480ab00fb2">More...</a><br /></td></tr>
+<tr class="separator:a2084ff077855d4f2f302a2480ab00fb2 inherit pub_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab8e2d6b5f2e216ecf3e1981e8c78627f"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ab8e2d6b5f2e216ecf3e1981e8c78627f">switching_pin</a></td></tr>
-<tr class="separator:ab8e2d6b5f2e216ecf3e1981e8c78627f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dfeac2ec029da12017f724876d7d645"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a1dfeac2ec029da12017f724876d7d645">switchingPin_activ</a></td></tr>
-<tr class="separator:a1dfeac2ec029da12017f724876d7d645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3148f408a9985d9f28a166f0905e77c8"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a3148f408a9985d9f28a166f0905e77c8">switching_pin</a></td></tr>
+<tr class="separator:a3148f408a9985d9f28a166f0905e77c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9043d45366dbbd448bff0c40dabe9d"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#aae9043d45366dbbd448bff0c40dabe9d">switchingPin_active</a></td></tr>
+<tr class="separator:aae9043d45366dbbd448bff0c40dabe9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b405c99068222067d1cd0fb25615e10"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a6b405c99068222067d1cd0fb25615e10">t0</a></td></tr>
 <tr class="memdesc:a6b405c99068222067d1cd0fb25615e10"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current task's starting time.  <a href="#a6b405c99068222067d1cd0fb25615e10">More...</a><br /></td></tr>
 <tr class="separator:a6b405c99068222067d1cd0fb25615e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8933843fd7843f5edf43a1ce95469ba5"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a8933843fd7843f5edf43a1ce95469ba5">elapsedTime</a></td></tr>
 <tr class="memdesc:a8933843fd7843f5edf43a1ce95469ba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The elapsed time since this task was started or switched.  <a href="#a8933843fd7843f5edf43a1ce95469ba5">More...</a><br /></td></tr>
 <tr class="separator:a8933843fd7843f5edf43a1ce95469ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d11873cbfcdad2df24c6729d988d3be"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a8d11873cbfcdad2df24c6729d988d3be">elapsedTime_previous</a></td></tr>
+<tr class="separator:a8d11873cbfcdad2df24c6729d988d3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54a3b99cb1d3447175bd309b4ebb73df"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a54a3b99cb1d3447175bd309b4ebb73df">timeForAcceleration</a></td></tr>
 <tr class="memdesc:a54a3b99cb1d3447175bd309b4ebb73df"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time for ramping up &lt;= acceleration&gt;.  <a href="#a54a3b99cb1d3447175bd309b4ebb73df">More...</a><br /></td></tr>
 <tr class="separator:a54a3b99cb1d3447175bd309b4ebb73df"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,28 +215,27 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aad3694fdeb03f08e9d7174ef7d8ed857"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#aad3694fdeb03f08e9d7174ef7d8ed857">switchOffTime</a></td></tr>
 <tr class="memdesc:aad3694fdeb03f08e9d7174ef7d8ed857"><td class="mdescLeft">&#160;</td><td class="mdescRight">The effectiv date for switching off.  <a href="#aad3694fdeb03f08e9d7174ef7d8ed857">More...</a><br /></td></tr>
 <tr class="separator:aad3694fdeb03f08e9d7174ef7d8ed857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56e45b95e89c4e4552f58b2d06238ce9"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a56e45b95e89c4e4552f58b2d06238ce9">isActiv</a></td></tr>
-<tr class="memdesc:a56e45b95e89c4e4552f58b2d06238ce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable is <code>true</code> when switched on, <code>false</code> when switched off.  <a href="#a56e45b95e89c4e4552f58b2d06238ce9">More...</a><br /></td></tr>
-<tr class="separator:a56e45b95e89c4e4552f58b2d06238ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0a2065f3e214ab5cd46427149e2e415"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ac0a2065f3e214ab5cd46427149e2e415">isActive</a></td></tr>
+<tr class="memdesc:ac0a2065f3e214ab5cd46427149e2e415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable is <code>true</code> when switched on, <code>false</code> when switched off.  <a href="#ac0a2065f3e214ab5cd46427149e2e415">More...</a><br /></td></tr>
+<tr class="separator:ac0a2065f3e214ab5cd46427149e2e415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2ff48be943b466df4b98b2941175620"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ac2ff48be943b466df4b98b2941175620">currentRatio</a></td></tr>
 <tr class="memdesc:ac2ff48be943b466df4b98b2941175620"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initial rate of duty cycle, when the task is switched, like v0.  <a href="#ac2ff48be943b466df4b98b2941175620">More...</a><br /></td></tr>
 <tr class="separator:ac2ff48be943b466df4b98b2941175620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a448b0e37c2dadf1cd56ce92062e3acea"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a448b0e37c2dadf1cd56ce92062e3acea">targetReachedCounter</a></td></tr>
-<tr class="memdesc:a448b0e37c2dadf1cd56ce92062e3acea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of times, the target was reached in series.  <a href="#a448b0e37c2dadf1cd56ce92062e3acea">More...</a><br /></td></tr>
-<tr class="separator:a448b0e37c2dadf1cd56ce92062e3acea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59fcea24f38eaf31b47c433b59fffb33"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a59fcea24f38eaf31b47c433b59fffb33">sensorValue</a></td></tr>
 <tr class="memdesc:a59fcea24f38eaf31b47c433b59fffb33"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sensor's value.  <a href="#a59fcea24f38eaf31b47c433b59fffb33">More...</a><br /></td></tr>
 <tr class="separator:a59fcea24f38eaf31b47c433b59fffb33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5027e11ea581ddcddcff229e515c250"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#ac5027e11ea581ddcddcff229e515c250">relativePosition</a></td></tr>
 <tr class="memdesc:ac5027e11ea581ddcddcff229e515c250"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance from the target position.  <a href="#ac5027e11ea581ddcddcff229e515c250">More...</a><br /></td></tr>
 <tr class="separator:ac5027e11ea581ddcddcff229e515c250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e200e2cf550d55778b9ab663a320810"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_dc_controller_device.html#a2e200e2cf550d55778b9ab663a320810">relativPosition_previous</a></td></tr>
+<tr class="separator:a2e200e2cf550d55778b9ab663a320810"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_c_c_device"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_c_c_device')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_c_c_device.html">CCDevice</a></td></tr>
-<tr class="memitem:af1afcf08ebcd33db60108bb1d5cb2cd9 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#af1afcf08ebcd33db60108bb1d5cb2cd9">deviceName</a></td></tr>
-<tr class="separator:af1afcf08ebcd33db60108bb1d5cb2cd9 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addbbc10082edc0fa59ef2df94ddf2707 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#addbbc10082edc0fa59ef2df94ddf2707">type</a></td></tr>
-<tr class="separator:addbbc10082edc0fa59ef2df94ddf2707 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad08c70e99848ee7a73b1bd0aae43fb6e inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad08c70e99848ee7a73b1bd0aae43fb6e">currentTaskID</a></td></tr>
-<tr class="separator:ad08c70e99848ee7a73b1bd0aae43fb6e inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add524d7603e017ffcd8b4a9f469572d7 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">const String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#add524d7603e017ffcd8b4a9f469572d7">deviceName</a></td></tr>
+<tr class="separator:add524d7603e017ffcd8b4a9f469572d7 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c4406cfbb37811a98c5478dc63c00ec inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6c4406cfbb37811a98c5478dc63c00ec">type</a></td></tr>
+<tr class="separator:a6c4406cfbb37811a98c5478dc63c00ec inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54aab84ec661f43c8b6282202b0eea5d inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a54aab84ec661f43c8b6282202b0eea5d">currentTaskID</a></td></tr>
+<tr class="separator:a54aab84ec661f43c8b6282202b0eea5d inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dae73c65321d0b1c5b276088ad43f66 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1dae73c65321d0b1c5b276088ad43f66">currentPosition</a></td></tr>
 <tr class="separator:a1dae73c65321d0b1c5b276088ad43f66 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0cfc919b648d0e2a50328ec526a260b inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab0cfc919b648d0e2a50328ec526a260b">directionDown</a></td></tr>
@@ -252,68 +250,68 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a8e994a6ba016bf8b54d0edc96e88f1f2 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a83ef6598686823b8334a987deedd53 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1a83ef6598686823b8334a987deedd53">deceleration</a></td></tr>
 <tr class="separator:a1a83ef6598686823b8334a987deedd53 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb90499759ffb5d4b0bebc4502067073 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aeb90499759ffb5d4b0bebc4502067073">moveRelativ</a></td></tr>
-<tr class="separator:aeb90499759ffb5d4b0bebc4502067073 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fe40255cf305436dfa72459e7fdec5f inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a2fe40255cf305436dfa72459e7fdec5f">moveRelativ</a></td></tr>
+<tr class="separator:a2fe40255cf305436dfa72459e7fdec5f inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa42ccef60530a4dc1413503ff5d960e3 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a7ead8112bd09aeb582343346c575691c">positionResetMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa42ccef60530a4dc1413503ff5d960e3">positionReset</a></td></tr>
 <tr class="separator:aa42ccef60530a4dc1413503ff5d960e3 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae83a23066452f96aa1e45678a4bb971f inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae83a23066452f96aa1e45678a4bb971f">startDelay</a></td></tr>
-<tr class="separator:ae83a23066452f96aa1e45678a4bb971f inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc450642f94ef4ab65043c26a002e8e2 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#adc450642f94ef4ab65043c26a002e8e2">startEvent</a></td></tr>
-<tr class="separator:adc450642f94ef4ab65043c26a002e8e2 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7610c5f03b3b91e7c9d057b4d3992892 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a7610c5f03b3b91e7c9d057b4d3992892">stopEvent</a></td></tr>
-<tr class="separator:a7610c5f03b3b91e7c9d057b4d3992892 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0afd36de517a583872a484ca4915f98 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad0afd36de517a583872a484ca4915f98">startTime</a></td></tr>
-<tr class="separator:ad0afd36de517a583872a484ca4915f98 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab090bd767df81ed66f78cc3b05a448c inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aab090bd767df81ed66f78cc3b05a448c">timeout</a></td></tr>
-<tr class="separator:aab090bd767df81ed66f78cc3b05a448c inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a632be722e7f568ccf44c852d82c6a2d1 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a632be722e7f568ccf44c852d82c6a2d1">stopping</a></td></tr>
 <tr class="separator:a632be722e7f568ccf44c852d82c6a2d1 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89d5f87f1d5687f5da0762e97b38e8df inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a89d5f87f1d5687f5da0762e97b38e8df">switchTaskPromptly</a></td></tr>
-<tr class="separator:a89d5f87f1d5687f5da0762e97b38e8df inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8730750ebe99b0a755eb22f96e869c4 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa8730750ebe99b0a755eb22f96e869c4">sensor</a></td></tr>
-<tr class="separator:aa8730750ebe99b0a755eb22f96e869c4 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b74e0a3d75ffd15ea65c2f33bf899ad inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5b74e0a3d75ffd15ea65c2f33bf899ad">switching</a></td></tr>
+<tr class="separator:a5b74e0a3d75ffd15ea65c2f33bf899ad inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6709f7239572b49dfdd3da08c63178be inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6709f7239572b49dfdd3da08c63178be">approximationTarget</a></td></tr>
+<tr class="separator:a6709f7239572b49dfdd3da08c63178be inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaddf72bcbdc7f73352c127c19f16c913 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aaddf72bcbdc7f73352c127c19f16c913">approximationControl</a></td></tr>
+<tr class="separator:aaddf72bcbdc7f73352c127c19f16c913 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9c3b14151ee2c001fd2cded97ef14f8 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ac9c3b14151ee2c001fd2cded97ef14f8">initiatePerformanceValue</a></td></tr>
 <tr class="separator:ac9c3b14151ee2c001fd2cded97ef14f8 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b312b4e207e281427b47fc20add93c8 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1b312b4e207e281427b47fc20add93c8">targetValue</a></td></tr>
-<tr class="separator:a1b312b4e207e281427b47fc20add93c8 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5afefb4d3d2b8187ca76962de980cd9a inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5afefb4d3d2b8187ca76962de980cd9a">stopPerformance</a></td></tr>
 <tr class="separator:a5afefb4d3d2b8187ca76962de980cd9a inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32fcef76975ae211a37c11abcfe9bee2 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a32fcef76975ae211a37c11abcfe9bee2">approximationCurve</a></td></tr>
 <tr class="separator:a32fcef76975ae211a37c11abcfe9bee2 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef2f67fa4f85351e2a9bef525ed63ea6 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aef2f67fa4f85351e2a9bef525ed63ea6">gap</a></td></tr>
 <tr class="separator:aef2f67fa4f85351e2a9bef525ed63ea6 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46e755b4b7bacd2bd552f0be8dec4e28 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a46e755b4b7bacd2bd552f0be8dec4e28">reversedApproximation</a></td></tr>
-<tr class="separator:a46e755b4b7bacd2bd552f0be8dec4e28 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae52cdc27fe24344a7990ca34344efbc3 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae52cdc27fe24344a7990ca34344efbc3">approximation</a></td></tr>
-<tr class="separator:ae52cdc27fe24344a7990ca34344efbc3 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aeef2852684145f3e988ab6cde8622e inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_task.html">CCTask</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a7aeef2852684145f3e988ab6cde8622e">pendingTask</a></td></tr>
-<tr class="separator:a7aeef2852684145f3e988ab6cde8622e inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea3400d46b341b7655b544a188e37c77 inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aea3400d46b341b7655b544a188e37c77">reversedApproximation</a></td></tr>
+<tr class="separator:aea3400d46b341b7655b544a188e37c77 inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba77160e8b85305d045793a5b7a9305c inherit pro_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aba77160e8b85305d045793a5b7a9305c">verbosity</a></td></tr>
+<tr class="memdesc:aba77160e8b85305d045793a5b7a9305c inherit pro_attribs_class_c_c_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">verbosity of the device  <a href="#aba77160e8b85305d045793a5b7a9305c">More...</a><br /></td></tr>
+<tr class="separator:aba77160e8b85305d045793a5b7a9305c inherit pro_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_class_c_c_device"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_c_c_device')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_c_c_device.html">CCDevice</a></td></tr>
+<tr class="memitem:ae52cdc27fe24344a7990ca34344efbc3 inherit pub_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae52cdc27fe24344a7990ca34344efbc3">approximation</a></td></tr>
+<tr class="separator:ae52cdc27fe24344a7990ca34344efbc3 inherit pub_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d3ad9828c686b387f2a47c0058ed87e inherit pub_attribs_class_c_c_device"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4d3ad9828c686b387f2a47c0058ed87e">targetReachedCounter</a></td></tr>
+<tr class="separator:a4d3ad9828c686b387f2a47c0058ed87e inherit pub_attribs_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_c_c_device"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_c_c_device')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_c_c_device.html">CCDevice</a></td></tr>
+<tr class="memitem:a3ab3376ba11f1a774b306b361e182c5e inherit pro_methods_class_c_c_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a3ab3376ba11f1a774b306b361e182c5e">isTargetReached</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *control, <a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> comparing, int controlTarget)</td></tr>
+<tr class="separator:a3ab3376ba11f1a774b306b361e182c5e inherit pro_methods_class_c_c_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00030">30</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab77e2ea0ee47844ed1e8db5d575f9f44"></a>
+<a class="anchor" id="ab56dbe2efde0b190e1296a11a9560564"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">CCDcControllerDevice::CCDcControllerDevice </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
+          <td class="paramtype">const String&#160;</td>
           <td class="paramname"><em>deviceName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramtype">const unsigned int&#160;</td>
           <td class="paramname"><em>switching_pin</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">boolean&#160;</td>
-          <td class="paramname"><em>switchingPin_activ</em>&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>switchingPin_active</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -340,7 +338,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00046">46</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00037">37</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,7 +366,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_c_c_device.html#a83ea989dc1fe663bfb57a0d8a988d795">CCDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00060">60</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00053">53</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -395,7 +393,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_c_c_device.html#a733c8f049208466f6bd1695a4b9ae037">CCDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00061">61</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00054">54</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -422,7 +420,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_c_c_device.html#a50e7203e325f08f63fd445255b1f9c75">CCDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00057">57</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00048">48</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -449,11 +447,13 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_c_c_device.html#aea6f373f7581e188fbd58b98f9f8b1bf">CCDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00058">58</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a2ce87cf7a7312d2eacc99a60f942b64b">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00049">49</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af38efac229cf52e60eae662eb49b6ac8"></a>
+<a class="anchor" id="a6c058447047a09cb9c85ad0d3590cd5c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -461,7 +461,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#ae75d9451f4521bc235d458bfb0a0a8d9">infoCode</a> CCDcControllerDevice::reviewValues </td>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a> CCDcControllerDevice::reviewValues </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_c_c_task.html">CCTask</a> *&#160;</td>
           <td class="paramname"><em>nextTask</em></td><td>)</td>
@@ -475,11 +475,22 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="class_c_c_device.html#a0c88f1f38f3c370523834580315df3c9">CCDevice</a>.</p>
+<p>Implements <a class="el" href="class_c_c_device.html#abbb3e2a3838375474619edca0d77eaec">CCDevice</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#afd282e9d7984a1236a3344bc0ca9d5fb">CCDcControllerDevice_fullBridge</a>.</p>
+<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00063">63</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00056">56</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_dc_controller_device_a6c058447047a09cb9c85ad0d3590cd5c_cgraph.png" border="0" usemap="#class_c_c_dc_controller_device_a6c058447047a09cb9c85ad0d3590cd5c_cgraph" alt=""/></div>
+<map name="class_c_c_dc_controller_device_a6c058447047a09cb9c85ad0d3590cd5c_cgraph" id="class_c_c_dc_controller_device_a6c058447047a09cb9c85ad0d3590cd5c_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#ad32d98d82ea1ac9d3c3314603a37bfeb" title="CCTask::getTarget" alt="" coords="215,5,350,32"/>
+<area shape="rect" id="node3" href="class_c_c_task.html#a5a128df5a86cf77b13c0a0a81d681bab" title="CCTask::getVelocity" alt="" coords="211,56,354,83"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -508,11 +519,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#aa8b7a5aa3fdce17393d6593fb83d8b16">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00082">82</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00064">64</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6acb2f612d33128076ac9f1ff5cac04f"></a>
+<a class="anchor" id="aec75a074bdd779d38a1c6b90deb92e77"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -520,7 +531,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void CCDcControllerDevice::prepareTask </td>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a> CCDcControllerDevice::prepareTask </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_c_c_task.html">CCTask</a> *&#160;</td>
           <td class="paramname"><em>nextTask</em></td><td>)</td>
@@ -534,11 +545,32 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="class_c_c_device.html#a2e3229eed50c21105b6b9f401bddabd2">CCDevice</a>.</p>
+<p>Implements <a class="el" href="class_c_c_device.html#a442d2ede02f83251369e197fb035a851">CCDevice</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a649b476fc634047630d0b8936a2c3afe">CCDcControllerDevice_fullBridge</a>.</p>
+<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00084">84</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00066">66</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_dc_controller_device_aec75a074bdd779d38a1c6b90deb92e77_cgraph.png" border="0" usemap="#class_c_c_dc_controller_device_aec75a074bdd779d38a1c6b90deb92e77_cgraph" alt=""/></div>
+<map name="class_c_c_dc_controller_device_aec75a074bdd779d38a1c6b90deb92e77_cgraph" id="class_c_c_dc_controller_device_aec75a074bdd779d38a1c6b90deb92e77_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="244,5,383,32"/>
+<area shape="rect" id="node3" href="class_c_c_task.html#ad32d98d82ea1ac9d3c3314603a37bfeb" title="CCTask::getTarget" alt="" coords="246,56,381,83"/>
+<area shape="rect" id="node4" href="class_c_c_task.html#a5a128df5a86cf77b13c0a0a81d681bab" title="CCTask::getVelocity" alt="" coords="242,107,385,133"/>
+<area shape="rect" id="node5" href="class_c_c_task.html#a7359e8f0c39a19d66df6fe2e8df92d89" title="CCTask::getAcceleration" alt="" coords="229,157,398,184"/>
+<area shape="rect" id="node6" href="class_c_c_task.html#a4b13cff2c495a2b7e3cc562a261a5fc4" title="CCTask::getDeceleration" alt="" coords="228,208,399,235"/>
+<area shape="rect" id="node7" href="class_c_c_task.html#a9634d50406e3dca8460da7fead59780f" title="CCTask::getSwitching" alt="" coords="237,259,390,285"/>
+<area shape="rect" id="node8" href="class_c_c_task.html#adeb53bd7a8530664d41c837b56e1f6a9" title="CCTask::getStopping" alt="" coords="239,309,388,336"/>
+<area shape="rect" id="node9" href="class_c_c_task.html#a185a2c7ce285426f6c9b06c530f01cbf" title="CCTask::getStopControl" alt="" coords="230,360,397,387"/>
+<area shape="rect" id="node10" href="class_c_c_task.html#ab69e443132911d86729ef481ea1336e4" title="CCTask::getStopControlTarget" alt="" coords="211,411,416,437"/>
+<area shape="rect" id="node11" href="class_c_c_task.html#a56c206f19a30b43c1e1d46cd7cdde503" title="CCTask::getApproximation\lCurve" alt="" coords="223,462,404,503"/>
+<area shape="rect" id="node12" href="class_c_c_task.html#ab424626a60eeab18ebd1098269416234" title="CCTask::getGap" alt="" coords="253,528,374,555"/>
+<area shape="rect" id="node13" href="class_c_c_task.html#a5a45ee07d4fefd7be6e73dd8c4f224ff" title="CCTask::getApproximation" alt="" coords="223,579,404,605"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -567,7 +599,19 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a48b77cc1051782bad49c0bac912d50b6">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00170">170</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00140">140</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_dc_controller_device_ab044f02c340bd584d8787292f1a04f06_cgraph.png" border="0" usemap="#class_c_c_dc_controller_device_ab044f02c340bd584d8787292f1a04f06_cgraph" alt=""/></div>
+<map name="class_c_c_dc_controller_device_ab044f02c340bd584d8787292f1a04f06_cgraph" id="class_c_c_dc_controller_device_ab044f02c340bd584d8787292f1a04f06_cgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#a6e9579fdc356825c58290213883cb152" title="CCDcControllerDevice\l::stopTask" alt="" coords="417,5,573,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device.html#ad70ba1a5f17bc30473647628b8f17b52" title="CCDcControllerDevice\l::operateTask" alt="" coords="211,63,367,105"/>
+<area shape="rect" id="node4" href="class_c_c_control.html#a987e7949d850e1c401e15880a570d335" title="CCControl::value" alt="" coords="433,71,557,97"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -596,7 +640,28 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#ae87b5ae24fc55e952eb66f894b32e416">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00221">221</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00194">194</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_cgraph.png" border="0" usemap="#class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_cgraph" alt=""/></div>
+<map name="class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_cgraph" id="class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_cgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#a6e9579fdc356825c58290213883cb152" title="CCDcControllerDevice\l::stopTask" alt="" coords="211,5,367,46"/>
+<area shape="rect" id="node3" href="class_c_c_control.html#a987e7949d850e1c401e15880a570d335" title="CCControl::value" alt="" coords="227,71,351,97"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_icgraph.png" border="0" usemap="#class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_icgraph" alt=""/></div>
+<map name="class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_icgraph" id="class_c_c_dc_controller_device_ad70ba1a5f17bc30473647628b8f17b52_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#ab044f02c340bd584d8787292f1a04f06" title="CCDcControllerDevice\l::startTask" alt="" coords="211,5,367,46"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -625,7 +690,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#afb901412e6217beca348c70b594bff30">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00191">191</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00163">163</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -654,7 +719,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a6be2551f18534ad405d3d344b44e9226">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00197">197</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00169">169</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_dc_controller_device_a6e9579fdc356825c58290213883cb152_icgraph.png" border="0" usemap="#class_c_c_dc_controller_device_a6e9579fdc356825c58290213883cb152_icgraph" alt=""/></div>
+<map name="class_c_c_dc_controller_device_a6e9579fdc356825c58290213883cb152_icgraph" id="class_c_c_dc_controller_device_a6e9579fdc356825c58290213883cb152_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#ab044f02c340bd584d8787292f1a04f06" title="CCDcControllerDevice\l::startTask" alt="" coords="417,5,573,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device.html#ad70ba1a5f17bc30473647628b8f17b52" title="CCDcControllerDevice\l::operateTask" alt="" coords="211,34,367,75"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -683,11 +759,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#ac2503280b3ba0e9c876dd7ed30ab7372">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00210">210</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00183">183</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8ae4d016b8e5da8f135199cac8154c22"></a>
+<a class="anchor" id="ae840fb18c49fbe32caaad72c46fad392"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -697,7 +773,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void CCDcControllerDevice::getReadOut </td>
           <td>(</td>
-          <td class="paramtype">byte&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>theReadOut</em></td><td>)</td>
           <td></td>
         </tr>
@@ -709,16 +785,16 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="class_c_c_device.html#a82bbb92ef20f194c1731e66482415f06">CCDevice</a>.</p>
+<p>Implements <a class="el" href="class_c_c_device.html#a359964a7489436b724d50350f13bc05e">CCDevice</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a8903571399cdb1cc00a964e7b9283cbf">CCDcControllerDevice_fullBridge</a>.</p>
+<p>Reimplemented in <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a35370941597affdb63821abe87091fd6">CCDcControllerDevice_fullBridge</a>.</p>
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00340">340</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8cpp_source.html#l00315">315</a> of file <a class="el" href="_c_c_dc_controller_device_8cpp_source.html">CCDcControllerDevice.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="ab8e2d6b5f2e216ecf3e1981e8c78627f"></a>
+<a class="anchor" id="a3148f408a9985d9f28a166f0905e77c8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -726,7 +802,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char CCDcControllerDevice::switching_pin</td>
+          <td class="memname">const unsigned int CCDcControllerDevice::switching_pin</td>
         </tr>
       </table>
   </td>
@@ -740,7 +816,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1dfeac2ec029da12017f724876d7d645"></a>
+<a class="anchor" id="aae9043d45366dbbd448bff0c40dabe9d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -748,7 +824,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char CCDcControllerDevice::switchingPin_activ</td>
+          <td class="memname">const bool CCDcControllerDevice::switchingPin_active</td>
         </tr>
       </table>
   </td>
@@ -758,7 +834,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00034">34</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00035">35</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -780,7 +856,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00042">42</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00043">43</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -802,7 +878,29 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00045">45</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00046">46</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d11873cbfcdad2df24c6729d988d3be"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed long CCDcControllerDevice::elapsedTime_previous</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00046">46</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -824,7 +922,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00048">48</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00049">49</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -846,7 +944,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00051">51</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00052">52</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -868,7 +966,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00054">54</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00055">55</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -890,7 +988,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00057">57</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00058">58</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -912,7 +1010,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00060">60</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00061">61</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -934,7 +1032,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00063">63</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00064">64</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -956,11 +1054,11 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00066">66</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00067">67</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a56e45b95e89c4e4552f58b2d06238ce9"></a>
+<a class="anchor" id="ac0a2065f3e214ab5cd46427149e2e415"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -968,7 +1066,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCDcControllerDevice::isActiv</td>
+          <td class="memname">bool CCDcControllerDevice::isActive</td>
         </tr>
       </table>
   </td>
@@ -978,7 +1076,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00069">69</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00070">70</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1000,29 +1098,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00072">72</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a448b0e37c2dadf1cd56ce92062e3acea"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int CCDcControllerDevice::targetReachedCounter</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00075">75</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00073">73</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1044,7 +1120,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00078">78</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00076">76</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1066,7 +1142,29 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00081">81</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00079">79</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e200e2cf550d55778b9ab663a320810"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed int CCDcControllerDevice::relativPosition_previous</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_dc_controller_device_8h_source.html#l00079">79</a> of file <a class="el" href="_c_c_dc_controller_device_8h_source.html">CCDcControllerDevice.h</a>.</p>
 
 </div>
 </div>

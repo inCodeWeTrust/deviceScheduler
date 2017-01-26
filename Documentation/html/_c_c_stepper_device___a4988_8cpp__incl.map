@@ -1,7 +1,10 @@
 <map id="CCStepperDevice_A4988.cpp" name="CCStepperDevice_A4988.cpp">
 <area shape="rect" id="node2" href="$_c_c_stepper_device___a4988_8h.html" title="CCStepperDevice_A4988.h" alt="" coords="13,80,197,107"/>
 <area shape="rect" id="node3" href="$_c_c_stepper_device_8h.html" title="CCStepperDevice.h" alt="" coords="35,155,175,181"/>
-<area shape="rect" id="node4" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="59,229,152,256"/>
-<area shape="rect" id="node5" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="39,379,171,405"/>
-<area shape="rect" id="node8" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="105,304,185,331"/>
+<area shape="rect" id="node4" href="$_c_c_device_8h.html" title="CCDevice.h" alt="" coords="9,229,103,256"/>
+<area shape="rect" id="node5" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="143,528,275,555"/>
+<area shape="rect" id="node8" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="169,453,249,480"/>
+<area shape="rect" id="node9" href="$_c_c_control_8h.html" title="CCControl.h" alt="" coords="149,304,245,331"/>
+<area shape="rect" id="node10" href="$_c_c_device_flow_8h.html" title="CCDeviceFlow.h" alt="" coords="57,379,177,405"/>
+<area shape="rect" id="node11" href="$_c_c_action_8h.html" title="CCAction.h" alt="" coords="254,379,343,405"/>
 </map>

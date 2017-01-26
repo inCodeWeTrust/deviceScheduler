@@ -53,6 +53,8 @@ $(document).ready(function(){initNavTree('class_c_c_device.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_c_c_device-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -62,6 +64,8 @@ $(document).ready(function(){initNavTree('class_c_c_device.html','');});
 
 <p>base class for all devices This baseclass holds all parameters, that are common for all devices, including the array of tasks to be executed by this device  
  <a href="class_c_c_device.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for CCDevice:</div>
 <div class="dyncontent">
@@ -69,11 +73,12 @@ Inheritance diagram for CCDevice:</div>
 <map name="_c_c_device_inherit__map" id="_c_c_device_inherit__map">
 <area shape="rect" id="node2" href="class_c_c_dc_controller_device.html" title="Device class for devices controlled by PWM&#45;signals or spimply switched on and off target: duty cycle ..." alt="" coords="137,16,293,43"/>
 <area shape="rect" id="node4" href="class_c_c_servo_device.html" title="Device class for servo motor devices. " alt="" coords="156,71,273,97"/>
-<area shape="rect" id="node6" href="class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="150,121,279,148"/>
-<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html" title="Device class for full&#45;controlled full&#45;Bridge devices controlled by PWM&#45;signals or spimply switched on..." alt="" coords="357,5,513,46"/>
-<area shape="rect" id="node5" href="class_c_c_servo_device__cross.html" title="Device class for two servo motor devices, working in counterrotation. " alt="" coords="357,71,513,97"/>
-<area shape="rect" id="node7" href="class_c_c_stepper_device___a4988.html" title="Device class for stepper motor devices using a A4988 or similar stepper driver. " alt="" coords="347,121,522,148"/>
-<area shape="rect" id="node8" href="class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="341,172,528,199"/>
+<area shape="rect" id="node6" href="class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="150,147,279,173"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html" title="Device class for full&#45;controlled full&#45;Bridge devices controlled by PWM&#45;signals or spimply switched on..." alt="" coords="361,5,517,46"/>
+<area shape="rect" id="node5" href="class_c_c_servo_device__cross.html" title="Device class for two servo motor devices, working in counterrotation. " alt="" coords="361,71,517,97"/>
+<area shape="rect" id="node7" href="class_c_c_stepper_device___a4988.html" title="Device class for stepper motor devices using a A4988 or similar stepper driver. " alt="" coords="351,121,526,148"/>
+<area shape="rect" id="node8" href="class_c_c_stepper_device___t_m_c2130.html" title="Device class for stepper motor devices driven by a TMC2130 stepper driver. " alt="" coords="341,172,536,199"/>
+<area shape="rect" id="node9" href="class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="345,223,532,249"/>
 </map>
 </div>
 <div class="dynheader">
@@ -81,12 +86,16 @@ Collaboration diagram for CCDevice:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_c_c_device__coll__graph.png" border="0" usemap="#_c_c_device_coll__map" alt="Collaboration graph"/></div>
 <map name="_c_c_device_coll__map" id="_c_c_device_coll__map">
-<area shape="rect" id="node2" href="class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="11,5,81,32"/>
+<area shape="rect" id="node2" href="class_c_c_control.html" title="Class for physical interaction to control the workflow. " alt="" coords="18,187,101,213"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="5,96,115,123"/>
+<area shape="rect" id="node4" href="class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="25,5,95,32"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a69e635dd5b643393f215a09ed4390baa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a69e635dd5b643393f215a09ed4390baa">CCDevice</a> (const String <a class="el" href="class_c_c_device.html#add524d7603e017ffcd8b4a9f469572d7">deviceName</a>, const <a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a> <a class="el" href="class_c_c_device.html#a6c4406cfbb37811a98c5478dc63c00ec">type</a>)</td></tr>
+<tr class="separator:a69e635dd5b643393f215a09ed4390baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae86588c0d5f0d0acfbe153c3afe89a2e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae86588c0d5f0d0acfbe153c3afe89a2e">~CCDevice</a> ()=0</td></tr>
 <tr class="separator:ae86588c0d5f0d0acfbe153c3afe89a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83ea989dc1fe663bfb57a0d8a988d795"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a83ea989dc1fe663bfb57a0d8a988d795">attachDevice</a> ()=0</td></tr>
@@ -97,12 +106,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a50e7203e325f08f63fd445255b1f9c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea6f373f7581e188fbd58b98f9f8b1bf"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aea6f373f7581e188fbd58b98f9f8b1bf">disableDevice</a> ()=0</td></tr>
 <tr class="separator:aea6f373f7581e188fbd58b98f9f8b1bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c88f1f38f3c370523834580315df3c9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="device_scheduler_8h.html#ae75d9451f4521bc235d458bfb0a0a8d9">infoCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a0c88f1f38f3c370523834580315df3c9">reviewValues</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)=0</td></tr>
-<tr class="separator:a0c88f1f38f3c370523834580315df3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbb3e2a3838375474619edca0d77eaec"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#abbb3e2a3838375474619edca0d77eaec">reviewValues</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)=0</td></tr>
+<tr class="separator:abbb3e2a3838375474619edca0d77eaec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a500aeabd359ceb3d40df54f82f5c77fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a500aeabd359ceb3d40df54f82f5c77fe">prepareNextTask</a> ()=0</td></tr>
 <tr class="separator:a500aeabd359ceb3d40df54f82f5c77fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e3229eed50c21105b6b9f401bddabd2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a2e3229eed50c21105b6b9f401bddabd2">prepareTask</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)=0</td></tr>
-<tr class="separator:a2e3229eed50c21105b6b9f401bddabd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442d2ede02f83251369e197fb035a851"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a442d2ede02f83251369e197fb035a851">prepareTask</a> (<a class="el" href="class_c_c_task.html">CCTask</a> *nextTask)=0</td></tr>
+<tr class="separator:a442d2ede02f83251369e197fb035a851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cafaa7df661e230addb57ea59294f19"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a7cafaa7df661e230addb57ea59294f19">startTask</a> ()=0</td></tr>
 <tr class="separator:a7cafaa7df661e230addb57ea59294f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dca533192bfd8e1c0d37c03199fd538"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a0dca533192bfd8e1c0d37c03199fd538">operateTask</a> ()=0</td></tr>
@@ -113,14 +122,20 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad36b328e3441f185761b01ca050e99e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add3529df45250163cbc46280ff0f07a4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#add3529df45250163cbc46280ff0f07a4">finishTask</a> ()=0</td></tr>
 <tr class="separator:add3529df45250163cbc46280ff0f07a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82bbb92ef20f194c1731e66482415f06"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a82bbb92ef20f194c1731e66482415f06">getReadOut</a> (byte theReadOut)=0</td></tr>
-<tr class="separator:a82bbb92ef20f194c1731e66482415f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ff14cfb320820802bc4ad96027449f"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab3ff14cfb320820802bc4ad96027449f">getName</a> ()</td></tr>
-<tr class="separator:ab3ff14cfb320820802bc4ad96027449f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68d44217dfaad1df698077f2bd425717"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a68d44217dfaad1df698077f2bd425717">getType</a> ()</td></tr>
-<tr class="separator:a68d44217dfaad1df698077f2bd425717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af91e5cfa614fae8d08a08ca00fa08cfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#af91e5cfa614fae8d08a08ca00fa08cfe">getCurrentTaskID</a> ()</td></tr>
-<tr class="separator:af91e5cfa614fae8d08a08ca00fa08cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd564f42fc3aed3d2037b7084780354"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aafd564f42fc3aed3d2037b7084780354">isStartTargetReached</a> ()</td></tr>
+<tr class="separator:aafd564f42fc3aed3d2037b7084780354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5db20bd1b1b8106fab3dc8deba85e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#acc5db20bd1b1b8106fab3dc8deba85e2">isStopTargetReached</a> ()</td></tr>
+<tr class="separator:acc5db20bd1b1b8106fab3dc8deba85e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a359964a7489436b724d50350f13bc05e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a359964a7489436b724d50350f13bc05e">getReadOut</a> (unsigned int theReadOut)=0</td></tr>
+<tr class="separator:a359964a7489436b724d50350f13bc05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b132b80bdfce073f5bde30beb4b9d46"><td class="memItemLeft" align="right" valign="top">const String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1b132b80bdfce073f5bde30beb4b9d46">getName</a> () const </td></tr>
+<tr class="separator:a1b132b80bdfce073f5bde30beb4b9d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8095a9ae71f33c77128dba458c879c73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a8095a9ae71f33c77128dba458c879c73">getType</a> () const </td></tr>
+<tr class="separator:a8095a9ae71f33c77128dba458c879c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22265b7f22465d84027241f116fb6388"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a22265b7f22465d84027241f116fb6388">getCurrentTaskID</a> ()</td></tr>
+<tr class="separator:a22265b7f22465d84027241f116fb6388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f6a5669009455ff13662cbfeab0b8f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1f6a5669009455ff13662cbfeab0b8f3">setCurrentTaskID</a> (unsigned int taskID)</td></tr>
+<tr class="separator:a1f6a5669009455ff13662cbfeab0b8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a829cc215985ebad2a8f1641d957aa7d0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a829cc215985ebad2a8f1641d957aa7d0">getCurrentPosition</a> ()</td></tr>
 <tr class="separator:a829cc215985ebad2a8f1641d957aa7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4b0c1acaff908eeb2362c4faabf0302"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa4b0c1acaff908eeb2362c4faabf0302">setCurrentPosition</a> (float position)</td></tr>
@@ -139,57 +154,54 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7fb09ab317419f8895b9c30a0ef48469"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1b0bcfb3e534b233986f70cfb7eda0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae1b0bcfb3e534b233986f70cfb7eda0c">setState</a> (<a class="el" href="device_scheduler_8h.html#a403c8de28829d82eaac4afa11170f60a">deviceState</a> <a class="el" href="class_c_c_device.html#acb02fe7eee8cf6ddb7cc22b9d0eec8d7">state</a>)</td></tr>
 <tr class="separator:ae1b0bcfb3e534b233986f70cfb7eda0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aef67f84b934d0404c0bb9efabbadc8"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5aef67f84b934d0404c0bb9efabbadc8">getStartDelay</a> ()</td></tr>
-<tr class="separator:a5aef67f84b934d0404c0bb9efabbadc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28f9de1355c2fa4bbb421c21ca252db3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a28f9de1355c2fa4bbb421c21ca252db3">setStartDelay</a> (unsigned long delay)</td></tr>
-<tr class="separator:a28f9de1355c2fa4bbb421c21ca252db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a684d08ff78799c9a8691af945669fbbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a684d08ff78799c9a8691af945669fbbe">getStartEvent</a> ()</td></tr>
-<tr class="separator:a684d08ff78799c9a8691af945669fbbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae195fc2a5aca717e5d3b16b657fbd6ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae195fc2a5aca717e5d3b16b657fbd6ed">setStartEvent</a> (<a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> <a class="el" href="class_c_c_device.html#adc450642f94ef4ab65043c26a002e8e2">startEvent</a>)</td></tr>
-<tr class="separator:ae195fc2a5aca717e5d3b16b657fbd6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab06d00d6214df753c11aaefb1a6547fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab06d00d6214df753c11aaefb1a6547fd">getStopEvent</a> ()</td></tr>
-<tr class="separator:ab06d00d6214df753c11aaefb1a6547fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36a2ce266fb32f2da2b0035712c51b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a36a2ce266fb32f2da2b0035712c51b64">setStopEvent</a> (<a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> <a class="el" href="class_c_c_device.html#a7610c5f03b3b91e7c9d057b4d3992892">stopEvent</a>)</td></tr>
-<tr class="separator:a36a2ce266fb32f2da2b0035712c51b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57527b831835fe2e83e0ccb6191c89ba"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a57527b831835fe2e83e0ccb6191c89ba">getStartTime</a> ()</td></tr>
-<tr class="separator:a57527b831835fe2e83e0ccb6191c89ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae41b3e2af6f7fa7f01078e51ad70b734"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae41b3e2af6f7fa7f01078e51ad70b734">setStartTime</a> (unsigned long <a class="el" href="class_c_c_device.html#ad0afd36de517a583872a484ca4915f98">startTime</a>)</td></tr>
-<tr class="separator:ae41b3e2af6f7fa7f01078e51ad70b734"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa654fe7ffd0a9cec17c0d56ee7c53aad"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa654fe7ffd0a9cec17c0d56ee7c53aad">getTimeout</a> ()</td></tr>
-<tr class="separator:aa654fe7ffd0a9cec17c0d56ee7c53aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c2abc34eedcb244e3a5552e03fe30ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1c2abc34eedcb244e3a5552e03fe30ec">getStopping</a> ()</td></tr>
 <tr class="separator:a1c2abc34eedcb244e3a5552e03fe30ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a506352dc4143c5ed384d3c393adab090"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a506352dc4143c5ed384d3c393adab090">setStopping</a> (<a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> mode)</td></tr>
 <tr class="separator:a506352dc4143c5ed384d3c393adab090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d47a69ba3505fdb072c924d2a4994fa"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6d47a69ba3505fdb072c924d2a4994fa">getSwitchTaskPromptly</a> ()</td></tr>
-<tr class="separator:a6d47a69ba3505fdb072c924d2a4994fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2eca9d24ba16b173c2e1eef66fe2585"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab2eca9d24ba16b173c2e1eef66fe2585">setSwitchTaskPromptly</a> (boolean switchPromptly)</td></tr>
-<tr class="separator:ab2eca9d24ba16b173c2e1eef66fe2585"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b0bbc9fe7c8d4d5b97659466450c120"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6b0bbc9fe7c8d4d5b97659466450c120">getSensor</a> ()</td></tr>
-<tr class="separator:a6b0bbc9fe7c8d4d5b97659466450c120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f5594bf4dc230fc6573efb0b0d039ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4f5594bf4dc230fc6573efb0b0d039ee">getSwitching</a> ()</td></tr>
+<tr class="separator:a4f5594bf4dc230fc6573efb0b0d039ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c15333185e2c1d153dcbe3f33c4b423"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a9c15333185e2c1d153dcbe3f33c4b423">setSwitching</a> (<a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a> switchPromptly)</td></tr>
+<tr class="separator:a9c15333185e2c1d153dcbe3f33c4b423"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97d0a4511bc4a652ac550ad53df82712"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a97d0a4511bc4a652ac550ad53df82712">getInitiatePerformanceValue</a> ()</td></tr>
 <tr class="separator:a97d0a4511bc4a652ac550ad53df82712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf22b84dedbeffacdb5545f8834d1e6"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#acdf22b84dedbeffacdb5545f8834d1e6">getTargetValue</a> ()</td></tr>
-<tr class="separator:acdf22b84dedbeffacdb5545f8834d1e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6614d5764e33fea1372c8daff26f485c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6614d5764e33fea1372c8daff26f485c">getStopPerformance</a> ()</td></tr>
 <tr class="separator:a6614d5764e33fea1372c8daff26f485c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe42b1027d9e50144123937798526e11"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#abe42b1027d9e50144123937798526e11">getApproximationCurve</a> ()</td></tr>
 <tr class="separator:abe42b1027d9e50144123937798526e11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad0ed591e4cd485bb3c8347225bffcd9"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aad0ed591e4cd485bb3c8347225bffcd9">getGap</a> ()</td></tr>
 <tr class="separator:aad0ed591e4cd485bb3c8347225bffcd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5169ba06dcabb3e9eb7d190b2209bcd3"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5169ba06dcabb3e9eb7d190b2209bcd3">getReversedApproximation</a> ()</td></tr>
-<tr class="separator:a5169ba06dcabb3e9eb7d190b2209bcd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8310f9abd8ef6a83c4b3b0df924e3131"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a8310f9abd8ef6a83c4b3b0df924e3131">getReversedApproximation</a> ()</td></tr>
+<tr class="separator:a8310f9abd8ef6a83c4b3b0df924e3131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa26f4097374e03c9d37b92ef3c28e1dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa26f4097374e03c9d37b92ef3c28e1dc">getApproximation</a> ()</td></tr>
 <tr class="separator:aa26f4097374e03c9d37b92ef3c28e1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc1d8edffd7c342b019fe2eb112f220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#adbc1d8edffd7c342b019fe2eb112f220">increaseTargetReachedCounter</a> ()</td></tr>
+<tr class="separator:adbc1d8edffd7c342b019fe2eb112f220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c760d79d665da63d65e58cc96b77a04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a0c760d79d665da63d65e58cc96b77a04">decreaseTargetReachedCounter</a> ()</td></tr>
+<tr class="separator:a0c760d79d665da63d65e58cc96b77a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2084ff077855d4f2f302a2480ab00fb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a2084ff077855d4f2f302a2480ab00fb2">setVerbosity</a> (int <a class="el" href="class_c_c_device.html#aba77160e8b85305d045793a5b7a9305c">verbosity</a>)</td></tr>
+<tr class="memdesc:a2084ff077855d4f2f302a2480ab00fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">verbosity of the device  <a href="#a2084ff077855d4f2f302a2480ab00fb2">More...</a><br /></td></tr>
+<tr class="separator:a2084ff077855d4f2f302a2480ab00fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ae52cdc27fe24344a7990ca34344efbc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae52cdc27fe24344a7990ca34344efbc3">approximation</a></td></tr>
+<tr class="separator:ae52cdc27fe24344a7990ca34344efbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d3ad9828c686b387f2a47c0058ed87e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a4d3ad9828c686b387f2a47c0058ed87e">targetReachedCounter</a></td></tr>
+<tr class="separator:a4d3ad9828c686b387f2a47c0058ed87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a3ab3376ba11f1a774b306b361e182c5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a3ab3376ba11f1a774b306b361e182c5e">isTargetReached</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *control, <a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> comparing, int controlTarget)</td></tr>
+<tr class="separator:a3ab3376ba11f1a774b306b361e182c5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:af1afcf08ebcd33db60108bb1d5cb2cd9"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#af1afcf08ebcd33db60108bb1d5cb2cd9">deviceName</a></td></tr>
-<tr class="separator:af1afcf08ebcd33db60108bb1d5cb2cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addbbc10082edc0fa59ef2df94ddf2707"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#addbbc10082edc0fa59ef2df94ddf2707">type</a></td></tr>
-<tr class="separator:addbbc10082edc0fa59ef2df94ddf2707"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad08c70e99848ee7a73b1bd0aae43fb6e"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad08c70e99848ee7a73b1bd0aae43fb6e">currentTaskID</a></td></tr>
-<tr class="separator:ad08c70e99848ee7a73b1bd0aae43fb6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add524d7603e017ffcd8b4a9f469572d7"><td class="memItemLeft" align="right" valign="top">const String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#add524d7603e017ffcd8b4a9f469572d7">deviceName</a></td></tr>
+<tr class="separator:add524d7603e017ffcd8b4a9f469572d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c4406cfbb37811a98c5478dc63c00ec"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6c4406cfbb37811a98c5478dc63c00ec">type</a></td></tr>
+<tr class="separator:a6c4406cfbb37811a98c5478dc63c00ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54aab84ec661f43c8b6282202b0eea5d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a54aab84ec661f43c8b6282202b0eea5d">currentTaskID</a></td></tr>
+<tr class="separator:a54aab84ec661f43c8b6282202b0eea5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dae73c65321d0b1c5b276088ad43f66"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1dae73c65321d0b1c5b276088ad43f66">currentPosition</a></td></tr>
 <tr class="separator:a1dae73c65321d0b1c5b276088ad43f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0cfc919b648d0e2a50328ec526a260b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ab0cfc919b648d0e2a50328ec526a260b">directionDown</a></td></tr>
@@ -204,47 +216,64 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a8e994a6ba016bf8b54d0edc96e88f1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a83ef6598686823b8334a987deedd53"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1a83ef6598686823b8334a987deedd53">deceleration</a></td></tr>
 <tr class="separator:a1a83ef6598686823b8334a987deedd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb90499759ffb5d4b0bebc4502067073"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aeb90499759ffb5d4b0bebc4502067073">moveRelativ</a></td></tr>
-<tr class="separator:aeb90499759ffb5d4b0bebc4502067073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fe40255cf305436dfa72459e7fdec5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a2fe40255cf305436dfa72459e7fdec5f">moveRelativ</a></td></tr>
+<tr class="separator:a2fe40255cf305436dfa72459e7fdec5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa42ccef60530a4dc1413503ff5d960e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a7ead8112bd09aeb582343346c575691c">positionResetMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa42ccef60530a4dc1413503ff5d960e3">positionReset</a></td></tr>
 <tr class="separator:aa42ccef60530a4dc1413503ff5d960e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae83a23066452f96aa1e45678a4bb971f"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae83a23066452f96aa1e45678a4bb971f">startDelay</a></td></tr>
-<tr class="separator:ae83a23066452f96aa1e45678a4bb971f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc450642f94ef4ab65043c26a002e8e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#adc450642f94ef4ab65043c26a002e8e2">startEvent</a></td></tr>
-<tr class="separator:adc450642f94ef4ab65043c26a002e8e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7610c5f03b3b91e7c9d057b4d3992892"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a7610c5f03b3b91e7c9d057b4d3992892">stopEvent</a></td></tr>
-<tr class="separator:a7610c5f03b3b91e7c9d057b4d3992892"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0afd36de517a583872a484ca4915f98"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ad0afd36de517a583872a484ca4915f98">startTime</a></td></tr>
-<tr class="separator:ad0afd36de517a583872a484ca4915f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab090bd767df81ed66f78cc3b05a448c"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aab090bd767df81ed66f78cc3b05a448c">timeout</a></td></tr>
-<tr class="separator:aab090bd767df81ed66f78cc3b05a448c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a632be722e7f568ccf44c852d82c6a2d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a632be722e7f568ccf44c852d82c6a2d1">stopping</a></td></tr>
 <tr class="separator:a632be722e7f568ccf44c852d82c6a2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89d5f87f1d5687f5da0762e97b38e8df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a89d5f87f1d5687f5da0762e97b38e8df">switchTaskPromptly</a></td></tr>
-<tr class="separator:a89d5f87f1d5687f5da0762e97b38e8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8730750ebe99b0a755eb22f96e869c4"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aa8730750ebe99b0a755eb22f96e869c4">sensor</a></td></tr>
-<tr class="separator:aa8730750ebe99b0a755eb22f96e869c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b74e0a3d75ffd15ea65c2f33bf899ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5b74e0a3d75ffd15ea65c2f33bf899ad">switching</a></td></tr>
+<tr class="separator:a5b74e0a3d75ffd15ea65c2f33bf899ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6709f7239572b49dfdd3da08c63178be"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a6709f7239572b49dfdd3da08c63178be">approximationTarget</a></td></tr>
+<tr class="separator:a6709f7239572b49dfdd3da08c63178be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaddf72bcbdc7f73352c127c19f16c913"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aaddf72bcbdc7f73352c127c19f16c913">approximationControl</a></td></tr>
+<tr class="separator:aaddf72bcbdc7f73352c127c19f16c913"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9c3b14151ee2c001fd2cded97ef14f8"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ac9c3b14151ee2c001fd2cded97ef14f8">initiatePerformanceValue</a></td></tr>
 <tr class="separator:ac9c3b14151ee2c001fd2cded97ef14f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b312b4e207e281427b47fc20add93c8"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a1b312b4e207e281427b47fc20add93c8">targetValue</a></td></tr>
-<tr class="separator:a1b312b4e207e281427b47fc20add93c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5afefb4d3d2b8187ca76962de980cd9a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a5afefb4d3d2b8187ca76962de980cd9a">stopPerformance</a></td></tr>
 <tr class="separator:a5afefb4d3d2b8187ca76962de980cd9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32fcef76975ae211a37c11abcfe9bee2"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a32fcef76975ae211a37c11abcfe9bee2">approximationCurve</a></td></tr>
 <tr class="separator:a32fcef76975ae211a37c11abcfe9bee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef2f67fa4f85351e2a9bef525ed63ea6"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aef2f67fa4f85351e2a9bef525ed63ea6">gap</a></td></tr>
 <tr class="separator:aef2f67fa4f85351e2a9bef525ed63ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46e755b4b7bacd2bd552f0be8dec4e28"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a46e755b4b7bacd2bd552f0be8dec4e28">reversedApproximation</a></td></tr>
-<tr class="separator:a46e755b4b7bacd2bd552f0be8dec4e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae52cdc27fe24344a7990ca34344efbc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#ae52cdc27fe24344a7990ca34344efbc3">approximation</a></td></tr>
-<tr class="separator:ae52cdc27fe24344a7990ca34344efbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aeef2852684145f3e988ab6cde8622e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_task.html">CCTask</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#a7aeef2852684145f3e988ab6cde8622e">pendingTask</a></td></tr>
-<tr class="separator:a7aeef2852684145f3e988ab6cde8622e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea3400d46b341b7655b544a188e37c77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aea3400d46b341b7655b544a188e37c77">reversedApproximation</a></td></tr>
+<tr class="separator:aea3400d46b341b7655b544a188e37c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba77160e8b85305d045793a5b7a9305c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_device.html#aba77160e8b85305d045793a5b7a9305c">verbosity</a></td></tr>
+<tr class="memdesc:aba77160e8b85305d045793a5b7a9305c"><td class="mdescLeft">&#160;</td><td class="mdescRight">verbosity of the device  <a href="#aba77160e8b85305d045793a5b7a9305c">More...</a><br /></td></tr>
+<tr class="separator:aba77160e8b85305d045793a5b7a9305c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00028">28</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00029">29</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a69e635dd5b643393f215a09ed4390baa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CCDevice::CCDevice </td>
+          <td>(</td>
+          <td class="paramtype">const String&#160;</td>
+          <td class="paramname"><em>deviceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00014">14</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae86588c0d5f0d0acfbe153c3afe89a2e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -266,11 +295,52 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00015">15</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00022">22</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3ab3376ba11f1a774b306b361e182c5e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CCDevice::isTargetReached </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td>
+          <td class="paramname"><em>control</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a>&#160;</td>
+          <td class="paramname"><em>comparing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>controlTarget</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Method, related to the device controll of the current task. Method determines if the target is already reached. </p>
+
+</div>
+</div>
 <a class="anchor" id="a83ea989dc1fe663bfb57a0d8a988d795"></a>
 <div class="memitem">
 <div class="memproto">
@@ -292,7 +362,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a13f7a0f104a3162c556c2487b145e07b">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a787753d94403d776bd2c90bce3e675ee">CCServoDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25">CCStepperDevice</a>, and <a class="el" href="class_c_c_servo_device__cross.html#aea4b133bd61343847d86ebeb35e87cd8">CCServoDevice_cross</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a13f7a0f104a3162c556c2487b145e07b">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a61b5729c1acfb250b2653e349668da25">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a787753d94403d776bd2c90bce3e675ee">CCServoDevice</a>, and <a class="el" href="class_c_c_servo_device__cross.html#aea4b133bd61343847d86ebeb35e87cd8">CCServoDevice_cross</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a83ea989dc1fe663bfb57a0d8a988d795_icgraph.png" border="0" usemap="#class_c_c_device_a83ea989dc1fe663bfb57a0d8a988d795_icgraph" alt=""/></div>
+<map name="class_c_c_device_a83ea989dc1fe663bfb57a0d8a988d795_icgraph" id="class_c_c_device_a83ea989dc1fe663bfb57a0d8a988d795_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="222,5,391,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="441,5,487,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -317,7 +398,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a7d6cce93c2bf85204897a6f3e7915e33">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a884763465990489915dbebecca980d3d">CCServoDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c">CCStepperDevice</a>, and <a class="el" href="class_c_c_servo_device__cross.html#aa14f1a826d94ec3d61703a99a89c6a1e">CCServoDevice_cross</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a7d6cce93c2bf85204897a6f3e7915e33">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a8fde2b4d00ab0f48d337b885819c2c3c">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a884763465990489915dbebecca980d3d">CCServoDevice</a>, and <a class="el" href="class_c_c_servo_device__cross.html#aa14f1a826d94ec3d61703a99a89c6a1e">CCServoDevice_cross</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a733c8f049208466f6bd1695a4b9ae037_icgraph.png" border="0" usemap="#class_c_c_device_a733c8f049208466f6bd1695a4b9ae037_icgraph" alt=""/></div>
+<map name="class_c_c_device_a733c8f049208466f6bd1695a4b9ae037_icgraph" id="class_c_c_device_a733c8f049208466f6bd1695a4b9ae037_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="225,5,394,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="443,5,490,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -342,7 +434,19 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a1d45d6859ce3f30552ba83fb7c5dd7bc">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a77a1f6a94309789f24b4345c0d1a38c2">CCServoDevice</a>, and <a class="el" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a1d45d6859ce3f30552ba83fb7c5dd7bc">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a0a51528d2a0b7a9504bc17b75e7fe8f3">CCStepperDevice</a>, and <a class="el" href="class_c_c_servo_device.html#a77a1f6a94309789f24b4345c0d1a38c2">CCServoDevice</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a50e7203e325f08f63fd445255b1f9c75_icgraph.png" border="0" usemap="#class_c_c_device_a50e7203e325f08f63fd445255b1f9c75_icgraph" alt=""/></div>
+<map name="class_c_c_device_a50e7203e325f08f63fd445255b1f9c75_icgraph" id="class_c_c_device_a50e7203e325f08f63fd445255b1f9c75_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#abc14060237e8046fcb6feae55d769467" title="CCDeviceFlow::handleStart\lEvent" alt="" coords="225,5,410,46"/>
+<area shape="rect" id="node3" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="459,12,629,39"/>
+<area shape="rect" id="node4" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="678,12,725,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -367,11 +471,22 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ad38317bcc80eb831819f5be5280a551e">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a59538df1bcf34e36cc76b98392a7b73a">CCServoDevice</a>, and <a class="el" href="class_c_c_stepper_device.html#ac372f7c2f54db906ae6390ea0386f18b">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ad38317bcc80eb831819f5be5280a551e">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#ac372f7c2f54db906ae6390ea0386f18b">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a59538df1bcf34e36cc76b98392a7b73a">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a2ce87cf7a7312d2eacc99a60f942b64b">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_aea6f373f7581e188fbd58b98f9f8b1bf_icgraph.png" border="0" usemap="#class_c_c_device_aea6f373f7581e188fbd58b98f9f8b1bf_icgraph" alt=""/></div>
+<map name="class_c_c_device_aea6f373f7581e188fbd58b98f9f8b1bf_icgraph" id="class_c_c_device_aea6f373f7581e188fbd58b98f9f8b1bf_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="227,5,397,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="446,5,493,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a0c88f1f38f3c370523834580315df3c9"></a>
+<a class="anchor" id="abbb3e2a3838375474619edca0d77eaec"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -379,7 +494,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="device_scheduler_8h.html#ae75d9451f4521bc235d458bfb0a0a8d9">infoCode</a> CCDevice::reviewValues </td>
+          <td class="memname">virtual <a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a> CCDevice::reviewValues </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_c_c_task.html">CCTask</a> *&#160;</td>
           <td class="paramname"><em>nextTask</em></td><td>)</td>
@@ -393,7 +508,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#af38efac229cf52e60eae662eb49b6ac8">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a58505ca15032bb4c20499b20b31c6811">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#afd282e9d7984a1236a3344bc0ca9d5fb">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#ac13b52eafb6cdbc976b3464176483bab">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a6c058447047a09cb9c85ad0d3590cd5c">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a86933eaf6681cd55ac51a415c7552f30">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_abbb3e2a3838375474619edca0d77eaec_icgraph.png" border="0" usemap="#class_c_c_device_abbb3e2a3838375474619edca0d77eaec_icgraph" alt=""/></div>
+<map name="class_c_c_device_abbb3e2a3838375474619edca0d77eaec_icgraph" id="class_c_c_device_abbb3e2a3838375474619edca0d77eaec_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a4ad69efb5904b4b0fe981f4afa995ed6" title="CCDeviceScheduler::\lreviewTasks" alt="" coords="224,5,373,46"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="422,12,469,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -418,11 +544,11 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a8c08dd8c24aa8058b0d332c4ce3891e2">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a789f5d2bfcee9db544a10a4662c09f00">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#aa8b7a5aa3fdce17393d6593fb83d8b16">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a8c08dd8c24aa8058b0d332c4ce3891e2">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a5e0714ad2ddc98fc1331d3a77184f53a">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a789f5d2bfcee9db544a10a4662c09f00">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#aa8b7a5aa3fdce17393d6593fb83d8b16">CCDcControllerDevice_fullBridge</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2e3229eed50c21105b6b9f401bddabd2"></a>
+<a class="anchor" id="a442d2ede02f83251369e197fb035a851"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -430,7 +556,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void CCDevice::prepareTask </td>
+          <td class="memname">virtual <a class="el" href="device_scheduler_8h.html#a6b1c8497a43e3975fac0636b3b972e54">deviceInfoCode</a> CCDevice::prepareTask </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_c_c_task.html">CCTask</a> *&#160;</td>
           <td class="paramname"><em>nextTask</em></td><td>)</td>
@@ -444,7 +570,20 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a6acb2f612d33128076ac9f1ff5cac04f">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a36eadbcac821afd1f562664a81d91d4e">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a649b476fc634047630d0b8936a2c3afe">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#a2b4fcf634f71aab620934b1c909d6489">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a442d2ede02f83251369e197fb035a851_icgraph.png" border="0" usemap="#class_c_c_device_a442d2ede02f83251369e197fb035a851_icgraph" alt=""/></div>
+<map name="class_c_c_device_a442d2ede02f83251369e197fb035a851_icgraph" id="class_c_c_device_a442d2ede02f83251369e197fb035a851_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="219,41,445,68"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="494,5,679,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="729,41,898,68"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="947,41,994,68"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -469,7 +608,19 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ab044f02c340bd584d8787292f1a04f06">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a5490461ce9b4268af3e91e77b80c562b">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a48b77cc1051782bad49c0bac912d50b6">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ab044f02c340bd584d8787292f1a04f06">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a4b529905b1e3101976fe4da369ac9f8e">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a5490461ce9b4268af3e91e77b80c562b">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a48b77cc1051782bad49c0bac912d50b6">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a7cafaa7df661e230addb57ea59294f19_icgraph.png" border="0" usemap="#class_c_c_device_a7cafaa7df661e230addb57ea59294f19_icgraph" alt=""/></div>
+<map name="class_c_c_device_a7cafaa7df661e230addb57ea59294f19_icgraph" id="class_c_c_device_a7cafaa7df661e230addb57ea59294f19_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#abc14060237e8046fcb6feae55d769467" title="CCDeviceFlow::handleStart\lEvent" alt="" coords="198,5,383,46"/>
+<area shape="rect" id="node3" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="433,12,602,39"/>
+<area shape="rect" id="node4" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="651,12,698,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -494,7 +645,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ad70ba1a5f17bc30473647628b8f17b52">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a30d3dc6f61e97e7408f24744d7fbe5dd">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#ae87b5ae24fc55e952eb66f894b32e416">CCDcControllerDevice_fullBridge</a>, <a class="el" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8">CCStepperDevice</a>, and <a class="el" href="class_c_c_servo_device__cross.html#af75780e855d9087ea12779ff4d722107">CCServoDevice_cross</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ad70ba1a5f17bc30473647628b8f17b52">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a4c490f65d534909db16c866c3ee916d8">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a30d3dc6f61e97e7408f24744d7fbe5dd">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#ae87b5ae24fc55e952eb66f894b32e416">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_servo_device__cross.html#af75780e855d9087ea12779ff4d722107">CCServoDevice_cross</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a0dca533192bfd8e1c0d37c03199fd538_icgraph.png" border="0" usemap="#class_c_c_device_a0dca533192bfd8e1c0d37c03199fd538_icgraph" alt=""/></div>
+<map name="class_c_c_device_a0dca533192bfd8e1c0d37c03199fd538_icgraph" id="class_c_c_device_a0dca533192bfd8e1c0d37c03199fd538_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="219,5,389,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="438,5,485,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -519,7 +681,20 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a88e0d05f995028063671afcc2b39968f">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a75568c1cd7dc3d69ba99063087d4f6ef">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#afb901412e6217beca348c70b594bff30">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a88e0d05f995028063671afcc2b39968f">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a795c762b31b533f4e0a7c7182d73762a">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#a75568c1cd7dc3d69ba99063087d4f6ef">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#afb901412e6217beca348c70b594bff30">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a4a02795984febc672953b7bfb9b7531a_icgraph.png" border="0" usemap="#class_c_c_device_a4a02795984febc672953b7bfb9b7531a_icgraph" alt=""/></div>
+<map name="class_c_c_device_a4a02795984febc672953b7bfb9b7531a_icgraph" id="class_c_c_device_a4a02795984febc672953b7bfb9b7531a_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="211,63,437,89"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="486,5,671,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="721,41,890,68"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="939,41,986,68"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -544,7 +719,19 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a6e9579fdc356825c58290213883cb152">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#ae9a8ba0b33b0a9c7b304970da5505278">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a6be2551f18534ad405d3d344b44e9226">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#a6e9579fdc356825c58290213883cb152">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#ace1e56e98ee6245f7b9377190e7ce7e1">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#ae9a8ba0b33b0a9c7b304970da5505278">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a6be2551f18534ad405d3d344b44e9226">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_ad36b328e3441f185761b01ca050e99e1_icgraph.png" border="0" usemap="#class_c_c_device_ad36b328e3441f185761b01ca050e99e1_icgraph" alt=""/></div>
+<map name="class_c_c_device_ad36b328e3441f185761b01ca050e99e1_icgraph" id="class_c_c_device_ad36b328e3441f185761b01ca050e99e1_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="198,5,383,46"/>
+<area shape="rect" id="node3" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="433,41,602,68"/>
+<area shape="rect" id="node4" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="651,41,698,68"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -569,11 +756,52 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ad2c17fd0a879ed1e11b16ff00797d214">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#afd2ab205b2c2e65816fff7227210d1bd">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#ac2503280b3ba0e9c876dd7ed30ab7372">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device.html#ab70b3b82a5772237514eb77111d64ff5">CCStepperDevice</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_dc_controller_device.html#ad2c17fd0a879ed1e11b16ff00797d214">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#ab70b3b82a5772237514eb77111d64ff5">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#afd2ab205b2c2e65816fff7227210d1bd">CCServoDevice</a>, and <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#ac2503280b3ba0e9c876dd7ed30ab7372">CCDcControllerDevice_fullBridge</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_add3529df45250163cbc46280ff0f07a4_icgraph.png" border="0" usemap="#class_c_c_device_add3529df45250163cbc46280ff0f07a4_icgraph" alt=""/></div>
+<map name="class_c_c_device_add3529df45250163cbc46280ff0f07a4_icgraph" id="class_c_c_device_add3529df45250163cbc46280ff0f07a4_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="203,5,373,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="422,5,469,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a82bbb92ef20f194c1731e66482415f06"></a>
+<a class="anchor" id="aafd564f42fc3aed3d2037b7084780354"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CCDevice::isStartTargetReached </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acc5db20bd1b1b8106fab3dc8deba85e2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CCDevice::isStopTargetReached </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a359964a7489436b724d50350f13bc05e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -583,7 +811,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void CCDevice::getReadOut </td>
           <td>(</td>
-          <td class="paramtype">byte&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>theReadOut</em></td><td>)</td>
           <td></td>
         </tr>
@@ -595,29 +823,41 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_c_c_stepper_device___t_m_c260.html#ad43f34c831a7c35540cab46bbef1826c">CCStepperDevice_TMC260</a>, <a class="el" href="class_c_c_dc_controller_device.html#a8ae4d016b8e5da8f135199cac8154c22">CCDcControllerDevice</a>, <a class="el" href="class_c_c_servo_device.html#a914bfd2ec80f0480587115fa8a3ff11b">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a8903571399cdb1cc00a964e7b9283cbf">CCDcControllerDevice_fullBridge</a>, <a class="el" href="class_c_c_stepper_device.html#ae2e01ea9527daa5e5b79221053912148">CCStepperDevice</a>, and <a class="el" href="class_c_c_stepper_device___a4988.html#a9e917b5e2c54460f47930f3828e00206">CCStepperDevice_A4988</a>.</p>
+<p>Implemented in <a class="el" href="class_c_c_stepper_device___t_m_c2130.html#ade10b7a162f49b4869bbc2b972a671ae">CCStepperDevice_TMC2130</a>, <a class="el" href="class_c_c_stepper_device___t_m_c260.html#a1f3763fcde91e643feea76e443255df1">CCStepperDevice_TMC260</a>, <a class="el" href="class_c_c_dc_controller_device.html#ae840fb18c49fbe32caaad72c46fad392">CCDcControllerDevice</a>, <a class="el" href="class_c_c_stepper_device.html#a980cc367dfe740f5c484329438fc9aed">CCStepperDevice</a>, <a class="el" href="class_c_c_servo_device.html#ae7d327d6576f3ad7bce55225a57e3ca7">CCServoDevice</a>, <a class="el" href="class_c_c_dc_controller_device__full_bridge.html#a35370941597affdb63821abe87091fd6">CCDcControllerDevice_fullBridge</a>, and <a class="el" href="class_c_c_stepper_device___a4988.html#ac73b75d50f392e09b7b197d19aeffc3f">CCStepperDevice_A4988</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab3ff14cfb320820802bc4ad96027449f"></a>
+<a class="anchor" id="a1b132b80bdfce073f5bde30beb4b9d46"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">String CCDevice::getName </td>
+          <td class="memname">const String CCDevice::getName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Getter method for getting the name of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#af1afcf08ebcd33db60108bb1d5cb2cd9">deviceName</a>; </dd></dl>
+<p>Getter method for getting the name of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#add524d7603e017ffcd8b4a9f469572d7">deviceName</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00021">21</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00026">26</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a1b132b80bdfce073f5bde30beb4b9d46_icgraph.png" border="0" usemap="#class_c_c_device_a1b132b80bdfce073f5bde30beb4b9d46_icgraph" alt=""/></div>
+<map name="class_c_c_device_a1b132b80bdfce073f5bde30beb4b9d46_icgraph" id="class_c_c_device_a1b132b80bdfce073f5bde30beb4b9d46_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="198,5,367,32"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="208,57,357,98"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="417,35,463,61"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a68d44217dfaad1df698077f2bd425717"></a>
+<a class="anchor" id="a8095a9ae71f33c77128dba458c879c73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -625,30 +865,87 @@ Protected Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a> CCDevice::getType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Getter method for getting the type of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00022">22</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00027">27</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a8095a9ae71f33c77128dba458c879c73_icgraph.png" border="0" usemap="#class_c_c_device_a8095a9ae71f33c77128dba458c879c73_icgraph" alt=""/></div>
+<map name="class_c_c_device_a8095a9ae71f33c77128dba458c879c73_icgraph" id="class_c_c_device_a8095a9ae71f33c77128dba458c879c73_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="193,5,362,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="411,5,458,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="af91e5cfa614fae8d08a08ca00fa08cfe"></a>
+<a class="anchor" id="a22265b7f22465d84027241f116fb6388"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a> CCDevice::getCurrentTaskID </td>
+          <td class="memname">unsigned int CCDevice::getCurrentTaskID </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Getter method for getting the current task of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a54aab84ec661f43c8b6282202b0eea5d">currentTaskID</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00023">23</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00029">29</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a22265b7f22465d84027241f116fb6388_icgraph.png" border="0" usemap="#class_c_c_device_a22265b7f22465d84027241f116fb6388_icgraph" alt=""/></div>
+<map name="class_c_c_device_a22265b7f22465d84027241f116fb6388_icgraph" id="class_c_c_device_a22265b7f22465d84027241f116fb6388_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="248,71,475,97"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="758,71,927,97"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="523,5,709,46"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="977,71,1023,97"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f6a5669009455ff13662cbfeab0b8f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCDevice::setCurrentTaskID </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>taskID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Setter method for setting the current task of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a54aab84ec661f43c8b6282202b0eea5d">currentTaskID</a>; </dd></dl>
+
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00030">30</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a1f6a5669009455ff13662cbfeab0b8f3_icgraph.png" border="0" usemap="#class_c_c_device_a1f6a5669009455ff13662cbfeab0b8f3_icgraph" alt=""/></div>
+<map name="class_c_c_device_a1f6a5669009455ff13662cbfeab0b8f3_icgraph" id="class_c_c_device_a1f6a5669009455ff13662cbfeab0b8f3_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="248,41,475,68"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="523,5,709,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="758,41,927,68"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="977,41,1023,68"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -666,7 +963,18 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the current position of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a1dae73c65321d0b1c5b276088ad43f66">currentPosition</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00024">24</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00031">31</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a829cc215985ebad2a8f1641d957aa7d0_icgraph.png" border="0" usemap="#class_c_c_device_a829cc215985ebad2a8f1641d957aa7d0_icgraph" alt=""/></div>
+<map name="class_c_c_device_a829cc215985ebad2a8f1641d957aa7d0_icgraph" id="class_c_c_device_a829cc215985ebad2a8f1641d957aa7d0_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="254,5,423,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="473,5,519,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -685,7 +993,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for setting the current position of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a1dae73c65321d0b1c5b276088ad43f66">currentPosition</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00025">25</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00032">32</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -703,7 +1011,18 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the target of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a7b6ea00110fc81fb70ebe694a9a78fd4">target</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00026">26</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00033">33</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a4816bf071a9b797b8d0743d119071585_icgraph.png" border="0" usemap="#class_c_c_device_a4816bf071a9b797b8d0743d119071585_icgraph" alt=""/></div>
+<map name="class_c_c_device_a4816bf071a9b797b8d0743d119071585_icgraph" id="class_c_c_device_a4816bf071a9b797b8d0743d119071585_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="201,5,370,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="419,5,466,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -721,7 +1040,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the velocity of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ae735ffca0b8a630f7e9df47686e3bd3a">velocity</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00027">27</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00034">34</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -739,7 +1058,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the acceleration of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a8e994a6ba016bf8b54d0edc96e88f1f2">acceleration</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00028">28</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00035">35</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -757,7 +1076,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the deceleration of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a1a83ef6598686823b8334a987deedd53">deceleration</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00029">29</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00036">36</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -775,7 +1094,18 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the counting direction of the moving device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ab0cfc919b648d0e2a50328ec526a260b">directionDown</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00030">30</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00037">37</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a5bae9411b47cc683be0b35ef6217e217_icgraph.png" border="0" usemap="#class_c_c_device_a5bae9411b47cc683be0b35ef6217e217_icgraph" alt=""/></div>
+<map name="class_c_c_device_a5bae9411b47cc683be0b35ef6217e217_icgraph" id="class_c_c_device_a5bae9411b47cc683be0b35ef6217e217_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="249,5,418,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="467,5,514,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -793,7 +1123,18 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the state of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="device_scheduler_8h.html#a403c8de28829d82eaac4afa11170f60a">deviceState</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00031">31</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00038">38</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a7fb09ab317419f8895b9c30a0ef48469_icgraph.png" border="0" usemap="#class_c_c_device_a7fb09ab317419f8895b9c30a0ef48469_icgraph" alt=""/></div>
+<map name="class_c_c_device_a7fb09ab317419f8895b9c30a0ef48469_icgraph" id="class_c_c_device_a7fb09ab317419f8895b9c30a0ef48469_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="193,5,362,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="411,5,458,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -812,173 +1153,18 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for Setting the state of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="device_scheduler_8h.html#a403c8de28829d82eaac4afa11170f60a">deviceState</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00032">32</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a5aef67f84b934d0404c0bb9efabbadc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long CCDevice::getStartDelay </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the startDelay of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ae83a23066452f96aa1e45678a4bb971f">startDelay</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00033">33</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a28f9de1355c2fa4bbb421c21ca252db3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CCDevice::setStartDelay </td>
-          <td>(</td>
-          <td class="paramtype">unsigned long&#160;</td>
-          <td class="paramname"><em>delay</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Setter method for setting the startDelay of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ae83a23066452f96aa1e45678a4bb971f">startDelay</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00034">34</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a684d08ff78799c9a8691af945669fbbe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> CCDevice::getStartEvent </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the startEvent of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#adc450642f94ef4ab65043c26a002e8e2">startEvent</a>, <a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00035">35</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae195fc2a5aca717e5d3b16b657fbd6ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CCDevice::setStartEvent </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td>
-          <td class="paramname"><em>startEvent</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Setter method for setting the startEvent of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#adc450642f94ef4ab65043c26a002e8e2">startEvent</a>, <a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00036">36</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab06d00d6214df753c11aaefb1a6547fd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> CCDevice::getStopEvent </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the stopEvent of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a7610c5f03b3b91e7c9d057b4d3992892">stopEvent</a>, <a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00037">37</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a36a2ce266fb32f2da2b0035712c51b64"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CCDevice::setStopEvent </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>&#160;</td>
-          <td class="paramname"><em>stopEvent</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Setter method for setting the stopEvent of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a7610c5f03b3b91e7c9d057b4d3992892">stopEvent</a>, <a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00038">38</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a57527b831835fe2e83e0ccb6191c89ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long CCDevice::getStartTime </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the startTime of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ad0afd36de517a583872a484ca4915f98">startTime</a>; </dd></dl>
-
 <p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00039">39</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_ae1b0bcfb3e534b233986f70cfb7eda0c_icgraph.png" border="0" usemap="#class_c_c_device_ae1b0bcfb3e534b233986f70cfb7eda0c_icgraph" alt=""/></div>
+<map name="class_c_c_device_ae1b0bcfb3e534b233986f70cfb7eda0c_icgraph" id="class_c_c_device_ae1b0bcfb3e534b233986f70cfb7eda0c_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="193,5,362,32"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="411,5,458,32"/>
+</map>
 </div>
-</div>
-<a class="anchor" id="ae41b3e2af6f7fa7f01078e51ad70b734"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CCDevice::setStartTime </td>
-          <td>(</td>
-          <td class="paramtype">unsigned long&#160;</td>
-          <td class="paramname"><em>startTime</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Setter method for setting the startTime of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ad0afd36de517a583872a484ca4915f98">startTime</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00040">40</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa654fe7ffd0a9cec17c0d56ee7c53aad"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long CCDevice::getTimeout </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the timeOut of the device </p><dl class="section see"><dt>See also</dt><dd>timeOut; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00041">41</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+</p>
 
 </div>
 </div>
@@ -996,7 +1182,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopping of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a632be722e7f568ccf44c852d82c6a2d1">stopping</a>, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00042">42</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00040">40</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1015,62 +1201,44 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for setting the stopping of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a632be722e7f568ccf44c852d82c6a2d1">stopping</a>, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00043">43</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00041">41</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6d47a69ba3505fdb072c924d2a4994fa"></a>
+<a class="anchor" id="a4f5594bf4dc230fc6573efb0b0d039ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCDevice::getSwitchTaskPromptly </td>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a> CCDevice::getSwitching </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Getter method for getting the switchTaskPromptly bit of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a89d5f87f1d5687f5da0762e97b38e8df">switchTaskPromptly</a>; </dd></dl>
+<p>Getter method for getting the switching bit of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a5b74e0a3d75ffd15ea65c2f33bf899ad">switching</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00044">44</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00042">42</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab2eca9d24ba16b173c2e1eef66fe2585"></a>
+<a class="anchor" id="a9c15333185e2c1d153dcbe3f33c4b423"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CCDevice::setSwitchTaskPromptly </td>
+          <td class="memname">void CCDevice::setSwitching </td>
           <td>(</td>
-          <td class="paramtype">boolean&#160;</td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a>&#160;</td>
           <td class="paramname"><em>switchPromptly</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Setter method for setting the switchTaskPromptly bit of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a89d5f87f1d5687f5da0762e97b38e8df">switchTaskPromptly</a>; </dd></dl>
+<p>Setter method for setting the switching bit of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a5b74e0a3d75ffd15ea65c2f33bf899ad">switching</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00045">45</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6b0bbc9fe7c8d4d5b97659466450c120"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned char CCDevice::getSensor </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the sensor of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#aa8730750ebe99b0a755eb22f96e869c4">sensor</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00046">46</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00043">43</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1088,25 +1256,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the sensor value to initiate the dynamical stop of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ac9c3b14151ee2c001fd2cded97ef14f8">initiatePerformanceValue</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00047">47</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acdf22b84dedbeffacdb5545f8834d1e6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">signed int CCDevice::getTargetValue </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the target sensor value of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a1b312b4e207e281427b47fc20add93c8">targetValue</a>; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00048">48</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00044">44</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1274,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopping performance of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a5afefb4d3d2b8187ca76962de980cd9a">stopPerformance</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00049">49</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00045">45</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1142,7 +1292,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the approximationCurve value of this task </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a32fcef76975ae211a37c11abcfe9bee2">approximationCurve</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00050">50</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00046">46</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1160,16 +1310,16 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the approximation value of this task </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#aef2f67fa4f85351e2a9bef525ed63ea6">gap</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00051">51</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00047">47</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5169ba06dcabb3e9eb7d190b2209bcd3"></a>
+<a class="anchor" id="a8310f9abd8ef6a83c4b3b0df924e3131"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCDevice::getReversedApproximation </td>
+          <td class="memname">bool CCDevice::getReversedApproximation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1178,7 +1328,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the direction of the approximation value of this task </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#a32fcef76975ae211a37c11abcfe9bee2">approximationCurve</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00052">52</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00048">48</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1196,12 +1346,88 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the approximation value of the device </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_c_c_device.html#ae52cdc27fe24344a7990ca34344efbc3">approximation</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00053">53</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00049">49</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adbc1d8edffd7c342b019fe2eb112f220"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCDevice::increaseTargetReachedCounter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00051">51</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_adbc1d8edffd7c342b019fe2eb112f220_icgraph.png" border="0" usemap="#class_c_c_device_adbc1d8edffd7c342b019fe2eb112f220_icgraph" alt=""/></div>
+<map name="class_c_c_device_adbc1d8edffd7c342b019fe2eb112f220_icgraph" id="class_c_c_device_adbc1d8edffd7c342b019fe2eb112f220_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac5e15a39a0eebc101b88b9bd6fc7b373" title="CCDeviceFlow::isStopTarget\lReached" alt="" coords="233,5,426,46"/>
+<area shape="rect" id="node3" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="475,12,645,39"/>
+<area shape="rect" id="node4" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="694,12,741,39"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0c760d79d665da63d65e58cc96b77a04"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCDevice::decreaseTargetReachedCounter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00052">52</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_device_a0c760d79d665da63d65e58cc96b77a04_icgraph.png" border="0" usemap="#class_c_c_device_a0c760d79d665da63d65e58cc96b77a04_icgraph" alt=""/></div>
+<map name="class_c_c_device_a0c760d79d665da63d65e58cc96b77a04_icgraph" id="class_c_c_device_a0c760d79d665da63d65e58cc96b77a04_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac5e15a39a0eebc101b88b9bd6fc7b373" title="CCDeviceFlow::isStopTarget\lReached" alt="" coords="238,5,431,46"/>
+<area shape="rect" id="node3" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="481,12,650,39"/>
+<area shape="rect" id="node4" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="699,12,746,39"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2084ff077855d4f2f302a2480ab00fb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCDevice::setVerbosity </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>verbosity</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_device_8cpp_source.html#l00056">56</a> of file <a class="el" href="_c_c_device_8cpp_source.html">CCDevice.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="af1afcf08ebcd33db60108bb1d5cb2cd9"></a>
+<a class="anchor" id="add524d7603e017ffcd8b4a9f469572d7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1209,7 +1435,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">String CCDevice::deviceName</td>
+          <td class="memname">const String CCDevice::deviceName</td>
         </tr>
       </table>
   </td>
@@ -1220,11 +1446,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameters of the device Value, set by the user to be recognized by him. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00033">33</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00034">34</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="addbbc10082edc0fa59ef2df94ddf2707"></a>
+<a class="anchor" id="a6c4406cfbb37811a98c5478dc63c00ec"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1232,7 +1458,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a> CCDevice::type</td>
+          <td class="memname">const <a class="el" href="device_scheduler_8h.html#aa5d3f9981cdbd91516c1474006a80fe4">deviceType</a> CCDevice::type</td>
         </tr>
       </table>
   </td>
@@ -1253,11 +1479,11 @@ Protected Attributes</h2></td></tr>
 <td>DCCONTROLLERDEVICE </td><td>any device to be pwm driven </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00043">43</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00044">44</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad08c70e99848ee7a73b1bd0aae43fb6e"></a>
+<a class="anchor" id="a54aab84ec661f43c8b6282202b0eea5d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1265,7 +1491,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char CCDevice::currentTaskID</td>
+          <td class="memname">unsigned int CCDevice::currentTaskID</td>
         </tr>
       </table>
   </td>
@@ -1274,8 +1500,9 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Device parameter: The device's current executed or pending task. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00045">45</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00049">49</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1298,7 +1525,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Device parameter: The device's current position. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00049">49</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00053">53</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1321,7 +1548,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Device parameter: This value indicates, if device's position values increase (´false´) or decrease (<code>true</code>) while the task is executed. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00053">53</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00057">57</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1356,7 +1583,7 @@ Protected Attributes</h2></td></tr>
 <td>PENDING_MOVES </td><td>device is idle, tasks have to be executed </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00064">64</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00068">68</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1379,7 +1606,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the current task operation. The value means different things, depending on the device type. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00069">69</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00075">75</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1402,7 +1629,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the current task operation. The value means different things, depending on the device type. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00073">73</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00079">79</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1425,7 +1652,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the current task operation. The value means different things, depending on the device type. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00077">77</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00083">83</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1448,11 +1675,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the current task operation. The value means different things, depending on the device type. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00081">81</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00087">87</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aeb90499759ffb5d4b0bebc4502067073"></a>
+<a class="anchor" id="a2fe40255cf305436dfa72459e7fdec5f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1460,7 +1687,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCDevice::moveRelativ</td>
+          <td class="memname">bool CCDevice::moveRelativ</td>
         </tr>
       </table>
   </td>
@@ -1471,7 +1698,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the current task operation. The value determines, if the provided target value is meant absolute or relativ. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00085">85</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00091">91</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1494,150 +1721,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the current task operation. The value determines, if current position is set to zero before job start. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00089">89</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae83a23066452f96aa1e45678a4bb971f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long CCDevice::startDelay</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter holds a delay to wait after occurance of the startEvent to start this task. </p>
-
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00093">93</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="adc450642f94ef4ab65043c26a002e8e2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> CCDevice::startEvent</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter describes, how the tast is started:</p>
-<table class="doxtable">
-<tr>
-<th>startEvent </th><th>behavior  </th></tr>
-<tr>
-<td>NONE </td><td>no specific starting given </td></tr>
-<tr>
-<td>DATE </td><td>starting at a specific time </td></tr>
-<tr>
-<td>BUTTON </td><td>starting on a hardware event </td></tr>
-<tr>
-<td>FOLLOW </td><td>starting when an other task of an other device is just finished </td></tr>
-<tr>
-<td>POSITION </td><td>starting when an other task of an other device has reached a specific position </td></tr>
-</table>
-
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00105">105</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7610c5f03b3b91e7c9d057b4d3992892"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a> CCDevice::stopEvent</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter describes, how the tast is started:</p>
-<table class="doxtable">
-<tr>
-<th>stopEvent </th><th>behavior  </th></tr>
-<tr>
-<td>NONE </td><td>no specific stopping given </td></tr>
-<tr>
-<td>DATE </td><td>stopping after a timeout </td></tr>
-<tr>
-<td>BUTTON </td><td>stopping on a hardware event </td></tr>
-<tr>
-<td>FOLLOW </td><td>stopping when an other task of an other device is just finished </td></tr>
-<tr>
-<td>POSITION </td><td>stopping when an other task of an other device has reached a specific position </td></tr>
-</table>
-
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00117">117</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad0afd36de517a583872a484ca4915f98"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long CCDevice::startTime</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter holds the time to start this task (ms after the scheduler was started). </p>
-
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00121">121</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aab090bd767df81ed66f78cc3b05a448c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned long CCDevice::timeout</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter holds the timeout to stop this task (ms after the task was started). </p>
-
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00125">125</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00095">95</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1669,11 +1753,11 @@ Protected Attributes</h2></td></tr>
 <td>STOP_DYNAMIC </td><td>approximate til a sensor shows a given value (reserved) </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00134">134</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00107">107</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a89d5f87f1d5687f5da0762e97b38e8df"></a>
+<a class="anchor" id="a5b74e0a3d75ffd15ea65c2f33bf899ad"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1681,7 +1765,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool CCDevice::switchTaskPromptly</td>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a> CCDevice::switching</td>
         </tr>
       </table>
   </td>
@@ -1692,11 +1776,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the task controll of the current task. This parameter indicates if any ongoing task should be completed first, before this task is started. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00138">138</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00111">111</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa8730750ebe99b0a755eb22f96e869c4"></a>
+<a class="anchor" id="a6709f7239572b49dfdd3da08c63178be"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1704,7 +1788,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char CCDevice::sensor</td>
+          <td class="memname">signed int CCDevice::approximationTarget</td>
         </tr>
       </table>
   </td>
@@ -1713,9 +1797,30 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter holds the pin number of a required hardware event to stop this task. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00142">142</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00114">114</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaddf72bcbdc7f73352c127c19f16c913"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_c_control.html">CCControl</a>* CCDevice::approximationControl</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00115">115</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1738,30 +1843,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the task controll of the current task. This parameter holds the numerical value of the sensor pin, required to initiate the stopping of this task. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00146">146</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1b312b4e207e281427b47fc20add93c8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">signed int CCDevice::targetValue</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parameter, related to the task controll of the current task. This parameter holds the numerical value of the sensor pin, on whitch this task comletes. </p>
-
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00150">150</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00120">120</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1784,7 +1866,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the task controll of the current task. This parameter holds the feedback amplification while approximating the target position. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00154">154</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00124">124</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1807,7 +1889,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the device controll of the current task. This value is for calculating the velocity while dynamical approximation. It's Value is &gt; 0. The smaller the value, the sharper the stop. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00158">158</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00128">128</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1830,11 +1912,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the device controll of the current task. Value holds the width of the target area, where the target is seen to be reached. It is <code>targetValue</code> +/- <code>gap</code>. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00162">162</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00132">132</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a46e755b4b7bacd2bd552f0be8dec4e28"></a>
+<a class="anchor" id="aea3400d46b341b7655b544a188e37c77"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1842,7 +1924,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCDevice::reversedApproximation</td>
+          <td class="memname">bool CCDevice::reversedApproximation</td>
         </tr>
       </table>
   </td>
@@ -1853,11 +1935,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Parameter, related to the device controll of the current task. This value indicates if a dynamical stop is performed on increasing or decreasing sensor values. </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00166">166</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00136">136</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae52cdc27fe24344a7990ca34344efbc3"></a>
+<a class="anchor" id="aba77160e8b85305d045793a5b7a9305c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1865,7 +1947,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> CCDevice::approximation</td>
+          <td class="memname">int CCDevice::verbosity</td>
         </tr>
       </table>
   </td>
@@ -1873,6 +1955,20 @@ Protected Attributes</h2></td></tr>
 <span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00151">151</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae52cdc27fe24344a7990ca34344efbc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> CCDevice::approximation</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 <p>Parameter, related to the task controll of the current task. This parameter holds the approximaton behavior, attaining the target position. </p><table class="doxtable">
 <tr>
@@ -1892,29 +1988,22 @@ Protected Attributes</h2></td></tr>
 </table>
 <p>(skip when ´appriximationMode´ times the sensor value is within the tolerance of ´ +/- 256 / approximationMode´) </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00179">179</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00167">167</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7aeef2852684145f3e988ab6cde8622e"></a>
+<a class="anchor" id="a4d3ad9828c686b387f2a47c0058ed87e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_c_task.html">CCTask</a>* CCDevice::pendingTask</td>
+          <td class="memname">int CCDevice::targetReachedCounter</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Parameter, related to the device controll of the current task. The number of times, the target was reached in series </p>
 
-<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00182">182</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_device_8h_source.html#l00171">171</a> of file <a class="el" href="_c_c_device_8h_source.html">CCDevice.h</a>.</p>
 
 </div>
 </div>

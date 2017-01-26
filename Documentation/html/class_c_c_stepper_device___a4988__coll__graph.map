@@ -1,5 +1,7 @@
 <map id="CCStepperDevice_A4988" name="CCStepperDevice_A4988">
-<area shape="rect" id="node2" href="$class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="27,173,156,200"/>
-<area shape="rect" id="node3" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="51,96,133,123"/>
-<area shape="rect" id="node4" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="57,5,127,32"/>
+<area shape="rect" id="node2" href="$class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="27,355,156,381"/>
+<area shape="rect" id="node3" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="51,277,133,304"/>
+<area shape="rect" id="node4" href="$class_c_c_control.html" title="Class for physical interaction to control the workflow. " alt="" coords="50,187,133,213"/>
+<area shape="rect" id="node5" href="$class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="37,96,147,123"/>
+<area shape="rect" id="node6" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="57,5,127,32"/>
 </map>

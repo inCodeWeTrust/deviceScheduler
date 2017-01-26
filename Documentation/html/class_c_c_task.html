@@ -61,6 +61,8 @@ $(document).ready(function(){initNavTree('class_c_c_task.html','');});
 
 <p>Class for tasks to be executed.  
  <a href="class_c_c_task.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_c_c_task_8h_source.html">CCTask.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -68,36 +70,42 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4210274fc91b333e0cfe1c0f830d9ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73858c361f70e0395e98d01ff34bba36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a73858c361f70e0395e98d01ff34bba36">startByDate</a> (unsigned long startTime)</td></tr>
 <tr class="separator:a73858c361f70e0395e98d01ff34bba36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b269f27de390c400e5950d569fe7bc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a9b269f27de390c400e5950d569fe7bc6">startByButton</a> (<a class="el" href="class_c_c_control_button.html">CCControlButton</a> *startButton)</td></tr>
-<tr class="separator:a9b269f27de390c400e5950d569fe7bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae97b862a83dbe58fd7176b571db43f37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ae97b862a83dbe58fd7176b571db43f37">startByControl</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *startControl, <a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> comparing, int target, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation=<a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210a4d52a4effdaddfacd048c95852413a44">SKIP_APPROXIMATION_IMMEDIATELY</a>)</td></tr>
+<tr class="separator:ae97b862a83dbe58fd7176b571db43f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8666dca35e9d12d9a2876289e498665"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#af8666dca35e9d12d9a2876289e498665">startAfterCompletion</a> ()</td></tr>
+<tr class="separator:af8666dca35e9d12d9a2876289e498665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b73f9f26a6a4548b626ff03b0bb69e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a4b73f9f26a6a4548b626ff03b0bb69e6">startAfterCompletionOf</a> (<a class="el" href="class_c_c_device.html">CCDevice</a> *startTriggerDevice, <a class="el" href="class_c_c_task.html">CCTask</a> *startTriggerTask)</td></tr>
 <tr class="separator:a4b73f9f26a6a4548b626ff03b0bb69e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e34d420061112b2aaae592d4fc19d12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a6e34d420061112b2aaae592d4fc19d12">startByTriggerpositionOf</a> (<a class="el" href="class_c_c_device.html">CCDevice</a> *startTriggerDevice, <a class="el" href="class_c_c_task.html">CCTask</a> *startTriggerTask, signed long startTriggerPosition)</td></tr>
 <tr class="separator:a6e34d420061112b2aaae592d4fc19d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af596cc25f435bf39d915ab2193f4d726"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#af596cc25f435bf39d915ab2193f4d726">switchToNextTaskByDate</a> (unsigned long switchingTimeout)</td></tr>
 <tr class="separator:af596cc25f435bf39d915ab2193f4d726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7731ee593f53b9038983a8a2926188c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#aa7731ee593f53b9038983a8a2926188c">switchToNextTaskByButton</a> (<a class="el" href="class_c_c_control_button.html">CCControlButton</a> *switchingButton)</td></tr>
-<tr class="separator:aa7731ee593f53b9038983a8a2926188c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c89226da268925ee826ef6ad75a3f2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a6c89226da268925ee826ef6ad75a3f2d">switchToNextTaskByControl</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *switchingButton, <a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> comparing, int target, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation=<a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210a4d52a4effdaddfacd048c95852413a44">SKIP_APPROXIMATION_IMMEDIATELY</a>)</td></tr>
+<tr class="separator:a6c89226da268925ee826ef6ad75a3f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5c13f9a6f98631c271e758d3c28da00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#af5c13f9a6f98631c271e758d3c28da00">switchToNextTaskAfterCompletionOf</a> (<a class="el" href="class_c_c_device.html">CCDevice</a> *switchingTriggerDevice, <a class="el" href="class_c_c_task.html">CCTask</a> *switchingTriggerTask)</td></tr>
 <tr class="separator:af5c13f9a6f98631c271e758d3c28da00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad18b5310137441dc5a367f5e76c07000"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ad18b5310137441dc5a367f5e76c07000">switchToNextTaskAtPosition</a> (signed long switchingTriggerPosition)</td></tr>
+<tr class="separator:ad18b5310137441dc5a367f5e76c07000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92298b955c1ac16b81a1d076deedbad9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a92298b955c1ac16b81a1d076deedbad9">switchToNextTaskByTriggerpositionOf</a> (<a class="el" href="class_c_c_device.html">CCDevice</a> *switchingTriggerDevice, <a class="el" href="class_c_c_task.html">CCTask</a> *switchingTriggerTask, signed long switchingTriggerPosition)</td></tr>
 <tr class="separator:a92298b955c1ac16b81a1d076deedbad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb8a6959d67b71284bc27ddc965e8ae0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#afb8a6959d67b71284bc27ddc965e8ae0">stopByTimeout</a> (unsigned long timeout, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> stopping)</td></tr>
 <tr class="separator:afb8a6959d67b71284bc27ddc965e8ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d8801a7cf0617ec6d0639d0233bb518"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a5d8801a7cf0617ec6d0639d0233bb518">stopByButton</a> (<a class="el" href="class_c_c_control_button.html">CCControlButton</a> *stopButton, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> stopping=<a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9a912a5244b1552dfb596bfbc3bb124bc0">STOP_NORMAL</a>)</td></tr>
-<tr class="separator:a5d8801a7cf0617ec6d0639d0233bb518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6634bd4cb6421854ce3076f24612a15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a6634bd4cb6421854ce3076f24612a15c">stopByControl</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *stopControl, <a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> comparing, int target, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> stopping=<a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9a912a5244b1552dfb596bfbc3bb124bc0">STOP_NORMAL</a>, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation=<a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210a4d52a4effdaddfacd048c95852413a44">SKIP_APPROXIMATION_IMMEDIATELY</a>)</td></tr>
+<tr class="separator:a6634bd4cb6421854ce3076f24612a15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7828ba2dea2fbe5d0c0ef932ce97d11e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a7828ba2dea2fbe5d0c0ef932ce97d11e">stopAfterCompletionOf</a> (<a class="el" href="class_c_c_device.html">CCDevice</a> *stopTriggerDevice, <a class="el" href="class_c_c_task.html">CCTask</a> *stopTriggerTask, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> stopping)</td></tr>
 <tr class="separator:a7828ba2dea2fbe5d0c0ef932ce97d11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac39bc8c066c2101d1e0979d70d3163e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ac39bc8c066c2101d1e0979d70d3163e9">stopByTriggerpositionOf</a> (<a class="el" href="class_c_c_device.html">CCDevice</a> *stopTriggerDevice, <a class="el" href="class_c_c_task.html">CCTask</a> *stopTriggerTask, signed long stopTriggerPosition, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> stopping)</td></tr>
 <tr class="separator:ac39bc8c066c2101d1e0979d70d3163e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acab960742fc26207a74882a9b0452965"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#acab960742fc26207a74882a9b0452965">stopDynamicallyBySensor</a> (unsigned char sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation)</td></tr>
-<tr class="separator:acab960742fc26207a74882a9b0452965"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8563e125d2032204e76be18764eb75c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a8563e125d2032204e76be18764eb75c4">stopDynamicallyBySensor_new</a> (unsigned char sensor, unsigned int targetValue, float approximationCurve, float gap, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation)</td></tr>
-<tr class="separator:a8563e125d2032204e76be18764eb75c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a963e43d200a891dd729b40443e004ac9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a963e43d200a891dd729b40443e004ac9">CCTask</a> (float target, float velocity, float acceleration, float deceleration, boolean moveRelativ, <a class="el" href="device_scheduler_8h.html#a7ead8112bd09aeb582343346c575691c">positionResetMode</a> positionReset, <a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a> taskID)</td></tr>
-<tr class="separator:a963e43d200a891dd729b40443e004ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab334e597353797a3a0eca358c0d5bef5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ab334e597353797a3a0eca358c0d5bef5">getTaskID</a> ()</td></tr>
-<tr class="separator:ab334e597353797a3a0eca358c0d5bef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b7b2dc82d55d81613423ad02dbc2a1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a0b7b2dc82d55d81613423ad02dbc2a1a">stopAtPosition</a> (signed long stopTriggerPosition, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a> stopping)</td></tr>
+<tr class="separator:a0b7b2dc82d55d81613423ad02dbc2a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d6813ca9f2cf157091e064b9ee4a678"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a2d6813ca9f2cf157091e064b9ee4a678">stopDynamicallyBySensor</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *sensor, unsigned int initiatePerformanceValue, unsigned int targetValue, float stopPerformance, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation)</td></tr>
+<tr class="separator:a2d6813ca9f2cf157091e064b9ee4a678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe73031e3eb1599c01244bb9e6340cba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#abe73031e3eb1599c01244bb9e6340cba">stopDynamicallyBySensor_new</a> (<a class="el" href="class_c_c_control.html">CCControl</a> *stopControl, unsigned int stopControlTarget, float approximationCurve, float gap, <a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a> approximation)</td></tr>
+<tr class="separator:abe73031e3eb1599c01244bb9e6340cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb8fa7aa9d57bf25a5469c2c2349d673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#acb8fa7aa9d57bf25a5469c2c2349d673">CCTask</a> (const unsigned int taskID, float target, float velocity, float acceleration, float deceleration, bool moveRelativ, <a class="el" href="device_scheduler_8h.html#a7ead8112bd09aeb582343346c575691c">positionResetMode</a> positionReset)</td></tr>
+<tr class="separator:acb8fa7aa9d57bf25a5469c2c2349d673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03e253c9d606903bb9c37b3a83ab60a1"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1">getTaskID</a> () const </td></tr>
+<tr class="separator:a03e253c9d606903bb9c37b3a83ab60a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad32d98d82ea1ac9d3c3314603a37bfeb"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ad32d98d82ea1ac9d3c3314603a37bfeb">getTarget</a> ()</td></tr>
 <tr class="separator:ad32d98d82ea1ac9d3c3314603a37bfeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbf32990de8282830af36c0b4fcaf91c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#afbf32990de8282830af36c0b4fcaf91c">setTarget</a> (float target)</td></tr>
@@ -114,8 +122,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4b13cff2c495a2b7e3cc562a261a5fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74ebcca96df7cd0777109fd88b869cf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a74ebcca96df7cd0777109fd88b869cf5">setDeceleration</a> (float deceleration)</td></tr>
 <tr class="separator:a74ebcca96df7cd0777109fd88b869cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81cec4a17cf263e9bd37a2a5b6d6f073"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a81cec4a17cf263e9bd37a2a5b6d6f073">getMoveRelativ</a> ()</td></tr>
-<tr class="separator:a81cec4a17cf263e9bd37a2a5b6d6f073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afafdfed47082451bef88e3b9b3d6e48a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#afafdfed47082451bef88e3b9b3d6e48a">getMoveRelativ</a> ()</td></tr>
+<tr class="separator:afafdfed47082451bef88e3b9b3d6e48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7976b2e882476b311a193d2e4fa5376"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a7ead8112bd09aeb582343346c575691c">positionResetMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ad7976b2e882476b311a193d2e4fa5376">getPositionReset</a> ()</td></tr>
 <tr class="separator:ad7976b2e882476b311a193d2e4fa5376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad79147e97f602b32f09003e3cdec7672"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ad79147e97f602b32f09003e3cdec7672">getStartDelay</a> ()</td></tr>
@@ -128,32 +136,36 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a40b46a4d7c44e9333297c492dd4337d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af70ccc239b58b682c398fe5888d2d65a"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#af70ccc239b58b682c398fe5888d2d65a">getTimeout</a> ()</td></tr>
 <tr class="separator:af70ccc239b58b682c398fe5888d2d65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37493764244232f197e48900e359a17d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a37493764244232f197e48900e359a17d">getStartButton</a> ()</td></tr>
-<tr class="separator:a37493764244232f197e48900e359a17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab69fc459d51506f87c0dce74aaf6e5d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ab69fc459d51506f87c0dce74aaf6e5d9">getStopButton</a> ()</td></tr>
-<tr class="separator:ab69fc459d51506f87c0dce74aaf6e5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a132f5787365ab949ebc78c08a399fd15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a132f5787365ab949ebc78c08a399fd15">getStartControl</a> ()</td></tr>
+<tr class="separator:a132f5787365ab949ebc78c08a399fd15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a185a2c7ce285426f6c9b06c530f01cbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a185a2c7ce285426f6c9b06c530f01cbf">getStopControl</a> ()</td></tr>
+<tr class="separator:a185a2c7ce285426f6c9b06c530f01cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc68639838bfd0353aaeec60b085cb18"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#abc68639838bfd0353aaeec60b085cb18">getStartControlTarget</a> ()</td></tr>
+<tr class="separator:abc68639838bfd0353aaeec60b085cb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab69e443132911d86729ef481ea1336e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ab69e443132911d86729ef481ea1336e4">getStopControlTarget</a> ()</td></tr>
+<tr class="separator:ab69e443132911d86729ef481ea1336e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cdf336a59900f9c2049304c4b36dc4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a8cdf336a59900f9c2049304c4b36dc4d">getStartControlComparing</a> ()</td></tr>
+<tr class="separator:a8cdf336a59900f9c2049304c4b36dc4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5b5764df1e91e0ba182cfd197978dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a3c5b5764df1e91e0ba182cfd197978dc">getStopControlComparing</a> ()</td></tr>
+<tr class="separator:a3c5b5764df1e91e0ba182cfd197978dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f471d2eefa91f32eec0706116a5d344"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_device.html">CCDevice</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a7f471d2eefa91f32eec0706116a5d344">getStartTriggerDevice</a> ()</td></tr>
 <tr class="separator:a7f471d2eefa91f32eec0706116a5d344"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6771fd2f3acffe10f5dba92ef31bc9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_c_device.html">CCDevice</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#aa6771fd2f3acffe10f5dba92ef31bc9e">getStopTriggerDevice</a> ()</td></tr>
 <tr class="separator:aa6771fd2f3acffe10f5dba92ef31bc9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6efe72eba17b94bb641e5c21eb7b8e6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a6efe72eba17b94bb641e5c21eb7b8e6b">getStartTriggerTaskID</a> ()</td></tr>
-<tr class="separator:a6efe72eba17b94bb641e5c21eb7b8e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a399fb35e13db12a83d7b10ba9f103fab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a399fb35e13db12a83d7b10ba9f103fab">getStopTriggerTaskID</a> ()</td></tr>
-<tr class="separator:a399fb35e13db12a83d7b10ba9f103fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f5725114e1658d82cba4f9b85e1d695"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a0f5725114e1658d82cba4f9b85e1d695">getStartTriggerTaskID</a> ()</td></tr>
+<tr class="separator:a0f5725114e1658d82cba4f9b85e1d695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca423d2312b1facbc526498232d76c38"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#aca423d2312b1facbc526498232d76c38">getStopTriggerTaskID</a> ()</td></tr>
+<tr class="separator:aca423d2312b1facbc526498232d76c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1127f3a2d71334b3f6a4c669b9e4e515"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a1127f3a2d71334b3f6a4c669b9e4e515">getStartTriggerPosition</a> ()</td></tr>
 <tr class="separator:a1127f3a2d71334b3f6a4c669b9e4e515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedad4e84cf68b45503c64858a179fe17"><td class="memItemLeft" align="right" valign="top">signed long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#aedad4e84cf68b45503c64858a179fe17">getStopTriggerPosition</a> ()</td></tr>
 <tr class="separator:aedad4e84cf68b45503c64858a179fe17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adeb53bd7a8530664d41c837b56e1f6a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#adeb53bd7a8530664d41c837b56e1f6a9">getStopping</a> ()</td></tr>
 <tr class="separator:adeb53bd7a8530664d41c837b56e1f6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dfdffff7887b3add46100c18fcf3bf2"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a9dfdffff7887b3add46100c18fcf3bf2">getSwitchTaskPromptly</a> ()</td></tr>
-<tr class="separator:a9dfdffff7887b3add46100c18fcf3bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae426bf01916a341542a29ec4b366becd"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ae426bf01916a341542a29ec4b366becd">getSensor</a> ()</td></tr>
-<tr class="separator:ae426bf01916a341542a29ec4b366becd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9634d50406e3dca8460da7fead59780f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a9634d50406e3dca8460da7fead59780f">getSwitching</a> ()</td></tr>
+<tr class="separator:a9634d50406e3dca8460da7fead59780f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e7743d8376f8949c185d7b45e67a31c"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a2e7743d8376f8949c185d7b45e67a31c">getInitiatePerformanceValue</a> ()</td></tr>
 <tr class="separator:a2e7743d8376f8949c185d7b45e67a31c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8474734915bf4e23ab1a8591a42dd419"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a8474734915bf4e23ab1a8591a42dd419">getTargetValue</a> ()</td></tr>
-<tr class="separator:a8474734915bf4e23ab1a8591a42dd419"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34582c1fe444862ce5403388d15f58d3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a34582c1fe444862ce5403388d15f58d3">getStopPerformance</a> ()</td></tr>
 <tr class="separator:a34582c1fe444862ce5403388d15f58d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a45ee07d4fefd7be6e73dd8c4f224ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a5a45ee07d4fefd7be6e73dd8c4f224ff">getApproximation</a> ()</td></tr>
@@ -162,20 +174,29 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a56c206f19a30b43c1e1d46cd7cdde503"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab424626a60eeab18ebd1098269416234"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#ab424626a60eeab18ebd1098269416234">getGap</a> ()</td></tr>
 <tr class="separator:ab424626a60eeab18ebd1098269416234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dda2c917f1238b155290dee4828187b"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a8dda2c917f1238b155290dee4828187b">getReversedApproximation</a> ()</td></tr>
-<tr class="separator:a8dda2c917f1238b155290dee4828187b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f40986d01e73e857859d33523f6d3d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a9f40986d01e73e857859d33523f6d3d3">getReversedApproximation</a> ()</td></tr>
+<tr class="separator:a9f40986d01e73e857859d33523f6d3d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d6ac4c805f45fda45817d25ed5acc50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_c_task.html#a9d6ac4c805f45fda45817d25ed5acc50">setVerbosity</a> (int verbosity)</td></tr>
+<tr class="memdesc:a9d6ac4c805f45fda45817d25ed5acc50"><td class="mdescLeft">&#160;</td><td class="mdescRight">the verbosity of the device  <a href="#a9d6ac4c805f45fda45817d25ed5acc50">More...</a><br /></td></tr>
+<tr class="separator:a9d6ac4c805f45fda45817d25ed5acc50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="_c_c_task_8h_source.html#l00027">27</a> of file <a class="el" href="_c_c_task_8h_source.html">CCTask.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a963e43d200a891dd729b40443e004ac9"></a>
+<a class="anchor" id="acb8fa7aa9d57bf25a5469c2c2349d673"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">CCTask::CCTask </td>
           <td>(</td>
+          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramname"><em>taskID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>target</em>, </td>
         </tr>
@@ -200,20 +221,14 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">boolean&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>moveRelativ</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="device_scheduler_8h.html#a7ead8112bd09aeb582343346c575691c">positionResetMode</a>&#160;</td>
-          <td class="paramname"><em>positionReset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a>&#160;</td>
-          <td class="paramname"><em>taskID</em>&#160;</td>
+          <td class="paramname"><em>positionReset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -241,8 +256,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>| | startEvent | stopEvent | ----------&mdash;|----------------------------------------------------------------------------&mdash; | NONE | no specific starting given | no specific stopping given | | | | DATE | start at a specific time | stop after a timeout | | <code><a class="el" href="class_c_c_task.html#a73858c361f70e0395e98d01ff34bba36">startByDate()</a></code> | <code><a class="el" href="class_c_c_task.html#afb8a6959d67b71284bc27ddc965e8ae0">stopByTimeout()</a></code> | | | <code><a class="el" href="class_c_c_task.html#af596cc25f435bf39d915ab2193f4d726">switchToNextTaskByDate()</a></code> | | | | CONTROL | start on a hardware event | stop on a hardware event | | <code><a class="el" href="class_c_c_task.html#ae97b862a83dbe58fd7176b571db43f37">startByControl()</a></code> | <code><a class="el" href="class_c_c_task.html#a6634bd4cb6421854ce3076f24612a15c">stopByControl()</a></code> | | | <code><a class="el" href="class_c_c_task.html#a6c89226da268925ee826ef6ad75a3f2d">switchToNextTaskByControl()</a></code> | | | | FOLLOW | start when task of other device finished | stop when task of other device finished | | <code><a class="el" href="class_c_c_task.html#a4b73f9f26a6a4548b626ff03b0bb69e6">startAfterCompletionOf()</a></code> | <code><a class="el" href="class_c_c_task.html#a7828ba2dea2fbe5d0c0ef932ce97d11e">stopAfterCompletionOf()</a></code> | | | <code><a class="el" href="class_c_c_task.html#af5c13f9a6f98631c271e758d3c28da00">switchToNextTaskAfterCompletionOf()</a></code> | | | | FOLLOW_ME | start when previous task finished | | | <code><a class="el" href="class_c_c_task.html#af8666dca35e9d12d9a2876289e498665">startAfterCompletion()</a></code> | | | | | POSITION | start when other device reached a specific position | stop when other device reached a specific position | | <code><a class="el" href="class_c_c_task.html#a6e34d420061112b2aaae592d4fc19d12">startByTriggerpositionOf()</a></code> | <code><a class="el" href="class_c_c_task.html#ac39bc8c066c2101d1e0979d70d3163e9">stopByTriggerpositionOf()</a></code> | | | <code><a class="el" href="class_c_c_task.html#a92298b955c1ac16b81a1d076deedbad9">switchToNextTaskByTriggerpositionOf()</a></code> | | | | MY_POSITION | | stop when previous reached a specific position | | | <code><a class="el" href="class_c_c_task.html#a0b7b2dc82d55d81613423ad02dbc2a1a">stopAtPosition()</a></code> | | | <code><a class="el" href="class_c_c_task.html#ad18b5310137441dc5a367f5e76c07000">switchToNextTaskAtPosition()</a></code> </p>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00057">57</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00049">49</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a4210274fc91b333e0cfe1c0f830d9ab9_icgraph.png" border="0" usemap="#class_c_c_task_a4210274fc91b333e0cfe1c0f830d9ab9_icgraph" alt=""/></div>
+<map name="class_c_c_task_a4210274fc91b333e0cfe1c0f830d9ab9_icgraph" id="class_c_c_task_a4210274fc91b333e0cfe1c0f830d9ab9_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="211,5,258,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -260,25 +286,94 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00061">61</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00053">53</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a73858c361f70e0395e98d01ff34bba36_icgraph.png" border="0" usemap="#class_c_c_task_a73858c361f70e0395e98d01ff34bba36_icgraph" alt=""/></div>
+<map name="class_c_c_task_a73858c361f70e0395e98d01ff34bba36_icgraph" id="class_c_c_task_a73858c361f70e0395e98d01ff34bba36_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="201,5,247,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a9b269f27de390c400e5950d569fe7bc6"></a>
+<a class="anchor" id="ae97b862a83dbe58fd7176b571db43f37"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CCTask::startByButton </td>
+          <td class="memname">void CCTask::startByControl </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> *&#160;</td>
-          <td class="paramname"><em>startButton</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td>
+          <td class="paramname"><em>startControl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a>&#160;</td>
+          <td class="paramname"><em>comparing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td>
+          <td class="paramname"><em>approximation</em> = <code><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210a4d52a4effdaddfacd048c95852413a44">SKIP_APPROXIMATION_IMMEDIATELY</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00057">57</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ae97b862a83dbe58fd7176b571db43f37_icgraph.png" border="0" usemap="#class_c_c_task_ae97b862a83dbe58fd7176b571db43f37_icgraph" alt=""/></div>
+<map name="class_c_c_task_ae97b862a83dbe58fd7176b571db43f37_icgraph" id="class_c_c_task_ae97b862a83dbe58fd7176b571db43f37_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="217,5,263,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="af8666dca35e9d12d9a2876289e498665"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCTask::startAfterCompletion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00065">65</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00064">64</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_af8666dca35e9d12d9a2876289e498665_icgraph.png" border="0" usemap="#class_c_c_task_af8666dca35e9d12d9a2876289e498665_icgraph" alt=""/></div>
+<map name="class_c_c_task_af8666dca35e9d12d9a2876289e498665_icgraph" id="class_c_c_task_af8666dca35e9d12d9a2876289e498665_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="254,5,301,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -306,7 +401,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00069">69</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00067">67</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_cgraph.png" border="0" usemap="#class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_cgraph" alt=""/></div>
+<map name="class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_cgraph" id="class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="267,5,405,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_icgraph.png" border="0" usemap="#class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_icgraph" alt=""/></div>
+<map name="class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_icgraph" id="class_c_c_task_a4b73f9f26a6a4548b626ff03b0bb69e6_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="267,5,314,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -340,7 +455,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00074">74</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00072">72</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_cgraph.png" border="0" usemap="#class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_cgraph" alt=""/></div>
+<map name="class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_cgraph" id="class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="275,5,413,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_icgraph.png" border="0" usemap="#class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_icgraph" alt=""/></div>
+<map name="class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_icgraph" id="class_c_c_task_a6e34d420061112b2aaae592d4fc19d12_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="275,5,322,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -358,25 +493,47 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00081">81</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00079">79</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa7731ee593f53b9038983a8a2926188c"></a>
+<a class="anchor" id="a6c89226da268925ee826ef6ad75a3f2d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CCTask::switchToNextTaskByButton </td>
+          <td class="memname">void CCTask::switchToNextTaskByControl </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> *&#160;</td>
-          <td class="paramname"><em>switchingButton</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td>
+          <td class="paramname"><em>switchingButton</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a>&#160;</td>
+          <td class="paramname"><em>comparing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td>
+          <td class="paramname"><em>approximation</em> = <code><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210a4d52a4effdaddfacd048c95852413a44">SKIP_APPROXIMATION_IMMEDIATELY</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00086">86</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00084">84</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +561,55 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00091">91</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00092">92</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_cgraph.png" border="0" usemap="#class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_cgraph" alt=""/></div>
+<map name="class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_cgraph" id="class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="240,12,379,39"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_icgraph.png" border="0" usemap="#class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_icgraph" alt=""/></div>
+<map name="class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_icgraph" id="class_c_c_task_af5c13f9a6f98631c271e758d3c28da00_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="241,12,287,39"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ad18b5310137441dc5a367f5e76c07000"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCTask::switchToNextTaskAtPosition </td>
+          <td>(</td>
+          <td class="paramtype">signed long&#160;</td>
+          <td class="paramname"><em>switchingTriggerPosition</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00098">98</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ad18b5310137441dc5a367f5e76c07000_icgraph.png" border="0" usemap="#class_c_c_task_ad18b5310137441dc5a367f5e76c07000_icgraph" alt=""/></div>
+<map name="class_c_c_task_ad18b5310137441dc5a367f5e76c07000_icgraph" id="class_c_c_task_ad18b5310137441dc5a367f5e76c07000_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="241,12,287,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -438,7 +643,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00097">97</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00103">103</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_cgraph.png" border="0" usemap="#class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_cgraph" alt=""/></div>
+<map name="class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_cgraph" id="class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="240,12,379,39"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_icgraph.png" border="0" usemap="#class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_icgraph" alt=""/></div>
+<map name="class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_icgraph" id="class_c_c_task_a92298b955c1ac16b81a1d076deedbad9_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="241,12,287,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -466,25 +691,43 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00105">105</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00111">111</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5d8801a7cf0617ec6d0639d0233bb518"></a>
+<a class="anchor" id="a6634bd4cb6421854ce3076f24612a15c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void CCTask::stopByButton </td>
+          <td class="memname">void CCTask::stopByControl </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> *&#160;</td>
-          <td class="paramname"><em>stopButton</em>, </td>
+          <td class="paramtype"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td>
+          <td class="paramname"><em>stopControl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a>&#160;</td>
+          <td class="paramname"><em>comparing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td>
-          <td class="paramname"><em>stopping</em> = <code><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9a912a5244b1552dfb596bfbc3bb124bc0">STOP_NORMAL</a></code>&#160;</td>
+          <td class="paramname"><em>stopping</em> = <code><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9a912a5244b1552dfb596bfbc3bb124bc0">STOP_NORMAL</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210">approximationMode</a>&#160;</td>
+          <td class="paramname"><em>approximation</em> = <code><a class="el" href="device_scheduler_8h.html#abb664f16e10d899b378c70b8c4643210a4d52a4effdaddfacd048c95852413a44">SKIP_APPROXIMATION_IMMEDIATELY</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -494,7 +737,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00110">110</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00116">116</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a6634bd4cb6421854ce3076f24612a15c_icgraph.png" border="0" usemap="#class_c_c_task_a6634bd4cb6421854ce3076f24612a15c_icgraph" alt=""/></div>
+<map name="class_c_c_task_a6634bd4cb6421854ce3076f24612a15c_icgraph" id="class_c_c_task_a6634bd4cb6421854ce3076f24612a15c_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="217,5,263,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -528,7 +781,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00115">115</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00124">124</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_cgraph.png" border="0" usemap="#class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_cgraph" alt=""/></div>
+<map name="class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_cgraph" id="class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="267,5,405,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_icgraph.png" border="0" usemap="#class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_icgraph" alt=""/></div>
+<map name="class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_icgraph" id="class_c_c_task_a7828ba2dea2fbe5d0c0ef932ce97d11e_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="267,5,314,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -568,18 +841,56 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00121">121</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00130">130</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ac39bc8c066c2101d1e0979d70d3163e9_cgraph.png" border="0" usemap="#class_c_c_task_ac39bc8c066c2101d1e0979d70d3163e9_cgraph" alt=""/></div>
+<map name="class_c_c_task_ac39bc8c066c2101d1e0979d70d3163e9_cgraph" id="class_c_c_task_ac39bc8c066c2101d1e0979d70d3163e9_cgraph">
+<area shape="rect" id="node2" href="class_c_c_task.html#a03e253c9d606903bb9c37b3a83ab60a1" title="CCTask::getTaskID" alt="" coords="275,5,413,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="acab960742fc26207a74882a9b0452965"></a>
+<a class="anchor" id="a0b7b2dc82d55d81613423ad02dbc2a1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCTask::stopAtPosition </td>
+          <td>(</td>
+          <td class="paramtype">signed long&#160;</td>
+          <td class="paramname"><em>stopTriggerPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>&#160;</td>
+          <td class="paramname"><em>stopping</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00137">137</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2d6813ca9f2cf157091e064b9ee4a678"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void CCTask::stopDynamicallyBySensor </td>
           <td>(</td>
-          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramtype"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td>
           <td class="paramname"><em>sensor</em>, </td>
         </tr>
         <tr>
@@ -614,25 +925,35 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00128">128</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00144">144</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a2d6813ca9f2cf157091e064b9ee4a678_icgraph.png" border="0" usemap="#class_c_c_task_a2d6813ca9f2cf157091e064b9ee4a678_icgraph" alt=""/></div>
+<map name="class_c_c_task_a2d6813ca9f2cf157091e064b9ee4a678_icgraph" id="class_c_c_task_a2d6813ca9f2cf157091e064b9ee4a678_icgraph">
+<area shape="rect" id="node2" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="246,12,293,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a8563e125d2032204e76be18764eb75c4"></a>
+<a class="anchor" id="abe73031e3eb1599c01244bb9e6340cba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void CCTask::stopDynamicallyBySensor_new </td>
           <td>(</td>
-          <td class="paramtype">unsigned char&#160;</td>
-          <td class="paramname"><em>sensor</em>, </td>
+          <td class="paramtype"><a class="el" href="class_c_c_control.html">CCControl</a> *&#160;</td>
+          <td class="paramname"><em>stopControl</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>targetValue</em>, </td>
+          <td class="paramname"><em>stopControlTarget</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -660,25 +981,52 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00137">137</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00153">153</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab334e597353797a3a0eca358c0d5bef5"></a>
+<a class="anchor" id="a03e253c9d606903bb9c37b3a83ab60a1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a> CCTask::getTaskID </td>
+          <td class="memname">unsigned int CCTask::getTaskID </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Getter method for getting the target of the device </p><dl class="section see"><dt>See also</dt><dd>target; </dd></dl>
+<p>Getter method for getting the id of the task </p><dl class="section see"><dt>See also</dt><dd>taskID; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00147">147</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00164">164</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a03e253c9d606903bb9c37b3a83ab60a1_icgraph.png" border="0" usemap="#class_c_c_task_a03e253c9d606903bb9c37b3a83ab60a1_icgraph" alt=""/></div>
+<map name="class_c_c_task_a03e253c9d606903bb9c37b3a83ab60a1_icgraph" id="class_c_c_task_a03e253c9d606903bb9c37b3a83ab60a1_icgraph">
+<area shape="rect" id="node2" href="class_c_c_action.html#af9f818649163d46259b0b62db926afbd" title="CCAction::evokeTaskStart" alt="" coords="216,5,395,32"/>
+<area shape="rect" id="node3" href="class_c_c_action.html#afdd67422b1bdde80725c04dbcd2b5cbd" title="CCAction::evokeTaskStart\lOfTask" alt="" coords="216,57,395,98"/>
+<area shape="rect" id="node4" href="class_c_c_action.html#a8b35c18eee843f9422265d69a0ef6407" title="CCAction::evokeTaskStop" alt="" coords="217,123,394,149"/>
+<area shape="rect" id="node6" href="class_c_c_action.html#a11b4b2c1fe4a5e7e68f7ba398e99ea30" title="CCAction::evokeJumpToNextTask" alt="" coords="193,173,418,200"/>
+<area shape="rect" id="node7" href="class_c_c_action.html#ac719f7c6d83439d5af444d8d8c34e979" title="CCAction::evokeJumpToTask" alt="" coords="206,224,405,251"/>
+<area shape="rect" id="node8" href="class_c_c_action.html#a27f878239fa65c67df396d1db31d7157" title="CCAction::evokeBreak" alt="" coords="227,275,383,301"/>
+<area shape="rect" id="node9" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="227,326,383,367"/>
+<area shape="rect" id="node10" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="222,391,389,433"/>
+<area shape="rect" id="node11" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="206,457,405,484"/>
+<area shape="rect" id="node12" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="200,508,411,535"/>
+<area shape="rect" id="node13" href="class_c_c_task.html#a4b73f9f26a6a4548b626ff03b0bb69e6" title="CCTask::startAfterCompletionOf" alt="" coords="199,559,412,585"/>
+<area shape="rect" id="node14" href="class_c_c_task.html#a6e34d420061112b2aaae592d4fc19d12" title="CCTask::startByTriggerpositionOf" alt="" coords="195,609,416,636"/>
+<area shape="rect" id="node15" href="class_c_c_task.html#af5c13f9a6f98631c271e758d3c28da00" title="CCTask::switchToNextTask\lAfterCompletionOf" alt="" coords="212,661,399,702"/>
+<area shape="rect" id="node16" href="class_c_c_task.html#a92298b955c1ac16b81a1d076deedbad9" title="CCTask::switchToNextTask\lByTriggerpositionOf" alt="" coords="212,726,399,767"/>
+<area shape="rect" id="node17" href="class_c_c_task.html#a7828ba2dea2fbe5d0c0ef932ce97d11e" title="CCTask::stopAfterCompletionOf" alt="" coords="199,792,411,819"/>
+<area shape="rect" id="node18" href="class_c_c_task.html#ac39bc8c066c2101d1e0979d70d3163e9" title="CCTask::stopByTriggerpositionOf" alt="" coords="195,843,415,869"/>
+<area shape="rect" id="node19" href="class_c_c_workflow.html#ae4cb45c52fb03651ed66c6b00b3b1d16" title="CCWorkflow::addFlowControl" alt="" coords="207,893,404,920"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="467,609,514,636"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -696,7 +1044,24 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the target of the device </p><dl class="section see"><dt>See also</dt><dd>target; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00148">148</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00166">166</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ad32d98d82ea1ac9d3c3314603a37bfeb_icgraph.png" border="0" usemap="#class_c_c_task_ad32d98d82ea1ac9d3c3314603a37bfeb_icgraph" alt=""/></div>
+<map name="class_c_c_task_ad32d98d82ea1ac9d3c3314603a37bfeb_icgraph" id="class_c_c_task_ad32d98d82ea1ac9d3c3314603a37bfeb_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#a6c058447047a09cb9c85ad0d3590cd5c" title="CCDcControllerDevice\l::reviewValues" alt="" coords="217,5,373,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="217,70,373,111"/>
+<area shape="rect" id="node4" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab" title="CCDcControllerDevice\l_fullBridge::reviewValues" alt="" coords="209,135,381,177"/>
+<area shape="rect" id="node5" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="211,201,378,242"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="220,266,369,307"/>
+<area shape="rect" id="node8" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="195,332,394,359"/>
+<area shape="rect" id="node9" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="189,383,400,409"/>
+<area shape="rect" id="node7" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="449,273,495,300"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -715,7 +1080,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for setting the target of the device </p><dl class="section see"><dt>See also</dt><dd>target; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00149">149</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00167">167</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
 </div>
 </div>
@@ -733,7 +1098,24 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the velocity of the device </p><dl class="section see"><dt>See also</dt><dd>velocity; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00150">150</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00168">168</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a5a128df5a86cf77b13c0a0a81d681bab_icgraph.png" border="0" usemap="#class_c_c_task_a5a128df5a86cf77b13c0a0a81d681bab_icgraph" alt=""/></div>
+<map name="class_c_c_task_a5a128df5a86cf77b13c0a0a81d681bab_icgraph" id="class_c_c_task_a5a128df5a86cf77b13c0a0a81d681bab_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#a6c058447047a09cb9c85ad0d3590cd5c" title="CCDcControllerDevice\l::reviewValues" alt="" coords="227,5,383,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="227,70,383,111"/>
+<area shape="rect" id="node4" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab" title="CCDcControllerDevice\l_fullBridge::reviewValues" alt="" coords="219,135,391,177"/>
+<area shape="rect" id="node5" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="222,201,389,242"/>
+<area shape="rect" id="node6" href="class_c_c_servo_device.html#a86933eaf6681cd55ac51a415c7552f30" title="CCServoDevice::reviewValues" alt="" coords="203,267,407,293"/>
+<area shape="rect" id="node7" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="206,317,405,344"/>
+<area shape="rect" id="node8" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a" title="CCStepperDevice::reviewValues" alt="" coords="197,368,413,395"/>
+<area shape="rect" id="node9" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="200,419,411,445"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -752,7 +1134,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for setting the velocity of the device </p><dl class="section see"><dt>See also</dt><dd>velocity; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00151">151</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00169">169</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a9a94c2e27bddb2bfa2b29d469a62926c_icgraph.png" border="0" usemap="#class_c_c_task_a9a94c2e27bddb2bfa2b29d469a62926c_icgraph" alt=""/></div>
+<map name="class_c_c_task_a9a94c2e27bddb2bfa2b29d469a62926c_icgraph" id="class_c_c_task_a9a94c2e27bddb2bfa2b29d469a62926c_icgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a" title="CCStepperDevice::reviewValues" alt="" coords="197,5,413,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -770,7 +1162,23 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the acceleration of the device </p><dl class="section see"><dt>See also</dt><dd>acceleration; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00152">152</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00170">170</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a7359e8f0c39a19d66df6fe2e8df92d89_icgraph.png" border="0" usemap="#class_c_c_task_a7359e8f0c39a19d66df6fe2e8df92d89_icgraph" alt=""/></div>
+<map name="class_c_c_task_a7359e8f0c39a19d66df6fe2e8df92d89_icgraph" id="class_c_c_task_a7359e8f0c39a19d66df6fe2e8df92d89_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="254,5,410,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab" title="CCDcControllerDevice\l_fullBridge::reviewValues" alt="" coords="246,70,418,111"/>
+<area shape="rect" id="node4" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="249,135,415,177"/>
+<area shape="rect" id="node5" href="class_c_c_servo_device.html#a86933eaf6681cd55ac51a415c7552f30" title="CCServoDevice::reviewValues" alt="" coords="230,201,434,228"/>
+<area shape="rect" id="node6" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="233,252,431,279"/>
+<area shape="rect" id="node7" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a" title="CCStepperDevice::reviewValues" alt="" coords="224,303,440,329"/>
+<area shape="rect" id="node8" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="227,353,437,380"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -789,7 +1197,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for setting the acceleration of the device </p><dl class="section see"><dt>See also</dt><dd>acceleration; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00153">153</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00171">171</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a8b9ec36f4593aeea0801d05531e5bbee_icgraph.png" border="0" usemap="#class_c_c_task_a8b9ec36f4593aeea0801d05531e5bbee_icgraph" alt=""/></div>
+<map name="class_c_c_task_a8b9ec36f4593aeea0801d05531e5bbee_icgraph" id="class_c_c_task_a8b9ec36f4593aeea0801d05531e5bbee_icgraph">
+<area shape="rect" id="node2" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a" title="CCStepperDevice::reviewValues" alt="" coords="224,5,440,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -807,7 +1225,23 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the deceleration of the device </p><dl class="section see"><dt>See also</dt><dd>deceleration; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00154">154</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00172">172</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a4b13cff2c495a2b7e3cc562a261a5fc4_icgraph.png" border="0" usemap="#class_c_c_task_a4b13cff2c495a2b7e3cc562a261a5fc4_icgraph" alt=""/></div>
+<map name="class_c_c_task_a4b13cff2c495a2b7e3cc562a261a5fc4_icgraph" id="class_c_c_task_a4b13cff2c495a2b7e3cc562a261a5fc4_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="254,5,410,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab" title="CCDcControllerDevice\l_fullBridge::reviewValues" alt="" coords="246,70,418,111"/>
+<area shape="rect" id="node4" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="249,135,415,177"/>
+<area shape="rect" id="node5" href="class_c_c_servo_device.html#a86933eaf6681cd55ac51a415c7552f30" title="CCServoDevice::reviewValues" alt="" coords="230,201,434,228"/>
+<area shape="rect" id="node6" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="233,252,431,279"/>
+<area shape="rect" id="node7" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a" title="CCStepperDevice::reviewValues" alt="" coords="224,303,440,329"/>
+<area shape="rect" id="node8" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="227,353,437,380"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -826,16 +1260,28 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Setter method for setting the deceleration of the device </p><dl class="section see"><dt>See also</dt><dd>deceleration; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00155">155</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00173">173</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a74ebcca96df7cd0777109fd88b869cf5_icgraph.png" border="0" usemap="#class_c_c_task_a74ebcca96df7cd0777109fd88b869cf5_icgraph" alt=""/></div>
+<map name="class_c_c_task_a74ebcca96df7cd0777109fd88b869cf5_icgraph" id="class_c_c_task_a74ebcca96df7cd0777109fd88b869cf5_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device__full_bridge.html#a46c6c67aff7be57c50650b7081c7d0ab" title="CCDcControllerDevice\l_fullBridge::reviewValues" alt="" coords="246,5,418,46"/>
+<area shape="rect" id="node3" href="class_c_c_servo_device.html#a86933eaf6681cd55ac51a415c7552f30" title="CCServoDevice::reviewValues" alt="" coords="230,71,434,97"/>
+<area shape="rect" id="node4" href="class_c_c_stepper_device.html#a98e941162c33c11c9b9db6d7d0aba86a" title="CCStepperDevice::reviewValues" alt="" coords="224,121,440,148"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a81cec4a17cf263e9bd37a2a5b6d6f073"></a>
+<a class="anchor" id="afafdfed47082451bef88e3b9b3d6e48a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCTask::getMoveRelativ </td>
+          <td class="memname">bool CCTask::getMoveRelativ </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -844,7 +1290,20 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the moveRelativ bit of the device </p><dl class="section see"><dt>See also</dt><dd>moveRelativ; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00156">156</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00174">174</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_afafdfed47082451bef88e3b9b3d6e48a_icgraph.png" border="0" usemap="#class_c_c_task_afafdfed47082451bef88e3b9b3d6e48a_icgraph" alt=""/></div>
+<map name="class_c_c_task_afafdfed47082451bef88e3b9b3d6e48a_icgraph" id="class_c_c_task_afafdfed47082451bef88e3b9b3d6e48a_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="255,5,404,46"/>
+<area shape="rect" id="node4" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="230,71,429,97"/>
+<area shape="rect" id="node5" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="224,121,435,148"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="483,12,530,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -862,7 +1321,19 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the positionReset mode of the device </p><dl class="section see"><dt>See also</dt><dd>positionReset; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00157">157</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00175">175</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ad7976b2e882476b311a193d2e4fa5376_icgraph.png" border="0" usemap="#class_c_c_task_ad7976b2e882476b311a193d2e4fa5376_icgraph" alt=""/></div>
+<map name="class_c_c_task_ad7976b2e882476b311a193d2e4fa5376_icgraph" id="class_c_c_task_ad7976b2e882476b311a193d2e4fa5376_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="263,5,412,46"/>
+<area shape="rect" id="node4" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="232,71,443,97"/>
+<area shape="rect" id="node3" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="491,12,538,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -880,7 +1351,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the startDelay of the device </p><dl class="section see"><dt>See also</dt><dd>startDelay; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00158">158</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00185">185</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ad79147e97f602b32f09003e3cdec7672_icgraph.png" border="0" usemap="#class_c_c_task_ad79147e97f602b32f09003e3cdec7672_icgraph" alt=""/></div>
+<map name="class_c_c_task_ad79147e97f602b32f09003e3cdec7672_icgraph" id="class_c_c_task_ad79147e97f602b32f09003e3cdec7672_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="213,71,440,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="507,122,656,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="489,5,674,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="723,71,893,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="942,96,989,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -898,7 +1383,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the startEvent of the device </p><dl class="section see"><dt>See also</dt><dd>startEvent, <a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00159">159</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00177">177</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a02e1d408a24914ec29d9c92221242360_icgraph.png" border="0" usemap="#class_c_c_task_a02e1d408a24914ec29d9c92221242360_icgraph" alt=""/></div>
+<map name="class_c_c_task_a02e1d408a24914ec29d9c92221242360_icgraph" id="class_c_c_task_a02e1d408a24914ec29d9c92221242360_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="213,71,440,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="507,122,656,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="489,5,674,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="723,71,893,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="942,96,989,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -916,7 +1415,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopEvent of the device </p><dl class="section see"><dt>See also</dt><dd>stopEvent, <a class="el" href="device_scheduler_8h.html#a3b65133bb9997cd1ccf311af0927fc9e">event</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00160">160</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00187">187</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_aa0990c484fc7906532dbe99a2077471a_icgraph.png" border="0" usemap="#class_c_c_task_aa0990c484fc7906532dbe99a2077471a_icgraph" alt=""/></div>
+<map name="class_c_c_task_aa0990c484fc7906532dbe99a2077471a_icgraph" id="class_c_c_task_aa0990c484fc7906532dbe99a2077471a_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="211,71,437,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="504,122,653,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="486,5,671,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="721,71,890,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="939,96,986,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -934,7 +1447,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the startTime of the device </p><dl class="section see"><dt>See also</dt><dd>startTime; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00161">161</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00178">178</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a40b46a4d7c44e9333297c492dd4337d4_icgraph.png" border="0" usemap="#class_c_c_task_a40b46a4d7c44e9333297c492dd4337d4_icgraph" alt=""/></div>
+<map name="class_c_c_task_a40b46a4d7c44e9333297c492dd4337d4_icgraph" id="class_c_c_task_a40b46a4d7c44e9333297c492dd4337d4_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="208,71,435,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="501,122,651,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="483,5,669,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="718,71,887,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="937,96,983,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -952,43 +1479,219 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the timeOut of the device </p><dl class="section see"><dt>See also</dt><dd>timeOut; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00162">162</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00188">188</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_af70ccc239b58b682c398fe5888d2d65a_icgraph.png" border="0" usemap="#class_c_c_task_af70ccc239b58b682c398fe5888d2d65a_icgraph" alt=""/></div>
+<map name="class_c_c_task_af70ccc239b58b682c398fe5888d2d65a_icgraph" id="class_c_c_task_af70ccc239b58b682c398fe5888d2d65a_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="197,71,424,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="491,122,640,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="473,5,658,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="707,71,877,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="926,96,973,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a37493764244232f197e48900e359a17d"></a>
+<a class="anchor" id="a132f5787365ab949ebc78c08a399fd15"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> * CCTask::getStartButton </td>
+          <td class="memname"><a class="el" href="class_c_c_control.html">CCControl</a> * CCTask::getStartControl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Getter method for getting the startButton of the device </p><dl class="section see"><dt>See also</dt><dd>startButton; </dd></dl>
+<p>Getter method for getting the startControl of the device </p><dl class="section see"><dt>See also</dt><dd>startControl; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00163">163</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00179">179</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a132f5787365ab949ebc78c08a399fd15_icgraph.png" border="0" usemap="#class_c_c_task_a132f5787365ab949ebc78c08a399fd15_icgraph" alt=""/></div>
+<map name="class_c_c_task_a132f5787365ab949ebc78c08a399fd15_icgraph" id="class_c_c_task_a132f5787365ab949ebc78c08a399fd15_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="221,71,448,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="515,122,664,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="497,5,682,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="731,71,901,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="950,96,997,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="ab69fc459d51506f87c0dce74aaf6e5d9"></a>
+<a class="anchor" id="a185a2c7ce285426f6c9b06c530f01cbf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_c_control_button.html">CCControlButton</a> * CCTask::getStopButton </td>
+          <td class="memname"><a class="el" href="class_c_c_control.html">CCControl</a> * CCTask::getStopControl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Getter method for getting the stopButton of the device </p><dl class="section see"><dt>See also</dt><dd>stopButton; </dd></dl>
+<p>Getter method for getting the stopControl of the device </p><dl class="section see"><dt>See also</dt><dd>stopControl; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00164">164</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00189">189</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a185a2c7ce285426f6c9b06c530f01cbf_icgraph.png" border="0" usemap="#class_c_c_task_a185a2c7ce285426f6c9b06c530f01cbf_icgraph" alt=""/></div>
+<map name="class_c_c_task_a185a2c7ce285426f6c9b06c530f01cbf_icgraph" id="class_c_c_task_a185a2c7ce285426f6c9b06c530f01cbf_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="257,5,413,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="251,70,418,111"/>
+<area shape="rect" id="node4" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="221,136,448,163"/>
+<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="515,187,664,229"/>
+<area shape="rect" id="node9" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="235,237,434,264"/>
+<area shape="rect" id="node5" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="497,70,682,111"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="731,136,901,163"/>
+<area shape="rect" id="node7" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="950,161,997,188"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abc68639838bfd0353aaeec60b085cb18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CCTask::getStartControlTarget </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Getter method for getting the target value of startControl </p><dl class="section see"><dt>See also</dt><dd>startControlTarget; </dd></dl>
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00180">180</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_abc68639838bfd0353aaeec60b085cb18_icgraph.png" border="0" usemap="#class_c_c_task_abc68639838bfd0353aaeec60b085cb18_icgraph" alt=""/></div>
+<map name="class_c_c_task_abc68639838bfd0353aaeec60b085cb18_icgraph" id="class_c_c_task_abc68639838bfd0353aaeec60b085cb18_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="259,71,485,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="552,122,701,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="534,5,719,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="769,71,938,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="987,96,1034,123"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab69e443132911d86729ef481ea1336e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CCTask::getStopControlTarget </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Getter method for getting the target value of stopControl </p><dl class="section see"><dt>See also</dt><dd>startControlTarget; </dd></dl>
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00190">190</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ab69e443132911d86729ef481ea1336e4_icgraph.png" border="0" usemap="#class_c_c_task_ab69e443132911d86729ef481ea1336e4_icgraph" alt=""/></div>
+<map name="class_c_c_task_ab69e443132911d86729ef481ea1336e4_icgraph" id="class_c_c_task_ab69e443132911d86729ef481ea1336e4_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="294,5,450,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="289,70,455,111"/>
+<area shape="rect" id="node4" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="259,136,485,163"/>
+<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="552,187,701,229"/>
+<area shape="rect" id="node9" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="273,237,471,264"/>
+<area shape="rect" id="node5" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="534,70,719,111"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="769,136,938,163"/>
+<area shape="rect" id="node7" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="987,161,1034,188"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8cdf336a59900f9c2049304c4b36dc4d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> CCTask::getStartControlComparing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Getter method for getting the comparing mode between the target value and the state of startControl </p><dl class="section see"><dt>See also</dt><dd>startControlTarget; </dd></dl>
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00181">181</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a8cdf336a59900f9c2049304c4b36dc4d_icgraph.png" border="0" usemap="#class_c_c_task_a8cdf336a59900f9c2049304c4b36dc4d_icgraph" alt=""/></div>
+<map name="class_c_c_task_a8cdf336a59900f9c2049304c4b36dc4d_icgraph" id="class_c_c_task_a8cdf336a59900f9c2049304c4b36dc4d_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="285,71,512,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="579,122,728,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="561,5,746,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="795,71,965,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="1014,96,1061,123"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c5b5764df1e91e0ba182cfd197978dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#af630707b6eb4252a9c96db80b6723ba8">comparingMode</a> CCTask::getStopControlComparing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Getter method for getting the comparing mode between the target value and the state of stopControl </p><dl class="section see"><dt>See also</dt><dd>startControlTarget; </dd></dl>
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00191">191</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a3c5b5764df1e91e0ba182cfd197978dc_icgraph.png" border="0" usemap="#class_c_c_task_a3c5b5764df1e91e0ba182cfd197978dc_icgraph" alt=""/></div>
+<map name="class_c_c_task_a3c5b5764df1e91e0ba182cfd197978dc_icgraph" id="class_c_c_task_a3c5b5764df1e91e0ba182cfd197978dc_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="285,71,512,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="579,122,728,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="561,5,746,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="795,71,965,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="1014,96,1061,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1006,7 +1709,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the startTriggerDevice of the device </p><dl class="section see"><dt>See also</dt><dd>startTriggerDevice; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00165">165</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00182">182</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a7f471d2eefa91f32eec0706116a5d344_icgraph.png" border="0" usemap="#class_c_c_task_a7f471d2eefa91f32eec0706116a5d344_icgraph" alt=""/></div>
+<map name="class_c_c_task_a7f471d2eefa91f32eec0706116a5d344_icgraph" id="class_c_c_task_a7f471d2eefa91f32eec0706116a5d344_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="261,71,488,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="555,122,704,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="537,5,722,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="771,71,941,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="990,96,1037,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1024,16 +1741,30 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopTriggerDevice of the device </p><dl class="section see"><dt>See also</dt><dd>stopTriggerDevice; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00166">166</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00192">192</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_aa6771fd2f3acffe10f5dba92ef31bc9e_icgraph.png" border="0" usemap="#class_c_c_task_aa6771fd2f3acffe10f5dba92ef31bc9e_icgraph" alt=""/></div>
+<map name="class_c_c_task_aa6771fd2f3acffe10f5dba92ef31bc9e_icgraph" id="class_c_c_task_aa6771fd2f3acffe10f5dba92ef31bc9e_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="261,71,488,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="555,122,704,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="537,5,722,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="771,71,941,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="990,96,1037,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a6efe72eba17b94bb641e5c21eb7b8e6b"></a>
+<a class="anchor" id="a0f5725114e1658d82cba4f9b85e1d695"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a> CCTask::getStartTriggerTaskID </td>
+          <td class="memname">unsigned int CCTask::getStartTriggerTaskID </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1042,16 +1773,30 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the startTriggerTask of the device </p><dl class="section see"><dt>See also</dt><dd>startTriggerTask; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00167">167</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00183">183</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a0f5725114e1658d82cba4f9b85e1d695_icgraph.png" border="0" usemap="#class_c_c_task_a0f5725114e1658d82cba4f9b85e1d695_icgraph" alt=""/></div>
+<map name="class_c_c_task_a0f5725114e1658d82cba4f9b85e1d695_icgraph" id="class_c_c_task_a0f5725114e1658d82cba4f9b85e1d695_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="264,71,491,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="557,122,707,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="539,5,725,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="774,71,943,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="993,96,1039,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a399fb35e13db12a83d7b10ba9f103fab"></a>
+<a class="anchor" id="aca423d2312b1facbc526498232d76c38"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="device_scheduler_8h.html#a5e07717dde6367fc26c245e64619b767">scheduledTask</a> CCTask::getStopTriggerTaskID </td>
+          <td class="memname">unsigned int CCTask::getStopTriggerTaskID </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1060,7 +1805,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopTriggerTask of the device </p><dl class="section see"><dt>See also</dt><dd>stopTriggerTask; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00168">168</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00193">193</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_aca423d2312b1facbc526498232d76c38_icgraph.png" border="0" usemap="#class_c_c_task_aca423d2312b1facbc526498232d76c38_icgraph" alt=""/></div>
+<map name="class_c_c_task_aca423d2312b1facbc526498232d76c38_icgraph" id="class_c_c_task_aca423d2312b1facbc526498232d76c38_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="261,71,488,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="555,122,704,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="537,5,722,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="771,71,941,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="990,96,1037,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1078,7 +1837,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the startTriggerPosition of the device </p><dl class="section see"><dt>See also</dt><dd>startTriggerPosition; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00169">169</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00184">184</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a1127f3a2d71334b3f6a4c669b9e4e515_icgraph.png" border="0" usemap="#class_c_c_task_a1127f3a2d71334b3f6a4c669b9e4e515_icgraph" alt=""/></div>
+<map name="class_c_c_task_a1127f3a2d71334b3f6a4c669b9e4e515_icgraph" id="class_c_c_task_a1127f3a2d71334b3f6a4c669b9e4e515_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="267,71,493,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="560,122,709,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="542,5,727,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="777,71,946,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="995,96,1042,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1096,7 +1869,21 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopTriggerPosition of the device </p><dl class="section see"><dt>See also</dt><dd>stopTriggerPosition; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00170">170</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00194">194</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_aedad4e84cf68b45503c64858a179fe17_icgraph.png" border="0" usemap="#class_c_c_task_aedad4e84cf68b45503c64858a179fe17_icgraph" alt=""/></div>
+<map name="class_c_c_task_aedad4e84cf68b45503c64858a179fe17_icgraph" id="class_c_c_task_aedad4e84cf68b45503c64858a179fe17_icgraph">
+<area shape="rect" id="node2" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="267,71,493,97"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="560,122,709,163"/>
+<area shape="rect" id="node3" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="542,5,727,46"/>
+<area shape="rect" id="node4" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="777,71,946,97"/>
+<area shape="rect" id="node5" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="995,96,1042,123"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1114,43 +1901,61 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopping of the device </p><dl class="section see"><dt>See also</dt><dd>stopping, <a class="el" href="device_scheduler_8h.html#a82b311bea6cf44d0e38e302ad9457af9">stoppingMode</a>; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00171">171</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00196">196</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_adeb53bd7a8530664d41c837b56e1f6a9_icgraph.png" border="0" usemap="#class_c_c_task_adeb53bd7a8530664d41c837b56e1f6a9_icgraph" alt=""/></div>
+<map name="class_c_c_task_adeb53bd7a8530664d41c837b56e1f6a9_icgraph" id="class_c_c_task_adeb53bd7a8530664d41c837b56e1f6a9_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="238,5,394,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="233,70,399,111"/>
+<area shape="rect" id="node4" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="203,136,429,163"/>
+<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="496,187,645,229"/>
+<area shape="rect" id="node9" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="217,237,415,264"/>
+<area shape="rect" id="node10" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="211,288,421,315"/>
+<area shape="rect" id="node5" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="478,70,663,111"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="713,136,882,163"/>
+<area shape="rect" id="node7" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="931,161,978,188"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a9dfdffff7887b3add46100c18fcf3bf2"></a>
+<a class="anchor" id="a9634d50406e3dca8460da7fead59780f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCTask::getSwitchTaskPromptly </td>
+          <td class="memname"><a class="el" href="device_scheduler_8h.html#ae04df4138739e425344296dc412f5d78">switchingMode</a> CCTask::getSwitching </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Getter method for getting the switchTaskPromptly bit of the device </p><dl class="section see"><dt>See also</dt><dd>switchTaskPromptly; </dd></dl>
+<p>Getter method for getting the switching bit of the device </p><dl class="section see"><dt>See also</dt><dd>switching; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00172">172</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00197">197</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a9634d50406e3dca8460da7fead59780f_icgraph.png" border="0" usemap="#class_c_c_task_a9634d50406e3dca8460da7fead59780f_icgraph" alt=""/></div>
+<map name="class_c_c_task_a9634d50406e3dca8460da7fead59780f_icgraph" id="class_c_c_task_a9634d50406e3dca8460da7fead59780f_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="243,5,399,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="238,70,405,111"/>
+<area shape="rect" id="node4" href="class_c_c_device_flow.html#ac9cfe20bf4b63493f0048b04fd808cd1" title="CCDeviceFlow::handlePreparation" alt="" coords="208,136,435,163"/>
+<area shape="rect" id="node8" href="class_c_c_device_scheduler.html#aa521398436dfb95e4c4a083b3c1257ca" title="CCDeviceScheduler::\llistAllTasks" alt="" coords="501,187,651,229"/>
+<area shape="rect" id="node9" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="222,237,421,264"/>
+<area shape="rect" id="node10" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="216,288,427,315"/>
+<area shape="rect" id="node5" href="class_c_c_device_flow.html#aabd38162795a0268d6c500d06058019b" title="CCDeviceFlow::handleStop\lEvent" alt="" coords="483,70,669,111"/>
+<area shape="rect" id="node6" href="class_c_c_device_scheduler.html#a7726135e466f76eeefe1ec1cc342a8ae" title="CCDeviceScheduler::run" alt="" coords="718,136,887,163"/>
+<area shape="rect" id="node7" href="voice_o_graph_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="937,161,983,188"/>
+</map>
 </div>
-</div>
-<a class="anchor" id="ae426bf01916a341542a29ec4b366becd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned char CCTask::getSensor </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the sensor pin of the device </p><dl class="section see"><dt>See also</dt><dd>sensor; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00173">173</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+</p>
 
 </div>
 </div>
@@ -1168,25 +1973,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the sensor value to initiate the dynamical stop of the device </p><dl class="section see"><dt>See also</dt><dd>initiatePerformanceValue; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00174">174</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00199">199</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a2e7743d8376f8949c185d7b45e67a31c_icgraph.png" border="0" usemap="#class_c_c_task_a2e7743d8376f8949c185d7b45e67a31c_icgraph" alt=""/></div>
+<map name="class_c_c_task_a2e7743d8376f8949c185d7b45e67a31c_icgraph" id="class_c_c_task_a2e7743d8376f8949c185d7b45e67a31c_icgraph">
+<area shape="rect" id="node2" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="267,12,466,39"/>
+</map>
 </div>
-</div>
-<a class="anchor" id="a8474734915bf4e23ab1a8591a42dd419"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">signed int CCTask::getTargetValue </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Getter method for getting the target sensor value of the device </p><dl class="section see"><dt>See also</dt><dd>targetValue; </dd></dl>
-
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00175">175</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+</p>
 
 </div>
 </div>
@@ -1204,7 +2001,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the stopping performance of the device </p><dl class="section see"><dt>See also</dt><dd>stopPerformance; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00176">176</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00200">200</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a34582c1fe444862ce5403388d15f58d3_icgraph.png" border="0" usemap="#class_c_c_task_a34582c1fe444862ce5403388d15f58d3_icgraph" alt=""/></div>
+<map name="class_c_c_task_a34582c1fe444862ce5403388d15f58d3_icgraph" id="class_c_c_task_a34582c1fe444862ce5403388d15f58d3_icgraph">
+<area shape="rect" id="node2" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="254,5,453,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1222,7 +2029,20 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the approximation value of the device </p><dl class="section see"><dt>See also</dt><dd>approximation; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00177">177</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00201">201</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a5a45ee07d4fefd7be6e73dd8c4f224ff_icgraph.png" border="0" usemap="#class_c_c_task_a5a45ee07d4fefd7be6e73dd8c4f224ff_icgraph" alt=""/></div>
+<map name="class_c_c_task_a5a45ee07d4fefd7be6e73dd8c4f224ff_icgraph" id="class_c_c_task_a5a45ee07d4fefd7be6e73dd8c4f224ff_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="262,5,418,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="257,70,423,111"/>
+<area shape="rect" id="node4" href="class_c_c_servo_device.html#aa84f8e9b2151898c0abaddbf8637af0b" title="CCServoDevice::prepareTask" alt="" coords="241,136,439,163"/>
+<area shape="rect" id="node5" href="class_c_c_stepper_device.html#ab38eef4f452df8c49bcc5b564b011930" title="CCStepperDevice::prepareTask" alt="" coords="235,187,445,213"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1240,7 +2060,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the approximationCurve value of this task </p><dl class="section see"><dt>See also</dt><dd>approximationCurve; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00178">178</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00202">202</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_a56c206f19a30b43c1e1d46cd7cdde503_icgraph.png" border="0" usemap="#class_c_c_task_a56c206f19a30b43c1e1d46cd7cdde503_icgraph" alt=""/></div>
+<map name="class_c_c_task_a56c206f19a30b43c1e1d46cd7cdde503_icgraph" id="class_c_c_task_a56c206f19a30b43c1e1d46cd7cdde503_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="241,5,397,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="235,70,402,111"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1258,16 +2089,27 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the approximation value of this task </p><dl class="section see"><dt>See also</dt><dd>gap; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00179">179</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00203">203</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_c_c_task_ab424626a60eeab18ebd1098269416234_icgraph.png" border="0" usemap="#class_c_c_task_ab424626a60eeab18ebd1098269416234_icgraph" alt=""/></div>
+<map name="class_c_c_task_ab424626a60eeab18ebd1098269416234_icgraph" id="class_c_c_task_ab424626a60eeab18ebd1098269416234_icgraph">
+<area shape="rect" id="node2" href="class_c_c_dc_controller_device.html#aec75a074bdd779d38a1c6b90deb92e77" title="CCDcControllerDevice\l::prepareTask" alt="" coords="182,5,338,46"/>
+<area shape="rect" id="node3" href="class_c_c_dc_controller_device__full_bridge.html#a85a1e15970a0e18a14e83be73b983ab2" title="CCDcControllerDevice\l_fullBridge::prepareTask" alt="" coords="177,70,343,111"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
-<a class="anchor" id="a8dda2c917f1238b155290dee4828187b"></a>
+<a class="anchor" id="a9f40986d01e73e857859d33523f6d3d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boolean CCTask::getReversedApproximation </td>
+          <td class="memname">bool CCTask::getReversedApproximation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1276,7 +2118,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Getter method for getting the direction of the approximation value of this task </p><dl class="section see"><dt>See also</dt><dd>approximationCurve; </dd></dl>
 
-<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00180">180</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00204">204</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9d6ac4c805f45fda45817d25ed5acc50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CCTask::setVerbosity </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>verbosity</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_c_c_task_8cpp_source.html#l00207">207</a> of file <a class="el" href="_c_c_task_8cpp_source.html">CCTask.cpp</a>.</p>
 
 </div>
 </div>

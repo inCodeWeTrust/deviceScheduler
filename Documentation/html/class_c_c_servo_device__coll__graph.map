@@ -1,4 +1,6 @@
 <map id="CCServoDevice" name="CCServoDevice">
-<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="23,96,105,123"/>
-<area shape="rect" id="node3" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="29,5,99,32"/>
+<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="23,277,105,304"/>
+<area shape="rect" id="node3" href="$class_c_c_control.html" title="Class for physical interaction to control the workflow. " alt="" coords="22,187,105,213"/>
+<area shape="rect" id="node4" href="$class_c_c_device_flow.html" title="CCDeviceFlow" alt="" coords="9,96,119,123"/>
+<area shape="rect" id="node5" href="$class_c_c_task.html" title="Class for tasks to be executed. " alt="" coords="29,5,99,32"/>
 </map>

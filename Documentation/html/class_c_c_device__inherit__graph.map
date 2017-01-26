@@ -1,9 +1,10 @@
 <map id="CCDevice" name="CCDevice">
 <area shape="rect" id="node2" href="$class_c_c_dc_controller_device.html" title="Device class for devices controlled by PWM&#45;signals or spimply switched on and off target: duty cycle ..." alt="" coords="137,16,293,43"/>
 <area shape="rect" id="node4" href="$class_c_c_servo_device.html" title="Device class for servo motor devices. " alt="" coords="156,71,273,97"/>
-<area shape="rect" id="node6" href="$class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="150,121,279,148"/>
-<area shape="rect" id="node3" href="$class_c_c_dc_controller_device__full_bridge.html" title="Device class for full&#45;controlled full&#45;Bridge devices controlled by PWM&#45;signals or spimply switched on..." alt="" coords="357,5,513,46"/>
-<area shape="rect" id="node5" href="$class_c_c_servo_device__cross.html" title="Device class for two servo motor devices, working in counterrotation. " alt="" coords="357,71,513,97"/>
-<area shape="rect" id="node7" href="$class_c_c_stepper_device___a4988.html" title="Device class for stepper motor devices using a A4988 or similar stepper driver. " alt="" coords="347,121,522,148"/>
-<area shape="rect" id="node8" href="$class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="341,172,528,199"/>
+<area shape="rect" id="node6" href="$class_c_c_stepper_device.html" title="Device class for stepper motor devices. " alt="" coords="150,147,279,173"/>
+<area shape="rect" id="node3" href="$class_c_c_dc_controller_device__full_bridge.html" title="Device class for full&#45;controlled full&#45;Bridge devices controlled by PWM&#45;signals or spimply switched on..." alt="" coords="361,5,517,46"/>
+<area shape="rect" id="node5" href="$class_c_c_servo_device__cross.html" title="Device class for two servo motor devices, working in counterrotation. " alt="" coords="361,71,517,97"/>
+<area shape="rect" id="node7" href="$class_c_c_stepper_device___a4988.html" title="Device class for stepper motor devices using a A4988 or similar stepper driver. " alt="" coords="351,121,526,148"/>
+<area shape="rect" id="node8" href="$class_c_c_stepper_device___t_m_c2130.html" title="Device class for stepper motor devices driven by a TMC2130 stepper driver. " alt="" coords="341,172,536,199"/>
+<area shape="rect" id="node9" href="$class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="345,223,532,249"/>
 </map>

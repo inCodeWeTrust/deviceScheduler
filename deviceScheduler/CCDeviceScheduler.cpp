@@ -271,34 +271,34 @@ CCDevice* CCDeviceScheduler::addStepper_TMC260(String deviceName, unsigned int s
     return device[countOfDevices - 1];
     
 }
-CCDevice* CCDeviceScheduler::addStepper_TMC2130(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) {
-    
-    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
-    
-    device[countOfDevices] = new CCStepperDevice_TMC2130(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, chipSelect_pin, currentMax);
-    
-    
-    if (verbosity & BASICOUTPUT) {
-        Serial.print(F("[CCDeviceScheduler]: "));
-        Serial.print(schedulerName);
-        Serial.print(F(": provided "));
-        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
-        Serial.print(F(": "));
-        Serial.println(device[countOfDevices]->getName());
-    }
-    if (verbosity & MEMORYDEBUG) {
-        Serial.print(F("[CCDeviceScheduler]: "));
-        Serial.print(schedulerName);
-        Serial.print(F(": CCStepperDevice_TMC2130 constructed at $"));
-        Serial.println((long)device[countOfDevices], HEX);
-    }
-    
-    countOfDevices++;
-    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
-    
-    return device[countOfDevices - 1];
-    
-}
+//CCDevice* CCDeviceScheduler::addStepper_TMC2130(String deviceName, unsigned int step_pin, unsigned int dir_pin, unsigned int enable_pin, unsigned int stepsPerRotation, unsigned int chipSelect_pin, unsigned int currentMax) {
+//    
+//    if (countOfDevices >= MAX_DEVICES_PER_SCHEDULER - 1) return NULL;
+//    
+//    device[countOfDevices] = new CCStepperDevice_TMC2130(deviceName, step_pin, dir_pin, enable_pin, stepsPerRotation, chipSelect_pin, currentMax);
+//    
+//    
+//    if (verbosity & BASICOUTPUT) {
+//        Serial.print(F("[CCDeviceScheduler]: "));
+//        Serial.print(schedulerName);
+//        Serial.print(F(": provided "));
+//        Serial.print(getLiteralOfDeviceType(device[countOfDevices]->getType()));
+//        Serial.print(F(": "));
+//        Serial.println(device[countOfDevices]->getName());
+//    }
+//    if (verbosity & MEMORYDEBUG) {
+//        Serial.print(F("[CCDeviceScheduler]: "));
+//        Serial.print(schedulerName);
+//        Serial.print(F(": CCStepperDevice_TMC2130 constructed at $"));
+//        Serial.println((long)device[countOfDevices], HEX);
+//    }
+//    
+//    countOfDevices++;
+//    //	Device index = countOfDevices - 1 [8 Devices: index of first: 0, last: 7]
+//    
+//    return device[countOfDevices - 1];
+//    
+//}
 
 
 void CCDeviceScheduler::listDevices() {
@@ -490,7 +490,13 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             
             //	prepare first Tasks
             currentDeviceFlow->setProposedTaskID(0);
-            currentDeviceFlow->handlePreparation(0);
+            info = currentDeviceFlow->handlePreparation(0);
+            
+            Serial.print(F("??? test startEvent: "));
+            Serial.print(currentDeviceFlow->getStartEvent());
+            Serial.println(F(" ???"));
+
+            
             currentDeviceFlow->setProposedTaskID(currentDeviceFlow->getTaskPointer() + 1);
             currentDevice->setState(PENDING_MOVES);
 
@@ -501,7 +507,13 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 Serial.print(F(": setup first Task: current Position: "));
                 Serial.print(currentDevice->getCurrentPosition());
                 Serial.print(F(", target: "));
-                Serial.println(currentDevice->getTarget());
+                Serial.print(currentDevice->getTarget());
+                Serial.print(F(", startEvent: "));
+                Serial.print(currentDeviceFlow->getStartEvent());
+
+//                Serial.print(getLiteralOfTaskEvent(currentDeviceFlow->getStartEvent()));
+                Serial.print(F(", result: "));
+                Serial.println(getLiteralOfDeviceInfo(info));
             }
             
 #ifdef ARDUINO_SIMULATION
@@ -869,6 +881,10 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
         
         for (unsigned int df = 0; df < currentWorkflow->getCountOfDeviceFlows(); df++) {
             currentDevice = currentWorkflow->deviceFlow[df]->getDevice();
+            if (currentDevice->getState() > SLEEPING) {
+                currentDevice->stopTask();
+                currentDevice->finishTask();
+            }
             currentDevice->disableDevice();
             currentDevice->detachDevice();
         }

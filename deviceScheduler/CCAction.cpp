@@ -140,7 +140,11 @@ void CCAction::evokeJumpToTask(CCDeviceFlow* targetDeviceFlow, CCTask* validTask
 
 void CCAction::evokeBreak(CCDeviceFlow* targetDeviceFlow, CCTask* validTask) {
     this->targetDeviceFlow = targetDeviceFlow;
-    this->validTaskID = validTask->getTaskID();
+    if (validTask == NULL) {
+        this->validTaskID = -1;
+    } else {
+        this->validTaskID = validTask->getTaskID();
+    }
     this->targetAction = BREAK_LOOP_ACTION;
     this->followingTaskID = 1;
     

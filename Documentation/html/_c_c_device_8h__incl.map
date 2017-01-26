@@ -1,4 +1,7 @@
 <map id="CCDevice.h" name="CCDevice.h">
-<area shape="rect" id="node2" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="39,155,171,181"/>
-<area shape="rect" id="node5" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="105,80,185,107"/>
+<area shape="rect" id="node2" href="$device_scheduler_8h.html" title="deviceScheduler.h" alt="" coords="139,304,271,331"/>
+<area shape="rect" id="node5" href="$_c_c_task_8h.html" title="CCTask.h" alt="" coords="165,229,245,256"/>
+<area shape="rect" id="node6" href="$_c_c_control_8h.html" title="CCControl.h" alt="" coords="145,80,241,107"/>
+<area shape="rect" id="node7" href="$_c_c_device_flow_8h.html" title="CCDeviceFlow.h" alt="" coords="53,155,173,181"/>
+<area shape="rect" id="node8" href="$_c_c_action_8h.html" title="CCAction.h" alt="" coords="250,155,339,181"/>
 </map>

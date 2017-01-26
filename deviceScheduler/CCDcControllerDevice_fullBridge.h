@@ -45,6 +45,8 @@ public:
     ~CCDcControllerDevice_fullBridge();
     
     
+    void                disableDevice();
+        
     deviceInfoCode      reviewValues(CCTask* nextTask);
     void                prepareNextTask();
     deviceInfoCode      prepareTask(CCTask* nextTask);

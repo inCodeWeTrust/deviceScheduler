@@ -416,7 +416,7 @@ void CCStepperDevice::startTask() {                                 // start thi
         stepExpiration = 0;                                         // set time for next step to 0 (= now)
         t0 = micros() & 0x7fffffff;                                 // remember starting time (but be aware of overflows)
         
-//        operateTask();                                              // do first step and calculate time for next step
+        operateTask();                                              // do first step and calculate time for next step
     }
 }
 

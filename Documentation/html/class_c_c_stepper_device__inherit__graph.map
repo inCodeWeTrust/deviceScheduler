@@ -1,5 +1,6 @@
 <map id="CCStepperDevice" name="CCStepperDevice">
 <area shape="rect" id="node3" href="$class_c_c_stepper_device___a4988.html" title="Device class for stepper motor devices using a A4988 or similar stepper driver. " alt="" coords="5,155,179,181"/>
-<area shape="rect" id="node4" href="$class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="204,155,391,181"/>
-<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="153,5,236,32"/>
+<area shape="rect" id="node4" href="$class_c_c_stepper_device___t_m_c2130.html" title="Device class for stepper motor devices driven by a TMC2130 stepper driver. " alt="" coords="204,155,399,181"/>
+<area shape="rect" id="node5" href="$class_c_c_stepper_device___t_m_c260.html" title="Device class for stepper motor devices driven by a TMC260 stepper driver. " alt="" coords="423,155,609,181"/>
+<area shape="rect" id="node2" href="$class_c_c_device.html" title="base class for all devices This baseclass holds all parameters, that are common for all devices..." alt="" coords="260,5,343,32"/>
 </map>

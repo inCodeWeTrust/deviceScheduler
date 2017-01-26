@@ -12,15 +12,39 @@
 
 void CCDeviceFlow::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
-CCDeviceFlow::CCDeviceFlow(const String deviceFlowName, const unsigned int deviceFlowID, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) : deviceFlowName(deviceFlowName), deviceFlowID(deviceFlowID), defaultVelocity(defaultVelocity), defaultAcceleration(defaultAcceleration), defaultDeceleration(defaultDeceleration) {
+CCDeviceFlow::CCDeviceFlow(const String deviceFlowName, const unsigned int deviceFlowID, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) : deviceFlowName(deviceFlowName), deviceFlowID(deviceFlowID), device(device), defaultVelocity(defaultVelocity), defaultAcceleration(defaultAcceleration), defaultDeceleration(defaultDeceleration) {
 
     this->verbosity = NO_OUTPUT;
     
     
-    this->device = device;
     this->countOfTasks = 0;
-    
     this->taskPointer = 0;
+    this->proposedTaskID = 0;
+    this->startProposedTaskAutomatically = false;
+
+    
+    this->startEvent = NONE;
+    this->startTime = 0;
+    this->startControl = NULL;
+    this->startControlTarget = 0;
+    this->startTriggerDevice = NULL;
+    this->startTriggerTaskID = 0;
+    this->startTriggerPosition = 0;
+    this->startDelay = 0;
+
+    this->stopEvent = NONE;
+    this->timeout = 0;
+    this->stopControl = NULL;
+    this->stopControlTarget = 0;
+    this->stopTriggerDevice = NULL;
+    this->stopTriggerTaskID = 0;
+    this->stopTriggerPosition = 0;
+    this->stopping = STOP_NORMAL;
+    this->switching = NO_SWITCHING;
+ 
+    
+    
+    
     
     //        Serial.print(F("[CCDeviceFlow]: setup deviceFlow "));
     //        Serial.print(this->deviceFlowName);
@@ -221,6 +245,32 @@ void CCDeviceFlow::getTask(unsigned int t) {
         Serial.println();
     }
 }
+//void CCDeviceFlow::getCurrentTask() {
+//        Serial.print(F("[CCDeviceFlow]: "));
+//        Serial.print(deviceFlowName);
+//        Serial.print(F(": currentTask "));
+//        Serial.print(taskPointer);
+//        Serial.print(F(": target: "));
+//        Serial.print(target);
+//        Serial.print(F(", velocity: "));
+//        Serial.print(task[t]->getVelocity());
+//        Serial.print(F(", acceleration: "));
+//        Serial.print(task[t]->getAcceleration());
+//        Serial.print(F(", deceleration: "));
+//        Serial.print(task[t]->getDeceleration());
+//        Serial.print(F(", startDelay: "));
+//        Serial.print(task[t]->getStartDelay());
+//        if (task[t]->getMoveRelativ()) {
+//            Serial.print(F(", move relativ"));
+//        }
+//        if (task[t]->getPositionReset() == RESET_ON_START) {
+//            Serial.print(F(", with position reset on start"));
+//        } else if (task[t]->getPositionReset() == RESET_ON_COMPLETION) {
+//            Serial.print(F(", with position reset on completion"));
+//        }
+//        Serial.println();
+//    }
+//}
 
 
 deviceInfoCode CCDeviceFlow::handlePreparation(long taskTime) {
@@ -239,8 +289,23 @@ deviceInfoCode CCDeviceFlow::handlePreparation(long taskTime) {
                 return TASK_DELAYED;
                 
             default:
-                startEvent = task[proposedTaskID]->getStartEvent();
-                startTime = task[proposedTaskID]->getStartTime();
+                this->startEvent = task[proposedTaskID]->getStartEvent();
+                
+                Serial.print(F("### proposed task: "));
+                Serial.print(proposedTaskID);
+                Serial.print(F(": task's start event: "));
+                Serial.print(task[proposedTaskID]->getStartEvent());
+                Serial.print(F(", my start event: "));
+                Serial.print(startEvent);
+                Serial.print(F(", getStartEvent: "));
+                Serial.print(getStartEvent());
+                Serial.print(F(" writing to: "));
+                Serial.print((long)&this->startEvent);
+
+                Serial.println(F(" ###"));
+                
+                
+                this->startTime = task[proposedTaskID]->getStartTime();
                 startControl = task[proposedTaskID]->getStartControl();
                 startControlComparing = task[proposedTaskID]->getStartControlComparing();
                 startControlTarget = task[proposedTaskID]->getStartControlTarget();
@@ -437,7 +502,7 @@ const unsigned int CCDeviceFlow::getID() const {return deviceFlowID;}
 const String CCDeviceFlow::getName() const {return deviceFlowName;}
 
 unsigned int CCDeviceFlow::getCountOfTasks(){return countOfTasks;}
-void CCDeviceFlow::setCountOfTasks(unsigned int count){countOfTasks = count;}
+void CCDeviceFlow::setCountOfTasks(unsigned int count){this->countOfTasks = count;}
 int CCDeviceFlow::getTaskPointer(){return taskPointer;}
 void CCDeviceFlow::setTaskPointer(int pointer){this->taskPointer = pointer;}
 void CCDeviceFlow::increaseTaskPointer(){this->taskPointer++;}
@@ -446,10 +511,17 @@ void CCDeviceFlow::setProposedTaskID(unsigned int proposedTaskID) {this->propose
 bool CCDeviceFlow::getStartProposedTaskAutomatically() {return startProposedTaskAutomatically;}
 void CCDeviceFlow::setStartProposedTaskAutomatically(bool startProposedTaskAutomatically) {this->startProposedTaskAutomatically = startProposedTaskAutomatically;}
 
-event CCDeviceFlow::getStartEvent(){return startEvent;}
-void CCDeviceFlow::setStartEvent(event startEvent) {startEvent = startEvent;}
+event CCDeviceFlow::getStartEvent(){
+//    Serial.print(F(" - report startEvent: "));
+//    Serial.print(this->startEvent);
+//    Serial.print(F(" reading: "));
+//    Serial.print((long)&this->startEvent);
+//    Serial.print(F(" - "));
+    return this->startEvent;
+}
+void CCDeviceFlow::setStartEvent(event startEvent) {this->startEvent = startEvent;}
 unsigned long CCDeviceFlow::getStartTime(){return startTime;}
-void CCDeviceFlow::setStartTime(unsigned long startTime){startTime = startTime;}
+void CCDeviceFlow::setStartTime(unsigned long startTime){this->startTime = startTime;}
 CCControl* CCDeviceFlow::getStartControl(){return startControl;}
 int CCDeviceFlow::getStartControlTarget(){return startControlTarget;}
 comparingMode CCDeviceFlow::getStartControlComparing(){return startControlComparing;}
@@ -457,10 +529,10 @@ CCDevice* CCDeviceFlow::getStartTriggerDevice(){return startTriggerDevice;}
 unsigned int CCDeviceFlow::getStartTriggerTaskID(){return startTriggerTaskID;}
 signed long CCDeviceFlow::getStartTriggerPosition(){return startTriggerPosition;}
 unsigned long CCDeviceFlow::getStartDelay(){return startDelay;}
-void CCDeviceFlow::setStartDelay(unsigned long delay) {startDelay = delay;}
+void CCDeviceFlow::setStartDelay(unsigned long delay) {this->startDelay = delay;}
 
 event CCDeviceFlow::getStopEvent(){return stopEvent;}
-void CCDeviceFlow::setStopEvent(event stopEvent) {stopEvent = stopEvent;};
+void CCDeviceFlow::setStopEvent(event stopEvent) {this->stopEvent = stopEvent;};
 unsigned long CCDeviceFlow::getTimeout(){return timeout;}
 CCControl* CCDeviceFlow::getStopControl(){return stopControl;}
 int CCDeviceFlow::getStopControlTarget(){return stopControlTarget;}
@@ -470,9 +542,9 @@ unsigned int CCDeviceFlow::getStopTriggerTaskID(){return stopTriggerTaskID;}
 signed long CCDeviceFlow::getStopTriggerPosition(){return stopTriggerPosition;}
 
 stoppingMode CCDeviceFlow::getStopping(){return stopping;}
-void CCDeviceFlow::setStopping(stoppingMode mode) {stopping = stopping;}
+void CCDeviceFlow::setStopping(stoppingMode mode) {this->stopping = stopping;}
 switchingMode CCDeviceFlow::getSwitching(){return switching;}
-void CCDeviceFlow::setSwitching(switchingMode switchPromptly) {switchPromptly = switchPromptly;}
+void CCDeviceFlow::setSwitching(switchingMode switchPromptly) {this->switching = switchPromptly;}
 
 
 float CCDeviceFlow::getDefaultVelocity(){return defaultVelocity;}
