@@ -11,10 +11,8 @@
 
 
 
-CCDevice::CCDevice(const String deviceName, const deviceType type) : deviceName(deviceName), type(type) {
-    this->state = SLEEPING;
-    this->currentPosition = 0;
-//    this->pr
+CCDevice::CCDevice(const String deviceName, const deviceType type) : deviceName(deviceName), type(type), currentTaskID(0), currentPosition(0), directionDown(false), state(SLEEPING), target(0), velocity(0), acceleration(0), deceleration(0), moveRelativ(false), positionReset(NO_RESET), stopping(STOP_NORMAL), switching(NO_SWITCHING), approximationTarget(0), approximationControl(NULL), initiatePerformanceValue(0), stopPerformance(0), approximationCurve(0), gap(0), reversedApproximation(false), approximation(SKIP_APPROXIMATION_MODERATE), targetReachedCounter(0) {
+
 
     this->verbosity = NO_OUTPUT;
 }

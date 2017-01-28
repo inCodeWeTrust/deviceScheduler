@@ -12,38 +12,9 @@
 
 void CCDeviceFlow::setVerbosity(int verbosity) {this->verbosity = verbosity;}
 
-CCDeviceFlow::CCDeviceFlow(const String deviceFlowName, const unsigned int deviceFlowID, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) : deviceFlowName(deviceFlowName), deviceFlowID(deviceFlowID), device(device), defaultVelocity(defaultVelocity), defaultAcceleration(defaultAcceleration), defaultDeceleration(defaultDeceleration) {
+CCDeviceFlow::CCDeviceFlow(const String deviceFlowName, const unsigned int deviceFlowID, CCDevice* device, float defaultVelocity, float defaultAcceleration, float defaultDeceleration) : deviceFlowName(deviceFlowName), deviceFlowID(deviceFlowID), device(device), defaultVelocity(defaultVelocity), defaultAcceleration(defaultAcceleration), defaultDeceleration(defaultDeceleration), countOfTasks(0), taskPointer(0), proposedTaskID(0), startProposedTaskAutomatically(false), startEvent(NONE), startTime(0), startControl(NULL), startControlTarget(0), startControlComparing(IS), startTriggerDevice(NULL), startTriggerTaskID(0), startTriggerPosition(0), startDelay(0), stopEvent(NONE), timeout(0), stopControl(NULL), stopControlTarget(0), stopControlComparing(IS), stopTriggerDevice(NULL), stopTriggerTaskID(0), stopTriggerPosition(0), stopping(STOP_NORMAL), switching(NO_SWITCHING) {
 
     this->verbosity = NO_OUTPUT;
-    
-    
-    this->countOfTasks = 0;
-    this->taskPointer = 0;
-    this->proposedTaskID = 0;
-    this->startProposedTaskAutomatically = false;
-
-    
-    this->startEvent = NONE;
-    this->startTime = 0;
-    this->startControl = NULL;
-    this->startControlTarget = 0;
-    this->startTriggerDevice = NULL;
-    this->startTriggerTaskID = 0;
-    this->startTriggerPosition = 0;
-    this->startDelay = 0;
-
-    this->stopEvent = NONE;
-    this->timeout = 0;
-    this->stopControl = NULL;
-    this->stopControlTarget = 0;
-    this->stopTriggerDevice = NULL;
-    this->stopTriggerTaskID = 0;
-    this->stopTriggerPosition = 0;
-    this->stopping = STOP_NORMAL;
-    this->switching = NO_SWITCHING;
- 
-    
-    
     
     
     //        Serial.print(F("[CCDeviceFlow]: setup deviceFlow "));
@@ -289,23 +260,8 @@ deviceInfoCode CCDeviceFlow::handlePreparation(long taskTime) {
                 return TASK_DELAYED;
                 
             default:
-                this->startEvent = task[proposedTaskID]->getStartEvent();
-                
-                Serial.print(F("### proposed task: "));
-                Serial.print(proposedTaskID);
-                Serial.print(F(": task's start event: "));
-                Serial.print(task[proposedTaskID]->getStartEvent());
-                Serial.print(F(", my start event: "));
-                Serial.print(startEvent);
-                Serial.print(F(", getStartEvent: "));
-                Serial.print(getStartEvent());
-                Serial.print(F(" writing to: "));
-                Serial.print((long)&this->startEvent);
-
-                Serial.println(F(" ###"));
-                
-                
-                this->startTime = task[proposedTaskID]->getStartTime();
+                startEvent = task[proposedTaskID]->getStartEvent();
+                startTime = task[proposedTaskID]->getStartTime();
                 startControl = task[proposedTaskID]->getStartControl();
                 startControlComparing = task[proposedTaskID]->getStartControlComparing();
                 startControlTarget = task[proposedTaskID]->getStartControlTarget();
@@ -511,14 +467,7 @@ void CCDeviceFlow::setProposedTaskID(unsigned int proposedTaskID) {this->propose
 bool CCDeviceFlow::getStartProposedTaskAutomatically() {return startProposedTaskAutomatically;}
 void CCDeviceFlow::setStartProposedTaskAutomatically(bool startProposedTaskAutomatically) {this->startProposedTaskAutomatically = startProposedTaskAutomatically;}
 
-event CCDeviceFlow::getStartEvent(){
-//    Serial.print(F(" - report startEvent: "));
-//    Serial.print(this->startEvent);
-//    Serial.print(F(" reading: "));
-//    Serial.print((long)&this->startEvent);
-//    Serial.print(F(" - "));
-    return this->startEvent;
-}
+event CCDeviceFlow::getStartEvent(){return this->startEvent;}
 void CCDeviceFlow::setStartEvent(event startEvent) {this->startEvent = startEvent;}
 unsigned long CCDeviceFlow::getStartTime(){return startTime;}
 void CCDeviceFlow::setStartTime(unsigned long startTime){this->startTime = startTime;}

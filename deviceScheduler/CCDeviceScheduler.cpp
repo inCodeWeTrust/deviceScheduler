@@ -14,12 +14,12 @@
 
 
 
-CCDeviceScheduler::CCDeviceScheduler(const String schedulerName) : schedulerName(schedulerName) {
+CCDeviceScheduler::CCDeviceScheduler(const String schedulerName) : schedulerName(schedulerName), countOfDevices(0), countOfControls(0), currentDeviceFlow(NULL), triggerDeviceFlow_start(NULL), triggerDeviceFlow_stop(NULL), currentTask(NULL), currentDevice(NULL), triggerDevice_start(NULL), triggerDevice_stop(NULL), currentButton(NULL), currentAction(NULL), currentFlowControl(NULL), notificationCode(0), notificationText("init scheduler") {
+
     this->verbosity = NO_OUTPUT;
     
-    this->countOfDevices = 0;
-    this->countOfControls = 0;
     
+  
     //        Serial.print(F("[CCDeviceScheduler]: setup scheduler "));
     //        Serial.print(schedulerName);
     //        if (verbosity & MEMORYDEBUG) {
@@ -492,11 +492,6 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
             currentDeviceFlow->setProposedTaskID(0);
             info = currentDeviceFlow->handlePreparation(0);
             
-            Serial.print(F("??? test startEvent: "));
-            Serial.print(currentDeviceFlow->getStartEvent());
-            Serial.println(F(" ???"));
-
-            
             currentDeviceFlow->setProposedTaskID(currentDeviceFlow->getTaskPointer() + 1);
             currentDevice->setState(PENDING_MOVES);
 
@@ -509,9 +504,7 @@ int CCDeviceScheduler::run(CCWorkflow* currentWorkflow) {
                 Serial.print(F(", target: "));
                 Serial.print(currentDevice->getTarget());
                 Serial.print(F(", startEvent: "));
-                Serial.print(currentDeviceFlow->getStartEvent());
-
-//                Serial.print(getLiteralOfTaskEvent(currentDeviceFlow->getStartEvent()));
+                Serial.print(getLiteralOfTaskEvent(currentDeviceFlow->getStartEvent()));
                 Serial.print(F(", result: "));
                 Serial.println(getLiteralOfDeviceInfo(info));
             }

@@ -111,7 +111,7 @@ protected:
     switchingMode       switching;
     
     
-    signed int approximationTarget;
+    int approximationTarget;
     CCControl* approximationControl;
     
     

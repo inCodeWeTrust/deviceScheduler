@@ -17,7 +17,7 @@
 /// |   A4  |               |  move cat forward button      |
 /// |   A5  |               |  move cat back button         |
 /// |   A6  |               |  match head impact switch     |
-/// |   A7  |               |  loading button               |
+/// |   A7  |               |  SCHEDULERS_TASKVIEW_SHOW_PIN |
 /// |   A8  |  <header 01>  |  head inclination sensor      |
 /// |   A9  |  <header 01>  |  arm turn sensor              |
 /// |  A10  |  <header 02>  |                               |
@@ -31,7 +31,7 @@
 /// |-------|---------------|-------------------------------|
 /// |    0  |               |  <serial communication>       |
 /// |    1  |               |  <serial communication>       |
-/// |    2  |               |  SCHEDULERS_TASKVIEW_SHOW_PIN |
+/// |    2  |               |                               |
 /// |    3  |               |  TMC260 table enable          |
 /// |    4  |               |  TMC260 table step            |
 /// |    5  |               |  TMC260 table dir             |
@@ -56,7 +56,7 @@
 /// |   18  |  <header 03>  |  headLeftServo                |
 /// |   19  |  <header 03>  |  headRightServo               |
 /// |   20  |  <header 03>  |                               |
-/// |   21  |  <header 03>  |  vacuumclaner                 |
+/// |   21  |  <header 03>  |                               |
 ///
 /// | pin   | header        | function                      | | pin   | header        | function                      |
 /// |-------|---------------|-------------------------------|-|-------|---------------|-------------------------------|
@@ -66,21 +66,26 @@
 /// |   28  |   A4988 01    |  stockStepper microstep 00    | |   29  |   A4988 02    |  conveyorStepper microstep 02 |
 /// |   30  |   A4988 01    |  stockStepper microstep 01    | |   31  |   A4988 02    |  conveyorStepper step         |
 /// |   32  |   A4988 01    |  stockStepper microstep 02    | |   33  |   A4988 02    |  conveyorStepper dir          |
-/// |   34  |   DRV8825     |  tableStepper dir             | |   35  |               |  Controller Lamp yellow       |
-/// |   36  |   DRV8825     |  tableStepper step            | |   37  |               |  Controller Lamp red          |
-/// |   38  |   DRV8825     |  tableStepper enable          | |   39  |               |                               |
-/// |   40  |   DRV8825     |  tableStepper microstep 00    | |   41  |               |                               |
+/// |   34  |   DRV8825     |  tableStepper dir             | |   35  |  <header 20>  |  vacuumclaner                 |
+/// |   36  |   DRV8825     |  tableStepper step            | |   37  |  <header 20>  |                               |
+/// |   38  |   DRV8825     |  tableStepper enable          | |   39  |  <header 21>  |  Controller Lamp red          |
+/// |   40  |   DRV8825     |  tableStepper microstep 00    | |   41  |  <header 21>  |  Controller Lamp yellow       |
 /// |   42  |   DRV8825     |  tableStepper microstep 01    | |   43  |  <header 10>  |                               |
 /// |   44  |   DRV8825     |  tableStepper microstep 02    | |   45  |  <header 10>  |  stockBottomButton            |
 /// |   46  |               |                               | |   47  |  <header 10>  |  stockTopButton               |
-/// |   48  |               |  songEndButton                | |   49  |  <header 10>  |  recordAvaliableButton        |
-/// |   50  |               |  startCuttingButton           | |   51  |  <header 10>  |  bridgeEndButton              |
-/// |   52  |               |  fetchRecordButton            | |   53  |  <header 10>  |  bridgeParkButton             |
+/// |   48  |  <header 21>  |  songEndButton                | |   49  |  <header 10>  |  recordAvaliableButton        |
+/// |   50  |  <header 21>  |  startCuttingButton           | |   51  |  <header 10>  |  bridgeEndButton              |
+/// |   52  |  <header 21>  |  fetchRecordButton            | |   53  |  <header 10>  |  bridgeParkButton             |
+///
+/// header 21:
+/// upper: [left] | GND (bl)            | powerOn/reset (or) | yellow lamp (ye) | red lamp (gr)       | [right]
+/// lower: [left] | loading button (wh) | start button (gy)  | stop button (pi) | emergency stop (rd) | [right]
+///
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-#define SCHEDULERS_TASKVIEW_SHOW_PIN        69
+#define SCHEDULERS_TASKVIEW_SHOW_PIN        A7
 #define SCHEDULERS_TASKVIEW_SHOW            LOW
 #define SCHEDULERS_TASKVIEW_HIDE            HIGH
 
@@ -228,23 +233,24 @@
 
 #define VACCUUMCLEANER_NAME                     "vacuumCleaner"
 
-#define VACCUUMCLEANER_PIN                      21
+//#define VACCUUMCLEANER_PIN                      21
+#define VACCUUMCLEANER_PIN                      35
 #define VACCUUMCLEANER_ACTIVE                    HIGH
-
-
-
-#define CONTROLLER_LAMP_YELLOW_NAME             "yellowLamp"
-
-#define CONTROLLER_LAMP_YELLOW_PIN              35
-#define CONTROLLER_LAMP_YELLOW_ON               LOW
-#define CONTROLLER_LAMP_YELLOW_OFF              HIGH
 
 
 
 #define CONTROLLER_LAMP_RED_NAME                "redLamp"
 
-#define CONTROLLER_LAMP_RED_PIN                 37
-#define CONTROLLER_LAMP_RED_ON                  LOW
+#define CONTROLLER_LAMP_RED_PIN                 39
+#define CONTROLLER_LAMP_RED_ON                  HIGH
+
+
+
+#define CONTROLLER_LAMP_YELLOW_NAME             "yellowLamp"
+
+#define CONTROLLER_LAMP_YELLOW_PIN              41
+#define CONTROLLER_LAMP_YELLOW_ON               HIGH
+#define CONTROLLER_LAMP_YELLOW_OFF              LOW
 
 
 

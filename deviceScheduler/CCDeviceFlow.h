@@ -72,13 +72,13 @@ class CCDeviceFlow {
     CCControl*          startControl;
     
     /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the comparing mode between the given target and the state of the CControl device. [values: IS, IS_NOT, IS_GREATER_THEN, IS_SMALLER_THEN]
-    comparingMode       startControlComparing;
-    
-    /// Parameter, related to the task controll of the current task.
     /// This parameter holds the target value of the CControl device to start this task.
     int                 startControlTarget;
     
+    /// Parameter, related to the task controll of the current task.
+    /// This parameter holds the comparing mode between the given target and the state of the CControl device. [values: IS, IS_NOT, IS_GREATER_THEN, IS_SMALLER_THEN]
+    comparingMode       startControlComparing;
+
     CCDevice*               startTriggerDevice;
     unsigned int            startTriggerTaskID;
     signed long             startTriggerPosition;
@@ -110,12 +110,12 @@ class CCDeviceFlow {
     CCControl*          stopControl;
     
     /// Parameter, related to the task controll of the current task.
-    /// This parameter holds the comparing mode between the given target and the state of the CControl device. [values: IS, IS_NOT, IS_GREATER_THEN, IS_SMALLER_THEN]
-    comparingMode       stopControlComparing;
-    
-    /// Parameter, related to the task controll of the current task.
     /// This parameter holds the target value of the CControl device to stop this task.
     int                 stopControlTarget;
+    
+    /// Parameter, related to the task controll of the current task.
+    /// This parameter holds the comparing mode between the given target and the state of the CControl device. [values: IS, IS_NOT, IS_GREATER_THEN, IS_SMALLER_THEN]
+    comparingMode       stopControlComparing;
     
     CCDevice*               stopTriggerDevice;
     unsigned int            stopTriggerTaskID;

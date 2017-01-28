@@ -9,33 +9,10 @@
 #include "CCTask.h"
 
 
-CCTask::CCTask(const unsigned int taskID, float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) : taskID(taskID), target(target), velocity(velocity), acceleration(acceleration), deceleration(deceleration), moveRelativ(moveRelativ), positionReset(positionReset) {
+CCTask::CCTask(const unsigned int taskID, float target, float velocity, float acceleration, float deceleration, bool moveRelativ, positionResetMode positionReset) : taskID(taskID), target(target), velocity(velocity), acceleration(acceleration), deceleration(deceleration), moveRelativ(moveRelativ), positionReset(positionReset), startEvent(NONE), startTime(0), startControl(NULL), startControlTarget(0), startControlComparing(IS), startTriggerDevice(NULL), startTriggerTaskID(0), startTriggerPosition(0), startDelay(0), stopEvent(NONE), timeout(0), stopControl(NULL), stopControlTarget(0), stopControlComparing(IS), stopTriggerDevice(NULL), stopTriggerTaskID(0), stopTriggerPosition(0), stopping(STOP_NORMAL), switching(NO_SWITCHING), initiatePerformanceValue(0), stopPerformance(0), approximation(SKIP_APPROXIMATION_MODERATE), approximationCurve(0), gap(0), reversedApproximation(false) {
 
     this->verbosity = NO_OUTPUT;
     
-    this->startDelay = 0;
-    this->startEvent = NONE;
-    this->stopEvent = NONE;
-    this->switching = NO_SWITCHING;
-    this->startTime = 0;
-    this->timeout = 0;
-    this->startControl = NULL;
-    this->stopControl = NULL;
-    this->startControlTarget = 0;
-    this->stopControlTarget = 0;
-    this->startTriggerDevice = NULL;
-    this->stopTriggerDevice = NULL;
-    this->startTriggerTaskID = 0;
-    this->stopTriggerTaskID = 0;
-    this->startTriggerPosition = 0;
-    this->stopTriggerPosition = 0;
-    this->stopping = STOP_NORMAL;
-    this->initiatePerformanceValue = 0;
-    this->stopPerformance = 0;
-    this->approximationCurve = 0;
-    this->gap = 0;
-    this->reversedApproximation = false;
-
     //        Serial.print(F("[CCTask]: setup task "));
     //        Serial.print((int)taskID);
     //        if (verbosity & MEMORYDEBUG) {

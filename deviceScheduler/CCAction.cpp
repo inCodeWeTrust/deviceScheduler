@@ -10,15 +10,10 @@
 
 
 
-CCAction::CCAction(const String actionName, workflowInfoCode workflowInfo) : actionName(actionName) {
+CCAction::CCAction(const String actionName, workflowInfoCode workflowInfo) : actionName(actionName), workflowInfo(workflowInfo), validTaskID(-1), targetAction(DO_NOTHING), stopping(STOP_NORMAL), switching(NO_SWITCHING), followingTaskID(-1), notificationCode(0), notificationText("init action"), actionDone(false), riseActionRepeatedly(false), targetDeviceFlow(NULL) {
+
     this->verbosity = NO_OUTPUT;
     
-    this->workflowInfo = workflowInfo;
-    this->targetDeviceFlow = NULL;
-    this->validTaskID = -1;
-    this->targetAction = DO_NOTHING;
-    this->followingTaskID = -1;
-    this->actionDone = false;
     
     //        Serial.print(F("[CCAction]: setup action "));
     //        Serial.print(actionName);

@@ -39,8 +39,8 @@ class CCTask {
     event                   startEvent;
     unsigned long           startTime;
     CCControl*              startControl;
-    comparingMode           startControlComparing;
     int                     startControlTarget;
+    comparingMode           startControlComparing;
     CCDevice*               startTriggerDevice;
     unsigned int            startTriggerTaskID;
     signed long             startTriggerPosition;
@@ -49,8 +49,8 @@ class CCTask {
     event                   stopEvent;
     unsigned long           timeout;
     CCControl*              stopControl;
-    comparingMode           stopControlComparing;
     int                     stopControlTarget;
+    comparingMode           stopControlComparing;
     CCDevice*               stopTriggerDevice;
     unsigned int            stopTriggerTaskID;
     signed long             stopTriggerPosition;
@@ -60,10 +60,10 @@ class CCTask {
     
     signed int              initiatePerformanceValue;
     float                   stopPerformance;
+    approximationMode       approximation;
     unsigned int            approximationCurve;
     unsigned int            gap;
     bool                    reversedApproximation;
-    approximationMode       approximation;
     
     
     int                     verbosity;

@@ -848,7 +848,7 @@ void loop() {
         
         //  lift up the new records, terminated by recordAvailableButton
         CCTask* supplyNewRecords;
-        supplyNewRecords = stockStepperFlow->addTaskMoveRelativ(400000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
+        supplyNewRecords = stockStepperFlow->addTaskMoveRelativ(800000, STOCK_SUPPLY_RECORD_SPEED, STOCK_SUPPLY_RECORD_ACCEL);
         supplyNewRecords->startByControl(loadingButtonControl, IS, FETCH_RECORD_BUTTON_PRESSED);
         supplyNewRecords->stopByControl(recordAvailableControl, IS, RECORD_IS_AVAILABLE);
         

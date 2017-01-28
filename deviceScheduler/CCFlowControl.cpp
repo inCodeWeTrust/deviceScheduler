@@ -13,12 +13,10 @@
 
 
 
-CCFlowControl::CCFlowControl(const String controlName, const CCControl* control, const comparingMode comparing, const int target) : controlName(controlName), control(control), comparing(comparing), target(target) {
+CCFlowControl::CCFlowControl(const String controlName, const CCControl* control, const comparingMode comparing, const int target) : controlName(controlName), control(control), comparing(comparing), target(target), countOfActions(0) {
    
     this->verbosity = NO_OUTPUT;
-    
-    this->countOfActions = 0;
-    
+        
     //        Serial.print(F("[CCFlowControl]: setup flowControl "));
     //        Serial.print(controlName);
     //        if (verbosity & MEMORYDEBUG) {

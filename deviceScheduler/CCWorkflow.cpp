@@ -9,7 +9,7 @@
 #include "CCWorkflow.h"
 
 
-CCWorkflow::CCWorkflow(const String workflowName) : workflowName(workflowName) {
+CCWorkflow::CCWorkflow(const String workflowName) : workflowName(workflowName), countOfDeviceFlows(0), countOfControls(0), countOfFlowControls(0) {
 
     this->verbosity = NO_OUTPUT;
     
