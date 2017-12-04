@@ -92,13 +92,13 @@
 
 //  ################## Hardware Cutting Parameters #########################################################
 
-#define SONGGROOVE_PITCH                    0.15
+#define SONGGROOVE_PITCH                    0.1
 #define STARTGROOVE_PITCH                   1
 #define STARTGROOVE_RANGE                   4
 #define ENDGROOVE_PITCH                     4.8
 #define ENDGROOVE_RANGE_MIN                 10
 #define CUTTING_RANGE                       38
-#define PLAYTIME_MINUTES                    4
+#define PLAYTIME_MINUTES                    6
 
 #define ADJUSTGROOVEPITCH_TO_PLAYTIME       false
 
