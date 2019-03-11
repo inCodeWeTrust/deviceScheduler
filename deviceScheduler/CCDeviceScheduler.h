@@ -86,7 +86,6 @@ class CCDeviceScheduler {
     String  notificationText;
     
     
-    
     String getLiteralOfDeviceType(deviceType t);
     String getLiteralOfControllerType(controlType t);
     String getLiteralOfTaskEvent(event e);
@@ -240,6 +239,9 @@ public:
     int run(CCWorkflow* currentWorkflow);
     
     void setVerbosity(int verbosity);
+    
+    bool getValueOfTriStateSwitch(unsigned int triStateSwitchPin, bool probedState);
+
 
 };
 

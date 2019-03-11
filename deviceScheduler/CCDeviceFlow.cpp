@@ -185,7 +185,7 @@ CCTask* CCDeviceFlow::registerTask(float target, float velocity, float accelerat
 }
 
 void CCDeviceFlow::getAllTasks() {
-    for (int t = 0; t < taskPointer; t++) {
+    for (unsigned int t = 0; t < countOfTasks; t++) {
         getTask(t);
     }
 }
@@ -216,6 +216,15 @@ void CCDeviceFlow::getTask(unsigned int t) {
         Serial.println();
     }
 }
+
+void CCDeviceFlow::deleteAllTasks() {
+    for (unsigned int t = 0; t < countOfTasks; t++) {
+        delete task[t];
+    }
+    countOfTasks = 0;
+}
+
+
 //void CCDeviceFlow::getCurrentTask() {
 //        Serial.print(F("[CCDeviceFlow]: "));
 //        Serial.print(deviceFlowName);

@@ -8,24 +8,24 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /// @page pinmap pin mapping on the Arduino Due
 ///
-/// | pin   | header        | function                      |
-/// |-------|---------------|-------------------------------|
-/// |   A0  |               |                               |
-/// |   A1  |               |                               |
-/// |   A2  |               |  evaluateButtons switch       |
-/// |   A3  |               |  move cat manually switch     |
-/// |   A4  |               |  move cat forward button      |
-/// |   A5  |               |  move cat back button         |
-/// |   A6  |               |  match head impact switch     |
-/// |   A7  |               |  SCHEDULERS_TASKVIEW_SHOW_PIN |
-/// |   A8  |  <header 01>  |  head inclination sensor      |
-/// |   A9  |  <header 01>  |  arm turn sensor              |
-/// |  A10  |  <header 02>  |                               |
-/// |  A11  |  <header 02>  |                               |
-/// |  A12  |  <header 02>  |                               |
-/// |  A13  |  <header 02>  |                               |
-/// |  A14  |               |                               |
-/// |  A15  |               |                               |
+/// | pin   | header        | function                               |
+/// |-------|---------------|----------------------------------------|
+/// |   A0  |  <switch 00>  |  skip unloading (up)                   |
+/// |   A1  |  <switch 01>  |  7" (down), postcard (up)              |
+/// |   A2  |  <switch 02>  |  45rpm (down), 33rmp (up)              |
+/// |   A3  |  <switch 03>  |  move cat manually (up)                |
+/// |   A4  |  <switch 10>  |  eval.Buttons (left)                   |
+/// |   A5  |  <switch 11>  |  run table (left), head impact (right) |
+/// |   A6  |               |                                        |
+/// |   A7  |               |  SCHEDULERS_TASKVIEW_SHOW_PIN          |
+/// |   A8  |  <header 01>  |  head inclination sensor               |
+/// |   A9  |  <header 01>  |  arm turn sensor                       |
+/// |  A10  |  <header 02>  |                                        |
+/// |  A11  |  <header 02>  |                                        |
+/// |  A12  |  <header 02>  |                                        |
+/// |  A13  |  <header 02>  |                                        |
+/// |  A14  |               |                                        |
+/// |  A15  |               |                                        |
 ///
 /// | pin   | header        | function                      |
 /// |-------|---------------|-------------------------------|
@@ -92,15 +92,30 @@
 
 //  ################## Hardware Cutting Parameters #########################################################
 
-#define SONGGROOVE_PITCH                    0.1
-#define STARTGROOVE_PITCH                   1
-#define STARTGROOVE_RANGE                   4
-#define ENDGROOVE_PITCH                     4.8
-#define ENDGROOVE_RANGE_MIN                 10
-#define CUTTING_RANGE                       38
-#define PLAYTIME_MINUTES                    6
+#define SONGGROOVE_PITCH_7INCH              0.1
+#define STARTGROOVE_PITCH_7INCH             1
+#define STARTGROOVE_RANGE_7INCH             4
+#define ENDGROOVE_PITCH_7INCH               4.8
+#define ENDGROOVE_RANGE_MIN_7INCH           10
+#define CUTTING_RANGE_7INCH                 38
+#define PLAYTIME_MINUTES_7INCH              6
 
-#define ADJUSTGROOVEPITCH_TO_PLAYTIME       false
+#define ADJUSTGROOVEPITCH_TO_PLAYTIME_7INCH false
+
+#define CAT_CUTTING_START_POSITION_7INCH    131600
+
+
+#define SONGGROOVE_PITCH_CARD               0.1
+#define STARTGROOVE_PITCH_CARD              1
+#define STARTGROOVE_RANGE_CARD              4
+#define ENDGROOVE_PITCH_CARD                4.8
+#define ENDGROOVE_RANGE_MIN_CARD            10
+#define CUTTING_RANGE_CARD                  38
+#define PLAYTIME_MINUTES_CARD               6
+
+#define ADJUSTGROOVEPITCH_TO_PLAYTIME_CARD  false
+
+#define CAT_CUTTING_START_POSITION_CARD     131600
 
 
 
@@ -298,14 +313,37 @@
 
 
 #define START_CUTTING_BUTTON                50
+#define START_CUTTING_BUTTON_PRESSED        LOW
 
 #define FETCH_RECORD_BUTTON_NAME            "fetchRecordButton"
 #define FETCH_RECORD_BUTTON_PIN             52
 #define FETCH_RECORD_BUTTON_MODE            INPUT_PULLUP
 #define FETCH_RECORD_BUTTON_PRESSED         LOW
 
+
+#define SKIP_UNLOADING_SWITCH               A0
+#define SKIP_UNLOADING_ACTIVE               LOW
+
+#define CUTTING_POSTCARDS_SWITCH            A1
+#define CUTTING_POSTCARDS_ACTIVE            LOW
+
+#define ROTATIONSPEED_33_SWITCH             A2
+#define ROTATIONSPEED_33_ACTIVE             LOW
+
+#define MOVE_CAT_MANUALLY_SWITCH            A3
+#define MOVE_CAT_MANUALLY_ACTIVE            LOW
+
 #define EVALUATE_BUTTONS_SWITCH             A4
+#define EVALUATE_BUTTONS_ACTIVE             LOW
+
+// #define undefinedFunction_SWITCH            A4
+// #define undefinedFunction_ACTIVE            HIGH
+
+#define RUN_TABLE_SWITCH                    A5
+#define RUN_TABLE_ACTIVE                    LOW
+
 #define MATCH_HEADIMPACT_SWITCH             A5
+#define MATCH_HEADIMPACT_ACTIVE             HIGH
 
 
 #define HEAD_INCLINATION_SENSOR_NAME        "headInclinationSensor"
@@ -328,7 +366,6 @@
 
 #define SPIN_PITCH_M6                       1
 #define CAT_DRIVE_RATIO                     36.0 / 60.0 * 22.0 / 60.0
-#define RECORD_TURNS_PER_MINUTE             45
 
 #define TABLE_DRIVE_RATIO                   123.0 / 28.0
 
@@ -403,7 +440,6 @@
 #define CAT_ACCEL_VERY_HIGH             4800
 
 #define CAT_PARK_POSITION               0
-#define CAT_CUTTING_START_POSITION      131600
 
 #define CONVEYOR_DISTANCE               8400
 #define CONVEYOR_SPEED                  600

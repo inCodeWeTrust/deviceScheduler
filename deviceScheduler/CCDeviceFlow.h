@@ -24,7 +24,7 @@ class CCDeviceFlow {
     const unsigned int  deviceFlowID;
     
     
-    CCDevice*     device;
+    CCDevice*           device;
 
     /// Default parameters for the device.
     /// A value for the device's default velocity is provided here.
@@ -426,7 +426,7 @@ public:
     /// A list with all tasks and bare informations are presented.
     void            getAllTasks();
     
-    
+    void            deleteAllTasks();
 
     void            setVerbosity(int verbosity);
 

@@ -62,17 +62,23 @@ CCStepperDevice::~CCStepperDevice() {
     steppingUnit = NULL;
 }
 
-void CCStepperDevice::attachDevice() {}
-void CCStepperDevice::detachDevice() {}
+void CCStepperDevice::attachDevice() {
+    digitalWrite(enable_pin, LOW);                  // keeping the stepper engaged during whole workflow
+}
+void CCStepperDevice::detachDevice() {
+    digitalWrite(enable_pin, HIGH);                 // disable the stepper motor only when workflow ends
+    digitalWrite(dir_pin, LOW);
+    setupMicroSteppingMode(0);
+}
 
 
 void CCStepperDevice::enableDevice() {
-    digitalWrite(enable_pin, LOW);
+    //    digitalWrite(enable_pin, LOW);                // enable stepper motor before every move
 }
 void CCStepperDevice::disableDevice() {
-    digitalWrite(enable_pin, HIGH);
-    digitalWrite(dir_pin, LOW);
-    setupMicroSteppingMode(0);
+    //    digitalWrite(enable_pin, HIGH);               // disable the stepper motor after every move
+    //    digitalWrite(dir_pin, LOW);
+    //    setupMicroSteppingMode(0);
 }
 
 
