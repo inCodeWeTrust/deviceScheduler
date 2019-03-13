@@ -29,7 +29,7 @@
 
 
 
-// ------------- globals -----------------------------------------------------------------------------------------------------
+// ------------- globals -------------------------------------------------------------------------------------------------------------------------------
 
 /// The Scheduler and it's device array
 
@@ -39,16 +39,16 @@ CCDeviceScheduler   *scheduler;
 
 
 
-/// parameters for cutting
+/// globals for cutting
 
 unsigned long       catCuttingStartPosition, catSongStartPosition, catSongEndPosition, catCuttingEndPosition;
+float               catMotorDegrees_start, catMotorDegrees_song, catMotorDegrees_end;
 float               catMotorSpeed_startGroove, catMotorSpeed_song, catMotorSpeed_endGroove;
-unsigned long       grooves_all;
 float               turnTableStepperDegrees, turnTableStepperSpeed;
 
 
 
-// ------------- prototypes --------------------------------------------------------------------------------------------------
+// ------------- prototypes ----------------------------------------------------------------------------------------------------------------------------
 void setup();
 void calculateCuttingParameters();
 void evaluateButtons();
@@ -61,7 +61,7 @@ extern "C" char *sbrk(int i);
 
 
 
-// ------------- main loop --------------------------------------------------------------------------------------------------
+// ------------- main loop -----------------------------------------------------------------------------------------------------------------------------
 void loop() {
     
     Serial.println(), Serial.println(), Serial.println();
@@ -71,11 +71,11 @@ void loop() {
     
     freeRam();
     
-    // ================================================================================================================================
-    // ================================================================================================================================
-    // ============= create scheduler object: =========================================================================================
-    // ================================================================================================================================
-    // ================================================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= create scheduler object: ==========================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
     
     Serial.print(F("create scheduler: "));
     
@@ -87,11 +87,11 @@ void loop() {
     
     freeRam();
     
-    // ================================================================================================================================
-    // ================================================================================================================================
-    // ============= register devices: ================================================================================================
-    // ================================================================================================================================
-    // ================================================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
+    // ============= register devices: =================================================================================================================
+    // =================================================================================================================================================
+    // =================================================================================================================================================
     
     Serial.print(F("register devices of scheduler "));
     Serial.println(scheduler->getName());
@@ -207,11 +207,11 @@ void loop() {
     freeRam();
     
     
-    // ================================================================================================================================
-    //=================================================================================================================================
-    // ============= register sensors: ================================================================================================
-    // ================================================================================================================================
-    // ================================================================================================================================
+    // ==================================================================================================================================================
+    //===================================================================================================================================================
+    // ============= register sensors: ==================================================================================================================
+    // ==================================================================================================================================================
+    // ==================================================================================================================================================
     
     Serial.print(F("register controls of scheduler "));
     Serial.println(scheduler->getName());
@@ -273,7 +273,7 @@ void loop() {
     
     // =================================================================================================================================================
     // =================================================================================================================================================
-    // ============= register workflows ===========================================================================================================
+    // ============= register workflows ================================================================================================================
     // =================================================================================================================================================
     // =================================================================================================================================================
     
@@ -289,7 +289,7 @@ void loop() {
     
     
     {
-        // ============= devices of initMachine =======================================================================================
+        // ============= devices of initMachine ========================================================================================================
         
         CCDeviceFlow* catStepperFlow = initTheMachine->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
         CCDeviceFlow* headLeftServoFlow = initTheMachine->addDeviceFlow("headLeftServoFlow", headLeftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
@@ -300,7 +300,7 @@ void loop() {
         CCControl* bridgeParkControl = initTheMachine->addControl(bridgeParkButton);
         CCControl* armControl = initTheMachine->addControl(armTurnSensor);
         
-        // ============= tasks of initMachine =========================================================================================
+        // ============= tasks of initMachine ==========================================================================================================
         
         //  drive head (left) to parking position
         CCTask* driveHeadLeftToParkPosition;
@@ -358,7 +358,7 @@ void loop() {
     
     
     {
-        // ============= devices of fetchingRecord: =====================================================================================
+        // ============= devices of fetchingRecord: ====================================================================================================
         
         CCDeviceFlow* liftServoFlow = fetchingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
         CCDeviceFlow* turnStepperFlow = fetchingRecord->addDeviceFlow("turnStepperFlow", turnStepper, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
@@ -376,7 +376,7 @@ void loop() {
         
         
         
-        // ============= tasks of fetchingRecord: =====================================================================================
+        // ============= tasks of fetchingRecord: ======================================================================================================
         
         //  move stock down first
         CCTask* moveStockStepperDown;
@@ -464,7 +464,7 @@ void loop() {
         
         
         
-        // ============= actions of fetchingRecord: =====================================================================================
+        // ============= actions of fetchingRecord: ====================================================================================================
         
         //  cancel fetching if stockBottomButton is pressed while lowering
         CCAction* cancelLoweringOnBottomAction = stockBottomFlowControl->addAction("cancelLoweringOnBottomAction", STOCKBOTTOM_BUTTON_REACHED);
@@ -492,25 +492,20 @@ void loop() {
     // =================================================================================================================================================
     
     CCWorkflow* driveToStartPositionOnly = new CCWorkflow("driveToStartPositionOnly");
-    
+    CCTask* manualDrive_driveToCuttingStartPosition;
+
     
     {
-        // ============= devices of driveToStartPositionOnly: =====================================================================================
+        // ============= devices of driveToStartPositionOnly: ==========================================================================================
         
         CCDeviceFlow* catStepperFlow = driveToStartPositionOnly->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
-        CCDeviceFlow* headLeftServoFlow = driveToStartPositionOnly->addDeviceFlow("headRightServoFlow", headRightServo, LIFT_SPEED_VERY_SLOW, LIFT_ACCEL_VERY_SLOW);
         
-        // ============= tasks of driveToStartPositionOnly: =====================================================================================
+        // ============= tasks of driveToStartPositionOnly: ============================================================================================
         
         //  move to start groove:
-        CCTask* driveToCuttingStartPosition;
-        driveToCuttingStartPosition = catStepperFlow->addTaskWithPositionReset(catCuttingStartPosition);
-        driveToCuttingStartPosition->startByDate(100);
-        
-        //  lower head close to record surface (left servo): start when reached start position of start groove
-        CCTask* lowerHeadLeftForCutting;
-        lowerHeadLeftForCutting = headLeftServoFlow->addTask(HEAD_LEFT_CUT_POSITION);
-        lowerHeadLeftForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+//        CCTask* driveToCuttingStartPosition;
+        manualDrive_driveToCuttingStartPosition = catStepperFlow->addTaskWithPositionReset(catCuttingStartPosition);
+        manualDrive_driveToCuttingStartPosition->startByDate(100);
         
         
         scheduler->reviewTasks(driveToStartPositionOnly);
@@ -523,14 +518,17 @@ void loop() {
     
     
     // =================================================================================================================================================
-    // ============= songCuttingOnly workflow ===========================================================================================================
+    // ============= songCuttingOnly workflow ==========================================================================================================
     // =================================================================================================================================================
     
     CCWorkflow* songCuttingOnly = new CCWorkflow("songCuttingOnly");
-    
+    CCTask* manualDrive_makeStartGroove;
+    CCTask* manualDrive_makeMainGroove;
+    CCTask* manualDrive_makeEndGroove;
+
     
     {
-        // ============= devices of songCuttingOnly: =====================================================================================
+        // ============= devices of songCuttingOnly: ===================================================================================================
         
         CCDeviceFlow* catStepperFlow = songCuttingOnly->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
         CCDeviceFlow* tableStepperFlow = songCuttingOnly->addDeviceFlow("tableStepperFlow", tableStepper);
@@ -549,28 +547,33 @@ void loop() {
         
         
         
-        // ============= tasks of songCuttingOnly: =====================================================================================
+        // ============= tasks of songCuttingOnly: =====================================================================================================
         
         // switch on vacuum device
         CCTask* hooverTheFlake;
         hooverTheFlake = vacuumCleanerFlow->addTask(1.0);
-        hooverTheFlake->startByDate(10);
+        hooverTheFlake->startByDate(6);
         
         //  turn the table:
         CCTask* turnTheTable;
-        turnTheTable = tableStepperFlow->addTaskWithPositionReset(turnTableStepperDegrees + 17200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
-        turnTheTable->startByDate(10);
+        turnTheTable = tableStepperFlow->addTaskWithPositionReset(turnTableStepperDegrees + 37200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
+        turnTheTable->startByDate(8);
         
         //  (1) blink lamp for start cutting very soon:
         CCTask* blinkForCuttingVerySoon;
         blinkForCuttingVerySoon = startingSoonLampFlow->addTask(0.5, 1.0, 0.0);
         blinkForCuttingVerySoon->startByDate(10);
         
+        //  lower head close to record surface (left servo): start when reached start position of start groove
+        CCTask* lowerHeadLeftForCutting;
+        lowerHeadLeftForCutting = headLeftServoFlow->addTask(HEAD_LEFT_CUT_POSITION);
+        lowerHeadLeftForCutting->startByDate(2000);
+        
         //  approximate head to record surface (right servo): start when left servo reached cutting position
         CCTask* approximateHeadRightForCutting;
         approximateHeadRightForCutting = headRightServoFlow->addTask(HEAD_RIGHT_CUT_POSITION);
-        approximateHeadRightForCutting->startByDate(10000);
-        approximateHeadRightForCutting->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_PRECISE);
+        approximateHeadRightForCutting->startByDate(6000);
+        approximateHeadRightForCutting->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_MODERATE);
         //        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
         
         //  (2) blink lamp for start cutting very very soon:
@@ -579,50 +582,50 @@ void loop() {
         blinkForCuttingVerySoon->switchToNextTaskAfterCompletionOf(headRightServo, approximateHeadRightForCutting);
         
         //  make start groove:
-        CCTask* makeStartGroove;
-        makeStartGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
-        makeStartGroove->startByControl(headInclinationControl, IS_SMALLER_THEN, HEAD_INCLINATION_START_CAT);
-        makeStartGroove->switchToNextTaskAtPosition(catSongStartPosition);
+//        CCTask* makeStartGroove;
+        manualDrive_makeStartGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_startGroove, CAT_ACCEL_SLOW);
+        manualDrive_makeStartGroove->startByControl(headInclinationControl, IS_SMALLER_THEN, HEAD_INCLINATION_START_CAT);
+        manualDrive_makeStartGroove->switchToNextTaskAtPosition(catSongStartPosition);
         
         //  (3) keep blinking lamp on for whole cutting process:
         CCTask* keepLampOn;
         keepLampOn = startingSoonLampFlow->addTask(1.0, 1.0, 0.0);
-        blinkForCuttingVeryVerySoon->switchToNextTaskAfterCompletionOf(catStepper, makeStartGroove);
+        blinkForCuttingVeryVerySoon->switchToNextTaskAfterCompletionOf(catStepper, manualDrive_makeStartGroove);
         
         //  make song groove:
-        CCTask* makeMainGroove;
-        makeMainGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_song, CAT_ACCEL_SLOW);
-        makeMainGroove->switchToNextTaskAtPosition(catSongEndPosition);
+//        CCTask* makeMainGroove;
+        manualDrive_makeMainGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_song, CAT_ACCEL_SLOW);
+        manualDrive_makeMainGroove->switchToNextTaskAtPosition(catSongEndPosition);
         
         //  (4) blink lamp for finishing soon:
         CCTask* blinkForFinishingSoon;
         blinkForFinishingSoon = startingSoonLampFlow->addTask(0.9, 0.3, 0.0);
-        keepLampOn->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 10000);
+        keepLampOn->switchToNextTaskByTriggerpositionOf(catStepper, manualDrive_makeMainGroove, catSongEndPosition - 10000);
         
         //  (5) blink lamp for finishing very soon:
         CCTask* blinkForFinishingVerySoon;
         blinkForFinishingVerySoon = startingSoonLampFlow->addTask(0.9, 1.0, 0.0);
-        blinkForFinishingSoon->switchToNextTaskByTriggerpositionOf(catStepper, makeMainGroove, catSongEndPosition - 5000);
+        blinkForFinishingSoon->switchToNextTaskByTriggerpositionOf(catStepper, manualDrive_makeMainGroove, catSongEndPosition - 5000);
         
         //  (5) blink lamp for finishing very soon:
         CCTask* blinkForFinishingVeryVerySoon;
         blinkForFinishingVeryVerySoon = startingSoonLampFlow->addTask(0.9, 3.0, 0.0);
-        blinkForFinishingVerySoon->switchToNextTaskAfterCompletionOf(catStepper, makeMainGroove);
+        blinkForFinishingVerySoon->switchToNextTaskAfterCompletionOf(catStepper, manualDrive_makeMainGroove);
         
         //  make end groove:
-        CCTask* makeEndGroove;
-        makeEndGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_endGroove, CAT_ACCEL_NORMAL);
+//        CCTask* makeEndGroove;
+        manualDrive_makeEndGroove = catStepperFlow->addTask(catCuttingEndPosition, catMotorSpeed_endGroove, CAT_ACCEL_NORMAL);
         
         //  switch off blinking lamp:
-        blinkForFinishingVeryVerySoon->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
+        blinkForFinishingVeryVerySoon->stopAfterCompletionOf(catStepper, manualDrive_makeEndGroove, STOP_IMMEDIATELY);
         
         //  switch off vacuum cleaner
-        hooverTheFlake->stopAfterCompletionOf(catStepper, makeEndGroove, STOP_IMMEDIATELY);
+        hooverTheFlake->stopAfterCompletionOf(catStepper, manualDrive_makeEndGroove, STOP_IMMEDIATELY);
         
         //  lift head after cutting above the record surface:
         CCTask* liftHeadRightAfterCutting;
         liftHeadRightAfterCutting = headRightServoFlow->addTask(HEAD_RIGHT_PARK_POSITION, LIFT_SPEED_FAST, LIFT_ACCEL_SLOW);
-        liftHeadRightAfterCutting->startAfterCompletionOf(catStepper, makeEndGroove);
+        liftHeadRightAfterCutting->startAfterCompletionOf(catStepper, manualDrive_makeEndGroove);
         
         //  lift head into park position:
         CCTask* liftHeadLeftAfterCutting;
@@ -640,11 +643,11 @@ void loop() {
         
         
         
-        // ============= actions of cuttingProcess: =====================================================================================
+        // ============= actions of songCuttingOnly: ==================================================================================================
         
         //  jump over to end groove if songEndButton is pressed
         CCAction* speedUpCatForEndGroove = songEndFlowControl->addAction("speedUpCatAtSongEnd", SONGENDBUTTON_PRESSED);
-        speedUpCatForEndGroove->evokeJumpToTask(catStepperFlow, makeMainGroove, SWITCH_PROMPTLY, makeEndGroove);
+        speedUpCatForEndGroove->evokeJumpToTask(catStepperFlow, manualDrive_makeMainGroove, SWITCH_PROMPTLY, manualDrive_makeEndGroove);
         
         CCAction* songEndBlinking_00 = songEndFlowControl->addAction("songEndBlinking_00", SONGENDBUTTON_PRESSED);
         songEndBlinking_00->evokeJumpToTask(startingSoonLampFlow, keepLampOn, SWITCH_PROMPTLY, blinkForFinishingVeryVerySoon);
@@ -678,13 +681,6 @@ void loop() {
     
     
     
-    
-    
-    
-    
-    
-    
-    
     // =================================================================================================================================================
     // ============= cuttingProcess workflow ===========================================================================================================
     // =================================================================================================================================================
@@ -693,7 +689,7 @@ void loop() {
     
     
     {
-        // ============= devices of cuttingProcess: =====================================================================================
+        // ============= devices of cuttingProcess: ====================================================================================================
         
         CCDeviceFlow* catStepperFlow = cuttingProcess->addDeviceFlow("catStepperFlow", catStepper, CAT_SPEED_HIGH, CAT_ACCEL_HIGH);
         CCDeviceFlow* tableStepperFlow = cuttingProcess->addDeviceFlow("tableStepperFlow", tableStepper);
@@ -712,7 +708,7 @@ void loop() {
         
         
         
-        // ============= tasks of cuttingProcess: =====================================================================================
+        // ============= tasks of cuttingProcess: ======================================================================================================
         
         //  (0) blink lamp for start cutting soon:
         CCTask* blinkForCuttingSoon;
@@ -731,8 +727,8 @@ void loop() {
         
         //  turn the table:
         CCTask* turnTheTable;
-        turnTheTable = tableStepperFlow->addTaskWithPositionReset(turnTableStepperDegrees + 17200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
-        turnTheTable->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, catCuttingStartPosition - 10000);
+        turnTheTable = tableStepperFlow->addTaskWithPositionReset(turnTableStepperDegrees + 27200.0, turnTableStepperSpeed, TABLE_STEP_ACCEL);
+        turnTheTable->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, catCuttingStartPosition - 80000);
         
         //  (1) blink lamp for start cutting very soon:
         CCTask* blinkForCuttingVerySoon;
@@ -742,13 +738,14 @@ void loop() {
         //  lower head close to record surface (left servo): start when reached start position of start groove
         CCTask* lowerHeadLeftForCutting;
         lowerHeadLeftForCutting = headLeftServoFlow->addTask(HEAD_LEFT_CUT_POSITION);
-        lowerHeadLeftForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+        //       lowerHeadLeftForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
+        lowerHeadLeftForCutting->startByTriggerpositionOf(catStepper, driveToCuttingStartPosition, catCuttingStartPosition - 10000);
         
         //  approximate head to record surface (right servo): start when left servo reached cutting position
         CCTask* approximateHeadRightForCutting;
         approximateHeadRightForCutting = headRightServoFlow->addTask(HEAD_RIGHT_CUT_POSITION);
         approximateHeadRightForCutting->startAfterCompletionOf(catStepper, driveToCuttingStartPosition);
-        approximateHeadRightForCutting->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_PRECISE);
+        approximateHeadRightForCutting->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_MODERATE);
         //        cuttingProcess->device[headRightServo]->task[approximateHeadRightForCutting]->stopDynamicallyBySensor(HEAD_INCLINATION_SENSOR, 600, 460, 0.6, SKIP_APPROXIMATION_PRECISE);
         
         //  (2) blink lamp for start cutting very very soon:
@@ -818,7 +815,7 @@ void loop() {
         
         
         
-        // ============= actions of cuttingProcess: =====================================================================================
+        // ============= actions of cuttingProcess: ====================================================================================================
         
         //  jump over to end groove if songEndButton is pressed
         CCAction* speedUpCatForEndGroove = songEndFlowControl->addAction("speedUpCatAtSongEnd", SONGENDBUTTON_PRESSED);
@@ -865,7 +862,7 @@ void loop() {
     
     
     {
-        // ============= devices of ejectingRecord ====================================================================================
+        // ============= devices of ejectingRecord =====================================================================================================
         
         CCDeviceFlow* liftServoFlow = ejectingRecord->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_SLOW, LIFT_ACCEL_SLOW);
         CCDeviceFlow* turnStepperFlow = ejectingRecord->addDeviceFlow("turnStepperFlow", turnStepper, TURN_SPEED_SLOW, TURN_ACCEL_SLOW);
@@ -876,7 +873,7 @@ void loop() {
         
         
         
-        // ============= tasks of ejectingRecord ======================================================================================
+        // ============= tasks of ejectingRecord =======================================================================================================
         
         //  lift grappler for calibrating arm
         CCTask* liftForCalibratingArm;
@@ -986,7 +983,7 @@ void loop() {
     
     {
         
-        // ============= devices of loading ====================================================================================
+        // ============= devices of loading ============================================================================================================
         
         CCDeviceFlow* liftServoFlow = loading->addDeviceFlow("liftServoFlow", liftServo, LIFT_SPEED_FAST, LIFT_ACCEL_FAST);
         CCDeviceFlow* turnStepperFlow = loading->addDeviceFlow("turnStepperFlow", turnStepper, TURN_SPEED_FAST, TURN_ACCEL_FAST);
@@ -1002,7 +999,7 @@ void loop() {
         
         
         
-        // ============= tasks of loading: =====================================================================================
+        // ============= tasks of loading: ============================================================================================================
         
         //  lift grappler
         CCTask* liftForCalibratingArm;
@@ -1067,7 +1064,7 @@ void loop() {
         
         
         
-        // ============= actions of loading: =====================================================================================
+        // ============= actions of loading: ===========================================================================================================
         
         //  stop supplying when stockTopButton is reached
         CCAction* stockEmptyAction = stockTopFlowControl->addAction("stockEmptyAction", STOCKTOP_BUTTON_REACHED);
@@ -1086,12 +1083,11 @@ void loop() {
     
     
     
+    // ================================================================================================================================================
+    // ============= evaluate evaluation switches =====================================================================================================
+    // ================================================================================================================================================
     
-    // ============================================================================================================================
-    // ============= evaluate evaluation switches =====================================================================================
-    // ============================================================================================================================
-    
-    // ============= evaluate evaluateButtons switch: =====================================================================================
+    // ============= evaluate evaluateButtons switch: =================================================================================================
     
     if (scheduler->getValueOfTriStateSwitch(EVALUATE_BUTTONS_SWITCH, EVALUATE_BUTTONS_ACTIVE)) {
         Serial.println();
@@ -1104,7 +1100,7 @@ void loop() {
     }
     
     
-    // ============= evaluate runTable switch: =====================================================================================
+    // ============= evaluate runTable switch: ========================================================================================================
     
     if (scheduler->getValueOfTriStateSwitch(RUN_TABLE_SWITCH, RUN_TABLE_ACTIVE)) {
         Serial.println();
@@ -1164,7 +1160,7 @@ void loop() {
             
             
             
-            // ============= tasks of matchHeadImpact: =====================================================================================
+            // ============= tasks of matchHeadImpact: =================================================================================================
             
             //  move to matchingPosition:
             CCTask* driveToMatchingPosition;
@@ -1185,7 +1181,7 @@ void loop() {
             CCTask* approximateHeadRightForMatching;
             approximateHeadRightForMatching = headRightServoFlow->addTask(HEAD_RIGHT_CUT_POSITION);
             approximateHeadRightForMatching->startAfterCompletionOf(catStepper, driveToMatchingPosition);
-            approximateHeadRightForMatching->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_PRECISE);
+            approximateHeadRightForMatching->stopDynamicallyBySensor(headInclinationControl, HEAD_INCLINATION_INIT_STOP, HEAD_INCLINATION_TARGET, 0.6, SKIP_APPROXIMATION_FAST);
             
             //  keep lamp constantly on when target position is reaached
             CCTask* keepLampOn;
@@ -1223,15 +1219,15 @@ void loop() {
             }
         }
     }
+
     
     
     
-    
-    // ============================================================================================================================
-    // ============================================================================================================================
-    // ============= operation: ===================================================================================================
-    // ============================================================================================================================
-    // ============================================================================================================================
+    // ================================================================================================================================================
+    // ================================================================================================================================================
+    // ============= operation: =======================================================================================================================
+    // ================================================================================================================================================
+    // ================================================================================================================================================
     
     scheduler->run(initTheMachine);
     Serial.println(F("initialisation complete!"));
@@ -1241,7 +1237,7 @@ void loop() {
     
     while (!initNeeded) {
         
-        // ============= evaluate fetchingRecordButton =====================================================================================
+        // ============= evaluate fetchingRecordButton =================================================================================================
         
         if (digitalRead(FETCH_RECORD_BUTTON_PIN) == FETCH_RECORD_BUTTON_PRESSED) {
             long buttonPressedTime = millis();
@@ -1277,7 +1273,7 @@ void loop() {
         }
         
         
-        // ============= evaluate startCuttingButton =====================================================================================
+        // ============= evaluate startCuttingButton ===================================================================================================
         
         if (digitalRead(START_CUTTING_BUTTON) == START_CUTTING_BUTTON_PRESSED) {
             if (digitalRead(MOVE_CAT_MANUALLY_SWITCH) != MOVE_CAT_MANUALLY_ACTIVE) {
@@ -1292,6 +1288,9 @@ void loop() {
                 Serial.println("go for mamual moving");
                 
                 digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
+                
+                manualDrive_driveToCuttingStartPosition->setTarget(catCuttingStartPosition);
+
                 scheduler->run(driveToStartPositionOnly);
                 
                 while (digitalRead(START_CUTTING_BUTTON) == START_CUTTING_BUTTON_PRESSED);
@@ -1300,7 +1299,7 @@ void loop() {
                     CCWorkflow *manualDrive = new CCWorkflow("manualDrive");
                     
                     CCDeviceFlow *catStepperFlow = manualDrive->addDeviceFlow("catStepperDeviceFlow", catStepper);
-                    
+
                     CCControl* catForwardControl = manualDrive->addControl(loadingButton);
                     CCControl* catRewindControl = manualDrive->addControl(songEndButton);
                     
@@ -1308,11 +1307,13 @@ void loop() {
                         if (catForwardControl->getDigitalValue() == FETCH_RECORD_BUTTON_PRESSED) {
                             {
                                 CCTask* driveToCuttinEndPosition;
-                                driveToCuttinEndPosition = catStepperFlow->addTask(catCuttingEndPosition);
+                                driveToCuttinEndPosition = catStepperFlow->addTask(catCuttingEndPosition, 1200, 600, 600);
                                 driveToCuttinEndPosition->startByDate(100);
                                 driveToCuttinEndPosition->stopByControl(catForwardControl, IS_NOT, FETCH_RECORD_BUTTON_PRESSED, STOP_NORMAL);
                             }
                             scheduler->reviewTasks(manualDrive);
+                            scheduler->listAllTasks(manualDrive);
+                            scheduler->listAllActions(manualDrive);
                             scheduler->run(manualDrive);
                             
                             catStepperFlow->deleteAllTasks();
@@ -1325,7 +1326,7 @@ void loop() {
                         if (catRewindControl->getDigitalValue() == SONG_ENDBUTTON_PRESSED) {
                             {
                                 CCTask* driveToParkPosition;
-                                driveToParkPosition = catStepperFlow->addTask(0);
+                                driveToParkPosition = catStepperFlow->addTask(0, 1200, 600, 600);
                                 driveToParkPosition->startByDate(100);
                                 driveToParkPosition->stopByControl(catRewindControl, IS_NOT, SONG_ENDBUTTON_PRESSED, STOP_NORMAL);
                             }
@@ -1341,6 +1342,35 @@ void loop() {
                     }
                 }
                 
+                catCuttingStartPosition = catStepper->getCurrentPosition();
+
+                catSongStartPosition = catCuttingStartPosition + catMotorDegrees_start;
+                if (catSongStartPosition > (CAT_ULTIMATIVE_END_POSITION - 12000)) {
+                    catSongStartPosition = CAT_ULTIMATIVE_END_POSITION - 12000;
+                    Serial.print(F("catSongStartPosition out of range!!!"));
+                }
+                
+                catSongEndPosition = catSongStartPosition + catMotorDegrees_song;
+                if (catSongEndPosition > (CAT_ULTIMATIVE_END_POSITION - 8000)) {
+                    catSongEndPosition = CAT_ULTIMATIVE_END_POSITION - 8000;
+                    Serial.print(F("catSongEndPosition out of range!!!"));
+                }
+                
+                catCuttingEndPosition = catSongEndPosition + catMotorDegrees_end;
+                if (catCuttingEndPosition > CAT_ULTIMATIVE_END_POSITION - 4000) {
+                    catCuttingEndPosition = CAT_ULTIMATIVE_END_POSITION - 4000;
+                    Serial.print(F("catCuttingEndPosition out of range!!!"));
+                }
+                
+                manualDrive_makeStartGroove->setTarget(catCuttingEndPosition);
+                manualDrive_makeStartGroove->switchToNextTaskAtPosition(catSongStartPosition);
+                
+                manualDrive_makeMainGroove->setTarget(catCuttingEndPosition);
+                manualDrive_makeMainGroove->switchToNextTaskAtPosition(catSongEndPosition);
+
+                manualDrive_makeEndGroove->setTarget(catCuttingEndPosition);
+
+
                 scheduler->run(songCuttingOnly);
                 
             }
@@ -1361,7 +1391,7 @@ void loop() {
         
         
         
-        // ============= or just blink =======================================================================================================
+        // ============= or just blink ================================================================================================================
         
         if (millis() - blinkTimer > 2000) {
             digitalWrite(CONTROLLER_LAMP_YELLOW_PIN, CONTROLLER_LAMP_YELLOW_ON);
@@ -1371,7 +1401,7 @@ void loop() {
                 Serial.print(F("."));
                 
                 if (digitalRead(SCHEDULERS_TASKVIEW_SHOW_PIN) == SCHEDULERS_TASKVIEW_HIDE) {
-                    scheduler->setVerbosity(NO_OUTPUT);
+                    //  scheduler->setVerbosity(NO_OUTPUT);
                 }
                 
             }
@@ -1460,6 +1490,17 @@ void calculateCuttingParameters() {
     Serial.println("################################################################################");
     Serial.println();
     
+    Serial.print(F("cutting "));
+    if (digitalRead(CUTTING_POSTCARDS_SWITCH) == CUTTING_POSTCARDS_ACTIVE) {
+        Serial.print(F("postcards "));
+    } else {
+        Serial.print(F("7 inch vinyls "));
+    }
+    if (digitalRead(ROTATIONSPEED_33_SWITCH) == ROTATIONSPEED_33_ACTIVE) {
+        Serial.println(F("with 33 rpm"));
+    } else {
+        Serial.println(F("with 45 rpm"));
+    }
     Serial.print(F("groove pitch is set to "));
     Serial.print(songGroove_pitch);
     Serial.print(F("mm, start groove pitch is set to "));
@@ -1500,22 +1541,22 @@ void calculateCuttingParameters() {
     }
     
     
-    grooves_all = startGroove_range / startGroove_pitch + songGrooves + endGrooveRange / endGroove_pitch;
-    turnTableStepperDegrees = grooves_all * TABLE_DRIVE_RATIO * 360.0;
+    unsigned int recordGrooves = startGroove_range / startGroove_pitch + songGrooves + endGrooveRange / endGroove_pitch;
+    turnTableStepperDegrees = recordGrooves * TABLE_DRIVE_RATIO * 360.0;
     //    turnTableStepperSpeed = recordTurnsPerMinute / 60.0 * TABLE_DRIVE_RATIO * 360.0;
     turnTableStepperSpeed = 6.0 * recordTurnsPerMinute * TABLE_DRIVE_RATIO;
     
     
     float catSpeed_start_mmPerSecond = startGroove_pitch * recordTurnsPerMinute / 60.0;
-    float catMotorDegrees_start = 360.0 * startGroove_range / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    catMotorDegrees_start = 360.0 * startGroove_range / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     catMotorSpeed_startGroove = 360.0 * catSpeed_start_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     
     float catSpeed_song_mmPerSecond = songGroove_pitch * recordTurnsPerMinute / 60.0;
-    float catMotorDegrees_song = 360.0 * songRange / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    catMotorDegrees_song = 360.0 * songRange / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     catMotorSpeed_song = 360.0 * catSpeed_song_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     
     float catSpeed_end_mmPerSecond = endGroove_pitch * recordTurnsPerMinute / 60.0;
-    float catMotorDegrees_end = 360.0 * endGrooveRange / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
+    catMotorDegrees_end = 360.0 * endGrooveRange / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     catMotorSpeed_endGroove = 360.0 * catSpeed_end_mmPerSecond / SPIN_PITCH_M6 / (float)(CAT_DRIVE_RATIO);
     
     
@@ -1546,7 +1587,7 @@ void calculateCuttingParameters() {
     Serial.println(catMotorSpeed_endGroove);
     
     Serial.print("Turning the table: table rotations: ");
-    Serial.print(grooves_all);
+    Serial.print(recordGrooves);
     Serial.print(", motor degrees: ");
     Serial.print(turnTableStepperDegrees);
     Serial.print(", degrees per second: ");

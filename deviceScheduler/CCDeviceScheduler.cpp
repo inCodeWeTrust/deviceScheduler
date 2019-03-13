@@ -1163,6 +1163,25 @@ void CCDeviceScheduler::listAllActions(CCWorkflow* workflow) {
 void CCDeviceScheduler::evaluateButtons() {
     
     Serial.println(F("************************************* evaluate buttons *************************************"));
+    
+    
+    while (true) {
+        Serial.print("A4: ");
+        Serial.print(getValueOfTriStateSwitch(A4, true));
+        Serial.print(" :: ");
+        Serial.print(getValueOfTriStateSwitch(A4, false));
+
+        Serial.print(" ### A5: ");
+        Serial.print(getValueOfTriStateSwitch(A5, true));
+        Serial.print(" :: ");
+        Serial.println(getValueOfTriStateSwitch(A5, false));
+        
+        delay(500);
+}
+    
+    
+    
+    
     Serial.print(F("[CCDeviceScheduler]: "));
     Serial.print(schedulerName);
     Serial.println(F(": Controls: "));
@@ -1214,7 +1233,7 @@ void CCDeviceScheduler::evaluateButtons() {
     Serial.print(F(", runTable: "));
     Serial.print(lastEvaluationButtonState[2] == LOW);
     Serial.print(F(", runTable: "));
-    Serial.print(lastEvaluationButtonState[3] == HIGH);
+    Serial.println(lastEvaluationButtonState[3] == HIGH);
 
     
     
@@ -1255,20 +1274,36 @@ void CCDeviceScheduler::evaluateButtons() {
         for (unsigned int i = 0; i < countOfEvaluationButtons; i++) {
             bool buttonState_00 = getValueOfTriStateSwitch(evaluationButtonPin[i], LOW);
             bool buttonState_01 = getValueOfTriStateSwitch(evaluationButtonPin[i], HIGH);
-            
-            if (buttonState_00 != lastEvaluationButtonState[2 * i] || buttonState_01 != lastEvaluationButtonState[2 * i + 1]) {
-                Serial.print(F("evaluateButtons: "));
-                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[0], LOW) == EVALUATE_BUTTONS_ACTIVE);
-                Serial.print(F(", [unused]: "));
-                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[0], HIGH) == HIGH);
-                Serial.print(F(", runTable: "));
-                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[1], LOW) == RUN_TABLE_ACTIVE);
-                Serial.print(F(", matchHeadImpact: "));
-                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[1], HIGH) == MATCH_HEADIMPACT_ACTIVE);
-                
-                lastEvaluationButtonState[2 * i] = buttonState_00;
-                lastEvaluationButtonState[2 * i + 1] = buttonState_01;
+
+            if (buttonState_00 != lastEvaluationButtonState[2 * i]) {
+                Serial.print(i);
+                Serial.print(": buttonState_00 changed: ");
+                Serial.print(" is now: ");
+                Serial.println(buttonState_00);
             }
+            if (buttonState_01 != lastEvaluationButtonState[2 * i + 1]) {
+                Serial.print(i);
+                Serial.print(": buttonState_01 changed: ");
+                Serial.print(" is now: ");
+                Serial.println(buttonState_01);
+            }
+
+            if ((buttonState_00 != lastEvaluationButtonState[2 * i]) || (buttonState_01 != lastEvaluationButtonState[2 * i + 1])) {
+                
+                Serial.print(F("evaluateButtons: "));
+                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[0], EVALUATE_BUTTONS_ACTIVE));
+                Serial.print(F(", [unused]: "));
+                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[0], HIGH));
+                Serial.print(F(", runTable: "));
+                Serial.print(getValueOfTriStateSwitch(evaluationButtonPin[1], RUN_TABLE_ACTIVE));
+                Serial.print(F(", matchHeadImpact: "));
+                Serial.println(getValueOfTriStateSwitch(evaluationButtonPin[1], MATCH_HEADIMPACT_ACTIVE));
+                
+//                lastEvaluationButtonState[2 * i] = buttonState_00;
+//                lastEvaluationButtonState[2 * i + 1] = buttonState_01;
+            }
+            lastEvaluationButtonState[2 * i] = buttonState_00;
+            lastEvaluationButtonState[2 * i + 1] = buttonState_01;
         }
     }
 }
@@ -1279,12 +1314,15 @@ void CCDeviceScheduler::setVerbosity(int verbosity) {this->verbosity = verbosity
 
 
 bool CCDeviceScheduler::getValueOfTriStateSwitch(unsigned int triStateSwitchPin, bool probedState) {
+    
     if (digitalRead(triStateSwitchPin) == probedState) {
         pinMode(triStateSwitchPin, INPUT);
+        delay(10);
         if (digitalRead(triStateSwitchPin) == probedState) {
             return true;
         }
         pinMode(triStateSwitchPin, INPUT_PULLUP);
+        delay(10);
     }
     return false;
 }

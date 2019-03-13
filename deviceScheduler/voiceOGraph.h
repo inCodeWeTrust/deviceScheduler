@@ -105,18 +105,22 @@
 #define CAT_CUTTING_START_POSITION_7INCH    131600
 
 
-#define SONGGROOVE_PITCH_CARD               0.1
+#define SONGGROOVE_PITCH_CARD               0.15
 #define STARTGROOVE_PITCH_CARD              1
-#define STARTGROOVE_RANGE_CARD              4
-#define ENDGROOVE_PITCH_CARD                4.8
-#define ENDGROOVE_RANGE_MIN_CARD            10
-#define CUTTING_RANGE_CARD                  38
+#define STARTGROOVE_RANGE_CARD              3
+#define ENDGROOVE_PITCH_CARD                2.8
+#define ENDGROOVE_RANGE_MIN_CARD            3
+#define CUTTING_RANGE_CARD                  30
 #define PLAYTIME_MINUTES_CARD               6
 
 #define ADJUSTGROOVEPITCH_TO_PLAYTIME_CARD  false
 
-#define CAT_CUTTING_START_POSITION_CARD     131600
+// big postcards: #define CAT_CUTTING_START_POSITION_CARD     156000
+#define CAT_CUTTING_START_POSITION_CARD     176000
 
+
+
+#define CAT_ULTIMATIVE_END_POSITION         220000
 
 
 
